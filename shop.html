@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse all natural soaps, roller oils, scrubs, balms and body care.">
+  <title>All Products | Just B Naturals</title>
+  <link rel="icon" href="images/just-b-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"><script src="script.js" defer></script>
+</head>
+<body data-page="shop">
+  <a class="skip-link" href="#main">Skip to content</a><div data-site-header></div>
+  <main id="main">
+    <header class="collection-header shell">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>All products</span></nav>
+      <p class="eyebrow">The complete collection</p><h1>All products</h1>
+      <p class="collection-lead">Browse every product and scent across seven categories. Add your favourites to your cart and check out when you are ready.</p>
+      <nav class="category-pills" aria-label="Product categories">
+        <button class="active" type="button" data-category-filter="all" aria-pressed="true">All</button><button type="button" data-category-filter="artisan-soap" aria-pressed="false">Artisan soaps</button><button type="button" data-category-filter="roller-oils" aria-pressed="false">Roller oils</button><button type="button" data-category-filter="sugar-scrubs" aria-pressed="false">Sugar scrubs</button><button type="button" data-category-filter="body-care" aria-pressed="false">Body care</button><button type="button" data-category-filter="home-linen" aria-pressed="false">Home & linen</button><button type="button" data-category-filter="dish-soap" aria-pressed="false">Dish soap</button><button type="button" data-category-filter="pantry" aria-pressed="false">Pantry</button>
+      </nav>
+    </header>
+    <section class="catalog-section shell" aria-label="All products">
+      <div class="catalog-toolbar"><p><span data-product-count>0</span> products</p><p>Guest order requests • Pay after confirmation</p></div>
+      <div class="catalog-controls">
+        <label class="catalog-search"><span class="visually-hidden">Search products</span><input type="search" data-product-search placeholder="Search products or ingredients…"></label>
+        <div class="catalog-control-actions"><label class="catalog-sort"><span>Sort products</span><select data-product-sort><option value="featured">Featured first</option><option value="name">Name A–Z</option><option value="price">Price: low to high</option></select></label><button class="text-button" type="button" data-surprise>Surprise me ✦</button></div>
+      </div>
+      <div class="product-grid" data-catalog="all"></div>
+      <div class="catalog-empty" data-catalog-empty hidden><h2>No products found</h2><p>Try a different product name or ingredient.</p></div>
+    </section>
+  </main>
+  <div data-site-footer></div>
+</body>
+</html>

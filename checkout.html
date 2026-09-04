@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send a Just B Naturals order request. Availability is confirmed before any payment is made.">
+  <title>Request an order | Just B Naturals</title>
+  <link rel="icon" href="images/just-b-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="checkout">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-site-header></div>
+  <main id="main">
+    <header class="checkout-header shell">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html">Products</a><span>/</span><span>Order request</span></nav>
+      <p class="eyebrow">Guest order request</p>
+      <h1>Request your order</h1>
+      <p>Review your cart and send your request. Nothing is charged now—Just B Naturals will check availability before asking you to pay.</p>
+    </header>
+
+    <section class="checkout-process shell" aria-label="How ordering works">
+      <div><span>01</span><p><strong>Send your request</strong>Your cart and contact details go to Just B Naturals.</p></div>
+      <div><span>02</span><p><strong>We check availability</strong>Each small-batch item is confirmed before payment.</p></div>
+      <div><span>03</span><p><strong>Pay after confirmation</strong>You receive payment and pickup or delivery details by email.</p></div>
+    </section>
+
+    <section class="checkout-section shell" data-checkout>
+      <div class="checkout-empty" data-checkout-empty hidden>
+        <p class="eyebrow">Your cart</p>
+        <h2>Your cart is empty.</h2>
+        <p>Add a few products before checking out.</p>
+        <a class="button button-dark" href="shop.html">Browse products</a>
+      </div>
+
+      <div class="checkout-layout" data-checkout-content hidden>
+        <form class="checkout-form" data-checkout-form>
+          <section class="checkout-card">
+            <div class="checkout-card-heading"><span>01</span><div><p class="eyebrow">Contact</p><h2>Your information</h2></div></div>
+            <div class="form-grid form-grid-two">
+              <label><span>First name</span><input name="firstName" autocomplete="given-name" maxlength="80" required></label>
+              <label><span>Last name</span><input name="lastName" autocomplete="family-name" maxlength="80" required></label>
+              <label class="form-span-two"><span>Email address</span><input name="email" type="email" autocomplete="email" maxlength="160" required></label>
+              <label class="form-span-two"><span>Phone number <small>optional</small></span><input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+            </div>
+          </section>
+
+          <section class="checkout-card">
+            <div class="checkout-card-heading"><span>02</span><div><p class="eyebrow">Fulfillment</p><h2>How will you receive it?</h2></div></div>
+            <div class="choice-grid">
+              <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
+              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>Availability and delivery details will be confirmed.</small></span></label>
+            </div>
+            <label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" maxlength="120" placeholder="For example: Aylmer or Hull"></label>
+          </section>
+
+          <section class="checkout-card">
+            <div class="checkout-card-heading"><span>03</span><div><p class="eyebrow">After approval</p><h2>Preferred payment method</h2></div></div>
+            <div class="choice-grid">
+              <label class="choice-card"><input type="radio" name="payment" value="etransfer" checked><span><strong>Interac e-Transfer</strong><small>Do not send payment yet. Instructions arrive only after your items are confirmed.</small></span></label>
+              <label class="choice-card"><input type="radio" name="payment" value="cash"><span><strong>Cash</strong><small>Pay at pickup or delivery, after your order has been confirmed.</small></span></label>
+            </div>
+          </section>
+
+          <section class="checkout-card">
+            <div class="checkout-card-heading"><span>04</span><div><p class="eyebrow">Finishing touches</p><h2>Order notes</h2></div></div>
+            <label class="field-block"><span>Anything we should know? <small>optional</small></span><textarea name="notes" rows="4" maxlength="1000" placeholder="Special instructions, allergies, preferred timing, or a gift note"></textarea></label>
+            <label class="consent-check consent-check-dark"><input name="marketingConsent" type="checkbox"><span>Send me occasional news and promotions from Just B Naturals. I can unsubscribe anytime.</span></label>
+            <p class="privacy-note">Promotional emails are optional. See the <a href="privacy.html">privacy note</a>.</p>
+            <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          </section>
+
+          <div class="payment-hold-note"><strong>No payment is taken now.</strong><span>This sends an order request for availability review.</span></div>
+          <button class="button button-dark checkout-submit" type="submit">Request order</button>
+          <p class="checkout-status" data-checkout-status aria-live="polite"></p>
+          <a class="button button-outline checkout-fallback" data-checkout-fallback href="mailto:justbnaturalss@gmail.com" hidden>Send order request by email</a>
+          <p class="checkout-terms">Your request is not a completed purchase. Please wait for a personal confirmation before sending an e-Transfer or preparing cash.</p>
+        </form>
+
+        <aside class="checkout-summary" aria-label="Order summary">
+          <div class="checkout-summary-heading"><div><p class="eyebrow">Your cart</p><h2>Order summary</h2></div><span><b data-checkout-count>0</b> items</span></div>
+          <div class="order-list-items checkout-order-items" data-order-items></div>
+          <div class="checkout-total"><span>Product total</span><strong data-order-total>$0</strong></div>
+          <p>Prices are shown in CAD. Availability, final total, and pickup or local-delivery details are confirmed by email before payment.</p>
+        </aside>
+      </div>
+
+      <div class="checkout-success" data-checkout-success hidden>
+        <span class="success-mark">✓</span>
+        <p class="eyebrow">Request received</p>
+        <h2>Please wait to pay.</h2>
+        <p>Your request number is <strong data-order-id></strong>. We sent you a receipt for the request. Just B Naturals will check the items and send a separate confirmation before any payment is due.</p>
+        <div><a class="button button-dark" href="shop.html">Continue shopping</a><a class="button button-outline" href="index.html">Return home</a></div>
+      </div>
+    </section>
+  </main>
+  <div data-site-footer></div>
+</body>
+</html>
