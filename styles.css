@@ -1,4 +1,6 @@
 :root {
+  color-scheme: only light;
+  supported-color-schemes: light;
   --ink: #294b3b;
   --dark: #17352b;
   --paper: #faf7ef;
@@ -17,9 +19,9 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+html { background: #faf7ef; color-scheme: only light; scroll-behavior: smooth; }
 section[id] { scroll-margin-top: 95px; }
-body { margin: 0; background: var(--paper); color: var(--dark); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: #faf7ef; color: #17352b; font-family: var(--sans); -webkit-font-smoothing: antialiased; }
 body.menu-open, body.order-open { overflow: hidden; }
 button, input, textarea { font: inherit; }
 a { color: inherit; text-decoration: none; }
