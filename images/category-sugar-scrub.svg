@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Open jar of sugar scrub with spoon</title>
+  <g fill="none" stroke="#173c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M34 67h78v50a13 13 0 0 1-13 13H47a13 13 0 0 1-13-13V67Z"/>
+    <ellipse cx="73" cy="67" rx="39" ry="11"/>
+    <path d="M42 67c9-6 53-6 62 0"/>
+    <circle cx="54" cy="66" r="2" fill="#173c34" stroke="none"/>
+    <circle cx="67" cy="63" r="2" fill="#173c34" stroke="none"/>
+    <circle cx="82" cy="65" r="2" fill="#173c34" stroke="none"/>
+    <circle cx="94" cy="62" r="2" fill="#173c34" stroke="none"/>
+    <path d="m113 124 18-41"/>
+    <path d="M129 80c2-7 8-11 14-8 6 3 7 10 3 15-4 5-11 6-16 2"/>
+  </g>
+</svg>

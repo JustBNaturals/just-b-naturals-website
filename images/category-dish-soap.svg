@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Solid dish soap and bamboo brush</title>
+  <g fill="none" stroke="#173c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 104h78v16a10 10 0 0 1-10 10H28a10 10 0 0 1-10-10v-16Z"/>
+    <ellipse cx="57" cy="104" rx="39" ry="10"/>
+    <path d="M32 101c3-16 13-25 25-25s22 9 25 25"/>
+    <rect x="112" y="25" width="24" height="28" rx="8"/>
+    <path d="M124 53v43"/>
+    <path d="M105 96h38v14h-38z"/>
+    <path d="M109 110v17M119 110v17M129 110v17M139 110v17"/>
+  </g>
+</svg>

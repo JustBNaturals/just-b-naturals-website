@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Open jar of whipped body butter</title>
+  <g fill="none" stroke="#173c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="62" width="76" height="68" rx="12"/>
+    <path d="M18 52h80v12H18z"/>
+    <path d="M34 92h48"/>
+    <rect x="104" y="76" width="38" height="54" rx="9"/>
+    <path d="M102 68h42v10h-42z"/>
+    <path d="M114 100h18"/>
+  </g>
+</svg>

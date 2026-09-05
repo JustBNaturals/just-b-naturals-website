@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Linen spray bottle</title>
+  <g fill="none" stroke="#173c34" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 70c0-9 7-16 16-16h28c9 0 16 7 16 16v52a14 14 0 0 1-14 14H64a14 14 0 0 1-14-14V70Z"/>
+    <rect x="67" y="40" width="26" height="16" rx="2"/>
+    <path d="M80 40V28h28"/>
+    <path d="M108 28h15v8h-15"/>
+    <rect x="63" y="79" width="34" height="28" rx="8"/>
+    <path d="M70 93h20"/>
+    <circle cx="132" cy="43" r="2" fill="#173c34" stroke="none"/>
+    <circle cx="142" cy="49" r="2" fill="#173c34" stroke="none"/>
+    <circle cx="132" cy="55" r="2" fill="#173c34" stroke="none"/>
+  </g>
+</svg>
