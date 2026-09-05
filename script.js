@@ -1,7 +1,7 @@
 /*
   STORE SETTINGS
-  Cart contents stay in the shopper's browser. When published on Cloudflare Pages,
-  the included /functions/api endpoints email guest orders and collect subscribers.
+  Cart contents stay in the shopper's browser. The Cloudflare Worker endpoints
+  email guest order requests and collect consenting subscribers.
 */
 document.documentElement.classList.add("has-js");
 
@@ -220,6 +220,7 @@ const NAV_ITEMS = [
 const currentPage = document.body.dataset.page || "";
 const ORDER_STORAGE_KEY = "just-b-naturals-order-list-v1";
 const ORDER_NOTES_KEY = "just-b-naturals-order-notes-v1";
+const ORDER_COOKIE_KEY = "just-b-naturals-cart";
 const generalOrderUrl = `mailto:${STORE.orderEmail}?subject=${encodeURIComponent("Product order inquiry")}`;
 
 const CATEGORY_LABELS = Object.freeze({
@@ -255,21 +256,41 @@ function findOrderLine(productId) {
   return orderList.find(item => item.id === productId);
 }
 
-function loadOrderList() {
+function readOrderCookie() {
   try {
-    const saved = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY) || "[]");
-    if (!Array.isArray(saved)) return [];
-    return saved
-      .filter(item => PRODUCTS.some(product => product.id === item.id))
-      .map(item => {
-        return {
-          id: item.id,
-          quantity: Math.min(99, Math.max(1, Number(item.quantity) || 1))
-        };
-      });
+    const prefix = `${ORDER_COOKIE_KEY}=`;
+    const entry = document.cookie.split("; ").find(value => value.startsWith(prefix));
+    return entry ? JSON.parse(decodeURIComponent(entry.slice(prefix.length))) : [];
   } catch (_) {
     return [];
   }
+}
+
+function writeOrderCookie(items) {
+  try {
+    const value = encodeURIComponent(JSON.stringify(items));
+    const secure = window.location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = `${ORDER_COOKIE_KEY}=${value}; Max-Age=2592000; Path=/; SameSite=Lax${secure}`;
+  } catch (_) {
+    // The in-memory cart still works if cookies are unavailable.
+  }
+}
+
+function loadOrderList() {
+  let saved = [];
+  try {
+    const stored = localStorage.getItem(ORDER_STORAGE_KEY);
+    saved = stored === null ? readOrderCookie() : JSON.parse(stored);
+  } catch (_) {
+    saved = readOrderCookie();
+  }
+  if (!Array.isArray(saved)) return [];
+  return saved
+    .filter(item => PRODUCTS.some(product => product.id === item.id))
+    .map(item => ({
+      id: item.id,
+      quantity: Math.min(99, Math.max(1, Number(item.quantity) || 1))
+    }));
 }
 
 function loadOrderNotes() {
@@ -289,8 +310,9 @@ function saveOrderList() {
     localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderList));
     localStorage.setItem(ORDER_NOTES_KEY, orderNotes);
   } catch (_) {
-    // The order still works for this visit if private browsing blocks storage.
+    // The cookie fallback below keeps the cart between pages.
   }
+  writeOrderCookie(orderList);
 }
 
 function productPriceNumber(product) {
