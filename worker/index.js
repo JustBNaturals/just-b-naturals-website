@@ -9,7 +9,10 @@ const OSRM_BASE="https://router.project-osrm.org/route/v1/driving";
 
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=300){return String(value||"").trim().slice(0,max)}
-function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value||""))}
+function validEmail(value){return String(value||"").length<=160&&/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(String(value||""))}
+function validName(value){return /^[\p{L}][\p{L}\p{M}'’ -]{1,79}$/u.test(String(value||""))}
+function validPhone(value){return !value||/^[0-9+() .-]{7,25}$/.test(String(value))}
+function validArea(value){return !value||(String(value).length>=2&&String(value).length<=120)}
 function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c])}
 function deliveryRate(env){const value=Number.parseInt(env.DELIVERY_RATE_PER_KM_CENTS,10);return Number.isInteger(value)&&value>=0?value:100}
 function money(cents){return `$${(Number(cents)/100).toFixed(2)} CAD`}
@@ -135,10 +138,14 @@ async function handleOrder(request,env){
   try{
     const data=await request.json();if(clean(data.website,50))return json({ok:true,orderId:"Submitted"});
     const order={firstName:clean(data.firstName,80),lastName:clean(data.lastName,80),email:clean(data.email,160).toLowerCase(),phone:clean(data.phone,40),area:clean(data.area,220),fulfillment:["pickup","delivery"].includes(data.fulfillment)?data.fulfillment:"pickup",deliveryAddress:clean(data.deliveryAddress,220),deliveryPlaceId:clean(data.deliveryPlaceId,300),deliveryDistanceKm:null,deliveryFeeCents:null,payment:["cash","etransfer"].includes(data.payment)?data.payment:"etransfer",notes:clean(data.notes,1000),marketingConsent:data.marketingConsent===true,consentText:clean(data.consentText,300),consentedAt:clean(data.consentedAt,60)||new Date().toISOString(),items:normalizeItems(data.items),orderId:`JBN-${new Date().toISOString().slice(0,10).replaceAll("-","")}-${crypto.randomUUID().slice(0,6).toUpperCase()}`,orderEmail:env.ORDER_EMAIL||"justbnaturalss@gmail.com"};
-    if(!order.firstName||!order.lastName||!validEmail(order.email))return json({error:"Please provide a valid name and email address."},400);
+    if(!validName(order.firstName)||!validName(order.lastName))return json({error:"Please provide a valid first and last name."},400);
+    if(!validEmail(order.email))return json({error:"Please provide a complete, valid email address."},400);
+    if(!validPhone(order.phone))return json({error:"Please provide a valid phone number or leave it blank."},400);
+    if(!validArea(order.area))return json({error:"Please provide a valid neighbourhood or area."},400);
+    if(!["pickup","delivery"].includes(data.fulfillment)||!["cash","etransfer"].includes(data.payment))return json({error:"Please select valid fulfillment and payment options."},400);
     if(!order.items.length)return json({error:"Your cart is empty."},400);
-    if(order.fulfillment==="delivery"&&!order.deliveryAddress)return json({error:"Please enter the local delivery address."},400);
-    if(order.fulfillment==="delivery"&&order.deliveryPlaceId){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){order.deliveryDistanceKm=null;order.deliveryFeeCents=null}}
+    if(order.fulfillment==="delivery"&&(order.deliveryAddress.length<8||!order.deliveryPlaceId))return json({error:"Please select a recognized local delivery address and calculate its fee."},400);
+    if(order.fulfillment==="delivery"){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){return json({error:"The delivery route could not be calculated. Please choose the address again."},400)}}
     order.items=await attachInventory(env,order.items);
     await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:`${order.orderId} — Approval needed before payment`,htmlContent:orderHtml(order)});
     await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:`${order.orderId} — Request received; please wait to pay`,htmlContent:customerHtml(order)});

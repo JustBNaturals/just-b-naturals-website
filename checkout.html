@@ -46,10 +46,10 @@
           <section class="checkout-card">
             <div class="checkout-card-heading"><span>01</span><div><p class="eyebrow">Contact</p><h2>Your information</h2></div></div>
             <div class="form-grid form-grid-two">
-              <label><span>First name</span><input name="firstName" autocomplete="given-name" maxlength="80" required></label>
-              <label><span>Last name</span><input name="lastName" autocomplete="family-name" maxlength="80" required></label>
-              <label class="form-span-two"><span>Email address</span><input name="email" type="email" autocomplete="email" maxlength="160" required></label>
-              <label class="form-span-two"><span>Phone number <small>optional</small></span><input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+              <label><span>First name</span><input name="firstName" autocomplete="given-name" minlength="2" maxlength="80" pattern="[A-Za-zÀ-ÖØ-öø-ÿ'’ -]{2,80}" title="Enter a valid first name using letters, spaces, apostrophes or hyphens." required></label>
+              <label><span>Last name</span><input name="lastName" autocomplete="family-name" minlength="2" maxlength="80" pattern="[A-Za-zÀ-ÖØ-öø-ÿ'’ -]{2,80}" title="Enter a valid last name using letters, spaces, apostrophes or hyphens." required></label>
+              <label class="form-span-two"><span>Email address</span><input name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." required></label>
+              <label class="form-span-two"><span>Phone number <small>optional</small></span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" minlength="7" maxlength="25" pattern="[0-9+() .-]{7,25}" title="Enter a valid phone number using numbers and standard phone punctuation."></label>
             </div>
           </section>
 
@@ -59,12 +59,12 @@
               <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
               <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>Delivery costs extra and is estimated from the driving distance.</small></span></label>
             </div>
-            <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
+            <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" minlength="2" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
             <div class="delivery-estimator" data-delivery-estimator hidden>
               <p class="delivery-extra-note"><strong>Local delivery is an additional charge.</strong> Select your address below to see the distance and estimated fee before sending the request. The final amount is confirmed by email.</p>
               <div class="delivery-address-wrap">
-                <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false"></label>
-                <div class="delivery-suggestions" data-delivery-suggestions role="listbox" hidden></div>
+                <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" minlength="8" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false" aria-controls="delivery-address-suggestions"></label>
+                <div class="delivery-suggestions" id="delivery-address-suggestions" data-delivery-suggestions role="listbox" hidden></div>
               </div>
               <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
               <p class="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>

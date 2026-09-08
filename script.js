@@ -1447,7 +1447,7 @@ function renderSiteChrome() {
     <div class="order-toast" role="status" aria-live="polite" aria-atomic="true"></div>`;
 
   if (footer) footer.innerHTML = `
-    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
+    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
     <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Aylmer, Quebec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Roller oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
@@ -1887,7 +1887,7 @@ function renderProductPage() {
     <section class="product-story-section">
       <div class="shell product-story-grid">
         <article class="product-source-copy"><p class="eyebrow">Complete product details</p><h2>Everything from the product guide.</h2>${storySections.map(section => `<section><h3>${section.title}</h3>${section.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("")}</section>`).join("")}</article>
-        <aside class="ingredient-panel"><p class="eyebrow">Ingredients</p><h2>What is inside</h2><ul>${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}</ul>${product.note ? `<p>${product.note}</p>` : ""}</aside>
+        <aside class="ingredient-panel"><h2>Ingredients</h2><ul>${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}</ul>${product.note ? `<p>${product.note}</p>` : ""}</aside>
       </div>
     </section>
     <section class="shell product-use-section">
@@ -1954,11 +1954,14 @@ function initializeDeliveryEstimator(form) {
     distance.value = "";
     fee.value = "";
     status.textContent = "";
+    status.classList.remove("is-ready");
+    if (form.elements.fulfillment.value === "delivery") address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
   };
 
   const showUnavailable = () => {
     closeSuggestions();
-    status.textContent = "Enter the full address. The exact delivery charge will be confirmed by email.";
+    status.textContent = "We could not calculate this address. Choose a suggested address before placing the order.";
+    address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
   };
 
   const estimate = async (selectedPlaceId, selectedAddress) => {
@@ -1974,6 +1977,8 @@ function initializeDeliveryEstimator(form) {
       distance.value = String(result.distanceKm);
       fee.value = String(result.feeCents);
       status.textContent = `Estimated local delivery: ${Number(result.distanceKm).toFixed(1)} km • ${formatPrice(Number(result.feeCents) / 100)} CAD extra`;
+      status.classList.add("is-ready");
+      address.setCustomValidity("");
     } catch (_) {
       showUnavailable();
     }
@@ -2029,6 +2034,7 @@ function initializeDeliveryEstimator(form) {
     panel.hidden = !deliverySelected;
     if (pickupArea) pickupArea.hidden = deliverySelected;
     address.required = deliverySelected;
+    address.setCustomValidity(deliverySelected && !fee.value ? "Please select a suggested address so we can calculate the delivery fee." : "");
     if (!deliverySelected) {
       closeSuggestions();
       clearEstimate();
@@ -2097,6 +2103,7 @@ function initializeCheckout() {
   form.addEventListener("submit", async event => {
     event.preventDefault();
     if (!event.submitter?.matches(".checkout-submit")) return;
+    form.classList.add("was-validated");
     if (!form.reportValidity() || !orderList.length) return;
     const details = checkoutPayload(form);
     const button = form.querySelector('[type="submit"]');
@@ -2144,6 +2151,7 @@ function initializeNewsletter() {
   document.querySelectorAll("[data-newsletter-form]").forEach(form => {
     form.addEventListener("submit", async event => {
       event.preventDefault();
+      form.classList.add("was-validated");
       if (!form.reportValidity()) return;
       const button = form.querySelector('[type="submit"]');
       const status = form.querySelector("[data-newsletter-status]");
