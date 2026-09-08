@@ -8,6 +8,19 @@ function clean(value,max=300){return String(value||"").trim().slice(0,max)}
 function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value||""))}
 function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c])}
 
+async function secureMatch(left,right){
+  const encode=value=>new TextEncoder().encode(String(value||""));
+  const [a,b]=await Promise.all([crypto.subtle.digest("SHA-256",encode(left)),crypto.subtle.digest("SHA-256",encode(right))]);
+  const aa=new Uint8Array(a),bb=new Uint8Array(b);let difference=aa.length^bb.length;
+  for(let index=0;index<aa.length;index++)difference|=aa[index]^bb[index];
+  return difference===0;
+}
+async function inventoryAuthorized(request,env){
+  if(!env.INVENTORY_ADMIN_KEY)return false;
+  const supplied=request.headers.get("Authorization")?.replace(/^Bearer\s+/i,"")||"";
+  return secureMatch(supplied,env.INVENTORY_ADMIN_KEY);
+}
+
 async function brevoRequest(env,path,body){
   if(!env.BREVO_API_KEY)throw new Error("Email service is not configured.");
   const response=await fetch(`${BREVO_BASE}${path}`,{method:"POST",headers:{"Content-Type":"application/json","api-key":env.BREVO_API_KEY},body:JSON.stringify(body)});
@@ -70,4 +83,27 @@ async function handleProducts(env){
   try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,is_active,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,active:row.is_active!==0,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
 }
 
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
+async function handleInventoryAdmin(request,env){
+  if(!await inventoryAuthorized(request,env))return json({error:"That inventory passcode was not accepted."},401);
+  if(!env.INVENTORY_DB)return json({error:"Inventory is not connected."},503);
+  if(request.method==="GET")return handleProducts(env);
+  if(request.method!=="POST")return json({error:"Method not allowed."},405);
+  if(request.headers.get("Origin")&&request.headers.get("Origin")!==new URL(request.url).origin)return json({error:"Request not allowed."},403);
+  try{
+    const data=await request.json();
+    if(!Array.isArray(data.products)||data.products.length>Object.keys(PRODUCT_CATALOG).length)return json({error:"The inventory list is invalid."},400);
+    const updates=[];
+    for(const item of data.products){
+      const id=clean(item?.id,100);
+      if(!PRODUCT_CATALOG[id])return json({error:"The inventory list contains an unknown product."},400);
+      const stock=item.stock===null||item.stock===""?null:Number(item.stock);
+      if(stock!==null&&(!Number.isInteger(stock)||stock<0||stock>99999))return json({error:"Stock must be a whole number or left blank."},400);
+      updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,id));
+    }
+    await env.INVENTORY_DB.batch(updates);
+    return json({ok:true,updated:updates.length});
+  }catch(_){return json({error:"The inventory changes could not be saved."},500)}
+}
+
+export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
+

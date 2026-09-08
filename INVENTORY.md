@@ -1,20 +1,18 @@
-# Inventory management
+# Inventory
 
-The live catalog is connected to the Cloudflare D1 database named
-`just-b-naturals-inventory`. Every current product has one row in the
-`inventory` table. Prices and stock counts intentionally start as `NULL` so
-the website does not display invented values.
+The private inventory page is:
 
-To update stock in the Cloudflare dashboard, open **Storage & Databases → D1 →
-just-b-naturals-inventory → Console** and run, for example:
+`https://justbnatural.ca/inventory.html`
 
-```sql
-UPDATE inventory
-SET stock_count = 12, updated_at = CURRENT_TIMESTAMP
-WHERE product_id = 'matcha-lavender-soap';
-```
+Enter the inventory passcode, type a whole-number stock count beside each
+product, and press **Save changes**. Leave a box blank when the website should
+not display a count. Enter `0` to show **Out of stock**.
 
-Use `NULL` instead of a number when a count is not yet set. Use `is_active = 0`
-to mark a product unavailable without deleting its catalog record. The site
-reads this table through `/api/products` and shows a count only when one has
-been entered.
+The page writes directly to the existing Cloudflare D1 database
+`just-b-naturals-inventory`. The passcode is stored as the Worker secret
+`INVENTORY_ADMIN_KEY`; it is never stored in the website files or GitHub.
+
+`inventory.sql` remains the repeatable schema/seed file. It uses
+`INSERT OR IGNORE`, so running it again does not overwrite stock values.
+`catalog.json` remains the database-ready product-data export.
+
