@@ -260,7 +260,7 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .category-pills { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
 .category-pills a, .category-pills button { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; background: transparent; color: var(--ink); font: inherit; font-size: 11px; font-weight: 600; cursor: pointer; }
 .category-pills a:hover, .category-pills a.active, .category-pills button:hover, .category-pills button.active { border-color: var(--ink); background: var(--ink); color: var(--white); }
-.catalog-section { padding-bottom: 110px; }
+.catalog-section { padding-top: 28px; padding-bottom: 110px; }
 .catalog-toolbar { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-bottom: 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; }
 .catalog-toolbar p { margin: 0; }
 .catalog-controls { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin: 0 0 30px; }
@@ -277,16 +277,16 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 
 .category-hero { position: relative; isolation: isolate; margin-bottom: 32px; overflow: hidden; background: #f5f0e6; }
 .category-hero::before { content: ""; position: absolute; z-index: -2; inset: 0 0 0 auto; width: min(59vw, 1120px); background-image: var(--category-photo); background-position: var(--hero-focus, center); background-repeat: no-repeat; background-size: cover; opacity: .84; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 11%, #000 38%, #000 91%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 11%, #000 38%, #000 91%, transparent 100%); }
-.category-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(250,247,239,.99) 0%, rgba(250,247,239,.97) 42%, rgba(250,247,239,.68) 58%, rgba(250,247,239,.18) 79%, rgba(250,247,239,.26) 100%); pointer-events: none; }
+.category-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, transparent 68%, rgba(250,247,239,.97) 100%), linear-gradient(90deg, rgba(250,247,239,.99) 0%, rgba(250,247,239,.97) 42%, rgba(250,247,239,.68) 58%, rgba(250,247,239,.18) 79%, rgba(250,247,239,.26) 100%); pointer-events: none; }
 .category-hero-grid { position: relative; z-index: 1; min-height: 475px; display: grid; grid-template-columns: minmax(0, 760px); align-items: center; }
 .category-hero .breadcrumbs { margin-bottom: 50px; }
 .category-hero h1 { max-width: 900px; }
 .category-hero h1 + p { max-width: 650px; margin: 23px 0 0; color: #40564f; font-size: 15px; line-height: 1.65; }
-.hero-rollers { --category-photo: url("images/catalog/calm-roller.webp"); --hero-focus: center 48%; }
-.hero-scrubs { --category-photo: url("images/catalog/lavender-bloom-scrub.webp"); --hero-focus: center 52%; }
-.hero-body { --category-photo: url("images/catalog/mango-butter.webp"); --hero-focus: center 50%; }
-.hero-bars { --category-photo: url("images/catalog/soap-matcha-lavender.webp"); --hero-focus: center 50%; }
-.hero-home { --category-photo: url("images/catalog/rested-room-spray.webp"); --hero-focus: center 50%; }
+.hero-rollers { --category-photo: url("images/catalog/calm-roller.webp"); --hero-focus: 64% 48%; --mobile-focus: 62% 48%; }
+.hero-scrubs { --category-photo: url("images/catalog/lavender-bloom-scrub.webp"); --hero-focus: 63% 52%; --mobile-focus: 68% 53%; }
+.hero-body { --category-photo: url("images/catalog/mango-butter.webp"); --hero-focus: 62% 46%; --mobile-focus: 66% 40%; }
+.hero-bars { --category-photo: url("images/catalog/soap-matcha-lavender.webp"); --hero-focus: 65% 50%; --mobile-focus: 68% 50%; }
+.hero-home { --category-photo: url("images/catalog/rested-room-spray.webp"); --hero-focus: 67% 50%; --mobile-focus: 72% 50%; }
 .hero-pantry { background: #d6b78d; }
 .category-symbol { position: relative; width: min(380px, 100%); height: 350px; display: grid; place-items: center; justify-self: center; }
 .category-symbol::before { content: none; }
@@ -691,7 +691,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .breadcrumbs { margin-bottom: 22px; }
   .category-pills { gap: 6px; }
   .category-pills a, .category-pills button { padding: 8px 11px; font-size: 9px; }
-  .catalog-section { padding-bottom: 60px; }
+  .catalog-section { padding-top: 16px; padding-bottom: 60px; }
   .catalog-toolbar { min-height: 54px; align-items: flex-start; flex-direction: column; justify-content: center; gap: 5px; margin-bottom: 16px; font-size: 10px; }
   .catalog-controls { align-items: stretch; flex-direction: column; gap: 12px; margin-bottom: 20px; }
   .catalog-control-actions { align-items: stretch; justify-content: space-between; }
@@ -701,12 +701,12 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .catalog-sort { gap: 4px; }
   .catalog-sort select { min-height: 39px; }
   .catalog-sort select { width: 100%; }
-  .category-hero { margin-bottom: 20px; }
+  .category-hero { margin-bottom: 0; }
   .category-hero-grid { min-height: 0; padding-top: 20px; }
   .category-hero .breadcrumbs { margin-bottom: 22px; }
   .category-hero h1 + p { font-size: 14px; }
-  .category-hero::before { width: 100%; opacity: .61; background-size: cover; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); }
-  .category-hero::after { background: linear-gradient(90deg, rgba(250,247,239,.98) 0%, rgba(250,247,239,.91) 54%, rgba(250,247,239,.48) 79%, rgba(250,247,239,.28) 100%); }
+  .category-hero::before { width: 100%; opacity: .66; background-position: var(--mobile-focus, center); background-size: cover; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); }
+  .category-hero::after { background: linear-gradient(180deg, transparent 62%, rgba(250,247,239,.98) 100%), linear-gradient(90deg, rgba(250,247,239,.98) 0%, rgba(250,247,239,.91) 52%, rgba(250,247,239,.43) 78%, rgba(250,247,239,.18) 100%); }
   .category-note { gap: 18px; padding-top: 38px; padding-bottom: 45px; }
   .about-hero-grid { padding-block: 36px 50px; }
   .about-hero .breadcrumbs { margin-bottom: 28px; }

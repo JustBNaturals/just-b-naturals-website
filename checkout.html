@@ -59,16 +59,16 @@
               <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
               <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>Delivery costs extra and is estimated from the driving distance.</small></span></label>
             </div>
-            <p class="delivery-extra-note"><strong>Local delivery is an additional charge.</strong> Select your address below to see an estimated fee before sending the request. The final amount is confirmed by email.</p>
             <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
             <div class="delivery-estimator" data-delivery-estimator hidden>
+              <p class="delivery-extra-note"><strong>Local delivery is an additional charge.</strong> Select your address below to see the distance and estimated fee before sending the request. The final amount is confirmed by email.</p>
               <div class="delivery-address-wrap">
                 <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false"></label>
                 <div class="delivery-suggestions" data-delivery-suggestions role="listbox" hidden></div>
               </div>
               <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
               <p class="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>
-              <p class="delivery-estimate-help">Estimated at $1.00 per driving kilometre from 291 Rue Lyse-Daniels. The final delivery fee is confirmed before payment.</p>
+              <p class="delivery-estimate-help">Estimated at $1.00 per driving kilometre from our Aylmer location. The final delivery fee is confirmed before payment.</p>
             </div>
           </section>
 

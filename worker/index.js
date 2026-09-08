@@ -4,7 +4,8 @@ const PRODUCT_CATALOG = Object.freeze({
 const BREVO_BASE="https://api.brevo.com/v3";
 const GOOGLE_PLACES_BASE="https://places.googleapis.com/v1";
 const GOOGLE_ROUTES_URL="https://routes.googleapis.com/directions/v2:computeRoutes";
-const DELIVERY_ORIGIN="291 Rue Lyse-Daniels, Gatineau, QC, Canada";
+const PHOTON_BASE="https://photon.komoot.io/api/";
+const OSRM_BASE="https://router.project-osrm.org/route/v1/driving";
 
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=300){return String(value||"").trim().slice(0,max)}
@@ -19,25 +20,56 @@ async function googleRequest(env,url,body,fieldMask){
   if(!response.ok)throw new Error(`Google Maps service error: ${response.status}`);
   return response.json();
 }
+async function photonSearch(query,limit=5){
+  const url=new URL(PHOTON_BASE);url.searchParams.set("q",query);url.searchParams.set("limit",String(limit));url.searchParams.set("lang","en");url.searchParams.set("lat","45.4");url.searchParams.set("lon","-75.8");
+  const response=await fetch(url,{headers:{"User-Agent":"Just B Natural local delivery estimator (justbnatural.ca)"}});
+  if(!response.ok)throw new Error(`Address service error: ${response.status}`);
+  return response.json();
+}
+function photonLabel(properties={}){
+  const street=[properties.housenumber,properties.street||properties.name].filter(Boolean).join(" ");
+  return [...new Set([street,properties.city||properties.locality||properties.district,properties.state,properties.postcode,"Canada"].filter(Boolean))].join(", ");
+}
+function osmCoordinates(placeId){const match=/^osm:(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(placeId);return match?{lon:Number(match[1]),lat:Number(match[2])}:null}
+async function calculateOpenDelivery(env,destination){
+  const originAddress=clean(env.DELIVERY_ORIGIN_ADDRESS,220);
+  if(!originAddress)throw new Error("Delivery origin is not configured.");
+  const originResult=await photonSearch(originAddress,1),coordinates=originResult.features?.[0]?.geometry?.coordinates;
+  if(!Array.isArray(coordinates)||coordinates.length<2)throw new Error("Delivery origin was not found.");
+  const url=`${OSRM_BASE}/${coordinates[0]},${coordinates[1]};${destination.lon},${destination.lat}?overview=false&steps=false`;
+  const response=await fetch(url,{headers:{"User-Agent":"Just B Natural local delivery estimator (justbnatural.ca)"}});
+  if(!response.ok)throw new Error(`Routing service error: ${response.status}`);
+  const result=await response.json(),route=result.routes?.[0],distanceMeters=Number(route?.distance);
+  if(!Number.isFinite(distanceMeters)||distanceMeters<=0)throw new Error("No driving route was found.");
+  const rateCentsPerKm=deliveryRate(env);
+  return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:Number.isFinite(route.duration)?`${Math.round(route.duration)}s`:"",feeCents:Math.round(distanceMeters/1000*rateCentsPerKm),rateCentsPerKm,originLabel:"Aylmer"};
+}
 async function calculateDelivery(env,placeId){
-  const result=await googleRequest(env,GOOGLE_ROUTES_URL,{origin:{address:DELIVERY_ORIGIN},destination:{placeId},travelMode:"DRIVE",routingPreference:"TRAFFIC_UNAWARE",computeAlternativeRoutes:false,languageCode:"en-CA",units:"METRIC"},"routes.distanceMeters,routes.duration");
+  const openDestination=osmCoordinates(placeId);
+  if(openDestination)return calculateOpenDelivery(env,openDestination);
+  const originAddress=clean(env.DELIVERY_ORIGIN_ADDRESS,220);
+  if(!originAddress)throw new Error("Delivery origin is not configured.");
+  const result=await googleRequest(env,GOOGLE_ROUTES_URL,{origin:{address:originAddress},destination:{placeId},travelMode:"DRIVE",routingPreference:"TRAFFIC_UNAWARE",computeAlternativeRoutes:false,languageCode:"en-CA",units:"METRIC"},"routes.distanceMeters,routes.duration");
   const route=result.routes?.[0],distanceMeters=Number(route?.distanceMeters);
   if(!Number.isFinite(distanceMeters)||distanceMeters<=0)throw new Error("No driving route was found.");
   const rateCentsPerKm=deliveryRate(env);
   return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:clean(route.duration,30),feeCents:Math.round(distanceMeters/1000*rateCentsPerKm),rateCentsPerKm,originLabel:"Aylmer"};
 }
 async function handleDeliveryAutocomplete(request,env){
-  if(!env.GOOGLE_MAPS_API_KEY)return json({error:"Google address estimates are not connected yet. Enter the full address and the delivery fee will be confirmed by email."},503);
   try{
     const data=await request.json(),input=clean(data.input,160),sessionToken=clean(data.sessionToken,100);
     if(input.length<3)return json({predictions:[]});
-    const result=await googleRequest(env,`${GOOGLE_PLACES_BASE}/places:autocomplete`,{input,includedRegionCodes:["ca"],languageCode:"en",regionCode:"CA",locationBias:{circle:{center:{latitude:45.4,longitude:-75.8},radius:50000}},...(sessionToken?{sessionToken}:{})},"suggestions.placePrediction.placeId,suggestions.placePrediction.text.text");
-    const predictions=(result.suggestions||[]).map(item=>({placeId:clean(item.placePrediction?.placeId,300),text:clean(item.placePrediction?.text?.text,220)})).filter(item=>item.placeId&&item.text).slice(0,5);
-    return json({predictions});
+    if(env.GOOGLE_MAPS_API_KEY){
+      const result=await googleRequest(env,`${GOOGLE_PLACES_BASE}/places:autocomplete`,{input,includedRegionCodes:["ca"],languageCode:"en",regionCode:"CA",locationBias:{circle:{center:{latitude:45.4,longitude:-75.8},radius:50000}},...(sessionToken?{sessionToken}:{})},"suggestions.placePrediction.placeId,suggestions.placePrediction.text.text");
+      const predictions=(result.suggestions||[]).map(item=>({placeId:clean(item.placePrediction?.placeId,300),text:clean(item.placePrediction?.text?.text,220)})).filter(item=>item.placeId&&item.text).slice(0,5);
+      return json({predictions,provider:"Google"});
+    }
+    const result=await photonSearch(`${input}, Quebec, Canada`,6);
+    const predictions=(result.features||[]).map(feature=>{const coordinates=feature.geometry?.coordinates,text=photonLabel(feature.properties);return Array.isArray(coordinates)&&text?{placeId:`osm:${coordinates[0]},${coordinates[1]}`,text}:null}).filter(Boolean).slice(0,5);
+    return json({predictions,provider:"OpenStreetMap"});
   }catch(_){return json({error:"Address suggestions are temporarily unavailable. Enter the full address and the fee will be confirmed by email."},502)}
 }
 async function handleDeliveryEstimate(request,env){
-  if(!env.GOOGLE_MAPS_API_KEY)return json({error:"Google address estimates are not connected yet. Enter the full address and the delivery fee will be confirmed by email."},503);
   try{
     const data=await request.json(),placeId=clean(data.placeId,300),address=clean(data.address,220);
     if(!placeId)return json({error:"Please select a recognized address."},400);
@@ -106,7 +138,7 @@ async function handleOrder(request,env){
     if(!order.firstName||!order.lastName||!validEmail(order.email))return json({error:"Please provide a valid name and email address."},400);
     if(!order.items.length)return json({error:"Your cart is empty."},400);
     if(order.fulfillment==="delivery"&&!order.deliveryAddress)return json({error:"Please enter the local delivery address."},400);
-    if(order.fulfillment==="delivery"&&order.deliveryPlaceId&&env.GOOGLE_MAPS_API_KEY){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){order.deliveryDistanceKm=null;order.deliveryFeeCents=null}}
+    if(order.fulfillment==="delivery"&&order.deliveryPlaceId){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){order.deliveryDistanceKm=null;order.deliveryFeeCents=null}}
     order.items=await attachInventory(env,order.items);
     await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:`${order.orderId} — Approval needed before payment`,htmlContent:orderHtml(order)});
     await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:`${order.orderId} — Request received; please wait to pay`,htmlContent:customerHtml(order)});

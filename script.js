@@ -1979,12 +1979,12 @@ function initializeDeliveryEstimator(form) {
     }
   };
 
-  const renderSuggestions = predictions => {
+  const renderSuggestions = (predictions, provider = "OpenStreetMap") => {
     if (!predictions.length) {
       closeSuggestions();
       return;
     }
-    suggestions.innerHTML = `${predictions.map(prediction => `<button type="button" role="option" data-place-id="${escapeHtml(prediction.placeId)}" data-address="${escapeHtml(prediction.text)}">${escapeHtml(prediction.text)}</button>`).join("")}<p class="delivery-google">Powered by Google</p>`;
+    suggestions.innerHTML = `${predictions.map(prediction => `<button type="button" role="option" data-place-id="${escapeHtml(prediction.placeId)}" data-address="${escapeHtml(prediction.text)}">${escapeHtml(prediction.text)}</button>`).join("")}<p class="delivery-google">Address data © ${escapeHtml(provider)}</p>`;
     suggestions.hidden = false;
     address.setAttribute("aria-expanded", "true");
   };
@@ -2008,7 +2008,7 @@ function initializeDeliveryEstimator(form) {
         const result = await response.json().catch(() => ({}));
         if (currentRequest !== requestNumber) return;
         if (!response.ok) throw new Error(result.error || "Suggestions unavailable");
-        renderSuggestions(Array.isArray(result.predictions) ? result.predictions : []);
+        renderSuggestions(Array.isArray(result.predictions) ? result.predictions : [], result.provider || "OpenStreetMap");
       } catch (_) {
         if (currentRequest === requestNumber) showUnavailable();
       }
@@ -2090,8 +2090,13 @@ function initializeCheckout() {
   renderOrderList();
   syncCheckoutState();
 
+  form.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !event.target.closest("textarea, button")) event.preventDefault();
+  });
+
   form.addEventListener("submit", async event => {
     event.preventDefault();
+    if (!event.submitter?.matches(".checkout-submit")) return;
     if (!form.reportValidity() || !orderList.length) return;
     const details = checkoutPayload(form);
     const button = form.querySelector('[type="submit"]');
