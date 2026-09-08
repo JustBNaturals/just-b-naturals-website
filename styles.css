@@ -275,17 +275,18 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .catalog-empty h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 38px; font-weight: 500; }
 .catalog-empty p { margin: 0; color: var(--muted); }
 
-.category-hero { margin-bottom: 32px; overflow: hidden; }
-.category-hero-grid { min-height: 475px; display: grid; grid-template-columns: minmax(0, 760px); align-items: center; }
+.category-hero { position: relative; isolation: isolate; margin-bottom: 32px; overflow: hidden; background: #f5f0e6; }
+.category-hero::before { content: ""; position: absolute; z-index: -2; inset: 0 0 0 auto; width: min(59vw, 1120px); background-image: var(--category-photo); background-position: var(--hero-focus, center); background-repeat: no-repeat; background-size: cover; opacity: .84; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 11%, #000 38%, #000 91%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 11%, #000 38%, #000 91%, transparent 100%); }
+.category-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(250,247,239,.99) 0%, rgba(250,247,239,.97) 42%, rgba(250,247,239,.68) 58%, rgba(250,247,239,.18) 79%, rgba(250,247,239,.26) 100%); pointer-events: none; }
+.category-hero-grid { position: relative; z-index: 1; min-height: 475px; display: grid; grid-template-columns: minmax(0, 760px); align-items: center; }
 .category-hero .breadcrumbs { margin-bottom: 50px; }
 .category-hero h1 { max-width: 900px; }
 .category-hero h1 + p { max-width: 650px; margin: 23px 0 0; color: #40564f; font-size: 15px; line-height: 1.65; }
-.category-hero { background-color: #eee6d7; background-repeat: no-repeat; background-size: 100% 100%, clamp(470px, 43vw, 760px) clamp(470px, 43vw, 760px); background-position: center, calc(100% - clamp(10px, 4vw, 74px)) center; }
-.hero-rollers { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.98) 42%, rgba(250,247,239,.78) 57%, rgba(250,247,239,.26) 78%, rgba(250,247,239,.12) 100%), url("images/catalog/calm-roller.webp"); }
-.hero-scrubs { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.98) 42%, rgba(250,247,239,.78) 57%, rgba(250,247,239,.26) 78%, rgba(250,247,239,.12) 100%), url("images/catalog/lavender-bloom-scrub.webp"); }
-.hero-body { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.98) 42%, rgba(250,247,239,.78) 57%, rgba(250,247,239,.26) 78%, rgba(250,247,239,.12) 100%), url("images/catalog/mango-butter.webp"); }
-.hero-bars { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.98) 42%, rgba(250,247,239,.78) 57%, rgba(250,247,239,.26) 78%, rgba(250,247,239,.12) 100%), url("images/catalog/soap-matcha-lavender.webp"); }
-.hero-home { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.98) 42%, rgba(250,247,239,.78) 57%, rgba(250,247,239,.26) 78%, rgba(250,247,239,.12) 100%), url("images/catalog/rested-room-spray.webp"); }
+.hero-rollers { --category-photo: url("images/catalog/calm-roller.webp"); --hero-focus: center 48%; }
+.hero-scrubs { --category-photo: url("images/catalog/lavender-bloom-scrub.webp"); --hero-focus: center 52%; }
+.hero-body { --category-photo: url("images/catalog/mango-butter.webp"); --hero-focus: center 50%; }
+.hero-bars { --category-photo: url("images/catalog/soap-matcha-lavender.webp"); --hero-focus: center 50%; }
+.hero-home { --category-photo: url("images/catalog/rested-room-spray.webp"); --hero-focus: center 50%; }
 .hero-pantry { background: #d6b78d; }
 .category-symbol { position: relative; width: min(380px, 100%); height: 350px; display: grid; place-items: center; justify-self: center; }
 .category-symbol::before { content: none; }
@@ -398,6 +399,19 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .choice-card strong, .choice-card small { display: block; }
 .choice-card strong { margin-bottom: 8px; font-family: var(--serif); font-size: 20px; font-weight: 500; line-height: 1.1; }
 .choice-card small { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.delivery-extra-note { margin: 0 0 20px; border-left: 3px solid var(--orange); padding: 11px 14px; background: rgba(199,116,62,.08); color: var(--muted); font-size: 11px; line-height: 1.55; }
+.delivery-extra-note strong { color: var(--ink); }
+.delivery-estimator { margin-top: 19px; border-top: 1px solid var(--line); padding-top: 20px; }
+.delivery-estimator[hidden], .pickup-area[hidden] { display: none !important; }
+.delivery-address-wrap { position: relative; }
+.delivery-suggestions { position: absolute; top: calc(100% + 5px); right: 0; left: 0; z-index: 20; overflow: hidden; border: 1px solid var(--line); background: var(--white); box-shadow: 0 18px 38px rgba(16,44,39,.16); }
+.delivery-suggestions button { width: 100%; display: block; border: 0; border-bottom: 1px solid rgba(203,191,174,.7); padding: 12px 14px; background: var(--white); color: var(--ink); font-size: 12px; line-height: 1.45; text-align: left; cursor: pointer; }
+.delivery-suggestions button:last-of-type { border-bottom: 0; }
+.delivery-suggestions button:hover, .delivery-suggestions button:focus { background: #f1eadc; outline: 0; }
+.delivery-google { margin: 0; padding: 8px 14px; background: #f8f8f8; color: #6b6b6b; font-size: 9px; text-align: right; }
+.delivery-estimate-status { min-height: 21px; margin: 10px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.delivery-estimate-status.is-ready { color: var(--ink); font-weight: 700; }
+.delivery-estimate-help { margin: 7px 0 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
 .consent-check-dark { color: var(--muted); }
 .privacy-note, .checkout-terms, .checkout-status { color: var(--muted); font-size: 10px; line-height: 1.65; }
 .privacy-note a { border-bottom: 1px solid currentColor; color: var(--ink); }
@@ -659,7 +673,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .product-art { aspect-ratio: 1; }
   .product-copy { border-top-width: 2px; padding: 10px 9px 11px; }
   .product-kicker { min-height: 24px; display: -webkit-box; margin-bottom: 5px; overflow: hidden; font-size: 8px; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-  .product-title-row { min-height: 78px; display: grid; align-content: start; gap: 5px; }
+  .product-title-row { min-height: 66px; display: grid; align-content: start; gap: 4px; }
   .product-copy h2 { min-height: 0; display: -webkit-box; margin-bottom: 0; overflow: hidden; font-size: 17px; line-height: 1.08; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
   .product-price { padding-top: 0; font-size: 12px; }
   .product-description { height: 51px; display: -webkit-box; margin: 0 0 13px; font-size: 10px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
@@ -691,13 +705,8 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .category-hero-grid { min-height: 0; padding-top: 20px; }
   .category-hero .breadcrumbs { margin-bottom: 22px; }
   .category-hero h1 + p { font-size: 14px; }
-  .category-hero { background-size: 100% 100%, 330px 330px; background-position: center, calc(100% + 104px) center; }
-  .hero-rollers, .hero-scrubs, .hero-body, .hero-bars, .hero-home { background-image: linear-gradient(90deg, rgba(250,247,239,.995) 0%, rgba(250,247,239,.97) 56%, rgba(250,247,239,.72) 76%, rgba(250,247,239,.30) 100%), var(--category-photo); }
-  .hero-rollers { --category-photo: url("images/catalog/calm-roller.webp"); }
-  .hero-scrubs { --category-photo: url("images/catalog/lavender-bloom-scrub.webp"); }
-  .hero-body { --category-photo: url("images/catalog/mango-butter.webp"); }
-  .hero-bars { --category-photo: url("images/catalog/soap-matcha-lavender.webp"); }
-  .hero-home { --category-photo: url("images/catalog/rested-room-spray.webp"); }
+  .category-hero::before { width: 100%; opacity: .61; background-size: cover; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.34) 36%, #000 78%, #000 100%); }
+  .category-hero::after { background: linear-gradient(90deg, rgba(250,247,239,.98) 0%, rgba(250,247,239,.91) 54%, rgba(250,247,239,.48) 79%, rgba(250,247,239,.28) 100%); }
   .category-note { gap: 18px; padding-top: 38px; padding-bottom: 45px; }
   .about-hero-grid { padding-block: 36px 50px; }
   .about-hero .breadcrumbs { margin-bottom: 28px; }

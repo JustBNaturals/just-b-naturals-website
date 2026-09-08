@@ -12,6 +12,8 @@ const STORE = Object.freeze({
   instagramDmUrl: "https://ig.me/m/justb.naturals",
   orderListEnabled: true,
   orderEndpoint: "/api/order",
+  deliveryAutocompleteEndpoint: "/api/delivery/autocomplete",
+  deliveryEstimateEndpoint: "/api/delivery/estimate",
   subscribeEndpoint: "/api/subscribe"
 });
 
@@ -1374,6 +1376,9 @@ function buildOrderSummary(details = {}) {
     `Email: ${details.email}`,
     details.phone ? `Phone: ${details.phone}` : "",
     details.area ? `Area: ${details.area}` : "",
+    details.deliveryAddress ? `Delivery address: ${details.deliveryAddress}` : "",
+    Number.isFinite(details.deliveryDistanceKm) ? `Estimated driving distance: ${details.deliveryDistanceKm.toFixed(1)} km` : "",
+    Number.isInteger(details.deliveryFeeCents) ? `Estimated local delivery fee: ${formatPrice(details.deliveryFeeCents / 100)} CAD (additional)` : "",
     `Fulfillment: ${details.fulfillment === "delivery" ? "Local delivery" : "Local pickup"}`,
     `Payment: ${details.payment === "cash" ? "Cash" : "Interac e-Transfer"}`,
     details.marketingConsent ? "Promotional emails: Yes, consent given" : "Promotional emails: No"
@@ -1899,13 +1904,21 @@ function renderProductPage() {
 
 function checkoutPayload(form) {
   const data = new FormData(form);
+  const fulfillment = String(data.get("fulfillment") || "pickup");
+  const deliveryAddress = String(data.get("deliveryAddress") || "").trim();
+  const deliveryDistanceKm = Number(data.get("deliveryDistanceKm"));
+  const deliveryFeeCents = Number(data.get("deliveryFeeCents"));
   return {
     firstName: String(data.get("firstName") || "").trim(),
     lastName: String(data.get("lastName") || "").trim(),
     email: String(data.get("email") || "").trim(),
     phone: String(data.get("phone") || "").trim(),
-    area: String(data.get("area") || "").trim(),
-    fulfillment: String(data.get("fulfillment") || "pickup"),
+    area: fulfillment === "delivery" ? deliveryAddress : String(data.get("area") || "").trim(),
+    fulfillment,
+    deliveryAddress,
+    deliveryPlaceId: String(data.get("deliveryPlaceId") || "").trim(),
+    deliveryDistanceKm: Number.isFinite(deliveryDistanceKm) && deliveryDistanceKm > 0 ? deliveryDistanceKm : null,
+    deliveryFeeCents: Number.isInteger(deliveryFeeCents) && deliveryFeeCents >= 0 ? deliveryFeeCents : null,
     payment: String(data.get("payment") || "etransfer"),
     notes: String(data.get("notes") || "").trim(),
     marketingConsent: data.get("marketingConsent") === "on",
@@ -1914,6 +1927,119 @@ function checkoutPayload(form) {
     website: String(data.get("website") || ""),
     items: orderList.map(item => ({ id: item.id, quantity: item.quantity }))
   };
+}
+
+function initializeDeliveryEstimator(form) {
+  const panel = form.querySelector("[data-delivery-estimator]");
+  const pickupArea = form.querySelector("[data-pickup-area]");
+  const address = form.querySelector("[data-delivery-address]");
+  const suggestions = form.querySelector("[data-delivery-suggestions]");
+  const status = form.querySelector("[data-delivery-estimate-status]");
+  if (!panel || !address || !suggestions || !status) return;
+
+  const placeId = form.elements.deliveryPlaceId;
+  const distance = form.elements.deliveryDistanceKm;
+  const fee = form.elements.deliveryFeeCents;
+  const sessionToken = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  let timer = 0;
+  let requestNumber = 0;
+
+  const closeSuggestions = () => {
+    suggestions.hidden = true;
+    address.setAttribute("aria-expanded", "false");
+  };
+
+  const clearEstimate = () => {
+    placeId.value = "";
+    distance.value = "";
+    fee.value = "";
+    status.textContent = "";
+  };
+
+  const showUnavailable = () => {
+    closeSuggestions();
+    status.textContent = "Enter the full address. The exact delivery charge will be confirmed by email.";
+  };
+
+  const estimate = async (selectedPlaceId, selectedAddress) => {
+    status.textContent = "Calculating the driving-distance estimate…";
+    try {
+      const response = await fetch(STORE.deliveryEstimateEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ placeId: selectedPlaceId, address: selectedAddress })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || "Estimate unavailable");
+      distance.value = String(result.distanceKm);
+      fee.value = String(result.feeCents);
+      status.textContent = `Estimated local delivery: ${Number(result.distanceKm).toFixed(1)} km • ${formatPrice(Number(result.feeCents) / 100)} CAD extra`;
+    } catch (_) {
+      showUnavailable();
+    }
+  };
+
+  const renderSuggestions = predictions => {
+    if (!predictions.length) {
+      closeSuggestions();
+      return;
+    }
+    suggestions.innerHTML = `${predictions.map(prediction => `<button type="button" role="option" data-place-id="${escapeHtml(prediction.placeId)}" data-address="${escapeHtml(prediction.text)}">${escapeHtml(prediction.text)}</button>`).join("")}<p class="delivery-google">Powered by Google</p>`;
+    suggestions.hidden = false;
+    address.setAttribute("aria-expanded", "true");
+  };
+
+  address.addEventListener("input", () => {
+    clearEstimate();
+    window.clearTimeout(timer);
+    const input = address.value.trim();
+    if (input.length < 3) {
+      closeSuggestions();
+      return;
+    }
+    const currentRequest = ++requestNumber;
+    timer = window.setTimeout(async () => {
+      try {
+        const response = await fetch(STORE.deliveryAutocompleteEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input, sessionToken })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (currentRequest !== requestNumber) return;
+        if (!response.ok) throw new Error(result.error || "Suggestions unavailable");
+        renderSuggestions(Array.isArray(result.predictions) ? result.predictions : []);
+      } catch (_) {
+        if (currentRequest === requestNumber) showUnavailable();
+      }
+    }, 250);
+  });
+
+  suggestions.addEventListener("click", event => {
+    const option = event.target.closest("button[data-place-id]");
+    if (!option) return;
+    address.value = option.dataset.address || "";
+    placeId.value = option.dataset.placeId || "";
+    closeSuggestions();
+    estimate(placeId.value, address.value);
+  });
+
+  const syncFulfillment = () => {
+    const deliverySelected = form.elements.fulfillment.value === "delivery";
+    panel.hidden = !deliverySelected;
+    if (pickupArea) pickupArea.hidden = deliverySelected;
+    address.required = deliverySelected;
+    if (!deliverySelected) {
+      closeSuggestions();
+      clearEstimate();
+    }
+  };
+
+  form.querySelectorAll('input[name="fulfillment"]').forEach(radio => radio.addEventListener("change", syncFulfillment));
+  document.addEventListener("click", event => {
+    if (!event.target.closest(".delivery-address-wrap")) closeSuggestions();
+  });
+  syncFulfillment();
 }
 
 function checkoutEmailUrl(details) {
@@ -1960,6 +2086,7 @@ function initializeCheckout() {
   const checkout = document.querySelector("[data-checkout]");
   const form = document.querySelector("[data-checkout-form]");
   if (!checkout || !form) return;
+  initializeDeliveryEstimator(form);
   renderOrderList();
   syncCheckoutState();
 
@@ -2195,3 +2322,4 @@ initializeCatalogueFeatures();
 initializeNewsletter();
 initializeScrollLife();
 loadInventory();
+
