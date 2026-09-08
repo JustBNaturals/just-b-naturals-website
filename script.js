@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 36501)
+Total output lines: 2166
+
 /*
   STORE SETTINGS
   Cart contents stay in the shopper's browser. The Cloudflare Worker endpoints
@@ -818,222 +821,7 @@ const PRODUCTS = [
       }
     ],
     "details": [
-      "Organic Jojoba Oil provides the lightweight base. Technically a liquid wax rather than a conventional oil, jojoba spreads easily across the skin and helps condition and soften it while carrying the essential oils at a diluted concentration.",
-      "Clary Sage provides a distinctive earthy, herbaceous and slightly floral aroma. It gives the blend much of its balancing, grounding character and pairs particularly well with lavender and grapefruit.",
-      "Grapefruit adds a bright, clean citrus note that lifts the heavier herbal oils. Its fresh aroma gives the roll-on an energizing quality and keeps the overall scent from becoming overly floral or earthy.",
-      "Cypress contributes a crisp, woody, evergreen-like aroma. It bridges the citrus and herbal components of the blend and gives it a clean, grounding base.",
-      "Lavender softens the formula with its familiar floral-herbal aroma. It is widely used in aromatherapy blends intended to encourage relaxation and creates a calmer counterpoint to the sharper peppermint and grapefruit notes.",
-      "Peppermint provides the most noticeable cooling and refreshing sensation. Its crisp menthol character makes the roll-on feel immediately fresh when applied to the skin and gives the overall aroma an invigorating finish.",
-      "All-Natural Vitamin E conditions the skin while providing antioxidant activity. It also helps protect the carrier oil from oxidation, supporting the stability and freshness of the finished product.",
-      "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy—peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation.",
-      "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience.",
-      "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs"
-    ],
-    "note": "",
-    "use": "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience.",
-    "safety": "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs",
-    "availability": null,
-    "price": null,
-    "stock": null,
-    "image": "images/catalog/calm-roller.webp",
-    "imageNote": null,
-    "art": "roller",
-    "tone": "#d5dfd6",
-    "accent": "#456b59",
-    "featured": true
-  },
-  {
-    "id": "just-b-relieved",
-    "category": "roller-oils",
-    "name": "Just B Relieved",
-    "kicker": "Portable botanical ritual",
-    "description": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
-    "cardDescription": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and…",
-    "ingredients": [
-      "Organic Jojoba Oil, Organic Essential Oils (Peppermint, Eucalyptus, Rosemary, Lavender, Frankincense), All-Natural Vitamin E."
-    ],
-    "sections": [
-      {
-        "title": "About this product",
-        "paragraphs": [
-          "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
-          "Designed for application around the head, neck, and shoulders, the aroma begins intensely fresh and minty, develops into crisp herbal notes, and finishes with the softer, grounding character of lavender and frankincense.",
-          "Peppermint Essential Oil provides the dominant cooling, minty sensation and immediately recognizable freshness of the blend. Peppermint naturally contains menthol, which activates cold-sensitive receptors in the skin and produces its characteristic cooling and tingling sensation. This makes it particularly well suited to a roll-on intended for a refreshing sensation around the temples, hairline, neck, and shoulders.",
-          "Eucalyptus Essential Oil reinforces that cooling sensation with its powerful, clean, almost camphoraceous aroma. Its naturally occurring eucalyptol (1,8-cineole) gives eucalyptus its distinctive fresh character and works beautifully alongside peppermint to create that crisp, open, invigorating aromatic experience.",
-          "Rosemary Essential Oil introduces a stimulating herbal note that bridges the sharp freshness of peppermint and eucalyptus with the softer oils in the formula. Rosemary naturally contains aromatic compounds such as alpha-pinene, and its warm, herbaceous character makes the blend feel refreshing without being purely minty.",
-          "Lavender Essential Oil provides balance. Peppermint, eucalyptus, and rosemary can create a very sharp aromatic profile on their own; lavender introduces a softer floral-herbal note traditionally associated with relaxation. This gives the formula both a refreshing and calming character, rather than making it smell medicinal or overwhelmingly minty.",
-          "Frankincense Essential Oil is what gives your version its own identity. Its warm, resinous, woody aroma provides a grounding base beneath the brighter mint and eucalyptus notes. It rounds out the formula and creates a deeper, smoother finish while complementing lavender particularly well.",
-          "Organic Jojoba Oil acts as the carrier for the essential oils. Technically a liquid wax composed primarily of wax esters, jojoba provides excellent slip, helps condition the skin, and allows the essential oil blend to be applied precisely without the heaviness of many conventional carrier oils.",
-          "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils within the formula from oxidation.",
-          "Peppermint and eucalyptus provide the immediate cooling sensation, rosemary adds an invigorating herbal middle, lavender softens and balances the blend, and frankincense leaves behind a subtle earthy warmth.",
-          "It's an ideal pocket-sized aromatic roll-on for moments when you want a cooling, refreshing sensation around the head, neck, and shoulders, whether during a long workday, while travelling, after physical activity, or whenever you're looking for a fresh botanical pick-me-up."
-        ]
-      },
-      {
-        "title": "How to use",
-        "paragraphs": [
-          "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma."
-        ]
-      },
-      {
-        "title": "Before using",
-        "paragraphs": [
-          "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs"
-        ]
-      }
-    ],
-    "details": [
-      "Designed for application around the head, neck, and shoulders, the aroma begins intensely fresh and minty, develops into crisp herbal notes, and finishes with the softer, grounding character of lavender and frankincense.",
-      "Peppermint Essential Oil provides the dominant cooling, minty sensation and immediately recognizable freshness of the blend. Peppermint naturally contains menthol, which activates cold-sensitive receptors in the skin and produces its characteristic cooling and tingling sensation. This makes it particularly well suited to a roll-on intended for a refreshing sensation around the temples, hairline, neck, and shoulders.",
-      "Eucalyptus Essential Oil reinforces that cooling sensation with its powerful, clean, almost camphoraceous aroma. Its naturally occurring eucalyptol (1,8-cineole) gives eucalyptus its distinctive fresh character and works beautifully alongside peppermint to create that crisp, open, invigorating aromatic experience.",
-      "Rosemary Essential Oil introduces a stimulating herbal note that bridges the sharp freshness of peppermint and eucalyptus with the softer oils in the formula. Rosemary naturally contains aromatic compounds such as alpha-pinene, and its warm, herbaceous character makes the blend feel refreshing without being purely minty.",
-      "Lavender Essential Oil provides balance. Peppermint, eucalyptus, and rosemary can create a very sharp aromatic profile on their own; lavender introduces a softer floral-herbal note traditionally associated with relaxation. This gives the formula both a refreshing and calming character, rather than making it smell medicinal or overwhelmingly minty.",
-      "Frankincense Essential Oil is what gives your version its own identity. Its warm, resinous, woody aroma provides a grounding base beneath the brighter mint and eucalyptus notes. It rounds out the formula and creates a deeper, smoother finish while complementing lavender particularly well.",
-      "Organic Jojoba Oil acts as the carrier for the essential oils. Technically a liquid wax composed primarily of wax esters, jojoba provides excellent slip, helps condition the skin, and allows the essential oil blend to be applied precisely without the heaviness of many conventional carrier oils.",
-      "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils within the formula from oxidation.",
-      "Peppermint and eucalyptus provide the immediate cooling sensation, rosemary adds an invigorating herbal middle, lavender softens and balances the blend, and frankincense leaves behind a subtle earthy warmth.",
-      "It's an ideal pocket-sized aromatic roll-on for moments when you want a cooling, refreshing sensation around the head, neck, and shoulders, whether during a long workday, while travelling, after physical activity, or whenever you're looking for a fresh botanical pick-me-up.",
-      "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma.",
-      "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs"
-    ],
-    "note": "",
-    "use": "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma.",
-    "safety": "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs",
-    "availability": null,
-    "price": null,
-    "stock": null,
-    "image": "images/catalog/relieved-roller.webp",
-    "imageNote": null,
-    "art": "roller",
-    "tone": "#d5dfd6",
-    "accent": "#456b59",
-    "featured": false
-  },
-  {
-    "id": "cycle-harmony",
-    "category": "roller-oils",
-    "name": "Cycle Harmony",
-    "kicker": "Portable botanical ritual",
-    "description": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
-    "cardDescription": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle.",
-    "ingredients": [
-      "Grapeseed Oil, Organic Essential Oils (Geranium, Lavender, Roman Chamomile, Frankincense), All-Natural Vitamin E."
-    ],
-    "sections": [
-      {
-        "title": "About this product",
-        "paragraphs": [
-          "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
-          "The blend was chosen to combine relaxing aromatherapy with the comfort of gentle massage. There is some clinical research suggesting that abdominal massage with certain essential-oil blends may help with menstrual discomfort, although the evidence is limited and the specific formulas studied are not identical to yours.",
-          "Geranium Essential Oil gives the blend its fresh, green-floral character. It works particularly well alongside lavender and chamomile, adding a balancing botanical note without making the finished oil overly sweet or perfume-like.",
-          "Lavender Essential Oil provides a soft floral and herbaceous aroma and forms much of the relaxing character of the blend. It makes this oil especially suited to quiet self-care, rest, and gentle massage when you want to unwind.",
-          "Roman Chamomile Essential Oil adds a delicate, sweet, herbaceous aroma. Its gentle aromatic character pairs beautifully with lavender and helps give the blend its comforting, calming profile.",
-          "Frankincense Essential Oil grounds the lighter floral notes with a warm, resinous and slightly woody aroma. It gives the blend greater depth and creates a peaceful, earthy finish.",
-          "Grapeseed Oil is an excellent massage carrier because of its relatively lightweight texture and good spreadability. It allows the hands to glide comfortably over the abdomen without the extremely heavy or waxy finish of richer butters and balms.",
-          "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils in the formula against oxidation."
-        ]
-      },
-      {
-        "title": "How to use",
-        "paragraphs": [
-          "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula."
-        ]
-      },
-      {
-        "title": "Before using",
-        "paragraphs": [
-          "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs."
-        ]
-      }
-    ],
-    "details": [
-      "The blend was chosen to combine relaxing aromatherapy with the comfort of gentle massage. There is some clinical research suggesting that abdominal massage with certain essential-oil blends may help with menstrual discomfort, although the evidence is limited and the specific formulas studied are not identical to yours.",
-      "Geranium Essential Oil gives the blend its fresh, green-floral character. It works particularly well alongside lavender and chamomile, adding a balancing botanical note without making the finished oil overly sweet or perfume-like.",
-      "Lavender Essential Oil provides a soft floral and herbaceous aroma and forms much of the relaxing character of the blend. It makes this oil especially suited to quiet self-care, rest, and gentle massage when you want to unwind.",
-      "Roman Chamomile Essential Oil adds a delicate, sweet, herbaceous aroma. Its gentle aromatic character pairs beautifully with lavender and helps give the blend its comforting, calming profile.",
-      "Frankincense Essential Oil grounds the lighter floral notes with a warm, resinous and slightly woody aroma. It gives the blend greater depth and creates a peaceful, earthy finish.",
-      "Grapeseed Oil is an excellent massage carrier because of its relatively lightweight texture and good spreadability. It allows the hands to glide comfortably over the abdomen without the extremely heavy or waxy finish of richer butters and balms.",
-      "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils in the formula against oxidation.",
-      "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula.",
-      "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs."
-    ],
-    "note": "",
-    "use": "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula.",
-    "safety": "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs.",
-    "availability": null,
-    "price": null,
-    "stock": null,
-    "image": "images/catalog/cycle-harmony-roller.webp",
-    "imageNote": null,
-    "art": "roller",
-    "tone": "#d5dfd6",
-    "accent": "#456b59",
-    "featured": false
-  },
-  {
-    "id": "lavender-bloom-scrub",
-    "category": "sugar-scrubs",
-    "name": "Lavender Bloom",
-    "kicker": "Exfoliating body care",
-    "description": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil blend. This formula is designed to do more than exfoliate: it combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother. Sugar-based exfoliation helps remove loose, dry surface skin, while the oils and butter replenish the skin with lipids afterward.",
-    "cardDescription": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil…",
-    "ingredients": [
-      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Lavender, Grapefruit, Geranium, Frankincense)."
-    ],
-    "sections": [
-      {
-        "title": "About this product",
-        "paragraphs": [
-          "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil blend. This formula is designed to do more than exfoliate: it combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother. Sugar-based exfoliation helps remove loose, dry surface skin, while the oils and butter replenish the skin with lipids afterward.",
-          "Organic Cane Sugar provides the exfoliating action. The sugar crystals physically lift away dry, flaky surface skin as they're massaged over the body, helping improve the immediate appearance and texture of rough areas. As the sugar dissolves with water, the scrub gradually becomes gentler during use.",
-          "Unrefined Shea Butter gives this scrub its rich, nourishing character. Shea butter contains a mixture of fatty acids and naturally occurring unsaponifiable compounds that make it an effective emollient. It helps soften and condition dry skin while leaving behind a protective, moisturized feel after rinsing.",
-          "Organic Jojoba Oil is technically a liquid wax composed largely of wax esters. It provides excellent slip, allowing the sugar to glide over the skin rather than feeling excessively abrasive. It also conditions and softens the skin and complements the heavier shea and castor components.",
-          "Organic Castor Oil adds richness and helps give the scrub its substantial, conditioning texture. It's a heavier emollient than jojoba, making it particularly useful in a body product intended for dry, rough-feeling areas such as elbows, knees, hands, and feet.",
-          "Arrowroot Powder helps balance the richness of the oils and shea butter. It contributes a soft, silky texture and helps reduce some of the excessively oily feel that can come from an anhydrous scrub.",
-          "All-Natural Vitamin E provides antioxidant benefits while conditioning the skin. It also serves a practical purpose within an oil-based formula by helping protect susceptible oils from oxidation."
-        ]
-      },
-      {
-        "title": "The essential oil blend",
-        "paragraphs": [
-          "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
-          "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
-          "Grapefruit Essential Oil provides the bright side of the blend—a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
-          "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
-          "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
-          "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath."
-        ]
-      },
-      {
-        "title": "Benefits",
-        "paragraphs": [
-          "Exfoliates • Smooths • Softens • Moisturizes • Conditions • Refreshes",
-          "Regular, gentle exfoliation can help keep areas prone to roughness feeling smoother, while the butter and oils help counteract the dry feeling that can follow exfoliation. For body scrubs, once or twice weekly is generally sufficient rather than daily scrubbing."
-        ]
-      },
-      {
-        "title": "How to use",
-        "paragraphs": [
-          "Apply a very small amount to damp skin using the spoon provided. Gently massage onto the body in circular motions, concentrating on dry or rough areas such as the arms, legs, elbows, knees, hands, and feet. Rinse thoroughly with warm water and gently pat skin dry.",
-          "Use up to twice per week. Always use the spoon provided and keep water out of the jar to help maintain the freshness and quality of your scrub. Avoid using on the face, broken or irritated skin, or freshly shaved areas. Use caution in the shower or bath, as the oils may make surfaces slippery."
-        ]
-      }
-    ],
-    "details": [
-      "Organic Cane Sugar provides the exfoliating action. The sugar crystals physically lift away dry, flaky surface skin as they're massaged over the body, helping improve the immediate appearance and texture of rough areas. As the sugar dissolves with water, the scrub gradually becomes gentler during use.",
-      "Unrefined Shea Butter gives this scrub its rich, nourishing character. Shea butter contains a mixture of fatty acids and naturally occurring unsaponifiable compounds that make it an effective emollient. It helps soften and condition dry skin while leaving behind a protective, moisturized feel after rinsing.",
-      "Organic Jojoba Oil is technically a liquid wax composed largely of wax esters. It provides excellent slip, allowing the sugar to glide over the skin rather than feeling excessively abrasive. It also conditions and softens the skin and complements the heavier shea and castor components.",
-      "Organic Castor Oil adds richness and helps give the scrub its substantial, conditioning texture. It's a heavier emollient than jojoba, making it particularly useful in a body product intended for dry, rough-feeling areas such as elbows, knees, hands, and feet.",
-      "Arrowroot Powder helps balance the richness of the oils and shea butter. It contributes a soft, silky texture and helps reduce some of the excessively oily feel that can come from an anhydrous scrub.",
-      "All-Natural Vitamin E provides antioxidant benefits while conditioning the skin. It also serves a practical purpose within an oil-based formula by helping protect susceptible oils from oxidation.",
-      "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
-      "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
-      "Grapefruit Essential Oil provides the bright side of the blend—a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
-      "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
-      "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
-      "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath.",
-      "Exfoliates • Smooths • Softens • Moisturizes • Conditions • Refreshes",
-      "Regular, gentle exfoliation can help keep areas prone to roughness feeling smoother, while the butter and oils help counteract the dry feeling that can follow exfoliation. For body scrubs, once or twice weekly is generally sufficient rather than daily scrubbing.",
+      "Organic Jojoba Oil provides the lightweight base. Technically a liquid wax rather than a conventional oil, jojoba spreads easily across the skin and helps condition and soften it while carrying the essen…6501 tokens truncated…s prone to roughness feeling smoother, while the butter and oils help counteract the dry feeling that can follow exfoliation. For body scrubs, once or twice weekly is generally sufficient rather than daily scrubbing.",
       "Apply a very small amount to damp skin using the spoon provided. Gently massage onto the body in circular motions, concentrating on dry or rough areas such as the arms, legs, elbows, knees, hands, and feet. Rinse thoroughly with warm water and gently pat skin dry.",
       "Use up to twice per week. Always use the spoon provided and keep water out of the jar to help maintain the freshness and quality of your scrub. Avoid using on the face, broken or irritated skin, or freshly shaved areas. Use caution in the shower or bath, as the oils may make surfaces slippery."
     ],
@@ -1442,7 +1230,7 @@ function fallbackArtMarkup(product) {
 }
 
 function artMarkup(product) {
-  return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}`;
+  return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}<span class="product-image-tagline" aria-hidden="true">Pure · Natural · Handcrafted</span>`;
 }
 
 function productCard(product) {
@@ -1850,7 +1638,7 @@ function renderProductPage() {
     <div class="shell product-detail-shell">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html#${product.category}">${categoryLabel}</a><span>/</span><span>${product.name}</span></nav>
       <section class="product-detail-hero" style="--tone:${product.tone};--accent:${product.accent}">
-        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}"></div>
+        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
         <div class="product-detail-purchase">
           <p class="eyebrow">${categoryLabel}</p>
           <h1>${product.name}</h1>
