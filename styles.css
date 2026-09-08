@@ -162,6 +162,8 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .dish-brush { position: absolute; top: -93%; left: 44%; width: 12%; height: 110%; border-radius: 10px 10px 0 0; background: var(--dark); transform: rotate(13deg); transform-origin: bottom; }
 .product-copy { flex: 1; display: flex; flex-direction: column; border-top: 3px solid var(--accent); padding: 17px 15px 16px; background: color-mix(in srgb, var(--tone) 16%, var(--paper)); }
 .product-kicker { margin: 0 0 8px; color: var(--accent, var(--orange)); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.stock-status { margin: 0; color: var(--accent, #526b60); font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.product-detail-stock { margin: 22px 0; }
 .product-copy h2 { min-height: 54px; margin: 0 0 12px; font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.14; }
 .product-title-row { min-height: 62px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .product-title-row h2 { min-height: 0; flex: 1; }
@@ -526,6 +528,8 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .mobile-bottom-nav { position: fixed; right: 0; bottom: 0; left: 0; z-index: 75; display: grid; grid-template-columns: repeat(4,1fr); min-height: 64px; padding-bottom: env(safe-area-inset-bottom); border-top: 1px solid var(--line); background: rgba(251,248,241,.98); box-shadow: 0 -10px 30px rgba(16,44,39,.08); }
   .mobile-bottom-nav a, .mobile-bottom-nav button { min-width: 0; display: grid; place-items: center; align-content: center; gap: 2px; border: 0; padding: 4px 2px; background: transparent; color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
   .mobile-bottom-nav span { position: relative; color: var(--ink); font-size: 20px; line-height: 1; }
+  .mobile-bottom-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .mobile-bottom-nav svg .icon-fill { fill: currentColor; stroke: none; }
   .mobile-bottom-nav .mobile-list-icon b { position: absolute; top: -6px; right: -13px; min-width: 17px; height: 17px; display: grid; place-items: center; border-radius: 50%; background: var(--orange); color: var(--white); font-family: var(--sans); font-size: 8px; font-weight: 700; }
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .hero-grid { min-height: 0; grid-template-columns: 1fr; gap: 0; }
