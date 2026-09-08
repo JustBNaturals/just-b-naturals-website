@@ -1,4 +1,4 @@
-# Just B Naturals — go-live checklist
+# Just B Natural — go-live checklist
 
 ## 1. Replace the files in GitHub
 
@@ -33,7 +33,7 @@ Choose **Deploy**. When it finishes, open the temporary `workers.dev` address an
 
    - `BREVO_API_KEY` as a secret
    - `BREVO_SENDER_EMAIL` as the verified Brevo sender
-   - `BREVO_SENDER_NAME` as `Just B Naturals`
+   - `BREVO_SENDER_NAME` as `Just B Natural`
    - `BREVO_LIST_ID` as the promotions list number
    - `ORDER_EMAIL` as `justbnaturalss@gmail.com`
    - `PAYMENT_EMAIL` as the address that should receive e-Transfers

@@ -44,7 +44,7 @@ async function openInventory(key) {
   const inventoryPayload = await inventoryResponse.json().catch(() => ({}));
   if (!inventoryResponse.ok) throw new Error(inventoryPayload.error || "The inventory could not be opened.");
   const catalog = await catalogResponse.json();
-  const quantities = new Map((inventoryPayload.products || []).map(item => [item.id, item.stock]));
+  const inventory = new Map((inventoryPayload.products || []).map(item => [item.id, item]));
   catalog.sort((a, b) => CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category) || a.name.localeCompare(b.name));
   rows.replaceChildren();
   catalog.forEach(product => {
@@ -63,9 +63,21 @@ async function openInventory(key) {
     input.step = "1";
     input.inputMode = "numeric";
     input.setAttribute("aria-label", `Stock for ${product.name}`);
-    const current = quantities.get(product.id);
+    const current = inventory.get(product.id)?.stock;
     input.value = Number.isInteger(current) ? String(current) : "";
     quantityCell.append(input);
+    const priceCell = document.createElement("td");
+    const priceInput = document.createElement("input");
+    priceInput.type = "number";
+    priceInput.min = "0";
+    priceInput.max = "99999.99";
+    priceInput.step = "0.01";
+    priceInput.inputMode = "decimal";
+    priceInput.className = "inventory-price-input";
+    priceInput.setAttribute("aria-label", `Price for ${product.name} in Canadian dollars`);
+    const priceCents = inventory.get(product.id)?.priceCents;
+    priceInput.value = Number.isInteger(priceCents) ? (priceCents / 100).toFixed(2) : "";
+    priceCell.append(priceInput);
     const websiteCell = document.createElement("td");
     websiteCell.className = "inventory-row-status";
     setStatus(websiteCell, input.value);
@@ -74,7 +86,11 @@ async function openInventory(key) {
       setStatus(websiteCell, input.value);
       saveStatus.textContent = "You have changes that are not saved yet.";
     });
-    row.append(productCell, categoryCell, quantityCell, websiteCell);
+    priceInput.addEventListener("input", () => {
+      dirty = true;
+      saveStatus.textContent = "You have changes that are not saved yet.";
+    });
+    row.append(productCell, categoryCell, quantityCell, priceCell, websiteCell);
     rows.append(row);
   });
   document.querySelector("[data-inventory-count]").textContent = `${catalog.length} products`;
@@ -96,8 +112,13 @@ loginForm.addEventListener("submit", async event => {
 document.querySelectorAll("[data-inventory-save]").forEach(button => {
   button.addEventListener("click", async () => {
     const products = [...rows.querySelectorAll("tr")].map(row => {
-      const value = row.querySelector("input").value.trim();
-      return { id: row.dataset.productId, stock: value === "" ? null : Number(value) };
+      const stockValue = row.querySelector('input[step="1"]').value.trim();
+      const priceValue = row.querySelector(".inventory-price-input").value.trim();
+      return {
+        id: row.dataset.productId,
+        stock: stockValue === "" ? null : Number(stockValue),
+        priceCents: priceValue === "" ? null : Math.round(Number(priceValue) * 100)
+      };
     });
     button.disabled = true;
     saveStatus.textContent = "Saving…";
@@ -127,4 +148,3 @@ window.addEventListener("beforeunload", event => {
 
 const rememberedKey = sessionStorage.getItem("jbn-inventory-key");
 if (rememberedKey) openInventory(rememberedKey).catch(() => sessionStorage.removeItem("jbn-inventory-key"));
-

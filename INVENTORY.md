@@ -15,4 +15,3 @@ The page writes directly to the existing Cloudflare D1 database
 `inventory.sql` remains the repeatable schema/seed file. It uses
 `INSERT OR IGNORE`, so running it again does not overwrite stock values.
 `catalog.json` remains the database-ready product-data export.
-

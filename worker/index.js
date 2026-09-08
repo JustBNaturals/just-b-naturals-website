@@ -29,13 +29,13 @@ async function brevoRequest(env,path,body){
 }
 function sendEmail(env,{to,toName,replyTo,subject,htmlContent}){
   const senderEmail=env.BREVO_SENDER_EMAIL||env.ORDER_EMAIL||"justbnaturalss@gmail.com";
-  return brevoRequest(env,"/smtp/email",{sender:{name:env.BREVO_SENDER_NAME||"Just B Naturals",email:senderEmail},to:[{email:to,name:toName||to}],...(replyTo?{replyTo:{email:replyTo.email,name:replyTo.name||replyTo.email}}:{}),subject,htmlContent});
+  return brevoRequest(env,"/smtp/email",{sender:{name:env.BREVO_SENDER_NAME||"Just B Natural",email:senderEmail},to:[{email:to,name:toName||to}],...(replyTo?{replyTo:{email:replyTo.email,name:replyTo.name||replyTo.email}}:{}),subject,htmlContent});
 }
 function addSubscriber(env,email){const listId=Number(env.BREVO_LIST_ID);return brevoRequest(env,"/contacts",{email,updateEnabled:true,...(Number.isInteger(listId)&&listId>0?{listIds:[listId]}:{})})}
 async function recordConsent(env,{email,consentText,consentedAt,source}){
   const orderEmail=env.ORDER_EMAIL||"justbnaturalss@gmail.com";
   const rows=[["Subscriber",email],["Date",consentedAt],["Source",source],["Consent shown",consentText]].map(([a,b])=>`<tr><th style="padding:8px;text-align:left">${escapeHtml(a)}</th><td style="padding:8px">${escapeHtml(b)}</td></tr>`).join("");
-  return sendEmail(env,{to:orderEmail,toName:"Just B Naturals",subject:`New promotional email consent — ${email}`,htmlContent:`<div style="font-family:Arial,sans-serif;color:#173329"><h1>New email subscriber</h1><table>${rows}</table></div>`});
+  return sendEmail(env,{to:orderEmail,toName:"Just B Natural",subject:`New promotional email consent — ${email}`,htmlContent:`<div style="font-family:Arial,sans-serif;color:#173329"><h1>New email subscriber</h1><table>${rows}</table></div>`});
 }
 
 function normalizeItems(items){
@@ -45,22 +45,22 @@ function normalizeItems(items){
 async function attachInventory(env,items){
   if(!env.INVENTORY_DB||!items.length)return items;
   const marks=items.map(()=>"?").join(",");
-  const result=await env.INVENTORY_DB.prepare(`SELECT product_id,stock_count,is_active FROM inventory WHERE product_id IN (${marks})`).bind(...items.map(i=>i.id)).all();
+  const result=await env.INVENTORY_DB.prepare(`SELECT product_id,stock_count,price_cents,is_active FROM inventory WHERE product_id IN (${marks})`).bind(...items.map(i=>i.id)).all();
   const rows=new Map((result.results||[]).map(row=>[row.product_id,row]));
-  return items.map(item=>({...item,stock:rows.get(item.id)?.stock_count??null,active:rows.get(item.id)?.is_active!==0}));
+  return items.map(item=>({...item,stock:rows.get(item.id)?.stock_count??null,priceCents:rows.get(item.id)?.price_cents??null,active:rows.get(item.id)?.is_active!==0}));
 }
 function approvalEmailUrl(order){
   const fulfillment=order.fulfillment==="delivery"?"delivery":"pickup";
-  const body=[`Hi ${order.firstName},`,"",`Good news—your Just B Naturals order ${order.orderId} is confirmed and the items are available.`,"","Final price and payment instructions:","[Add the confirmed total and payment instructions here]","",`${fulfillment==="delivery"?"Delivery":"Pickup"} details:`,"[Add the location, date, and time here]","","Thank you!","Just B Naturals"].join("\n");
+  const body=[`Hi ${order.firstName},`,"",`Good news—your Just B Natural order ${order.orderId} is confirmed and the items are available.`,"","Final price and payment instructions:","[Add the confirmed total and payment instructions here]","",`${fulfillment==="delivery"?"Delivery":"Pickup"} details:`,"[Add the location, date, and time here]","","Thank you!","Just B Natural"].join("\n");
   return `mailto:${order.email}?subject=${encodeURIComponent(`${order.orderId} — Your order is confirmed`)}&body=${encodeURIComponent(body)}`;
 }
-function unavailableEmailUrl(order){const body=[`Hi ${order.firstName},`,"",`Thank you for your order request ${order.orderId}. Unfortunately, one or more items are not available right now, so no payment is needed.`,"","If you would like, reply to this email and we can help with alternatives or let you know when the item is available again.","","Just B Naturals"].join("\n");return `mailto:${order.email}?subject=${encodeURIComponent(`${order.orderId} — Update on your order request`)}&body=${encodeURIComponent(body)}`}
+function unavailableEmailUrl(order){const body=[`Hi ${order.firstName},`,"",`Thank you for your order request ${order.orderId}. Unfortunately, one or more items are not available right now, so no payment is needed.`,"","If you would like, reply to this email and we can help with alternatives or let you know when the item is available again.","","Just B Natural"].join("\n");return `mailto:${order.email}?subject=${encodeURIComponent(`${order.orderId} — Update on your order request`)}&body=${encodeURIComponent(body)}`}
 function orderHtml(order){
-  const items=order.items.map(item=>`<li style="padding:8px 0">${escapeHtml(item.name)} × ${item.quantity}${Number.isInteger(item.stock)?` <small>(${item.stock} currently recorded in stock)</small>`:""}</li>`).join("");
+  const items=order.items.map(item=>`<li style="padding:8px 0">${escapeHtml(item.name)} × ${item.quantity}${Number.isInteger(item.priceCents)?` — $${(item.priceCents*item.quantity/100).toFixed(2)} CAD`:""}${Number.isInteger(item.stock)?` <small>(${item.stock} currently recorded in stock)</small>`:""}</li>`).join("");
   const customer=[["Name",`${order.firstName} ${order.lastName}`],["Email",order.email],["Phone",order.phone||"Not provided"],["Area",order.area||"Not provided"],["Fulfillment",order.fulfillment==="delivery"?"Local delivery":"Local pickup"],["Payment",order.payment==="cash"?"Cash":"Interac e-Transfer"],["Promotional emails",order.marketingConsent?"Yes — consent given":"No"],["Notes",order.notes||"None"]].map(([a,b])=>`<tr><th style="padding:7px 12px 7px 0;text-align:left">${escapeHtml(a)}</th><td style="padding:7px 0">${escapeHtml(b)}</td></tr>`).join("");
-  return `<div style="max-width:680px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Naturals</p><h1>Order request ${escapeHtml(order.orderId)}</h1><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Approval needed.</strong> Confirm availability and pricing before sending payment instructions.</p><ul>${items}</ul><table>${customer}</table><p><a href="${escapeHtml(approvalEmailUrl(order))}">Confirm order and prepare payment steps</a> · <a href="${escapeHtml(unavailableEmailUrl(order))}">Tell customer it is unavailable</a></p></div>`;
+  return `<div style="max-width:680px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>Order request ${escapeHtml(order.orderId)}</h1><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Approval needed.</strong> Confirm availability and pricing before sending payment instructions.</p><ul>${items}</ul><table>${customer}</table><p><a href="${escapeHtml(approvalEmailUrl(order))}">Confirm order and prepare payment steps</a> · <a href="${escapeHtml(unavailableEmailUrl(order))}">Tell customer it is unavailable</a></p></div>`;
 }
-function customerHtml(order){return `<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Naturals</p><h1>We received your request, ${escapeHtml(order.firstName)}.</h1><p>Your request number is <strong>${escapeHtml(order.orderId)}</strong>.</p><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Please do not send payment yet.</strong> Nothing has been charged or finalized.</p><p>We will confirm availability, pricing, ${order.fulfillment==="delivery"?"delivery":"pickup"} details, and payment instructions separately.</p></div>`}
+function customerHtml(order){return `<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>We received your request, ${escapeHtml(order.firstName)}.</h1><p>Your request number is <strong>${escapeHtml(order.orderId)}</strong>.</p><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Please do not send payment yet.</strong> Nothing has been charged or finalized.</p><p>We will confirm availability, pricing, ${order.fulfillment==="delivery"?"delivery":"pickup"} details, and payment instructions separately.</p></div>`}
 
 async function handleOrder(request,env){
   try{
@@ -69,8 +69,8 @@ async function handleOrder(request,env){
     if(!order.firstName||!order.lastName||!validEmail(order.email))return json({error:"Please provide a valid name and email address."},400);
     if(!order.items.length)return json({error:"Your cart is empty."},400);
     order.items=await attachInventory(env,order.items);
-    await sendEmail(env,{to:order.orderEmail,toName:"Just B Naturals",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:`${order.orderId} — Approval needed before payment`,htmlContent:orderHtml(order)});
-    await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Naturals"},subject:`${order.orderId} — Request received; please wait to pay`,htmlContent:customerHtml(order)});
+    await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:`${order.orderId} — Approval needed before payment`,htmlContent:orderHtml(order)});
+    await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:`${order.orderId} — Request received; please wait to pay`,htmlContent:customerHtml(order)});
     let subscriberAdded=false;if(order.marketingConsent&&order.consentText){try{await addSubscriber(env,order.email);await recordConsent(env,{email:order.email,consentText:order.consentText,consentedAt:order.consentedAt,source:`checkout ${order.orderId}`});subscriberAdded=true}catch(_){subscriberAdded=false}}
     return json({ok:true,orderId:order.orderId,status:"pending_confirmation",subscriberAdded});
   }catch(_){return json({error:"The order could not be sent. Please try again or use the email option."},500)}
@@ -80,7 +80,7 @@ async function handleSubscribe(request,env){
 }
 async function handleProducts(env){
   if(!env.INVENTORY_DB)return json({products:[]});
-  try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,is_active,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,active:row.is_active!==0,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
+  try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,price_cents,is_active,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,priceCents:row.price_cents,active:row.is_active!==0,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
 }
 
 async function handleInventoryAdmin(request,env){
@@ -98,7 +98,9 @@ async function handleInventoryAdmin(request,env){
       if(!PRODUCT_CATALOG[id])return json({error:"The inventory list contains an unknown product."},400);
       const stock=item.stock===null||item.stock===""?null:Number(item.stock);
       if(stock!==null&&(!Number.isInteger(stock)||stock<0||stock>99999))return json({error:"Stock must be a whole number or left blank."},400);
-      updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,id));
+      const priceCents=item.priceCents===null||item.priceCents===""?null:Number(item.priceCents);
+      if(priceCents!==null&&(!Number.isInteger(priceCents)||priceCents<0||priceCents>9999999))return json({error:"Price must be a valid dollar amount or left blank."},400);
+      updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, price_cents = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,priceCents,id));
     }
     await env.INVENTORY_DB.batch(updates);
     return json({ok:true,updated:updates.length});
@@ -106,4 +108,3 @@ async function handleInventoryAdmin(request,env){
 }
 
 export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
-
