@@ -24,12 +24,12 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html">Products</a><span>/</span><span>Order request</span></nav>
       <p class="eyebrow">Guest order request</p>
       <h1>Request your order</h1>
-      <p>Review your cart and send your request. Nothing is charged now—Just B Natural will check availability before asking you to pay.</p>
+      <p>Review your cart and send your request. Nothing is charged now—you will receive payment instructions by email.</p>
     </header>
 
     <section class="checkout-process shell" aria-label="How ordering works">
       <div><span>01</span><p><strong>Send your request</strong>Your cart and contact details go to Just B Natural.</p></div>
-      <div><span>02</span><p><strong>We check availability</strong>Each small-batch item is confirmed before payment.</p></div>
+      <div><span>02</span><p><strong>We review your request</strong>You receive the final details and payment instructions by email.</p></div>
       <div><span>03</span><p><strong>Pay after confirmation</strong>You receive payment and pickup or delivery details by email.</p></div>
     </section>
 
@@ -63,11 +63,12 @@
             <div class="delivery-estimator" data-delivery-estimator hidden>
               <p class="delivery-extra-note"><strong>Local delivery is an additional charge.</strong> Select your address below to see the distance and estimated fee before sending the request. The final amount is confirmed by email.</p>
               <div class="delivery-address-wrap">
-                <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" minlength="8" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false" aria-controls="delivery-address-suggestions"></label>
+                <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" minlength="8" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false" aria-controls="delivery-address-suggestions" aria-describedby="delivery-address-instruction delivery-estimate-status"></label>
                 <div class="delivery-suggestions" id="delivery-address-suggestions" data-delivery-suggestions role="listbox" hidden></div>
               </div>
               <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
-              <p class="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>
+              <p class="field-instruction" id="delivery-address-instruction">Type your address, then choose the matching address from the suggestion list. This is required to calculate delivery.</p>
+              <p class="delivery-estimate-status" id="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>
               <p class="delivery-estimate-help">Estimated at $1.00 per driving kilometre from our Aylmer location. The final delivery fee is confirmed before payment.</p>
             </div>
           </section>

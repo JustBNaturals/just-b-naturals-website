@@ -16,7 +16,7 @@
     <section class="inventory-intro">
       <p class="eyebrow">Private stock manager</p>
       <h1>Inventory</h1>
-      <p>Type the stock and price beside each product, then press <strong>Save changes</strong>. Leave stock blank when you do not want a stock number shown. Prices are in Canadian dollars.</p>
+      <p>Choose what customers should see for each product, add a ready date for preorders, and press <strong>Save changes</strong>. Stock can stay blank when you do not want a number shown. Prices are in Canadian dollars.</p>
     </section>
 
     <form class="inventory-login" data-inventory-login>
@@ -26,13 +26,17 @@
     </form>
 
     <section class="inventory-manager" data-inventory-manager hidden>
+      <div class="inventory-guide">
+        <strong>Three simple choices</strong>
+        <p><b>Available</b> means customers can order it now. <b>Preorder</b> shows the date it will be ready. <b>Unavailable</b> turns ordering off and offers an email notification instead.</p>
+      </div>
       <div class="inventory-actions">
         <div><strong data-inventory-count>0 products</strong><span>Changes appear on the shop after saving.</span></div>
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
       </div>
       <div class="inventory-table-wrap">
         <table class="inventory-table">
-          <thead><tr><th>Product</th><th>Category</th><th>How many are in stock?</th><th>Price (CAD)</th><th>Website</th></tr></thead>
+          <thead><tr><th>Product</th><th>Category</th><th>Status</th><th>Ready date</th><th>Stock</th><th>Price (CAD)</th><th>Website</th></tr></thead>
           <tbody data-inventory-rows></tbody>
         </table>
       </div>
@@ -45,3 +49,4 @@
   <script src="inventory.js"></script>
 </body>
 </html>
+

@@ -117,9 +117,9 @@ function normalizeItems(items){
 async function attachInventory(env,items){
   if(!env.INVENTORY_DB||!items.length)return items;
   const marks=items.map(()=>"?").join(",");
-  const result=await env.INVENTORY_DB.prepare(`SELECT product_id,stock_count,price_cents,is_active FROM inventory WHERE product_id IN (${marks})`).bind(...items.map(i=>i.id)).all();
+  const result=await env.INVENTORY_DB.prepare(`SELECT product_id,stock_count,price_cents,is_active,availability_status,available_date FROM inventory WHERE product_id IN (${marks})`).bind(...items.map(i=>i.id)).all();
   const rows=new Map((result.results||[]).map(row=>[row.product_id,row]));
-  return items.map(item=>({...item,stock:rows.get(item.id)?.stock_count??null,priceCents:rows.get(item.id)?.price_cents??null,active:rows.get(item.id)?.is_active!==0}));
+  return items.map(item=>{const row=rows.get(item.id)||{};return {...item,stock:row.stock_count??null,priceCents:row.price_cents??null,active:row.is_active!==0,availabilityStatus:row.availability_status||"available",availableDate:row.available_date||null}});
 }
 function approvalEmailUrl(order){
   const fulfillment=order.fulfillment==="delivery"?"delivery":"pickup";
@@ -128,7 +128,7 @@ function approvalEmailUrl(order){
 }
 function unavailableEmailUrl(order){const body=[`Hi ${order.firstName},`,"",`Thank you for your order request ${order.orderId}. Unfortunately, one or more items are not available right now, so no payment is needed.`,"","If you would like, reply to this email and we can help with alternatives or let you know when the item is available again.","","Just B Natural"].join("\n");return `mailto:${order.email}?subject=${encodeURIComponent(`${order.orderId} — Update on your order request`)}&body=${encodeURIComponent(body)}`}
 function orderHtml(order){
-  const items=order.items.map(item=>`<li style="padding:8px 0">${escapeHtml(item.name)} × ${item.quantity}${Number.isInteger(item.priceCents)?` — $${(item.priceCents*item.quantity/100).toFixed(2)} CAD`:""}${Number.isInteger(item.stock)?` <small>(${item.stock} currently recorded in stock)</small>`:""}</li>`).join("");
+  const items=order.items.map(item=>`<li style="padding:8px 0">${escapeHtml(item.name)} × ${item.quantity}${Number.isInteger(item.priceCents)?` — $${(item.priceCents*item.quantity/100).toFixed(2)} CAD`:""}${item.availabilityStatus==="preorder"&&item.availableDate?` <strong>(preorder — expected ${escapeHtml(item.availableDate)})</strong>`:""}${Number.isInteger(item.stock)?` <small>(${item.stock} currently recorded in stock)</small>`:""}</li>`).join("");
   const customer=[["Name",`${order.firstName} ${order.lastName}`],["Email",order.email],["Phone",order.phone||"Not provided"],[order.fulfillment==="delivery"?"Delivery address":"Area",order.fulfillment==="delivery"?order.deliveryAddress||order.area||"Not provided":order.area||"Not provided"],["Fulfillment",order.fulfillment==="delivery"?"Local delivery — additional charge":"Local pickup"],...(Number.isFinite(order.deliveryDistanceKm)?[["Estimated driving distance",`${order.deliveryDistanceKm.toFixed(1)} km`]]:[]),...(Number.isInteger(order.deliveryFeeCents)?[["Estimated delivery fee",`${money(order.deliveryFeeCents)} additional`]]:[]),["Payment",order.payment==="cash"?"Cash":"Interac e-Transfer"],["Promotional emails",order.marketingConsent?"Yes — consent given":"No"],["Notes",order.notes||"None"]].map(([a,b])=>`<tr><th style="padding:7px 12px 7px 0;text-align:left">${escapeHtml(a)}</th><td style="padding:7px 0">${escapeHtml(b)}</td></tr>`).join("");
   return `<div style="max-width:680px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>Order request ${escapeHtml(order.orderId)}</h1><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Approval needed.</strong> Confirm availability and pricing before sending payment instructions.</p><ul>${items}</ul><table>${customer}</table><p><a href="${escapeHtml(approvalEmailUrl(order))}">Confirm order and prepare payment steps</a> · <a href="${escapeHtml(unavailableEmailUrl(order))}">Tell customer it is unavailable</a></p></div>`;
 }
@@ -147,6 +147,8 @@ async function handleOrder(request,env){
     if(order.fulfillment==="delivery"&&(order.deliveryAddress.length<8||!order.deliveryPlaceId))return json({error:"Please select a recognized local delivery address and calculate its fee."},400);
     if(order.fulfillment==="delivery"){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){return json({error:"The delivery route could not be calculated. Please choose the address again."},400)}}
     order.items=await attachInventory(env,order.items);
+    const unavailable=order.items.find(item=>item.active===false||item.availabilityStatus==="unavailable"||(item.stock===0&&item.availabilityStatus!=="preorder"));
+    if(unavailable)return json({error:`${unavailable.name} is currently unavailable. Please remove it from your cart before sending the request.`},400);
     await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:`${order.orderId} — Approval needed before payment`,htmlContent:orderHtml(order)});
     await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:`${order.orderId} — Request received; please wait to pay`,htmlContent:customerHtml(order)});
     let subscriberAdded=false;if(order.marketingConsent&&order.consentText){try{await addSubscriber(env,order.email);await recordConsent(env,{email:order.email,consentText:order.consentText,consentedAt:order.consentedAt,source:`checkout ${order.orderId}`});subscriberAdded=true}catch(_){subscriberAdded=false}}
@@ -158,7 +160,38 @@ async function handleSubscribe(request,env){
 }
 async function handleProducts(env){
   if(!env.INVENTORY_DB)return json({products:[]});
-  try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,price_cents,is_active,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,priceCents:row.price_cents,active:row.is_active!==0,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
+  try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,price_cents,is_active,availability_status,available_date,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,priceCents:row.price_cents,active:row.is_active!==0,availabilityStatus:row.availability_status||"available",availableDate:row.available_date||null,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
+}
+
+async function sendReadyNotifications(env,productId){
+  const productName=PRODUCT_CATALOG[productId];
+  if(!productName||!env.INVENTORY_DB||!env.BREVO_API_KEY)return 0;
+  const result=await env.INVENTORY_DB.prepare("SELECT email FROM restock_notifications WHERE product_id = ? AND status = 'pending' LIMIT 100").bind(productId).all();
+  let sent=0;
+  for(const row of result.results||[]){
+    try{
+      await sendEmail(env,{to:row.email,subject:`${productName} is now available`,htmlContent:`<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>${escapeHtml(productName)} is ready.</h1><p>The product you asked about is now available to order.</p><p><a href="https://justbnatural.ca/product-${encodeURIComponent(productId)}.html">View ${escapeHtml(productName)}</a></p><p>You received this one-time message because you requested an availability update for this product.</p></div>`});
+      await env.INVENTORY_DB.prepare("UPDATE restock_notifications SET status = 'sent', notified_at = CURRENT_TIMESTAMP WHERE product_id = ? AND email = ?").bind(productId,row.email).run();
+      sent++;
+    }catch(_){}
+  }
+  return sent;
+}
+
+async function handleNotify(request,env){
+  if(request.method!=="POST")return json({error:"Method not allowed."},405);
+  if(!env.INVENTORY_DB)return json({error:"Availability notifications are not connected."},503);
+  try{
+    const data=await request.json(),productId=clean(data.productId,100),email=clean(data.email,160).toLowerCase(),productName=PRODUCT_CATALOG[productId];
+    if(!productName)return json({error:"Please choose a valid product."},400);
+    if(!validEmail(email))return json({error:"Please enter a complete, valid email address."},400);
+    const current=await env.INVENTORY_DB.prepare("SELECT availability_status,available_date FROM inventory WHERE product_id = ?").bind(productId).first();
+    if(!current)return json({error:"That product could not be found."},404);
+    await env.INVENTORY_DB.prepare("INSERT INTO restock_notifications (product_id,email,status,created_at,notified_at) VALUES (?,?,'pending',CURRENT_TIMESTAMP,NULL) ON CONFLICT(product_id,email) DO UPDATE SET status='pending',created_at=CURRENT_TIMESTAMP,notified_at=NULL").bind(productId,email).run();
+    const dateNote=current.available_date?` It is currently expected to be ready on <strong>${escapeHtml(current.available_date)}</strong>.`:"";
+    await sendEmail(env,{to:email,subject:`We’ll let you know about ${productName}`,htmlContent:`<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>You’re on the list.</h1><p>We’ll send you one email when <strong>${escapeHtml(productName)}</strong> becomes available.${dateNote}</p><p>No promotional emails will be sent from this request.</p></div>`});
+    return json({ok:true});
+  }catch(_){return json({error:"We could not save that notification request. Please try again."},500)}
 }
 
 async function handleInventoryAdmin(request,env){
@@ -170,7 +203,7 @@ async function handleInventoryAdmin(request,env){
   try{
     const data=await request.json();
     if(!Array.isArray(data.products)||data.products.length>Object.keys(PRODUCT_CATALOG).length)return json({error:"The inventory list is invalid."},400);
-    const updates=[];
+    const updates=[],availableIds=[];
     for(const item of data.products){
       const id=clean(item?.id,100);
       if(!PRODUCT_CATALOG[id])return json({error:"The inventory list contains an unknown product."},400);
@@ -178,12 +211,18 @@ async function handleInventoryAdmin(request,env){
       if(stock!==null&&(!Number.isInteger(stock)||stock<0||stock>99999))return json({error:"Stock must be a whole number or left blank."},400);
       const priceCents=item.priceCents===null||item.priceCents===""?null:Number(item.priceCents);
       if(priceCents!==null&&(!Number.isInteger(priceCents)||priceCents<0||priceCents>9999999))return json({error:"Price must be a valid dollar amount or left blank."},400);
-      updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, price_cents = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,priceCents,id));
+      const availabilityStatus=["available","preorder","unavailable"].includes(item.availabilityStatus)?item.availabilityStatus:"available";
+      const availableDate=item.availableDate===null||item.availableDate===""?null:clean(item.availableDate,10);
+      if(availabilityStatus==="preorder"&&!/^\d{4}-\d{2}-\d{2}$/.test(availableDate||""))return json({error:"Every preorder needs a valid ready date."},400);
+      const savedDate=availabilityStatus==="preorder"?availableDate:null;
+      updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, price_cents = ?, is_active = ?, availability_status = ?, available_date = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,priceCents,availabilityStatus==="unavailable"?0:1,availabilityStatus,savedDate,id));
+      if(availabilityStatus==="available"&&stock!==0)availableIds.push(id);
     }
     await env.INVENTORY_DB.batch(updates);
-    return json({ok:true,updated:updates.length});
+    let notificationsSent=0;for(const id of availableIds)notificationsSent+=await sendReadyNotifications(env,id);
+    return json({ok:true,updated:updates.length,notificationsSent});
   }catch(_){return json({error:"The inventory changes could not be saved."},500)}
 }
 
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
+export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
 

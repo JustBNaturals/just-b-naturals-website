@@ -1253,7 +1253,7 @@ const NAV_ITEMS = [
   ["shop.html", "Shop all", "shop"],
   ["artisan-soap.html", "Artisan soap", "artisan-soap"],
   ["sugar-scrubs.html", "Sugar scrubs", "sugar-scrubs"],
-  ["roller-oils.html", "Roller oils", "roller-oils"],
+  ["roller-oils.html", "Roll-on oils", "roller-oils"],
   ["body-care.html", "Body care", "body-care"],
   ["home-linen.html", "Home & linen", "home-linen"],
   ["about.html", "About", "about"]
@@ -1268,7 +1268,7 @@ const generalOrderUrl = `mailto:${STORE.orderEmail}?subject=${encodeURIComponent
 const CATEGORY_LABELS = Object.freeze({
   "artisan-soap": "Artisan Soaps",
   "sugar-scrubs": "Sugar Scrubs",
-  "roller-oils": "Roller Oils",
+  "roller-oils": "Roll-On Oils",
   "body-care": "Body Care",
   "home-linen": "Home & Linen"
 });
@@ -1280,6 +1280,23 @@ function productPageUrl(productOrId) {
 
 function formatPrice(price) {
   return Number.isFinite(price) ? new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(price) : "";
+}
+
+function completeEmail(value) {
+  return String(value || "").length <= 160 && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(String(value || "").trim());
+}
+
+function formatReadyDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || "")) return "";
+  return new Date(`${value}T12:00:00`).toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" });
+}
+
+function productAvailabilityText(product) {
+  if (product.availabilityStatus === "preorder") return product.availableDate ? `Preorder • Available ${formatReadyDate(product.availableDate)}` : "Available for preorder";
+  if (product.availabilityStatus === "unavailable" || product.active === false) return "Currently unavailable";
+  if (product.stock === 0) return "Out of stock";
+  if (Number.isInteger(product.stock)) return `${product.stock} in stock`;
+  return product.availability || "";
 }
 
 function escapeHtml(value) {
@@ -1417,7 +1434,7 @@ function renderSiteChrome() {
 
   if (header) header.innerHTML = `
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
-    <div class="announcement">Just B pure • Just B natural • Handmade in Aylmer, Quebec</div>
+    <div class="announcement">Just B pure • Just B natural • Handmade in Gatineau, Quebec</div>
     <header class="site-header">
       <div class="shell header-inner">
         <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
@@ -1444,11 +1461,22 @@ function renderSiteChrome() {
       </div>
     </aside>
     <button class="order-list-fab" type="button" data-order-list-open hidden>Cart <span data-order-count>0</span></button>
-    <div class="order-toast" role="status" aria-live="polite" aria-atomic="true"></div>`;
+    <div class="order-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <dialog class="notify-dialog" data-notify-dialog aria-labelledby="notify-title">
+      <form method="dialog" class="notify-dialog-close-form"><button type="submit" aria-label="Close notification form">×</button></form>
+      <form class="notify-form" data-notify-form novalidate>
+        <p class="eyebrow">One-time product update</p><h2 id="notify-title">Let me know when it’s ready</h2>
+        <p>We’ll send one email when <strong data-notify-product-name>this product</strong> becomes available. No promotional emails are added from this request.</p>
+        <input type="hidden" name="productId"><label for="notify-email">Email address</label>
+        <input id="notify-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" placeholder="you@example.com" required>
+        <p class="notify-status" data-notify-status aria-live="polite"></p>
+        <button class="button button-dark" type="submit">Notify me <span>→</span></button>
+      </form>
+    </dialog>`;
 
   if (footer) footer.innerHTML = `
     <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
-    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Aylmer, Quebec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Roller oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
+    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Gatineau, Quebec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Roll-on oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
 
@@ -1475,7 +1503,7 @@ function productCard(product) {
       <div class="product-title-row"><h2><a href="${productPageUrl(product)}">${product.name}</a></h2>${Number.isFinite(product.price) ? `<span class="product-price">${formatPrice(product.price)}</span>` : ""}</div>
       <p class="product-description">${product.cardDescription || product.description}</p>
       ${availability}
-      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">Add to cart <span>＋</span></button><a class="product-detail-link" href="${productPageUrl(product)}">View full details</a></div>
+      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">Add to cart <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">View full details</a></div>
     </div>
   </article>`;
 }
@@ -1526,9 +1554,13 @@ function orderItemMarkup(item) {
 }
 
 function updateAddButton(button) {
+  const product = PRODUCTS.find(candidate => candidate.id === button.dataset.addOrder);
+  const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
   const item = findOrderLine(button.dataset.addOrder);
+  button.disabled = Boolean(unavailable);
   button.classList.toggle("is-added", Boolean(item));
-  button.innerHTML = `${item ? `Add another (${item.quantity})` : "Add to cart"} <span>＋</span>`;
+  const base = unavailable ? "Unavailable" : product?.availabilityStatus === "preorder" ? "Preorder" : "Add to cart";
+  button.innerHTML = `${item && !unavailable ? `Add another (${item.quantity})` : base} <span>${unavailable ? "" : "＋"}</span>`;
 }
 
 function renderOrderList() {
@@ -1562,7 +1594,7 @@ function showOrderToast(message) {
 
 function addToOrderList(productId) {
   const product = PRODUCTS.find(candidate => candidate.id === productId);
-  if (!product) return null;
+  if (!product || product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder")) return null;
   const existing = findOrderLine(productId);
   if (existing) existing.quantity = Math.min(99, existing.quantity + 1);
   else orderList.push({ id: productId, quantity: 1 });
@@ -1880,7 +1912,8 @@ function renderProductPage() {
           <p class="product-detail-description">${product.description}</p>
           ${stockMarkup}
           <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">Add to cart <span>＋</span></button>
-          <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Aylmer</span><span>Pay after approval</span></div>
+          <button class="notify-product-button notify-product-button--detail" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button>
+          <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Gatineau</span><span>Pay after approval</span></div>
         </div>
       </section>
     </div>
@@ -1953,19 +1986,22 @@ function initializeDeliveryEstimator(form) {
     placeId.value = "";
     distance.value = "";
     fee.value = "";
-    status.textContent = "";
-    status.classList.remove("is-ready");
+    status.textContent = "Choose the matching address from the suggestion list to calculate delivery.";
+    status.classList.remove("is-ready", "is-error");
     if (form.elements.fulfillment.value === "delivery") address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
   };
 
   const showUnavailable = () => {
     closeSuggestions();
     status.textContent = "We could not calculate this address. Choose a suggested address before placing the order.";
+    status.classList.add("is-error");
+    status.classList.remove("is-ready");
     address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
   };
 
   const estimate = async (selectedPlaceId, selectedAddress) => {
     status.textContent = "Calculating the driving-distance estimate…";
+    status.classList.remove("is-ready", "is-error");
     try {
       const response = await fetch(STORE.deliveryEstimateEndpoint, {
         method: "POST",
@@ -1978,7 +2014,9 @@ function initializeDeliveryEstimator(form) {
       fee.value = String(result.feeCents);
       status.textContent = `Estimated local delivery: ${Number(result.distanceKm).toFixed(1)} km • ${formatPrice(Number(result.feeCents) / 100)} CAD extra`;
       status.classList.add("is-ready");
+      status.classList.remove("is-error");
       address.setCustomValidity("");
+      address.dispatchEvent(new Event("change", { bubbles: true }));
     } catch (_) {
       showUnavailable();
     }
@@ -1990,8 +2028,23 @@ function initializeDeliveryEstimator(form) {
       return;
     }
     suggestions.innerHTML = `${predictions.map(prediction => `<button type="button" role="option" data-place-id="${escapeHtml(prediction.placeId)}" data-address="${escapeHtml(prediction.text)}">${escapeHtml(prediction.text)}</button>`).join("")}<p class="delivery-google">Address data © ${escapeHtml(provider)}</p>`;
+    suggestions.querySelectorAll("button[data-place-id]").forEach(option => {
+      const selectOption = () => {
+        if (placeId.value === option.dataset.placeId && address.value === option.dataset.address) return;
+        address.value = option.dataset.address || "";
+        placeId.value = option.dataset.placeId || "";
+        closeSuggestions();
+        estimate(placeId.value, address.value);
+      };
+      option.addEventListener("pointerdown", event => { event.preventDefault(); selectOption(); });
+      option.addEventListener("click", selectOption);
+      option.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectOption(); } });
+    });
     suggestions.hidden = false;
     address.setAttribute("aria-expanded", "true");
+    const bounds = address.getBoundingClientRect();
+    const headerClearance = window.innerWidth <= 720 ? 165 : 110;
+    if (bounds.top < headerClearance || bounds.bottom > window.innerHeight - 150) address.scrollIntoView({ behavior: "auto", block: "center" });
   };
 
   address.addEventListener("input", () => {
@@ -2020,15 +2073,6 @@ function initializeDeliveryEstimator(form) {
     }, 250);
   });
 
-  suggestions.addEventListener("click", event => {
-    const option = event.target.closest("button[data-place-id]");
-    if (!option) return;
-    address.value = option.dataset.address || "";
-    placeId.value = option.dataset.placeId || "";
-    closeSuggestions();
-    estimate(placeId.value, address.value);
-  });
-
   const syncFulfillment = () => {
     const deliverySelected = form.elements.fulfillment.value === "delivery";
     panel.hidden = !deliverySelected;
@@ -2046,6 +2090,62 @@ function initializeDeliveryEstimator(form) {
     if (!event.target.closest(".delivery-address-wrap")) closeSuggestions();
   });
   syncFulfillment();
+}
+
+function initializeInlineValidation(form) {
+  const fields = [...form.elements].filter(field => field.willValidate && !["radio", "checkbox", "hidden", "submit"].includes(field.type));
+
+  const fieldName = field => {
+    const names = { firstName: "First name", lastName: "Last name", email: "Email address", phone: "Phone number", area: "Neighbourhood or general area", deliveryAddress: "Delivery address", notes: "Order notes" };
+    return names[field.name] || "This field";
+  };
+
+  const messageFor = field => {
+    const validity = field.validity;
+    if (validity.valid) return "";
+    if (validity.customError) return field.validationMessage;
+    if (validity.valueMissing) return `${fieldName(field)} is required.`;
+    if (field.type === "email" || field.name === "email") return "Enter a complete email address, such as name@example.com.";
+    if (field.name === "firstName" || field.name === "lastName") return `${fieldName(field)} must use letters, spaces, apostrophes or hyphens.`;
+    if (field.name === "phone") return "Enter a valid phone number using numbers and standard phone punctuation.";
+    if (validity.tooShort) return `${fieldName(field)} is too short.`;
+    if (validity.tooLong) return `${fieldName(field)} is too long.`;
+    return field.validationMessage || `Check ${fieldName(field).toLowerCase()} and try again.`;
+  };
+
+  const errorFor = (field, index) => {
+    const parent = field.closest("label") || field.parentElement;
+    let error = parent?.querySelector(":scope > .field-error");
+    if (!error && parent) {
+      error = document.createElement("small");
+      error.className = "field-error";
+      error.id = `field-error-${field.name || index}-${index}`;
+      error.setAttribute("aria-live", "polite");
+      parent.append(error);
+      const describedBy = new Set((field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean));
+      describedBy.add(error.id);
+      field.setAttribute("aria-describedby", [...describedBy].join(" "));
+    }
+    return error;
+  };
+
+  const controls = fields.map((field, index) => ({ field, error: errorFor(field, index) }));
+  const update = (field, error, force = false) => {
+    const message = messageFor(field);
+    const visible = Boolean(message) && (force || form.classList.contains("was-validated") || document.activeElement !== field);
+    error.textContent = visible ? message : "";
+    error.classList.toggle("is-visible", visible);
+    field.setAttribute("aria-invalid", visible ? "true" : "false");
+  };
+
+  controls.forEach(({ field, error }) => {
+    field.addEventListener("invalid", event => { event.preventDefault(); update(field, error, true); });
+    field.addEventListener("input", () => update(field, error));
+    field.addEventListener("change", () => update(field, error));
+    field.addEventListener("blur", () => update(field, error, Boolean(field.value)));
+  });
+
+  return (force = false) => controls.forEach(({ field, error }) => update(field, error, force));
 }
 
 function checkoutEmailUrl(details) {
@@ -2093,6 +2193,7 @@ function initializeCheckout() {
   const form = document.querySelector("[data-checkout-form]");
   if (!checkout || !form) return;
   initializeDeliveryEstimator(form);
+  const updateValidation = initializeInlineValidation(form);
   renderOrderList();
   syncCheckoutState();
 
@@ -2104,7 +2205,15 @@ function initializeCheckout() {
     event.preventDefault();
     if (!event.submitter?.matches(".checkout-submit")) return;
     form.classList.add("was-validated");
-    if (!form.reportValidity() || !orderList.length) return;
+    if (!form.reportValidity() || !orderList.length) {
+      updateValidation(true);
+      const firstInvalid = form.querySelector(":invalid");
+      firstInvalid?.focus({ preventScroll: true });
+      firstInvalid?.scrollIntoView({ behavior: "auto", block: "center" });
+      const invalidStatus = form.querySelector("[data-checkout-status]");
+      if (invalidStatus) invalidStatus.textContent = "Please correct the highlighted information before sending your request.";
+      return;
+    }
     const details = checkoutPayload(form);
     const button = form.querySelector('[type="submit"]');
     const status = form.querySelector("[data-checkout-status]");
@@ -2149,10 +2258,14 @@ function initializeCheckout() {
 
 function initializeNewsletter() {
   document.querySelectorAll("[data-newsletter-form]").forEach(form => {
+    const updateValidation = initializeInlineValidation(form);
     form.addEventListener("submit", async event => {
       event.preventDefault();
       form.classList.add("was-validated");
-      if (!form.reportValidity()) return;
+      if (!form.reportValidity()) {
+        updateValidation(true);
+        return;
+      }
       const button = form.querySelector('[type="submit"]');
       const status = form.querySelector("[data-newsletter-status]");
       const email = String(new FormData(form).get("email") || "").trim();
@@ -2285,6 +2398,8 @@ async function loadInventory() {
       product.stock = Number.isInteger(record.stock) ? record.stock : null;
       product.price = Number.isInteger(record.priceCents) ? record.priceCents / 100 : product.price;
       product.active = record.active !== false;
+      product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
+      product.availableDate = record.availableDate || null;
     });
     document.querySelectorAll(".product-card").forEach(card => {
       const product = PRODUCTS.find(item => item.id === card.dataset.productId);
@@ -2303,26 +2418,57 @@ async function loadInventory() {
     document.querySelectorAll("[data-stock-product]").forEach(node => {
       const product = PRODUCTS.find(item => item.id === node.dataset.stockProduct);
       if (!product) return;
-      if (product.active === false) {
-        node.textContent = "Currently unavailable";
-        node.hidden = false;
-      } else if (product.stock === 0) {
-        node.textContent = "Out of stock";
-        node.hidden = false;
-      } else if (Number.isInteger(product.stock)) {
-        node.textContent = `${product.stock} in stock`;
-        node.hidden = false;
-      } else if (product.availability) {
-        node.textContent = product.availability;
-        node.hidden = false;
-      } else {
-        node.textContent = "";
-        node.hidden = true;
-      }
+      node.textContent = productAvailabilityText(product);
+      node.hidden = !node.textContent;
     });
+    document.querySelectorAll("[data-notify-product]").forEach(button => {
+      const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
+      const show = product && (product.availabilityStatus === "preorder" || product.availabilityStatus === "unavailable" || product.active === false || product.stock === 0);
+      button.hidden = !show;
+      button.textContent = product?.availabilityStatus === "preorder" ? "Notify me when it’s ready" : "Notify me when available";
+    });
+    document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
   } catch (_) {
     // The catalog remains usable if inventory status is temporarily unavailable.
   }
+}
+
+function initializeAvailabilityNotifications() {
+  const dialog = document.querySelector("[data-notify-dialog]");
+  const form = dialog?.querySelector("[data-notify-form]");
+  if (!dialog || !form) return;
+  document.addEventListener("click", event => {
+    const button = event.target.closest("[data-notify-product]");
+    if (!button) return;
+    const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
+    if (!product) return;
+    form.reset();
+    form.elements.productId.value = product.id;
+    form.querySelector("[data-notify-product-name]").textContent = product.name;
+    form.querySelector("[data-notify-status]").textContent = product.availableDate ? `Currently expected ${formatReadyDate(product.availableDate)}.` : "";
+    dialog.showModal();
+    form.elements.email.focus();
+  });
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    const email = form.elements.email;
+    const status = form.querySelector("[data-notify-status]");
+    email.setCustomValidity(completeEmail(email.value) ? "" : "Enter a complete email address, such as name@example.com.");
+    if (!form.reportValidity()) return;
+    const submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    status.textContent = "Saving your notification…";
+    try {
+      const response = await fetch("/api/notify", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ productId: form.elements.productId.value, email: email.value.trim() }) });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || "The notification could not be saved.");
+      status.textContent = "You’re all set. Check your inbox for confirmation.";
+      submit.hidden = true;
+    } catch (error) {
+      status.textContent = error.message;
+    } finally { submit.disabled = false; }
+  });
+  dialog.addEventListener("close", () => { form.querySelector('button[type="submit"]').hidden = false; });
 }
 
 renderSiteChrome();
@@ -2334,5 +2480,6 @@ initializeCheckout();
 initializeCatalogueFeatures();
 initializeNewsletter();
 initializeScrollLife();
+initializeAvailabilityNotifications();
 loadInventory();
 
