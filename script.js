@@ -22,7 +22,7 @@ const PRODUCTS = [
     "id": "matcha-lavender-soap",
     "category": "artisan-soap",
     "name": "Matcha & Lavender",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather that nourishes the skin. Kaolin clay, matcha powder, and French green clay lend a soft, earthy color and a gentle detoxifying touch.",
     "cardDescription": "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather…",
     "ingredients": [
@@ -57,7 +57,7 @@ const PRODUCTS = [
     "id": "rosemary-sage-soap",
     "category": "artisan-soap",
     "name": "Rosemary & Sage",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing lather. French green clay offers a gentle detoxifying cleanse, while activated charcoal adds a deeper purifying touch and a striking natural contrast in the swirl.",
     "cardDescription": "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing…",
     "ingredients": [
@@ -92,7 +92,7 @@ const PRODUCTS = [
     "id": "lemon-rosemary-soap",
     "category": "artisan-soap",
     "name": "Lemon & Rosemary",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a creamy, conditioning lather that leaves skin soft and nourished. Kaolin clay, French green clay, and matcha powder give the soap its beautiful light green swirls, adding gentle detoxifying and soothing properties.",
     "cardDescription": "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a…",
     "ingredients": [
@@ -129,7 +129,7 @@ const PRODUCTS = [
     "id": "ember-ash-soap",
     "category": "artisan-soap",
     "name": "Ember & Ash",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color—clean, modern, and visually striking.",
     "cardDescription": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy…",
     "ingredients": [
@@ -164,7 +164,7 @@ const PRODUCTS = [
     "id": "sweater-weather-soap",
     "category": "artisan-soap",
     "name": "Sweater Weather",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "Handcrafted in small batches, this nourishing soap is made with saponified organic olive oil, grass-fed tallow, organic coconut oil, and organic castor oil for a rich, creamy lather that deeply comforts the skin. Organic coconut milk, raw honey, and colloidal oats add soothing moisture, creating a gentle bar ideal for daily use.",
     "cardDescription": "Handcrafted in small batches, this nourishing soap is made with saponified organic olive oil, grass-fed tallow, organic coconut oil, and organic castor oil for a rich…",
     "ingredients": [
@@ -199,7 +199,7 @@ const PRODUCTS = [
     "id": "coconut-lavender-soap",
     "category": "artisan-soap",
     "name": "Coconut Lavender",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather. Organic coconut milk adds silky moisture, creating a soothing cleanse that feels soft and comforting on the skin.",
     "cardDescription": "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather.",
     "ingredients": [
@@ -234,7 +234,7 @@ const PRODUCTS = [
     "id": "whisper-citrus-soap",
     "category": "artisan-soap",
     "name": "Whisper of Citrus",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy, nourishing lather that feels delicate on the skin. The formula is intentionally simple and soothing, perfect for those who prefer an understated, fragrance-light cleanse.",
     "cardDescription": "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy…",
     "ingredients": [
@@ -271,7 +271,7 @@ const PRODUCTS = [
     "id": "charcoal-blush-soap",
     "category": "artisan-soap",
     "name": "Charcoal & Blush",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A gentle activated charcoal bar with a very light, natural aroma. Soft earthy notes of patchouli and frankincense are balanced by a delicate hint of sweet orange, creating a clean, understated scent that stays close to the soap rather than lingering heavily.",
     "cardDescription": "A gentle activated charcoal bar with a very light, natural aroma.",
     "ingredients": [
@@ -303,7 +303,7 @@ const PRODUCTS = [
     "id": "cedar-eucalyptus-loofah-soap",
     "category": "artisan-soap",
     "name": "Cedarwood & Eucalyptus Loofah",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A refreshing exfoliating bar with natural loofah for a satisfying scrub. Crisp eucalyptus and cooling peppermint create a clean, invigorating aroma, while cedarwood adds a warm, earthy base. Mango and shea butters give the bar a rich, creamy feel that balances the exfoliation.",
     "cardDescription": "A refreshing exfoliating bar with natural loofah for a satisfying scrub.",
     "ingredients": [
@@ -335,7 +335,7 @@ const PRODUCTS = [
     "id": "lemongrass-lavender-soap",
     "category": "artisan-soap",
     "name": "Lemongrass & Lavender",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A gentle, earthy bar crafted with nourishing organic oils, turmeric, and natural Brazilian purple and kaolin clays. Fresh lemongrass and soft lavender create a clean, calming botanical scent, while the clays give the bar its naturally rich character.",
     "cardDescription": "A gentle, earthy bar crafted with nourishing organic oils, turmeric, and natural Brazilian purple and kaolin clays.",
     "ingredients": [
@@ -367,7 +367,7 @@ const PRODUCTS = [
     "id": "ylang-ylang-soap",
     "category": "artisan-soap",
     "name": "Ylang Ylang",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A soft, creamy bar made with nourishing organic oils, unrefined shea butter, and coconut milk. French pink clay adds a gentle, silky touch, while ylang-ylang, sweet orange, and cedarwood create a warm, lightly floral scent with soft citrus and woody notes.",
     "cardDescription": "A soft, creamy bar made with nourishing organic oils, unrefined shea butter, and coconut milk.",
     "ingredients": [
@@ -399,7 +399,7 @@ const PRODUCTS = [
     "id": "honey-oat-comfort-soap",
     "category": "artisan-soap",
     "name": "Honey Oat Comfort",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin. Made with grass-fed tallow, creamy coconut milk, raw honey, colloidal oatmeal, and nourishing oils and butters, it creates a soft, comforting lather. Kaolin clay and turmeric complement the blend, while a delicate touch of lavender gives it a subtle, calming botanical scent.",
     "cardDescription": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin.",
     "ingredients": [
@@ -431,7 +431,7 @@ const PRODUCTS = [
     "id": "chocolate-pumpkin-pie-soap",
     "category": "artisan-soap",
     "name": "Chocolate Pumpkin Pie",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A warm, cozy bar made with real pumpkin purée, nourishing oils, cocoa powder, and French green clay. Sweet orange and cedarwood blend with spicy clove and a touch of cinnamon, creating a rich, comforting aroma reminiscent of crisp autumn days and freshly baked fall treats.",
     "cardDescription": "A warm, cozy bar made with real pumpkin purée, nourishing oils, cocoa powder, and French green clay.",
     "ingredients": [
@@ -463,7 +463,7 @@ const PRODUCTS = [
     "id": "unscented-loofah-soap",
     "category": "artisan-soap",
     "name": "Unscented Loofah",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A creamy, naturally exfoliating bar made with nourishing organic oils, unrefined shea butter, and coconut milk. Sugar and natural loofah provide a gentle scrub, leaving skin feeling smooth, refreshed, and clean.",
     "cardDescription": "A creamy, naturally exfoliating bar made with nourishing organic oils, unrefined shea butter, and coconut milk.",
     "ingredients": [
@@ -495,7 +495,7 @@ const PRODUCTS = [
     "id": "mint-eucalyptus-spa-soap",
     "category": "artisan-soap",
     "name": "Mint & Eucalyptus Spa Bar",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A fresh, invigorating bar crafted with nourishing organic oils and rich unrefined shea butter. Cooling peppermint and crisp eucalyptus create a refreshing, clean aroma that awakens the senses and leaves you feeling fresh and revitalized.",
     "cardDescription": "A fresh, invigorating bar crafted with nourishing organic oils and rich unrefined shea butter.",
     "ingredients": [
@@ -527,7 +527,7 @@ const PRODUCTS = [
     "id": "spiced-banana-soap",
     "category": "artisan-soap",
     "name": "Spiced Banana",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A warm, creamy bar made with real banana, organic coconut milk, raw honey, and nourishing oils and butters. A touch of ground cinnamon adds a cozy, comforting aroma, while decorative oats give each bar a naturally rustic finish.",
     "cardDescription": "A warm, creamy bar made with real banana, organic coconut milk, raw honey, and nourishing oils and butters.",
     "ingredients": [
@@ -559,7 +559,7 @@ const PRODUCTS = [
     "id": "cedar-lemon-soap",
     "category": "artisan-soap",
     "name": "Cedar Lemon",
-    "kicker": "Handcrafted bar soap",
+    "kicker": "Just B Clean",
     "description": "A fresh, earthy bar crafted with nourishing oils and butters, French green clay, matcha, and turmeric. Bright lemongrass gives the soap a clean, citrusy freshness, while cedarwood and patchouli add warm, woody, grounding notes. The natural clays and botanicals give the bar its distinctive colour and character, creating a refreshing everyday soap with a balanced, nature-inspired aroma.",
     "cardDescription": "A fresh, earthy bar crafted with nourishing oils and butters, French green clay, matcha, and turmeric.",
     "ingredients": [
@@ -784,8 +784,8 @@ const PRODUCTS = [
   {
     "id": "just-b-calm",
     "category": "roller-oils",
-    "name": "Just B Calm",
-    "kicker": "Portable botanical ritual",
+    "name": "Hormonal Balance Roll-On",
+    "kicker": "Just B Calm",
     "description": "A refreshing, aromatic roll-on created with organic jojoba oil and a carefully balanced blend of clary sage, grapefruit, cypress, lavender, and peppermint essential oils. The blend combines cooling, bright citrus notes with soft florals and grounding herbal aromas, making it ideal to keep nearby whenever you want a quick moment of freshness and calm.",
     "cardDescription": "A refreshing, aromatic roll-on created with organic jojoba oil and a carefully balanced blend of clary sage, grapefruit, cypress, lavender, and peppermint essential oils.",
     "ingredients": [
@@ -847,8 +847,8 @@ const PRODUCTS = [
   {
     "id": "just-b-relieved",
     "category": "roller-oils",
-    "name": "Just B Relieved",
-    "kicker": "Portable botanical ritual",
+    "name": "Headache Relief Roll-On",
+    "kicker": "Just B Relieved",
     "description": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
     "cardDescription": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and…",
     "ingredients": [
@@ -914,8 +914,8 @@ const PRODUCTS = [
   {
     "id": "cycle-harmony",
     "category": "roller-oils",
-    "name": "Cycle Harmony",
-    "kicker": "Portable botanical ritual",
+    "name": "Cramp and Bloat Relief",
+    "kicker": "Just B Cycle Harmony",
     "description": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
     "cardDescription": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle.",
     "ingredients": [
@@ -976,7 +976,7 @@ const PRODUCTS = [
     "id": "lavender-bloom-scrub",
     "category": "sugar-scrubs",
     "name": "Lavender Bloom",
-    "kicker": "Exfoliating body care",
+    "kicker": "Just B Scrubbed",
     "description": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil blend. This formula is designed to do more than exfoliate: it combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother. Sugar-based exfoliation helps remove loose, dry surface skin, while the oils and butter replenish the skin with lipids afterward.",
     "cardDescription": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil…",
     "ingredients": [
@@ -1056,7 +1056,7 @@ const PRODUCTS = [
     "id": "harvest-spa-scrub",
     "category": "sugar-scrubs",
     "name": "Harvest Spa",
-    "kicker": "Exfoliating body care",
+    "kicker": "Just B Scrubbed",
     "description": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba oil, castor oil, and vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed.",
     "cardDescription": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba oil, castor oil, and vitamin E.",
     "ingredients": [
@@ -1096,7 +1096,7 @@ const PRODUCTS = [
     "id": "vanilla-scrub",
     "category": "sugar-scrubs",
     "name": "Vanilla",
-    "kicker": "Exfoliating body care",
+    "kicker": "Just B Scrubbed",
     "description": "More information to follow.",
     "cardDescription": "More information to follow.",
     "ingredients": [
@@ -1293,10 +1293,23 @@ function formatReadyDate(value) {
 
 function productAvailabilityText(product) {
   if (product.availabilityStatus === "preorder") return product.availableDate ? `Preorder • Available ${formatReadyDate(product.availableDate)}` : "Available for preorder";
-  if (product.availabilityStatus === "unavailable" || product.active === false) return "Currently unavailable";
   if (product.stock === 0) return "Out of stock";
+  if (product.availabilityStatus === "unavailable" || product.active === false) return "Currently unavailable";
   if (Number.isInteger(product.stock)) return `${product.stock} in stock`;
   return product.availability || "";
+}
+
+function updateAvailabilitySummaries() {
+  document.querySelectorAll("[data-category-summary]").forEach(node => {
+    const category = node.dataset.categorySummary;
+    const products = category === "all" ? PRODUCTS : PRODUCTS.filter(product => product.category === category);
+    const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0).length;
+    const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
+    const parts = [];
+    if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
+    if (preorder) parts.push(`${preorder} available for preorder`);
+    node.textContent = parts.length ? parts.join(" • ") : "No products currently available";
+  });
 }
 
 function escapeHtml(value) {
@@ -1380,13 +1393,38 @@ function orderItemCount() {
   return orderList.reduce((total, item) => total + item.quantity, 0);
 }
 
+function cartSubtotalCents() {
+  return orderList.reduce((total, item) => {
+    const product = PRODUCTS.find(candidate => candidate.id === item.id);
+    return total + (product && Number.isFinite(product.price) ? Math.round(product.price * 100) * item.quantity : 0);
+  }, 0);
+}
+
+function updateCheckoutTotals() {
+  const form = document.querySelector("[data-checkout-form]");
+  const subtotal = cartSubtotalCents();
+  const deliverySelected = form?.elements.fulfillment?.value === "delivery";
+  const deliveryFee = deliverySelected ? Number(form?.elements.deliveryFeeCents?.value) : 0;
+  const hasDeliveryFee = deliverySelected && Number.isInteger(deliveryFee) && deliveryFee >= 0;
+  document.querySelectorAll("[data-checkout-subtotal]").forEach(node => { node.textContent = formatPrice(subtotal / 100); });
+  document.querySelectorAll("[data-checkout-delivery-row]").forEach(node => { node.hidden = !deliverySelected; });
+  document.querySelectorAll("[data-checkout-delivery]").forEach(node => { node.textContent = hasDeliveryFee ? formatPrice(deliveryFee / 100) : "Select an address"; });
+  document.querySelectorAll("[data-checkout-total]").forEach(node => { node.textContent = hasDeliveryFee || !deliverySelected ? formatPrice((subtotal + (hasDeliveryFee ? deliveryFee : 0)) / 100) : "Pending address"; });
+}
+
 function buildOrderSummary(details = {}) {
   const selectedItems = Array.isArray(details.items) ? details.items : orderList;
   const lines = selectedItems.map((item, index) => {
     const product = PRODUCTS.find(candidate => candidate.id === item.id);
     if (!product) return "";
-    return `${index + 1}. ${product.name}\n   Quantity: ${item.quantity}`;
+    return `${index + 1}. ${product.name}\n   Quantity: ${item.quantity}${Number.isFinite(product.price) ? `\n   Line total: ${formatPrice(product.price * item.quantity)}` : ""}`;
   }).filter(Boolean);
+
+  const subtotalCents = selectedItems.reduce((total, item) => {
+    const product = PRODUCTS.find(candidate => candidate.id === item.id);
+    return total + (product && Number.isFinite(product.price) ? Math.round(product.price * 100) * item.quantity : 0);
+  }, 0);
+  const deliveryFeeCents = Number.isInteger(details.deliveryFeeCents) ? details.deliveryFeeCents : 0;
 
   const customerLines = details.email ? [
     `Customer: ${[details.firstName, details.lastName].filter(Boolean).join(" ")}`,
@@ -1408,6 +1446,9 @@ function buildOrderSummary(details = {}) {
     ...(customerLines.length ? ["", ...customerLines] : []),
     "",
     lines.join("\n\n"),
+    "",
+    `Products subtotal: ${formatPrice(subtotalCents / 100)}`,
+    ...(details.fulfillment === "delivery" ? [Number.isInteger(details.deliveryFeeCents) ? `Estimated delivery: ${formatPrice(deliveryFeeCents / 100)}` : "Estimated delivery: pending address", `Estimated order total: ${formatPrice((subtotalCents + deliveryFeeCents) / 100)}`] : [`Estimated order total: ${formatPrice(subtotalCents / 100)}`]),
     "",
     details.notes?.trim() ? `Notes:\n${details.notes.trim()}\n` : (orderNotes.trim() ? `Notes:\n${orderNotes.trim()}\n` : "Notes:\n"),
     "",
@@ -1522,7 +1563,7 @@ function renderProductGrid(grid, matches) {
   grid.innerHTML = matches.map(productCard).join("");
   grid.dataset.productIds = matches.map(product => product.id).join(",");
   const count = grid.closest("section")?.querySelector("[data-product-count]");
-  if (count) count.textContent = matches.length;
+  if (count) count.textContent = `${matches.length} product${matches.length === 1 ? "" : "s"}`;
   const empty = grid.closest("section")?.querySelector("[data-catalog-empty]");
   if (empty) empty.hidden = matches.length !== 0;
   activateImageFallbacks(grid);
@@ -1547,7 +1588,7 @@ function orderItemMarkup(item) {
   const key = orderLineKey(item);
   return `<article class="order-list-item" data-order-item="${escapeHtml(key)}">
     <a href="${productPageUrl(product)}" aria-label="View ${product.name}"><img src="${product.image}" alt="" loading="lazy"></a>
-    <div class="order-item-copy"><h3><a href="${productPageUrl(product)}">${product.name}</a></h3><p>${CATEGORY_LABELS[product.category] || "Just B Natural"}</p>
+    <div class="order-item-copy"><h3><a href="${productPageUrl(product)}">${product.name}</a></h3><p>${CATEGORY_LABELS[product.category] || "Just B Natural"}${Number.isFinite(product.price) ? ` · ${formatPrice(product.price * item.quantity)}` : ""}</p>
       <div class="order-item-controls"><div class="quantity-control" aria-label="Quantity for ${product.name}"><button type="button" data-order-quantity="-1" data-order-key="${escapeHtml(key)}" aria-label="Remove one ${product.name}">−</button><strong aria-live="polite">${item.quantity}</strong><button type="button" data-order-quantity="1" data-order-key="${escapeHtml(key)}" aria-label="Add one ${product.name}">+</button></div><button class="remove-order-item" type="button" data-order-remove="${escapeHtml(key)}">Remove</button></div>
     </div>
   </article>`;
@@ -1557,10 +1598,11 @@ function updateAddButton(button) {
   const product = PRODUCTS.find(candidate => candidate.id === button.dataset.addOrder);
   const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
   const item = findOrderLine(button.dataset.addOrder);
-  button.disabled = Boolean(unavailable);
+  button.disabled = false;
+  button.hidden = Boolean(unavailable);
   button.classList.toggle("is-added", Boolean(item));
-  const base = unavailable ? "Unavailable" : product?.availabilityStatus === "preorder" ? "Preorder" : "Add to cart";
-  button.innerHTML = `${item && !unavailable ? `Add another (${item.quantity})` : base} <span>${unavailable ? "" : "＋"}</span>`;
+  const base = product?.availabilityStatus === "preorder" ? "Preorder" : "Add to cart";
+  button.innerHTML = `${item ? `Add another (${item.quantity})` : base} <span>＋</span>`;
 }
 
 function renderOrderList() {
@@ -1580,6 +1622,7 @@ function renderOrderList() {
   if (fab) fab.hidden = count === 0;
 
   document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
+  updateCheckoutTotals();
   syncCheckoutState();
 }
 
@@ -1905,9 +1948,9 @@ function renderProductPage() {
       <section class="product-detail-hero" style="--tone:${product.tone};--accent:${product.accent}">
         <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
         <div class="product-detail-purchase">
-          <p class="eyebrow">${categoryLabel}</p>
+          <p class="eyebrow">${product.kicker}</p>
           <h1>${product.name}</h1>
-          <p class="product-detail-kicker">${product.kicker}</p>
+          <p class="product-detail-kicker">${categoryLabel}</p>
           ${Number.isFinite(product.price) ? `<p class="product-detail-price" data-price-product="${product.id}">${formatPrice(product.price)}</p>` : `<p class="product-detail-price" data-price-product="${product.id}" hidden></p>`}
           <p class="product-detail-description">${product.description}</p>
           ${stockMarkup}
@@ -1989,6 +2032,7 @@ function initializeDeliveryEstimator(form) {
     status.textContent = "Choose the matching address from the suggestion list to calculate delivery.";
     status.classList.remove("is-ready", "is-error");
     if (form.elements.fulfillment.value === "delivery") address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
+    updateCheckoutTotals();
   };
 
   const showUnavailable = () => {
@@ -2017,6 +2061,7 @@ function initializeDeliveryEstimator(form) {
       status.classList.remove("is-error");
       address.setCustomValidity("");
       address.dispatchEvent(new Event("change", { bubbles: true }));
+      updateCheckoutTotals();
     } catch (_) {
       showUnavailable();
     }
@@ -2083,6 +2128,7 @@ function initializeDeliveryEstimator(form) {
       closeSuggestions();
       clearEstimate();
     }
+    updateCheckoutTotals();
   };
 
   form.querySelectorAll('input[name="fulfillment"]').forEach(radio => radio.addEventListener("change", syncFulfillment));
@@ -2166,6 +2212,7 @@ function syncCheckoutState() {
   if (empty) empty.hidden = orderList.length > 0;
   if (content) content.hidden = orderList.length === 0;
   checkout.querySelectorAll("[data-checkout-count]").forEach(node => { node.textContent = orderItemCount(); });
+  updateCheckoutTotals();
   const submit = checkout.querySelector('.checkout-submit');
   if (submit && !submit.disabled) submit.textContent = "Request order";
 }
@@ -2423,11 +2470,15 @@ async function loadInventory() {
     });
     document.querySelectorAll("[data-notify-product]").forEach(button => {
       const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
-      const show = product && (product.availabilityStatus === "preorder" || product.availabilityStatus === "unavailable" || product.active === false || product.stock === 0);
+      const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
+      const show = product && (product.availabilityStatus === "preorder" || unavailable);
       button.hidden = !show;
       button.textContent = product?.availabilityStatus === "preorder" ? "Notify me when it’s ready" : "Notify me when available";
+      button.classList.toggle("notify-product-button--primary", Boolean(unavailable));
     });
     document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
+    updateAvailabilitySummaries();
+    renderOrderList();
   } catch (_) {
     // The catalog remains usable if inventory status is temporarily unavailable.
   }
@@ -2482,4 +2533,3 @@ initializeNewsletter();
 initializeScrollLife();
 initializeAvailabilityNotifications();
 loadInventory();
-

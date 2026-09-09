@@ -22,7 +22,7 @@ function setStatus(cell, status, date, stock) {
     cell.textContent = "Ordering is off";
     cell.dataset.state = "out";
   } else if (stock !== "" && Number(stock) === 0) {
-    cell.textContent = "Available, 0 in stock";
+    cell.textContent = "Out of stock automatically";
     cell.dataset.state = "out";
   } else {
     cell.textContent = "Available to order";
@@ -187,4 +187,3 @@ window.addEventListener("beforeunload", event => {
 
 const rememberedKey = sessionStorage.getItem("jbn-inventory-key");
 if (rememberedKey) openInventory(rememberedKey).catch(() => sessionStorage.removeItem("jbn-inventory-key"));
-

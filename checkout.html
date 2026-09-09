@@ -99,7 +99,12 @@
         <aside class="checkout-summary" aria-label="Order summary">
           <div class="checkout-summary-heading"><div><p class="eyebrow">Your cart</p><h2>Order summary</h2></div><span><b data-checkout-count>0</b> items</span></div>
           <div class="order-list-items checkout-order-items" data-order-items></div>
-          <p>Availability, pricing, and pickup or local-delivery details are confirmed by email before payment.</p>
+          <dl class="checkout-totals">
+            <div><dt>Products subtotal</dt><dd data-checkout-subtotal>$0.00</dd></div>
+            <div data-checkout-delivery-row hidden><dt>Estimated local delivery</dt><dd data-checkout-delivery>Select an address</dd></div>
+            <div class="checkout-grand-total"><dt>Estimated order total</dt><dd data-checkout-total>$0.00</dd></div>
+          </dl>
+          <p>The item subtotal comes from the current inventory prices. Local delivery is added after a recognized address is selected.</p>
         </aside>
       </div>
 
@@ -115,4 +120,3 @@
   <div data-site-footer></div>
 </body>
 </html>
-
