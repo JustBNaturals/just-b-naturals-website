@@ -591,7 +591,7 @@ const PRODUCTS = [
     "id": "mango-butter",
     "category": "body-care",
     "name": "Mango Butter",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin. The combination of raw mango butter and unrefined shea butter creates a protective, emollient base, while jojoba and rosehip oils provide additional fatty acids and naturally occurring antioxidants. Arrowroot helps give the butter a smoother, less-greasy finish, and lavender, cedarwood, and real Madagascar vanilla create a soft, warm botanical aroma.",
     "cardDescription": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin.",
     "ingredients": [
@@ -646,7 +646,7 @@ const PRODUCTS = [
     "id": "vanilla-infused-tallow",
     "category": "body-care",
     "name": "Vanilla Infused Tallow",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled frankincense essential oil. Whipping transforms the naturally dense tallow into a soft, cloud-like texture that melts effortlessly on contact with the skin, making a small amount easy to spread over larger areas.",
     "cardDescription": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled…",
     "ingredients": [
@@ -721,7 +721,7 @@ const PRODUCTS = [
     "id": "unscented-tallow",
     "category": "body-care",
     "name": "Unscented Tallow",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E. With no essential oils, added fragrance, or vanilla, this simple water-free formula is designed for those who prefer uncomplicated skincare, especially for dry, delicate, or fragrance-sensitive skin.",
     "cardDescription": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E.",
     "ingredients": [
@@ -1127,8 +1127,8 @@ const PRODUCTS = [
   {
     "id": "just-b-rested-room-spray",
     "category": "home-linen",
-    "name": "Just B Rested Room Spray",
-    "kicker": "Thoughtful care for the home",
+    "name": "Linen Room Spray",
+    "kicker": "Just B Rested",
     "description": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils. Designed as a simple alternative to heavily perfumed conventional room sprays, this blend fills your space with a soft, calming botanical aroma without synthetic fragrance.",
     "cardDescription": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils.",
     "ingredients": [
@@ -1197,8 +1197,8 @@ const PRODUCTS = [
   {
     "id": "solid-dish-soap",
     "category": "home-linen",
-    "name": "Non-Toxic No-Waste Solid Dish Soap",
-    "kicker": "Thoughtful care for the home",
+    "name": "Non-Toxic Solid Dish Soap",
+    "kicker": "Just B Clean",
     "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, low-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
     "cardDescription": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning.",
     "ingredients": [
@@ -1533,6 +1533,26 @@ function fallbackArtMarkup(product) {
 
 function artMarkup(product) {
   return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}<span class="product-image-tagline" aria-hidden="true">Pure · Natural · Handcrafted</span>`;
+}
+
+function preorderArtMarkup(product) {
+  const ready = product.availableDate ? `Expected ${formatReadyDate(product.availableDate)}` : "Availability date coming soon";
+  return `<span class="preorder-art" role="img" aria-label="${product.name} is being prepared and will be available soon"><span class="preorder-art-inner"><span class="preorder-art-mark" aria-hidden="true">B</span><strong>Coming soon</strong><span>Small batch curing</span><small>${ready}</small></span></span>`;
+}
+
+function updatePreorderArtwork(product) {
+  if (!product || product.availabilityStatus !== "preorder") return;
+  document.querySelectorAll(`.product-card[data-product-id="${product.id}"] .product-art`).forEach(art => {
+    art.classList.add("is-preorder-art");
+    art.innerHTML = preorderArtMarkup(product);
+  });
+  if (document.body.dataset.productId === product.id) {
+    const detail = document.querySelector(".product-detail-media");
+    if (detail) {
+      detail.classList.add("is-preorder-art");
+      detail.innerHTML = preorderArtMarkup(product);
+    }
+  }
 }
 
 function productCard(product) {
@@ -2448,6 +2468,7 @@ async function loadInventory() {
       product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
       product.availableDate = record.availableDate || null;
     });
+    PRODUCTS.forEach(updatePreorderArtwork);
     document.querySelectorAll(".product-card").forEach(card => {
       const product = PRODUCTS.find(item => item.id === card.dataset.productId);
       if (!product) return;
@@ -2533,3 +2554,4 @@ initializeNewsletter();
 initializeScrollLife();
 initializeAvailabilityNotifications();
 loadInventory();
+

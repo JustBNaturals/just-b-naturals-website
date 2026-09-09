@@ -572,7 +572,7 @@
     "id": "mango-butter",
     "category": "body-care",
     "name": "Mango Butter",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin. The combination of raw mango butter and unrefined shea butter creates a protective, emollient base, while jojoba and rosehip oils provide additional fatty acids and naturally occurring antioxidants. Arrowroot helps give the butter a smoother, less-greasy finish, and lavender, cedarwood, and real Madagascar vanilla create a soft, warm botanical aroma.",
     "cardDescription": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin.",
     "ingredients": [
@@ -627,7 +627,7 @@
     "id": "vanilla-infused-tallow",
     "category": "body-care",
     "name": "Vanilla Infused Tallow",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled frankincense essential oil. Whipping transforms the naturally dense tallow into a soft, cloud-like texture that melts effortlessly on contact with the skin, making a small amount easy to spread over larger areas.",
     "cardDescription": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled…",
     "ingredients": [
@@ -702,7 +702,7 @@
     "id": "unscented-tallow",
     "category": "body-care",
     "name": "Unscented Tallow",
-    "kicker": "Concentrated, water-free care",
+    "kicker": "Just B Nourished",
     "description": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E. With no essential oils, added fragrance, or vanilla, this simple water-free formula is designed for those who prefer uncomplicated skincare, especially for dry, delicate, or fragrance-sensitive skin.",
     "cardDescription": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E.",
     "ingredients": [
@@ -1108,8 +1108,8 @@
   {
     "id": "just-b-rested-room-spray",
     "category": "home-linen",
-    "name": "Just B Rested Room Spray",
-    "kicker": "Thoughtful care for the home",
+    "name": "Linen Room Spray",
+    "kicker": "Just B Rested",
     "description": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils. Designed as a simple alternative to heavily perfumed conventional room sprays, this blend fills your space with a soft, calming botanical aroma without synthetic fragrance.",
     "cardDescription": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils.",
     "ingredients": [
@@ -1178,8 +1178,8 @@
   {
     "id": "solid-dish-soap",
     "category": "home-linen",
-    "name": "Non-Toxic No-Waste Solid Dish Soap",
-    "kicker": "Thoughtful care for the home",
+    "name": "Non-Toxic Solid Dish Soap",
+    "kicker": "Just B Clean",
     "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, low-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
     "cardDescription": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning.",
     "ingredients": [
@@ -1216,3 +1216,4 @@
     "featured": true
   }
 ]
+
