@@ -294,17 +294,17 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .catalog-empty h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 38px; font-weight: 500; }
 .catalog-empty p { margin: 0; color: var(--muted); }
 
-.category-hero { position: relative; margin-bottom: 32px; overflow: hidden; background-color: #faf7ef; background-image: linear-gradient(90deg, #faf7ef 0%, #faf7ef 38%, rgba(250,247,239,.98) 44%, rgba(250,247,239,.78) 54%, rgba(250,247,239,.36) 68%, rgba(250,247,239,.1) 82%, rgba(250,247,239,.06) 100%), linear-gradient(180deg, rgba(250,247,239,0) 60%, rgba(250,247,239,.98) 100%), var(--category-photo); background-position: center, center, right center; background-repeat: no-repeat; background-size: 100% 100%, 100% 100%, min(60vw, 1120px) auto; }
+.category-hero { position: relative; margin-bottom: 32px; overflow: hidden; background: #faf7ef var(--category-hero) center / cover no-repeat; }
 .category-hero::before, .category-hero::after { content: none; }
 .category-hero-grid { position: relative; z-index: 1; min-height: 475px; display: grid; grid-template-columns: minmax(0, 760px); align-items: center; }
 .category-hero .breadcrumbs { margin-bottom: 50px; }
 .category-hero h1 { max-width: 900px; }
 .category-hero h1 + p { max-width: 650px; margin: 23px 0 0; color: #40564f; font-size: 15px; line-height: 1.65; }
-.hero-rollers { --category-photo: url("images/category-roller-oils.jpg"); --hero-focus: 50% 48%; --mobile-focus: 50% 48%; }
-.hero-scrubs { --category-photo: url("images/category-scrubs.jpg"); --hero-focus: 50% 57%; --mobile-focus: 50% 36%; }
-.hero-body { --category-photo: url("images/category-body-butters.jpg"); --hero-focus: 50% 56%; --mobile-focus: 50% 55%; }
-.hero-bars { --category-photo: url("images/category-artisan-soaps.jpg"); --hero-focus: 54% 50%; --mobile-focus: 54% 50%; }
-.hero-home { --category-photo: url("images/category-dish-soap.jpg"); --hero-focus: 45% 45%; --mobile-focus: 45% 45%; }
+.hero-rollers { --category-hero: url("images/hero-rollers-desktop.jpg"); --category-hero-mobile: url("images/hero-rollers-mobile.jpg"); }
+.hero-scrubs { --category-hero: url("images/hero-scrubs-desktop.jpg"); --category-hero-mobile: url("images/hero-scrubs-mobile.jpg"); }
+.hero-body { --category-hero: url("images/hero-body-desktop.jpg"); --category-hero-mobile: url("images/hero-body-mobile.jpg"); }
+.hero-bars { --category-hero: url("images/hero-artisan-desktop.jpg"); --category-hero-mobile: url("images/hero-artisan-mobile.jpg"); }
+.hero-home { --category-hero: url("images/hero-home-desktop.jpg"); --category-hero-mobile: url("images/hero-home-mobile.jpg"); }
 .hero-pantry { background: #d6b78d; }
 .category-symbol { position: relative; width: min(380px, 100%); height: 350px; display: grid; place-items: center; justify-self: center; }
 .category-symbol::before { content: none; }
@@ -763,7 +763,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   .category-hero-grid { min-height: 0; padding-top: 20px; }
   .category-hero .breadcrumbs { margin-bottom: 22px; }
   .category-hero h1 + p { font-size: 14px; }
-  .category-hero { background-image: linear-gradient(90deg, rgba(250,247,239,.96) 0%, rgba(250,247,239,.91) 46%, rgba(250,247,239,.56) 76%, rgba(250,247,239,.26) 100%), linear-gradient(180deg, rgba(250,247,239,.02) 54%, #faf7ef 100%), var(--category-photo); background-position: center, center, var(--mobile-focus, center); background-size: 100% 100%, 100% 100%, cover; }
+  .category-hero { background-image: var(--category-hero-mobile); }
   .category-note { gap: 18px; padding-top: 38px; padding-bottom: 45px; }
   .about-hero-grid { padding-block: 36px 50px; }
   .about-hero .breadcrumbs { margin-bottom: 28px; }
