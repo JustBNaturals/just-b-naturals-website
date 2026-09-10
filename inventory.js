@@ -18,9 +18,6 @@ function setStatus(cell, status, date, stock) {
   if (status === "preorder") {
     cell.textContent = date ? `Preorder until ${new Date(`${date}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}` : "Choose a ready date";
     cell.dataset.state = "preorder";
-  } else if (status === "unavailable") {
-    cell.textContent = "Ordering is off";
-    cell.dataset.state = "out";
   } else if (stock !== "" && Number(stock) === 0) {
     cell.textContent = "Out of stock automatically";
     cell.dataset.state = "out";
@@ -65,8 +62,8 @@ async function openInventory(key) {
     const statusSelect = document.createElement("select");
     statusSelect.className = "inventory-status-select";
     statusSelect.setAttribute("aria-label", `Website status for ${product.name}`);
-    statusSelect.innerHTML = '<option value="available">Available now</option><option value="preorder">Preorder</option><option value="unavailable">Unavailable</option>';
-    statusSelect.value = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
+    statusSelect.innerHTML = '<option value="available">Available now</option><option value="preorder">Preorder</option>';
+    statusSelect.value = record.availabilityStatus === "preorder" ? "preorder" : "available";
     statusCell.append(statusSelect);
     const dateCell = document.createElement("td");
     dateCell.dataset.label = "Ready date";
@@ -171,6 +168,13 @@ document.querySelectorAll("[data-inventory-save]").forEach(button => {
       if (!response.ok) throw new Error(payload.error || "The changes could not be saved.");
       dirty = false;
       saveStatus.textContent = payload.notificationsSent ? `Saved. ${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} sent.` : "Saved. The website inventory is up to date.";
+      const toast = document.querySelector("[data-inventory-toast]");
+      if (toast) {
+        toast.querySelector("span").textContent = payload.notificationsSent ? `${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} also sent.` : "The website inventory is up to date.";
+        toast.hidden = false;
+        clearTimeout(toast.hideTimer);
+        toast.hideTimer = setTimeout(() => { toast.hidden = true; }, 4200);
+      }
     } catch (error) {
       saveStatus.textContent = error.message;
     } finally {

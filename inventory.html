@@ -27,8 +27,8 @@
 
     <section class="inventory-manager" data-inventory-manager hidden>
       <div class="inventory-guide">
-        <strong>Three simple choices</strong>
-        <p><b>Available</b> means customers can order it now, unless stock is 0. <b>Preorder</b> shows the ready date and allows advance orders. <b>Unavailable</b> turns ordering off even when stock is entered. Out-of-stock and unavailable products show one clear “Notify me” button.</p>
+        <strong>Two simple choices</strong>
+        <p><b>Available now</b> lets customers order whenever stock is above 0. <b>Preorder</b> shows the ready date and allows advance orders. Setting stock to <b>0</b> automatically shows Out of stock.</p>
       </div>
       <div class="inventory-actions">
         <div><strong data-inventory-count>0 products</strong><span>Changes appear on the shop after saving.</span></div>
@@ -45,6 +45,7 @@
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
       </div>
     </section>
+    <div class="inventory-save-toast" data-inventory-toast role="status" aria-live="polite" hidden><strong>Changes saved</strong><span>The website inventory is up to date.</span></div>
   </main>
   <script src="inventory.js"></script>
 </body>

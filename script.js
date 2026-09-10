@@ -398,7 +398,7 @@ const PRODUCTS = [
   {
     "id": "honey-oat-comfort-soap",
     "category": "artisan-soap",
-    "name": "Honey Oat Comfort",
+    "name": "Oat and Tallow",
     "kicker": "Just B Clean",
     "description": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin. Made with grass-fed tallow, creamy coconut milk, raw honey, colloidal oatmeal, and nourishing oils and butters, it creates a soft, comforting lather. Kaolin clay and turmeric complement the blend, while a delicate touch of lavender gives it a subtle, calming botanical scent.",
     "cardDescription": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin.",
@@ -420,7 +420,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/soap-honey-oat-comfort.webp",
+    "image": "images/product-photo-coming-soon.svg",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -1564,7 +1564,7 @@ function productCard(product) {
       <div class="product-title-row"><h2><a href="${productPageUrl(product)}">${product.name}</a></h2>${Number.isFinite(product.price) ? `<span class="product-price">${formatPrice(product.price)}</span>` : ""}</div>
       <p class="product-description">${product.cardDescription || product.description}</p>
       ${availability}
-      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">Add to cart <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">View full details</a></div>
+      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? "Preorder" : "Add to cart"} <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">View full details</a></div>
     </div>
   </article>`;
 }
@@ -1597,9 +1597,28 @@ function renderCatalogues() {
     const catalogue = grid.dataset.catalog;
     let matches = PRODUCTS;
     if (category) matches = PRODUCTS.filter(product => product.category === category);
-    if (catalogue === "featured") matches = PRODUCTS.filter(product => product.featured).slice(0, 4);
+    if (catalogue === "featured") matches = [...PRODUCTS].sort(() => Math.random() - .5);
     renderProductGrid(grid, matches);
+    if (catalogue === "featured") initializeFeaturedCarousel(grid);
   });
+}
+
+function initializeFeaturedCarousel(grid) {
+  grid.classList.add("featured-carousel");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let paused = false;
+  const advance = () => {
+    if (paused || grid.scrollWidth <= grid.clientWidth) return;
+    const firstCard = grid.querySelector(".product-card");
+    const step = (firstCard?.getBoundingClientRect().width || 280) + 16;
+    const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - step / 2;
+    grid.scrollTo({ left: atEnd ? 0 : grid.scrollLeft + step, behavior: "smooth" });
+  };
+  grid.addEventListener("mouseenter", () => { paused = true; });
+  grid.addEventListener("mouseleave", () => { paused = false; });
+  grid.addEventListener("focusin", () => { paused = true; });
+  grid.addEventListener("focusout", () => { paused = false; });
+  window.setInterval(advance, 4800);
 }
 
 function orderItemMarkup(item) {
@@ -1974,9 +1993,9 @@ function renderProductPage() {
           ${Number.isFinite(product.price) ? `<p class="product-detail-price" data-price-product="${product.id}">${formatPrice(product.price)}</p>` : `<p class="product-detail-price" data-price-product="${product.id}" hidden></p>`}
           <p class="product-detail-description">${product.description}</p>
           ${stockMarkup}
-          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">Add to cart <span>＋</span></button>
+          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? "Preorder" : "Add to cart"} <span>＋</span></button>
           <button class="notify-product-button notify-product-button--detail" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button>
-          <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Gatineau</span><span>Pay after approval</span></div>
+          <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Gatineau</span><span>Made with care</span></div>
         </div>
       </section>
     </div>
@@ -2278,7 +2297,10 @@ function initializeCheckout() {
       firstInvalid?.focus({ preventScroll: true });
       firstInvalid?.scrollIntoView({ behavior: "auto", block: "center" });
       const invalidStatus = form.querySelector("[data-checkout-status]");
-      if (invalidStatus) invalidStatus.textContent = "Please correct the highlighted information before sending your request.";
+      if (invalidStatus) {
+        invalidStatus.textContent = "Please correct the highlighted information before sending your request.";
+        invalidStatus.classList.add("is-error");
+      }
       return;
     }
     const details = checkoutPayload(form);
@@ -2287,7 +2309,7 @@ function initializeCheckout() {
     const fallback = form.querySelector("[data-checkout-fallback]");
     button.disabled = true;
     button.textContent = "Sending request…";
-    if (status) status.textContent = "";
+    if (status) { status.textContent = ""; status.classList.remove("is-error"); }
     if (fallback) fallback.hidden = true;
 
     if (window.location.protocol === "file:") {
@@ -2311,7 +2333,7 @@ function initializeCheckout() {
       if (!response.ok) throw new Error(result.error || "Order could not be sent.");
       showCheckoutSuccess(result.orderId || "Submitted");
     } catch (error) {
-      if (status) status.textContent = "We could not send the request automatically. You can send the prepared request by email instead.";
+      if (status) { status.textContent = "We could not send the request automatically. You can send the prepared request by email instead."; status.classList.add("is-error"); }
       if (fallback) {
         fallback.href = checkoutEmailUrl(details);
         fallback.hidden = false;
@@ -2492,9 +2514,9 @@ async function loadInventory() {
     document.querySelectorAll("[data-notify-product]").forEach(button => {
       const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
       const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
-      const show = product && (product.availabilityStatus === "preorder" || unavailable);
+      const show = product && unavailable;
       button.hidden = !show;
-      button.textContent = product?.availabilityStatus === "preorder" ? "Notify me when it’s ready" : "Notify me when available";
+      button.textContent = "Notify me when available";
       button.classList.toggle("notify-product-button--primary", Boolean(unavailable));
     });
     document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
@@ -2554,4 +2576,3 @@ initializeNewsletter();
 initializeScrollLife();
 initializeAvailabilityNotifications();
 loadInventory();
-

@@ -379,7 +379,7 @@
   {
     "id": "honey-oat-comfort-soap",
     "category": "artisan-soap",
-    "name": "Honey Oat Comfort",
+    "name": "Oat and Tallow",
     "kicker": "Just B Clean",
     "description": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin. Made with grass-fed tallow, creamy coconut milk, raw honey, colloidal oatmeal, and nourishing oils and butters, it creates a soft, comforting lather. Kaolin clay and turmeric complement the blend, while a delicate touch of lavender gives it a subtle, calming botanical scent.",
     "cardDescription": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin.",
@@ -401,7 +401,7 @@
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/soap-honey-oat-comfort.webp",
+    "image": "images/product-photo-coming-soon.svg",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -1216,4 +1216,3 @@
     "featured": true
   }
 ]
-
