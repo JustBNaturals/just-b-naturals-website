@@ -131,8 +131,9 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .circle-arrow { position: absolute; top: 18px; right: 18px; z-index: 3; width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid rgba(16,44,39,.45); border-radius: 50%; background: rgba(255,253,248,.9); transition: background .2s, color .2s; }
 .category-card:hover .circle-arrow { background: var(--ink); color: var(--white); }
 .featured-section { max-width: none; background: var(--cream); }
-.product-grid.featured-carousel { display: flex; gap: 16px; overflow-x: auto; padding: 2px 0 18px; scroll-behavior: smooth; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--brown) transparent; }
-.product-grid.featured-carousel .product-card { flex: 0 0 calc((100% - 48px) / 4); scroll-snap-align: start; }
+.product-grid.featured-carousel { display: flex; gap: 16px; overflow: hidden; padding: 2px 0 0; scroll-behavior: auto; scroll-snap-type: none; scrollbar-width: none; }
+.product-grid.featured-carousel::-webkit-scrollbar { display: none; }
+.product-grid.featured-carousel .product-card { flex: 0 0 calc((100% - 48px) / 4); scroll-snap-align: none; }
 
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 38px 16px; }
 .product-grid:has(.product-card:only-child) { grid-template-columns: minmax(280px, 360px); justify-content: center; }
@@ -307,8 +308,9 @@ p, h1, h2, h3 { overflow-wrap: break-word; }
 .catalog-empty h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 38px; font-weight: 500; }
 .catalog-empty p { margin: 0; color: var(--muted); }
 
-.category-hero { position: relative; margin-bottom: 32px; overflow: hidden; background: #faf7ef var(--category-hero) center / cover no-repeat; }
-.category-hero::before, .category-hero::after { content: none; }
+.category-hero { position: relative; margin-bottom: 0; overflow: hidden; background: #faf7ef var(--category-hero) center / cover no-repeat; }
+.category-hero::before { content: none; }
+.category-hero::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; z-index: 0; height: 112px; pointer-events: none; background: linear-gradient(180deg, rgba(250,247,239,0), #faf7ef 94%); }
 .category-hero-grid { position: relative; z-index: 1; min-height: 475px; display: grid; grid-template-columns: minmax(0, 760px); align-items: center; }
 .category-hero .breadcrumbs { margin-bottom: 50px; }
 .category-hero h1 { max-width: 900px; }

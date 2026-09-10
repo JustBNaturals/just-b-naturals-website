@@ -1597,28 +1597,61 @@ function renderCatalogues() {
     const catalogue = grid.dataset.catalog;
     let matches = PRODUCTS;
     if (category) matches = PRODUCTS.filter(product => product.category === category);
-    if (catalogue === "featured") matches = [...PRODUCTS].sort(() => Math.random() - .5);
+    if (catalogue === "featured") matches = featuredProducts();
     renderProductGrid(grid, matches);
     if (catalogue === "featured") initializeFeaturedCarousel(grid);
   });
 }
 
+function featuredProducts() {
+  return PRODUCTS
+    .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0)
+    .sort(() => Math.random() - .5);
+}
+
 function initializeFeaturedCarousel(grid) {
+  if (typeof grid._featuredCarouselCleanup === "function") grid._featuredCarouselCleanup();
   grid.classList.add("featured-carousel");
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const originals = [...grid.querySelectorAll(":scope > .product-card")];
+  if (originals.length < 2 || grid.scrollWidth <= grid.clientWidth) return;
+  const clones = originals.map(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("a, button, input, select, textarea").forEach(control => control.setAttribute("tabindex", "-1"));
+    grid.append(clone);
+    return clone;
+  });
   let paused = false;
-  const advance = () => {
-    if (paused || grid.scrollWidth <= grid.clientWidth) return;
-    const firstCard = grid.querySelector(".product-card");
-    const step = (firstCard?.getBoundingClientRect().width || 280) + 16;
-    const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - step / 2;
-    grid.scrollTo({ left: atEnd ? 0 : grid.scrollLeft + step, behavior: "smooth" });
+  let frame = 0;
+  let previousTime = 0;
+  let position = grid.scrollLeft;
+  const tick = time => {
+    if (!paused && previousTime) {
+      const elapsed = Math.min(time - previousTime, 40);
+      position += elapsed * .018;
+      const loopWidth = clones[0].offsetLeft - originals[0].offsetLeft;
+      if (loopWidth > 0 && position >= loopWidth) position -= loopWidth;
+      grid.scrollLeft = position;
+    }
+    previousTime = time;
+    frame = requestAnimationFrame(tick);
   };
-  grid.addEventListener("mouseenter", () => { paused = true; });
-  grid.addEventListener("mouseleave", () => { paused = false; });
-  grid.addEventListener("focusin", () => { paused = true; });
-  grid.addEventListener("focusout", () => { paused = false; });
-  window.setInterval(advance, 4800);
+  const pause = () => { paused = true; };
+  const resume = () => { paused = false; position = grid.scrollLeft; previousTime = performance.now(); };
+  const handleVisibility = () => { if (document.hidden) pause(); else resume(); };
+  grid.addEventListener("focusin", pause);
+  grid.addEventListener("focusout", resume);
+  document.addEventListener("visibilitychange", handleVisibility);
+  frame = requestAnimationFrame(tick);
+  grid._featuredCarouselCleanup = () => {
+    cancelAnimationFrame(frame);
+    grid.removeEventListener("focusin", pause);
+    grid.removeEventListener("focusout", resume);
+    document.removeEventListener("visibilitychange", handleVisibility);
+    clones.forEach(clone => clone.remove());
+    delete grid._featuredCarouselCleanup;
+  };
 }
 
 function orderItemMarkup(item) {
@@ -2238,6 +2271,21 @@ function checkoutEmailUrl(details) {
   return `mailto:${STORE.orderEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildOrderSummary(details))}`;
 }
 
+function focusFirstInvalidCheckoutField(form) {
+  const field = [...form.elements].find(control => control.willValidate && !control.checkValidity() && control.type !== "hidden");
+  if (!(field instanceof HTMLElement)) return;
+  const headerClearance = window.innerWidth <= 900 ? 150 : 105;
+  const targetTop = Math.max(0, field.getBoundingClientRect().top + window.scrollY - headerClearance);
+  field.focus({ preventScroll: true });
+  window.scrollTo({ top: targetTop, behavior: "smooth" });
+  window.setTimeout(() => {
+    field.focus({ preventScroll: true });
+    if (field instanceof HTMLInputElement && typeof field.setSelectionRange === "function") {
+      try { field.setSelectionRange(field.value.length, field.value.length); } catch (_) {}
+    }
+  }, 360);
+}
+
 function syncCheckoutState() {
   const checkout = document.querySelector("[data-checkout]");
   if (!checkout) return;
@@ -2287,15 +2335,30 @@ function initializeCheckout() {
     if (event.key === "Enter" && !event.target.closest("textarea, button")) event.preventDefault();
   });
 
+  let invalidFocusQueued = false;
+  form.addEventListener("invalid", () => {
+    form.classList.add("was-validated");
+    if (invalidFocusQueued) return;
+    invalidFocusQueued = true;
+    requestAnimationFrame(() => {
+      updateValidation(true);
+      focusFirstInvalidCheckoutField(form);
+      const invalidStatus = form.querySelector("[data-checkout-status]");
+      if (invalidStatus) {
+        invalidStatus.textContent = "Please correct the highlighted information before sending your request.";
+        invalidStatus.classList.add("is-error");
+      }
+      invalidFocusQueued = false;
+    });
+  }, true);
+
   form.addEventListener("submit", async event => {
     event.preventDefault();
     if (!event.submitter?.matches(".checkout-submit")) return;
     form.classList.add("was-validated");
     if (!form.reportValidity() || !orderList.length) {
       updateValidation(true);
-      const firstInvalid = form.querySelector(":invalid");
-      firstInvalid?.focus({ preventScroll: true });
-      firstInvalid?.scrollIntoView({ behavior: "auto", block: "center" });
+      focusFirstInvalidCheckoutField(form);
       const invalidStatus = form.querySelector("[data-checkout-status]");
       if (invalidStatus) {
         invalidStatus.textContent = "Please correct the highlighted information before sending your request.";
@@ -2489,6 +2552,10 @@ async function loadInventory() {
       product.active = record.active !== false;
       product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
       product.availableDate = record.availableDate || null;
+    });
+    document.querySelectorAll('[data-catalog="featured"]').forEach(grid => {
+      renderProductGrid(grid, featuredProducts());
+      initializeFeaturedCarousel(grid);
     });
     PRODUCTS.forEach(updatePreorderArtwork);
     document.querySelectorAll(".product-card").forEach(card => {
