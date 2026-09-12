@@ -170,7 +170,7 @@
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-sweater-weather.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -401,7 +401,7 @@
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/product-photo-coming-soon.svg",
+    "image": "images/catalog/soap-oat-tallow.webp",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -498,7 +498,7 @@
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-mint-eucalyptus-spa.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -530,7 +530,7 @@
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-spiced-banana.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -1214,5 +1214,197 @@
     "tone": "#d9ded7",
     "accent": "#526b60",
     "featured": true
+  },
+  {
+    "id": "blue-cedar-soap",
+    "category": "artisan-soap",
+    "name": "Blue Cedar",
+    "kicker": "Just B Clean",
+    "description": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
+    "cardDescription": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-blue-cedar.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "chamomile-soap",
+    "category": "artisan-soap",
+    "name": "Chamomile",
+    "kicker": "Just B Clean",
+    "description": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
+    "cardDescription": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-chamomile.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "forest-soap",
+    "category": "artisan-soap",
+    "name": "Forest",
+    "kicker": "Just B Clean",
+    "description": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
+    "cardDescription": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-forest.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "lavender-oat-soap",
+    "category": "artisan-soap",
+    "name": "Lavender and Oat",
+    "kicker": "Just B Clean",
+    "description": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
+    "cardDescription": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-lavender-oat.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "ocean-soap",
+    "category": "artisan-soap",
+    "name": "Ocean",
+    "kicker": "Just B Clean",
+    "description": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
+    "cardDescription": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-ocean.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "rose-matter-soap",
+    "category": "artisan-soap",
+    "name": "Rose Matter",
+    "kicker": "Just B Clean",
+    "description": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
+    "cardDescription": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-rose-matter.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
   }
 ]

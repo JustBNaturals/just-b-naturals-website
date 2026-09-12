@@ -189,7 +189,7 @@ const PRODUCTS = [
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-sweater-weather.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -420,7 +420,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/product-photo-coming-soon.svg",
+    "image": "images/catalog/soap-oat-tallow.webp",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -517,7 +517,7 @@ const PRODUCTS = [
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-mint-eucalyptus-spa.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -549,7 +549,7 @@ const PRODUCTS = [
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-spiced-banana.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -1233,6 +1233,198 @@ const PRODUCTS = [
     "tone": "#d9ded7",
     "accent": "#526b60",
     "featured": true
+  },
+  {
+    "id": "blue-cedar-soap",
+    "category": "artisan-soap",
+    "name": "Blue Cedar",
+    "kicker": "Just B Clean",
+    "description": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
+    "cardDescription": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-blue-cedar.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "chamomile-soap",
+    "category": "artisan-soap",
+    "name": "Chamomile",
+    "kicker": "Just B Clean",
+    "description": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
+    "cardDescription": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-chamomile.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "forest-soap",
+    "category": "artisan-soap",
+    "name": "Forest",
+    "kicker": "Just B Clean",
+    "description": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
+    "cardDescription": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-forest.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "lavender-oat-soap",
+    "category": "artisan-soap",
+    "name": "Lavender and Oat",
+    "kicker": "Just B Clean",
+    "description": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
+    "cardDescription": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-lavender-oat.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "ocean-soap",
+    "category": "artisan-soap",
+    "name": "Ocean",
+    "kicker": "Just B Clean",
+    "description": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
+    "cardDescription": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-ocean.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "rose-matter-soap",
+    "category": "artisan-soap",
+    "name": "Rose Matter",
+    "kicker": "Just B Clean",
+    "description": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
+    "cardDescription": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
+    "ingredients": [
+      "Full ingredient list coming soon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-rose-matter.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
   }
 ];
 
@@ -1535,26 +1727,6 @@ function artMarkup(product) {
   return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}<span class="product-image-tagline" aria-hidden="true">Pure · Natural · Handcrafted</span>`;
 }
 
-function preorderArtMarkup(product) {
-  const ready = product.availableDate ? `Expected ${formatReadyDate(product.availableDate)}` : "Availability date coming soon";
-  return `<span class="preorder-art" role="img" aria-label="${product.name} is being prepared and will be available soon"><span class="preorder-art-inner"><span class="preorder-art-mark" aria-hidden="true">B</span><strong>Coming soon</strong><span>Small batch curing</span><small>${ready}</small></span></span>`;
-}
-
-function updatePreorderArtwork(product) {
-  if (!product || product.availabilityStatus !== "preorder") return;
-  document.querySelectorAll(`.product-card[data-product-id="${product.id}"] .product-art`).forEach(art => {
-    art.classList.add("is-preorder-art");
-    art.innerHTML = preorderArtMarkup(product);
-  });
-  if (document.body.dataset.productId === product.id) {
-    const detail = document.querySelector(".product-detail-media");
-    if (detail) {
-      detail.classList.add("is-preorder-art");
-      detail.innerHTML = preorderArtMarkup(product);
-    }
-  }
-}
-
 function productCard(product) {
   const availability = product.availability ? `<p class="stock-status" data-stock-product="${product.id}">${product.availability}</p>` : `<p class="stock-status" data-stock-product="${product.id}" hidden></p>`;
   return `<article class="product-card" data-product-id="${product.id}" style="--tone:${product.tone};--accent:${product.accent}">
@@ -1623,13 +1795,15 @@ function initializeFeaturedCarousel(grid) {
     return clone;
   });
   let paused = false;
+  let resumeTimer = 0;
   let frame = 0;
   let previousTime = 0;
   let position = grid.scrollLeft;
   const tick = time => {
     if (!paused && previousTime) {
       const elapsed = Math.min(time - previousTime, 40);
-      position += elapsed * .018;
+      const speed = window.matchMedia("(max-width: 620px)").matches ? .034 : .027;
+      position += elapsed * speed;
       const loopWidth = clones[0].offsetLeft - originals[0].offsetLeft;
       if (loopWidth > 0 && position >= loopWidth) position -= loopWidth;
       grid.scrollLeft = position;
@@ -1637,17 +1811,42 @@ function initializeFeaturedCarousel(grid) {
     previousTime = time;
     frame = requestAnimationFrame(tick);
   };
-  const pause = () => { paused = true; };
-  const resume = () => { paused = false; position = grid.scrollLeft; previousTime = performance.now(); };
+  const pause = () => {
+    window.clearTimeout(resumeTimer);
+    paused = true;
+    position = grid.scrollLeft;
+  };
+  const resume = () => {
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(() => {
+      paused = false;
+      position = grid.scrollLeft;
+      previousTime = performance.now();
+    }, 900);
+  };
+  const syncPosition = () => { if (paused) position = grid.scrollLeft; };
   const handleVisibility = () => { if (document.hidden) pause(); else resume(); };
   grid.addEventListener("focusin", pause);
   grid.addEventListener("focusout", resume);
+  grid.addEventListener("pointerdown", pause);
+  grid.addEventListener("pointerup", resume);
+  grid.addEventListener("pointercancel", resume);
+  grid.addEventListener("touchstart", pause, { passive: true });
+  grid.addEventListener("touchend", resume, { passive: true });
+  grid.addEventListener("scroll", syncPosition, { passive: true });
   document.addEventListener("visibilitychange", handleVisibility);
   frame = requestAnimationFrame(tick);
   grid._featuredCarouselCleanup = () => {
     cancelAnimationFrame(frame);
+    window.clearTimeout(resumeTimer);
     grid.removeEventListener("focusin", pause);
     grid.removeEventListener("focusout", resume);
+    grid.removeEventListener("pointerdown", pause);
+    grid.removeEventListener("pointerup", resume);
+    grid.removeEventListener("pointercancel", resume);
+    grid.removeEventListener("touchstart", pause);
+    grid.removeEventListener("touchend", resume);
+    grid.removeEventListener("scroll", syncPosition);
     document.removeEventListener("visibilitychange", handleVisibility);
     clones.forEach(clone => clone.remove());
     delete grid._featuredCarouselCleanup;
@@ -2557,7 +2756,6 @@ async function loadInventory() {
       renderProductGrid(grid, featuredProducts());
       initializeFeaturedCarousel(grid);
     });
-    PRODUCTS.forEach(updatePreorderArtwork);
     document.querySelectorAll(".product-card").forEach(card => {
       const product = PRODUCTS.find(item => item.id === card.dataset.productId);
       if (!product) return;
