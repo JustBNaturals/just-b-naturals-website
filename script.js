@@ -223,8 +223,8 @@ const PRODUCTS = [
     "availability": "Available October 15",
     "price": null,
     "stock": null,
-    "image": "images/catalog/soap-coconut-lavender.webp",
-    "imageNote": "Individual product photo coming soon.",
+    "image": "images/catalog/soap-collection.webp",
+    "imageNote": "Collection photo — individual photo coming soon.",
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -1723,8 +1723,26 @@ function fallbackArtMarkup(product) {
   return `<div class="art-object jar-object"><span class="jar-lid"></span><span class="art-label">${jarLabel}</span></div>`;
 }
 
+const PRODUCT_IMAGE_POSITIONS = Object.freeze({
+  "blue-cedar-soap": "50% 76%",
+  "chamomile-soap": "50% 77%",
+  "mint-eucalyptus-spa-soap": "50% 77%",
+  "forest-soap": "50% 79%",
+  "lavender-oat-soap": "50% 79%",
+  "honey-oat-comfort-soap": "50% 78%",
+  "ocean-soap": "50% 78%",
+  "rose-matter-soap": "50% 78%",
+  "spiced-banana-soap": "50% 79%",
+  "sweater-weather-soap": "50% 69%",
+  "coconut-lavender-soap": "50% 66%"
+});
+
+function productImageStyle(product) {
+  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}`;
+}
+
 function artMarkup(product) {
-  return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}<span class="product-image-tagline" aria-hidden="true">Pure · Natural · Handcrafted</span>`;
+  return `<img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy" style="${productImageStyle(product)}"><div class="art-fallback" hidden>${fallbackArtMarkup(product)}</div>${product.imageNote ? `<span class="photo-note">${product.imageNote}</span>` : ""}<span class="product-image-tagline" aria-hidden="true">Pure · Natural · Handcrafted</span>`;
 }
 
 function productCard(product) {
@@ -2102,6 +2120,9 @@ function initializeCatalogueFeatures() {
       });
       if (sort?.value === "name") matches.sort((a, b) => a.name.localeCompare(b.name));
       if (sort?.value === "featured") matches.sort((a, b) => Number(b.featured) - Number(a.featured));
+      if (sort?.value === "price-low") matches.sort((a, b) => (Number.isFinite(a.price) ? a.price : Infinity) - (Number.isFinite(b.price) ? b.price : Infinity) || a.name.localeCompare(b.name));
+      if (sort?.value === "price-high") matches.sort((a, b) => (Number.isFinite(b.price) ? b.price : -Infinity) - (Number.isFinite(a.price) ? a.price : -Infinity) || a.name.localeCompare(b.name));
+      if (sort?.value === "preorder") matches.sort((a, b) => Number(b.availabilityStatus === "preorder") - Number(a.availabilityStatus === "preorder") || a.name.localeCompare(b.name));
       renderProductGrid(shopGrid, matches);
       filterButtons.forEach(button => {
         const selected = button.dataset.categoryFilter === activeCategory;
@@ -2217,7 +2238,7 @@ function renderProductPage() {
     <div class="shell product-detail-shell">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html#${product.category}">${categoryLabel}</a><span>/</span><span>${product.name}</span></nav>
       <section class="product-detail-hero" style="--tone:${product.tone};--accent:${product.accent}">
-        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
+        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}" style="${productImageStyle(product)}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
         <div class="product-detail-purchase">
           <p class="eyebrow">${product.kicker}</p>
           <h1>${product.name}</h1>
@@ -2841,3 +2862,4 @@ initializeNewsletter();
 initializeScrollLife();
 initializeAvailabilityNotifications();
 loadInventory();
+

@@ -27,8 +27,8 @@
     <section class="catalog-section shell" aria-label="All products">
       <div class="catalog-toolbar"><p data-product-count data-category-summary="all">0 products</p><p class="catalog-toolbar-note">Guest order requests • Pay after confirmation</p></div>
       <div class="catalog-controls">
-        <label class="catalog-search"><span class="visually-hidden">Search products</span><input type="search" data-product-search placeholder="Search products or ingredients…"></label>
-        <div class="catalog-control-actions"><label class="catalog-sort"><span>Sort products</span><select data-product-sort><option value="featured">Featured first</option><option value="name">Name A–Z</option></select></label></div>
+        <label class="catalog-search"><span class="visually-hidden">Search products or ingredients</span><input type="search" data-product-search placeholder="Search products or ingredients…" aria-label="Search products or ingredients"></label>
+        <div class="catalog-control-actions"><label class="catalog-sort"><span>Sort products</span><select data-product-sort><option value="featured">Featured first</option><option value="name">Name A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="preorder">Preorders first</option></select></label></div>
       </div>
       <div class="product-grid" data-catalog="all"></div>
       <div class="catalog-empty" data-catalog-empty hidden><h2>No products found</h2><p>Try a different product name or ingredient.</p></div>
@@ -37,3 +37,4 @@
   <div data-site-footer></div>
 </body>
 </html>
+

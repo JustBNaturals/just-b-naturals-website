@@ -57,7 +57,7 @@
             <div class="checkout-card-heading"><span>02</span><div><p class="eyebrow">Fulfillment</p><h2>How will you receive it?</h2></div></div>
             <div class="choice-grid">
               <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
-              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>Delivery costs extra and is estimated from the driving distance.</small></span></label>
+              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>$0.50 per driving kilometre from Aylmer. Select an address to see your estimate.</small></span></label>
             </div>
             <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" minlength="2" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
             <div class="delivery-estimator" data-delivery-estimator hidden>
@@ -69,7 +69,7 @@
               <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
               <p class="field-instruction" id="delivery-address-instruction">Type your address, then choose the matching address from the suggestion list. This is required to calculate delivery.</p>
               <p class="delivery-estimate-status" id="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>
-              <p class="delivery-estimate-help">Estimated at $1.00 per driving kilometre from our Aylmer location. The final delivery fee is confirmed before payment.</p>
+              <p class="delivery-estimate-help">Estimated at $0.50 per driving kilometre from our Aylmer location. Your delivery estimate appears in the order total and in both order emails.</p>
             </div>
           </section>
 
@@ -101,7 +101,7 @@
           <div class="order-list-items checkout-order-items" data-order-items></div>
           <dl class="checkout-totals">
             <div><dt>Products subtotal</dt><dd data-checkout-subtotal>$0.00</dd></div>
-            <div data-checkout-delivery-row hidden><dt>Estimated local delivery</dt><dd data-checkout-delivery>Select an address</dd></div>
+            <div data-checkout-delivery-row hidden><dt>Estimated local delivery <small>($0.50/km)</small></dt><dd data-checkout-delivery>Select an address</dd></div>
             <div class="checkout-grand-total"><dt>Estimated order total</dt><dd data-checkout-total>$0.00</dd></div>
           </dl>
           <p>The item subtotal comes from the current inventory prices. Local delivery is added after a recognized address is selected.</p>
@@ -120,3 +120,4 @@
   <div data-site-footer></div>
 </body>
 </html>
+
