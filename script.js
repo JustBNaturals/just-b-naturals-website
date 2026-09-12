@@ -223,8 +223,8 @@ const PRODUCTS = [
     "availability": "Available October 15",
     "price": null,
     "stock": null,
-    "image": "images/catalog/soap-collection.webp",
-    "imageNote": "Collection photo — individual photo coming soon.",
+    "image": "images/product-photo-coming-soon.svg",
+    "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
@@ -1724,21 +1724,38 @@ function fallbackArtMarkup(product) {
 }
 
 const PRODUCT_IMAGE_POSITIONS = Object.freeze({
-  "blue-cedar-soap": "50% 76%",
-  "chamomile-soap": "50% 77%",
-  "mint-eucalyptus-spa-soap": "50% 77%",
-  "forest-soap": "50% 79%",
-  "lavender-oat-soap": "50% 79%",
-  "honey-oat-comfort-soap": "50% 78%",
-  "ocean-soap": "50% 78%",
-  "rose-matter-soap": "50% 78%",
-  "spiced-banana-soap": "50% 79%",
+  "blue-cedar-soap": "50% 84%",
+  "chamomile-soap": "50% 85%",
+  "mint-eucalyptus-spa-soap": "50% 85%",
+  "forest-soap": "50% 86%",
+  "lavender-oat-soap": "50% 86%",
+  "honey-oat-comfort-soap": "50% 85%",
+  "ocean-soap": "50% 84%",
+  "rose-matter-soap": "50% 84%",
+  "spiced-banana-soap": "50% 85%",
   "sweater-weather-soap": "50% 69%",
-  "coconut-lavender-soap": "50% 66%"
+  "coconut-lavender-soap": "50% 50%"
+});
+
+const SOAP_IMAGE_TREATMENTS = Object.freeze({
+  "blue-cedar-soap": "brightness(1.08) contrast(.92) saturate(.86)",
+  "chamomile-soap": "brightness(.91) contrast(.98) saturate(.86)",
+  "mint-eucalyptus-spa-soap": "brightness(1.02) contrast(.95) saturate(.88)",
+  "forest-soap": "brightness(1.16) contrast(.88) saturate(.82)",
+  "lavender-oat-soap": "brightness(.93) contrast(.98) saturate(.86)",
+  "honey-oat-comfort-soap": "brightness(1.04) contrast(.94) saturate(.86)",
+  "ocean-soap": "brightness(1.12) contrast(.9) saturate(.8)",
+  "rose-matter-soap": "brightness(.98) contrast(.95) saturate(.86)",
+  "spiced-banana-soap": "brightness(1.03) contrast(.94) saturate(.86)",
+  "sweater-weather-soap": "brightness(1.05) contrast(.94) saturate(.85)"
 });
 
 function productImageStyle(product) {
-  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}`;
+  const imageTreatment = SOAP_IMAGE_TREATMENTS[product.id];
+  const treatment = imageTreatment
+    ? `;--image-treatment:${imageTreatment};--image-treatment-hover:${imageTreatment}`
+    : "";
+  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}${treatment}`;
 }
 
 function artMarkup(product) {
@@ -2122,8 +2139,10 @@ function initializeCatalogueFeatures() {
       if (sort?.value === "featured") matches.sort((a, b) => Number(b.featured) - Number(a.featured));
       if (sort?.value === "price-low") matches.sort((a, b) => (Number.isFinite(a.price) ? a.price : Infinity) - (Number.isFinite(b.price) ? b.price : Infinity) || a.name.localeCompare(b.name));
       if (sort?.value === "price-high") matches.sort((a, b) => (Number.isFinite(b.price) ? b.price : -Infinity) - (Number.isFinite(a.price) ? a.price : -Infinity) || a.name.localeCompare(b.name));
-      if (sort?.value === "preorder") matches.sort((a, b) => Number(b.availabilityStatus === "preorder") - Number(a.availabilityStatus === "preorder") || a.name.localeCompare(b.name));
-      renderProductGrid(shopGrid, matches);
+      const visibleMatches = sort?.value === "preorder"
+        ? matches.filter(product => product.active !== false && product.availabilityStatus === "preorder")
+        : matches;
+      renderProductGrid(shopGrid, visibleMatches);
       filterButtons.forEach(button => {
         const selected = button.dataset.categoryFilter === activeCategory;
         button.classList.toggle("active", selected);

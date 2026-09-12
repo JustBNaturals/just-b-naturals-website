@@ -140,7 +140,19 @@ async function handleOrder(request,env){
     if(!["pickup","delivery"].includes(data.fulfillment)||!["cash","etransfer"].includes(data.payment))return json({error:"Please select valid fulfillment and payment options."},400);
     if(!order.items.length)return json({error:"Your cart is empty."},400);
     if(order.fulfillment==="delivery"&&(order.deliveryAddress.length<8||!order.deliveryPlaceId))return json({error:"Please select a recognized local delivery address and calculate its fee."},400);
-    if(order.fulfillment==="delivery"){try{Object.assign(order,await calculateDelivery(env,order.deliveryPlaceId))}catch(_){return json({error:"The delivery route could not be calculated. Please choose the address again."},400)}}
+    if(order.fulfillment==="delivery"){
+      try{
+        const estimate=await calculateDelivery(env,order.deliveryPlaceId);
+        if(!Number.isInteger(estimate.feeCents)||estimate.feeCents<0||!Number.isFinite(estimate.distanceKm))throw new Error("Incomplete delivery estimate");
+        order.deliveryDistanceKm=estimate.distanceKm;
+        order.deliveryFeeCents=estimate.feeCents;
+        order.deliveryDuration=estimate.duration;
+        order.deliveryOriginLabel=estimate.originLabel;
+      }catch(_){
+        return json({error:"The delivery fee could not be calculated. Please choose the suggested address again before submitting."},400);
+      }
+    }
+    if(order.fulfillment==="delivery"&&(!Number.isInteger(order.deliveryFeeCents)||order.deliveryFeeCents<0))return json({error:"A delivery fee is required before this order can be emailed."},400);
     order.items=await attachInventory(env,order.items);
     const unavailable=order.items.find(item=>item.active===false||item.availabilityStatus==="unavailable"||(item.stock===0&&item.availabilityStatus!=="preorder"));
     if(unavailable)return json({error:`${unavailable.name} is currently unavailable. Please remove it from your cart before sending the request.`},400);
@@ -223,5 +235,13 @@ async function handleInventoryAdmin(request,env){
   }catch(_){return json({error:"The inventory changes could not be saved."},500)}
 }
 
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return env.ASSETS.fetch(request)}};
+async function serveAsset(request,env){
+  const response=await env.ASSETS.fetch(request),url=new URL(request.url);
+  if(!/\.(?:html|css|js|json)$/.test(url.pathname)&&url.pathname!=="/")return response;
+  const headers=new Headers(response.headers);
+  headers.set("Cache-Control","no-cache, no-store, must-revalidate");
+  headers.set("Pragma","no-cache");
+  return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
+}
+export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
 
