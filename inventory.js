@@ -31,7 +31,7 @@ async function authorizedFetch(url, options = {}) {
   const headers = new Headers(options.headers || {});
   headers.set("Authorization", `Bearer ${inventoryKey}`);
   headers.set("Accept", "application/json");
-  return fetch(url, { ...options, headers });
+  return fetch(url, { cache: "no-store", ...options, headers });
 }
 
 async function openInventory(key) {
@@ -137,51 +137,85 @@ loginForm.addEventListener("submit", async event => {
   }
 });
 
-document.querySelectorAll("[data-inventory-save]").forEach(button => {
-  button.addEventListener("click", async () => {
-    const invalidDate = rows.querySelector(".inventory-date-input:invalid");
-    if (invalidDate) {
-      invalidDate.reportValidity();
-      invalidDate.focus();
-      saveStatus.textContent = "Choose a ready date for every product marked Preorder.";
-      return;
-    }
-    const products = [...rows.querySelectorAll("tr")].map(row => {
-      const stockValue = row.querySelector('input[step="1"]').value.trim();
-      const priceValue = row.querySelector(".inventory-price-input").value.trim();
-      return {
-        id: row.dataset.productId,
-        stock: stockValue === "" ? null : Number(stockValue),
-        priceCents: priceValue === "" ? null : Math.round(Number(priceValue) * 100),
-        availabilityStatus: row.querySelector(".inventory-status-select").value,
-        availableDate: row.querySelector(".inventory-date-input").value || null
-      };
-    });
-    button.disabled = true;
-    saveStatus.textContent = "Saving…";
-    try {
-      const response = await authorizedFetch("/api/inventory", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ products })
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || "The changes could not be saved.");
-      dirty = false;
-      saveStatus.textContent = payload.notificationsSent ? `Saved. ${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} sent.` : "Saved. The website inventory is up to date.";
-      const toast = document.querySelector("[data-inventory-toast]");
-      if (toast) {
-        toast.querySelector("span").textContent = payload.notificationsSent ? `${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} also sent.` : "The website inventory is up to date.";
-        toast.hidden = false;
-        clearTimeout(toast.hideTimer);
-        toast.hideTimer = setTimeout(() => { toast.hidden = true; }, 4200);
-      }
-    } catch (error) {
-      saveStatus.textContent = error.message;
-    } finally {
-      document.querySelectorAll("[data-inventory-save]").forEach(item => { item.disabled = false; });
-    }
+let saving = false;
+
+function showSavedToast(message) {
+  const toast = document.querySelector("[data-inventory-toast]");
+  if (!toast) return;
+  toast.querySelector("span").textContent = message;
+  toast.hidden = false;
+  toast.classList.remove("is-visible");
+  requestAnimationFrame(() => toast.classList.add("is-visible"));
+  clearTimeout(toast.hideTimer);
+  toast.hideTimer = setTimeout(() => {
+    toast.classList.remove("is-visible");
+    toast.hidden = true;
+  }, 4200);
+}
+
+async function saveInventory() {
+  if (saving || manager.hidden) return;
+  const invalidDate = rows.querySelector(".inventory-date-input:invalid");
+  if (invalidDate) {
+    invalidDate.reportValidity();
+    invalidDate.focus();
+    saveStatus.textContent = "Choose a ready date for every product marked Preorder.";
+    return;
+  }
+  const products = [...rows.querySelectorAll("tr")].map(row => {
+    const stockValue = row.querySelector('input[step="1"]').value.trim();
+    const priceValue = row.querySelector(".inventory-price-input").value.trim();
+    return {
+      id: row.dataset.productId,
+      stock: stockValue === "" ? null : Number(stockValue),
+      priceCents: priceValue === "" ? null : Math.round(Number(priceValue) * 100),
+      availabilityStatus: row.querySelector(".inventory-status-select").value,
+      availableDate: row.querySelector(".inventory-date-input").value || null
+    };
   });
+  saving = true;
+  const buttons = [...document.querySelectorAll("[data-inventory-save]")];
+  buttons.forEach(button => {
+    button.disabled = true;
+    button.dataset.label = button.textContent;
+    button.textContent = "Saving…";
+  });
+  saveStatus.textContent = "Saving and updating the shop…";
+  try {
+    const response = await authorizedFetch("/api/inventory", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ products })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || "The changes could not be saved.");
+    const verification = await authorizedFetch("/api/inventory");
+    if (!verification.ok) throw new Error("The inventory saved, but the live update could not be verified. Refresh and try again.");
+    dirty = false;
+    const notificationMessage = payload.notificationsSent ? `${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} also sent.` : "The shop now has your latest inventory.";
+    saveStatus.textContent = payload.notificationsSent ? `Saved and live. ${notificationMessage}` : "Saved and live. The website inventory is up to date.";
+    buttons.forEach(button => { button.textContent = "Saved ✓"; });
+    showSavedToast(notificationMessage);
+  } catch (error) {
+    saveStatus.textContent = error.message;
+  } finally {
+    saving = false;
+    setTimeout(() => {
+      buttons.forEach(button => {
+        button.disabled = false;
+        button.textContent = button.dataset.label || "Save changes";
+      });
+    }, 900);
+  }
+}
+
+document.querySelectorAll("[data-inventory-save]").forEach(button => button.addEventListener("click", saveInventory));
+
+document.addEventListener("keydown", event => {
+  if (event.key !== "Enter" || event.shiftKey || event.ctrlKey || event.altKey || event.metaKey || manager.hidden) return;
+  if (event.target.closest("button, textarea, a")) return;
+  event.preventDefault();
+  saveInventory();
 });
 
 window.addEventListener("beforeunload", event => {
@@ -237,4 +271,3 @@ campaignForm?.addEventListener('submit',async event=>{event.preventDefault();con
 
 const rememberedKey = sessionStorage.getItem("jbn-inventory-key");
 if (rememberedKey) openInventory(rememberedKey).catch(() => sessionStorage.removeItem("jbn-inventory-key"));
-

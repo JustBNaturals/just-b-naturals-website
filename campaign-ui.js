@@ -1,8 +1,4 @@
-export let campaignLanguage = (() => {
-  const requested = new URLSearchParams(location.search).get('lang');
-  let remembered; try { remembered=localStorage.getItem('jbn-language'); } catch (_) {}
-  return requested==='fr'||requested==='en'?requested:remembered==='fr'?'fr':'en';
-})();
+export const campaignLanguage = new URLSearchParams(location.search).get('lang')==='fr'?'fr':'en';
 const FR = {
   'Home':'Accueil','Shop all':'Tous les produits','Artisan soap':'Savons artisanaux','Sugar scrubs':'Exfoliants au sucre','Roll-on oils':'Huiles à bille','Body care':'Soins corporels','Home & linen':'Maison et linge','About':'À propos',
   'Cart':'Panier','Your selections':'Vos choix','Your cart is empty':'Votre panier est vide','Browse products':'Voir les produits','Review request':'Vérifier la demande','Keep shopping':'Continuer à magasiner','Clear cart':'Vider le panier','Add to cart':'Ajouter au panier','Preorder':'Précommander','Remove':'Retirer','View full details':'Voir les détails','View product':'Voir le produit',

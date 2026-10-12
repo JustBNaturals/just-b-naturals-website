@@ -1,3 +1,5 @@
+import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
+import "./fr.js";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js";
 let soapCampaign = { ...CAMPAIGN_DEFAULTS, enabled: false };
@@ -36,12 +38,12 @@ const PRODUCTS = [
         "title": "About this product",
         "paragraphs": [
           "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather that nourishes the skin. Kaolin clay, matcha powder, and French green clay lend a soft, earthy color and a gentle detoxifying touch.",
-          "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral—balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
+          "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral, balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
         ]
       }
     ],
     "details": [
-      "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral—balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
+      "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral, balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
     ],
     "note": "",
     "use": "",
@@ -71,12 +73,12 @@ const PRODUCTS = [
         "title": "About this product",
         "paragraphs": [
           "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing lather. French green clay offers a gentle detoxifying cleanse, while activated charcoal adds a deeper purifying touch and a striking natural contrast in the swirl.",
-          "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma—bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
+          "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma, bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
         ]
       }
     ],
     "details": [
-      "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma—bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
+      "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma, bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
     ],
     "note": "",
     "use": "",
@@ -106,13 +108,13 @@ const PRODUCTS = [
         "title": "About this product",
         "paragraphs": [
           "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a creamy, conditioning lather that leaves skin soft and nourished. Kaolin clay, French green clay, and matcha powder give the soap its beautiful light green swirls, adding gentle detoxifying and soothing properties.",
-          "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean—an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
+          "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean, an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
           "A pure, handcrafted bar that brings a breath of fresh air to your daily routine."
         ]
       }
     ],
     "details": [
-      "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean—an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
+      "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean, an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
       "A pure, handcrafted bar that brings a breath of fresh air to your daily routine."
     ],
     "note": "",
@@ -133,7 +135,7 @@ const PRODUCTS = [
     "category": "artisan-soap",
     "name": "Ember & Ash",
     "kicker": "Just B Clean",
-    "description": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color—clean, modern, and visually striking.",
+    "description": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color, clean, modern, and visually striking.",
     "cardDescription": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy…",
     "ingredients": [
       "Saponified Oils (Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Sweet Almond Oil, All Natural castor Oil) , Activated Charcoal, Steam-Distilled Essential Oils (Patchouli, Frankincense, Sweet Orange)"
@@ -142,13 +144,13 @@ const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color—clean, modern, and visually striking.",
-          "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint—a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
+          "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color, clean, modern, and visually striking.",
+          "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint, a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
         ]
       }
     ],
     "details": [
-      "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint—a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
+      "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint, a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
     ],
     "note": "",
     "use": "",
@@ -213,12 +215,12 @@ const PRODUCTS = [
         "title": "About this product",
         "paragraphs": [
           "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather. Organic coconut milk adds silky moisture, creating a soothing cleanse that feels soft and comforting on the skin.",
-          "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma—light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
+          "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma, light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
         ]
       }
     ],
     "details": [
-      "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma—light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
+      "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma, light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
     ],
     "note": "Available October 15",
     "use": "",
@@ -226,7 +228,7 @@ const PRODUCTS = [
     "availability": "Available October 15",
     "price": null,
     "stock": null,
-    "image": "images/product-photo-coming-soon.svg",
+    "image": "images/catalog/soap-coconut-lavender.webp",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -248,13 +250,13 @@ const PRODUCTS = [
         "title": "About this product",
         "paragraphs": [
           "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy, nourishing lather that feels delicate on the skin. The formula is intentionally simple and soothing, perfect for those who prefer an understated, fragrance-light cleanse.",
-          "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint—a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
+          "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint, a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
           "A gentle, airy bar designed for lovers of barely-there scents and naturally elegant simplicity."
         ]
       }
     ],
     "details": [
-      "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint—a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
+      "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint, a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
       "A gentle, airy bar designed for lovers of barely-there scents and naturally elegant simplicity."
     ],
     "note": "",
@@ -401,18 +403,19 @@ const PRODUCTS = [
   {
     "id": "honey-oat-comfort-soap",
     "category": "artisan-soap",
-    "name": "Oat and Tallow",
+    "name": "Oat Tallow",
     "kicker": "Just B Clean",
-    "description": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin. Made with grass-fed tallow, creamy coconut milk, raw honey, colloidal oatmeal, and nourishing oils and butters, it creates a soft, comforting lather. Kaolin clay and turmeric complement the blend, while a delicate touch of lavender gives it a subtle, calming botanical scent.",
-    "cardDescription": "A rich, gentle bar thoughtfully crafted for dry and sensitive skin.",
+    "description": "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin. Grass-fed tallow creates a rich, creamy lather while providing skin-conditioning fatty acids that help leave skin feeling soft and nourished. Calendula-infused olive oil, traditionally valued for its soothing properties, pairs beautifully with colloidal oatmeal to comfort and condition the skin. Organic coconut milk adds extra creaminess for a mild, luxurious everyday cleanse.",
+    "cardDescription": "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin.",
     "ingredients": [
-      "Saponified Oils ( Organic Olive Oil, , Grass-Fed Tallow, Unrefined Shea Butter, Organic Coconut Oil, All-Natural Castor Oil, Organic Jojoba Oil), Organic Coconut Milk Colloidal Oatmeal, Raw Honey, Kaolin Clay, Turmeric Powder, Steam-Distilled Lavender Essential Oil."
+      "Saponified oils (calendula-infused olive oil, grass-fed tallow, organic coconut oil, all-natural castor oil), organic coconut milk, colloidal oatmeal."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A rich, gentle bar thoughtfully crafted for dry and sensitive skin. Made with grass-fed tallow, creamy coconut milk, raw honey, colloidal oatmeal, and nourishing oils and butters, it creates a soft, comforting lather. Kaolin clay and turmeric complement the blend, while a delicate touch of lavender gives it a subtle, calming botanical scent."
+          "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin.",
+          "Grass-fed tallow creates a rich, creamy lather while providing skin-conditioning fatty acids that help leave skin feeling soft and nourished. Calendula-infused olive oil, traditionally valued for its soothing properties, pairs beautifully with colloidal oatmeal to comfort and condition the skin. Organic coconut milk adds extra creaminess for a mild, luxurious everyday cleanse."
         ]
       }
     ],
@@ -433,18 +436,55 @@ const PRODUCTS = [
   {
     "id": "chocolate-pumpkin-pie-soap",
     "category": "artisan-soap",
-    "name": "Chocolate Pumpkin Pie",
+    "name": "Pumpkin",
     "kicker": "Just B Clean",
-    "description": "A warm, cozy bar made with real pumpkin purée, nourishing oils, cocoa powder, and French green clay. Sweet orange and cedarwood blend with spicy clove and a touch of cinnamon, creating a rich, comforting aroma reminiscent of crisp autumn days and freshly baked fall treats.",
-    "cardDescription": "A warm, cozy bar made with real pumpkin purée, nourishing oils, cocoa powder, and French green clay.",
+    "description": "This cozy, skin-nourishing bar is crafted with saponified organic olive oil, shea butter, coconut oil, and castor oil for a rich, creamy lather. Real pumpkin purée and 10% cream give the soap its velvety texture and naturally moisturizing feel. Turmeric adds a warm golden hue, while steam-distilled sweet orange, lavender, and clove essential oils create a soft, comforting aroma.",
+    "cardDescription": "A cozy, creamy seasonal bar made with real pumpkin purée, 10% cream, turmeric, and pure essential oils.",
     "ingredients": [
-      "Saponified Oils ( Organic Olive Oil, Unrefined Shea Butter), Pumpkin Purée, Saponified Organic Coconut Oil, Saponified Jojoba Oil, Saponified All-Natural Castor Oil, All-Natural Cocoa Powder, French Green Clay, Steam-Distilled Essential Oils (Sweet Orange, Cedarwood, Clove), Cinnamon."
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), 10% cream, real pumpkin purée, steam-distilled essential oils (sweet orange, lavender, clove), kaolin clay, turmeric powder."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A warm, cozy bar made with real pumpkin purée, nourishing oils, cocoa powder, and French green clay. Sweet orange and cedarwood blend with spicy clove and a touch of cinnamon, creating a rich, comforting aroma reminiscent of crisp autumn days and freshly baked fall treats."
+          "This cozy, skin-nourishing bar is crafted with a blend of saponified organic olive oil, shea butter, coconut oil, and castor oil for a rich, creamy lather. Real pumpkin purée and 10% cream give the soap its velvety texture and naturally moisturizing feel.",
+          "Turmeric adds a warm golden hue. Steam-distilled sweet orange, lavender, and clove essential oils create a soft, comforting aroma that makes each use feel like a warm, cozy moment.",
+          "A seasonal favourite with a naturally luxurious finish, perfect for anyone who loves a gentle, creamy bar made from real ingredients."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": "Preorder • Available September 24, 2026",
+    "availabilityStatus": "preorder",
+    "availableDate": "2026-09-24",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-pumpkin.jpg",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "almond-milk-mocha-soap",
+    "category": "artisan-soap",
+    "name": "Mocha Latté",
+    "kicker": "Just B Clean",
+    "description": "This indulgent bar blends creamy nourishment with the warm comfort of coffee. Made with saponified organic olive oil, shea butter, coconut oil, and castor oil, organic almond milk adds a soft, creamy feel while brewed espresso, coffee grounds, and cocoa powder give the bar its rich mocha character.",
+    "cardDescription": "A creamy mocha-inspired bar made with organic almond milk, brewed espresso, coffee grounds, and cocoa powder.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic almond milk, brewed espresso, coffee grounds, cocoa powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This indulgent bar blends creamy nourishment with the warm comfort of coffee.",
+          "Made with saponified organic olive oil, shea butter, coconut oil, and castor oil, organic almond milk adds a soft, creamy feel while brewed espresso, coffee grounds, and cocoa powder give the bar its rich mocha character."
         ]
       }
     ],
@@ -455,7 +495,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/soap-chocolate-pumpkin-pie.webp",
+    "image": "images/catalog/soap-mocha-latte.jpg",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",
@@ -615,7 +655,7 @@ const PRODUCTS = [
           "Lavender Essential Oil provides a soft floral-herbal aroma traditionally associated with relaxation and calm, making the butter especially pleasant as part of an evening or after-bath routine.",
           "Cedarwood Essential Oil adds a warm, dry, woody character that grounds the lavender and balances the sweetness of the vanilla. Together, lavender and cedarwood create a relaxing, earthy botanical scent rather than an overpowering perfume.",
           "Madagascar Vanilla Bean provides a naturally warm, creamy sweetness and rounds out the sharper botanical notes of lavender and cedarwood, giving the finished butter a subtle, comforting aroma.",
-          "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way—warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
+          "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
         ]
       }
     ],
@@ -630,10 +670,10 @@ const PRODUCTS = [
       "Lavender Essential Oil provides a soft floral-herbal aroma traditionally associated with relaxation and calm, making the butter especially pleasant as part of an evening or after-bath routine.",
       "Cedarwood Essential Oil adds a warm, dry, woody character that grounds the lavender and balances the sweetness of the vanilla. Together, lavender and cedarwood create a relaxing, earthy botanical scent rather than an overpowering perfume.",
       "Madagascar Vanilla Bean provides a naturally warm, creamy sweetness and rounds out the sharper botanical notes of lavender and cedarwood, giving the finished butter a subtle, comforting aroma.",
-      "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way—warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
+      "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
     ],
     "note": "",
-    "use": "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way—warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp.",
+    "use": "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp.",
     "safety": "",
     "availability": null,
     "price": null,
@@ -751,7 +791,7 @@ const PRODUCTS = [
         "paragraphs": [
           "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Fragrance-Free • Essential-Oil-Free • Water-Free • Concentrated",
           "Its simple, unscented formula makes it a versatile head-to-toe moisturizer. Use it for dry hands, rough elbows and knees, cracked-feeling heels, feet, cuticles, weather-exposed skin, or anywhere that needs additional moisture. It can also be worked through a dry beard and the skin underneath to soften and condition.",
-          "Because there is no added water, the formula is highly concentrated—a little goes a long way."
+          "Because there is no added water, the formula is highly concentrated, so a little goes a long way."
         ]
       },
       {
@@ -768,7 +808,7 @@ const PRODUCTS = [
       "Whipping incorporates air into the formula, transforming dense tallow into a soft, light, cloud-like texture. It melts almost immediately from the warmth of your skin and spreads easily, providing the richness of a traditional tallow balm with a more luxurious application.",
       "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Fragrance-Free • Essential-Oil-Free • Water-Free • Concentrated",
       "Its simple, unscented formula makes it a versatile head-to-toe moisturizer. Use it for dry hands, rough elbows and knees, cracked-feeling heels, feet, cuticles, weather-exposed skin, or anywhere that needs additional moisture. It can also be worked through a dry beard and the skin underneath to soften and condition.",
-      "Because there is no added water, the formula is highly concentrated—a little goes a long way.",
+      "Because there is no added water, the formula is highly concentrated, so a little goes a long way.",
       "Warm a small amount between your fingertips or palms and gently massage into the skin. For best moisture retention, apply after bathing or showering while the skin is still slightly damp. When using on the face, start with a very small amount and patch-test first, particularly if you have sensitive or acne-prone skin."
     ],
     "note": "",
@@ -787,10 +827,10 @@ const PRODUCTS = [
   {
     "id": "just-b-calm",
     "category": "roller-oils",
-    "name": "Hormonal Balance Roll-On",
-    "kicker": "Just B Calm",
-    "description": "A refreshing, aromatic roll-on created with organic jojoba oil and a carefully balanced blend of clary sage, grapefruit, cypress, lavender, and peppermint essential oils. The blend combines cooling, bright citrus notes with soft florals and grounding herbal aromas, making it ideal to keep nearby whenever you want a quick moment of freshness and calm.",
-    "cardDescription": "A refreshing, aromatic roll-on created with organic jojoba oil and a carefully balanced blend of clary sage, grapefruit, cypress, lavender, and peppermint essential oils.",
+    "name": "Calm",
+    "kicker": "Just B Botanical Oil",
+    "description": "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability. With cooling citrus, soft florals, and herbal notes, it provides gentle, everyday support for moments when you want to feel more centered and at ease.",
+    "cardDescription": "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability.",
     "ingredients": [
       "Organic Jojoba Oil, Organic Essential Oils (Clary Sage, Grapefruit, Cypress, Lavender, Peppermint), All-Natural Vitamin E."
     ],
@@ -798,7 +838,7 @@ const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "A refreshing, aromatic roll-on created with organic jojoba oil and a carefully balanced blend of clary sage, grapefruit, cypress, lavender, and peppermint essential oils. The blend combines cooling, bright citrus notes with soft florals and grounding herbal aromas, making it ideal to keep nearby whenever you want a quick moment of freshness and calm.",
+          "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability. With cooling citrus, soft florals, and herbal notes, it provides gentle, everyday support for moments when you want to feel more centered and at ease.",
           "Organic Jojoba Oil provides the lightweight base. Technically a liquid wax rather than a conventional oil, jojoba spreads easily across the skin and helps condition and soften it while carrying the essential oils at a diluted concentration.",
           "Clary Sage provides a distinctive earthy, herbaceous and slightly floral aroma. It gives the blend much of its balancing, grounding character and pairs particularly well with lavender and grapefruit.",
           "Grapefruit adds a bright, clean citrus note that lifts the heavier herbal oils. Its fresh aroma gives the roll-on an energizing quality and keeps the overall scent from becoming overly floral or earthy.",
@@ -806,7 +846,7 @@ const PRODUCTS = [
           "Lavender softens the formula with its familiar floral-herbal aroma. It is widely used in aromatherapy blends intended to encourage relaxation and creates a calmer counterpoint to the sharper peppermint and grapefruit notes.",
           "Peppermint provides the most noticeable cooling and refreshing sensation. Its crisp menthol character makes the roll-on feel immediately fresh when applied to the skin and gives the overall aroma an invigorating finish.",
           "All-Natural Vitamin E conditions the skin while providing antioxidant activity. It also helps protect the carrier oil from oxidation, supporting the stability and freshness of the finished product.",
-          "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy—peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation."
+          "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy. Peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation."
         ]
       },
       {
@@ -830,7 +870,7 @@ const PRODUCTS = [
       "Lavender softens the formula with its familiar floral-herbal aroma. It is widely used in aromatherapy blends intended to encourage relaxation and creates a calmer counterpoint to the sharper peppermint and grapefruit notes.",
       "Peppermint provides the most noticeable cooling and refreshing sensation. Its crisp menthol character makes the roll-on feel immediately fresh when applied to the skin and gives the overall aroma an invigorating finish.",
       "All-Natural Vitamin E conditions the skin while providing antioxidant activity. It also helps protect the carrier oil from oxidation, supporting the stability and freshness of the finished product.",
-      "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy—peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation.",
+      "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy. Peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation.",
       "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience.",
       "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs"
     ],
@@ -840,7 +880,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/calm-roller.webp",
+    "image": "images/catalog/calm-botanical-oil.jpg",
     "imageNote": null,
     "art": "roller",
     "tone": "#d5dfd6",
@@ -850,10 +890,10 @@ const PRODUCTS = [
   {
     "id": "just-b-relieved",
     "category": "roller-oils",
-    "name": "Headache Relief Roll-On",
-    "kicker": "Just B Relieved",
-    "description": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
-    "cardDescription": "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and…",
+    "name": "Eased",
+    "kicker": "Just B Botanical Oil",
+    "description": "A cooling, aromatic roll-on made with organic jojoba oil and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
+    "cardDescription": "A cooling, aromatic botanical oil made with organic jojoba and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
     "ingredients": [
       "Organic Jojoba Oil, Organic Essential Oils (Peppermint, Eucalyptus, Rosemary, Lavender, Frankincense), All-Natural Vitamin E."
     ],
@@ -861,7 +901,7 @@ const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "A refreshing, cooling essential oil roll-on created with organic jojoba oil and a concentrated botanical blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
+          "A cooling, aromatic roll-on made with organic jojoba oil and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
           "Designed for application around the head, neck, and shoulders, the aroma begins intensely fresh and minty, develops into crisp herbal notes, and finishes with the softer, grounding character of lavender and frankincense.",
           "Peppermint Essential Oil provides the dominant cooling, minty sensation and immediately recognizable freshness of the blend. Peppermint naturally contains menthol, which activates cold-sensitive receptors in the skin and produces its characteristic cooling and tingling sensation. This makes it particularly well suited to a roll-on intended for a refreshing sensation around the temples, hairline, neck, and shoulders.",
           "Eucalyptus Essential Oil reinforces that cooling sensation with its powerful, clean, almost camphoraceous aroma. Its naturally occurring eucalyptol (1,8-cineole) gives eucalyptus its distinctive fresh character and works beautifully alongside peppermint to create that crisp, open, invigorating aromatic experience.",
@@ -907,7 +947,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/relieved-roller.webp",
+    "image": "images/catalog/eased-botanical-oil.jpg",
     "imageNote": null,
     "art": "roller",
     "tone": "#d5dfd6",
@@ -917,10 +957,10 @@ const PRODUCTS = [
   {
     "id": "cycle-harmony",
     "category": "roller-oils",
-    "name": "Cramp and Bloat Relief",
-    "kicker": "Just B Cycle Harmony",
-    "description": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
-    "cardDescription": "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle.",
+    "name": "Balanced",
+    "kicker": "Just B Botanical Oil",
+    "description": "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
+    "cardDescription": "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle.",
     "ingredients": [
       "Grapeseed Oil, Organic Essential Oils (Geranium, Lavender, Roman Chamomile, Frankincense), All-Natural Vitamin E."
     ],
@@ -928,7 +968,7 @@ const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "A gentle, soothing botanical oil created for to help with lower-abdominal massage and comforting self-care during your menstrual cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
+          "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
           "The blend was chosen to combine relaxing aromatherapy with the comfort of gentle massage. There is some clinical research suggesting that abdominal massage with certain essential-oil blends may help with menstrual discomfort, although the evidence is limited and the specific formulas studied are not identical to yours.",
           "Geranium Essential Oil gives the blend its fresh, green-floral character. It works particularly well alongside lavender and chamomile, adding a balancing botanical note without making the finished oil overly sweet or perfume-like.",
           "Lavender Essential Oil provides a soft floral and herbaceous aroma and forms much of the relaxing character of the blend. It makes this oil especially suited to quiet self-care, rest, and gentle massage when you want to unwind.",
@@ -968,7 +1008,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/cycle-harmony-roller.webp",
+    "image": "images/catalog/balanced-botanical-oil.jpg",
     "imageNote": null,
     "art": "roller",
     "tone": "#d5dfd6",
@@ -980,16 +1020,16 @@ const PRODUCTS = [
     "category": "sugar-scrubs",
     "name": "Lavender Bloom",
     "kicker": "Just B Scrubbed",
-    "description": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil blend. This formula is designed to do more than exfoliate: it combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother. Sugar-based exfoliation helps remove loose, dry surface skin, while the oils and butter replenish the skin with lipids afterward.",
-    "cardDescription": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil…",
+    "description": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba, rosehip, and castor oils, vitamin E, and a botanical essential-oil blend. This formula combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother.",
+    "cardDescription": "A rich, naturally exfoliating body scrub with organic cane sugar, unrefined shea butter, and organic jojoba, rosehip, and castor oils.",
     "ingredients": [
-      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Lavender, Grapefruit, Geranium, Frankincense)."
+      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Lavender, Grapefruit, Geranium, Frankincense)."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba and castor oils, vitamin E, and a botanical essential-oil blend. This formula is designed to do more than exfoliate: it combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother. Sugar-based exfoliation helps remove loose, dry surface skin, while the oils and butter replenish the skin with lipids afterward.",
+          "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba, rosehip, and castor oils, vitamin E, and a botanical essential-oil blend. This formula combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother.",
           "Organic Cane Sugar provides the exfoliating action. The sugar crystals physically lift away dry, flaky surface skin as they're massaged over the body, helping improve the immediate appearance and texture of rough areas. As the sugar dissolves with water, the scrub gradually becomes gentler during use.",
           "Unrefined Shea Butter gives this scrub its rich, nourishing character. Shea butter contains a mixture of fatty acids and naturally occurring unsaponifiable compounds that make it an effective emollient. It helps soften and condition dry skin while leaving behind a protective, moisturized feel after rinsing.",
           "Organic Jojoba Oil is technically a liquid wax composed largely of wax esters. It provides excellent slip, allowing the sugar to glide over the skin rather than feeling excessively abrasive. It also conditions and softens the skin and complements the heavier shea and castor components.",
@@ -1003,7 +1043,7 @@ const PRODUCTS = [
         "paragraphs": [
           "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
           "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
-          "Grapefruit Essential Oil provides the bright side of the blend—a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
+          "Grapefruit Essential Oil provides the bright side of the blend: a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
           "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
           "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
           "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath."
@@ -1033,7 +1073,7 @@ const PRODUCTS = [
       "All-Natural Vitamin E provides antioxidant benefits while conditioning the skin. It also serves a practical purpose within an oil-based formula by helping protect susceptible oils from oxidation.",
       "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
       "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
-      "Grapefruit Essential Oil provides the bright side of the blend—a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
+      "Grapefruit Essential Oil provides the bright side of the blend: a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
       "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
       "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
       "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath.",
@@ -1058,18 +1098,18 @@ const PRODUCTS = [
   {
     "id": "harvest-spa-scrub",
     "category": "sugar-scrubs",
-    "name": "Harvest Spa",
+    "name": "Harvest",
     "kicker": "Just B Scrubbed",
-    "description": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba oil, castor oil, and vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed.",
-    "cardDescription": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba oil, castor oil, and vitamin E.",
+    "description": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed.",
+    "cardDescription": "A refreshing sugar scrub with organic cane sugar, unrefined shea butter, and organic jojoba, rosehip, and castor oils.",
     "ingredients": [
-      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils ( Sweet Orange, Lavender, Peppermint, Frankincense)"
+      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Sweet Orange, Lavender, Peppermint, Frankincense)."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba oil, castor oil, and vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed."
+          "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed."
         ]
       },
       {
@@ -1088,7 +1128,7 @@ const PRODUCTS = [
     "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/harvest-spa-scrub.webp",
+    "image": "images/catalog/harvest-spa-scrub.jpg",
     "imageNote": null,
     "art": "jar",
     "tone": "#ead8c8",
@@ -1100,27 +1140,28 @@ const PRODUCTS = [
     "category": "sugar-scrubs",
     "name": "Vanilla",
     "kicker": "Just B Scrubbed",
-    "description": "More information to follow.",
-    "cardDescription": "More information to follow.",
+    "description": "A simple, luxurious scrub made with organic cane sugar infused with Madagascar vanilla bean. Unrefined shea butter, jojoba, rosehip, and castor oils complement the exfoliating sugar base, while vanilla oleoresin creates a warm, creamy, true-vanilla aroma without synthetic fragrance.",
+    "cardDescription": "A luxurious cane-sugar scrub infused with Madagascar vanilla bean and nourishing botanical oils.",
     "ingredients": [
-      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (essential-oil details to follow)"
+      "Organic cane sugar infused with Madagascar vanilla bean, unrefined shea butter, organic jojoba oil, organic rosehip oil, all-natural castor oil, arrowroot powder, vitamin E, vanilla oleoresin."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "More information to follow."
+          "Organic cane sugar infused with Madagascar vanilla bean gently exfoliates, while unrefined shea butter and jojoba, rosehip, and castor oils help leave skin feeling soft and moisturized.",
+          "Vanilla oleoresin creates a warm, creamy, true-vanilla aroma without synthetic fragrance."
         ]
       }
     ],
     "details": [],
-    "note": "Details coming soon",
+    "note": "",
     "use": "",
     "safety": "",
-    "availability": "Details coming soon",
+    "availability": null,
     "price": null,
     "stock": null,
-    "image": "images/catalog/vanilla-scrub.webp",
+    "image": "images/catalog/vanilla-scrub.jpg",
     "imageNote": null,
     "art": "jar",
     "tone": "#ead8c8",
@@ -1155,7 +1196,7 @@ const PRODUCTS = [
         "paragraphs": [
           "Calming • Woody • Earthy • Botanical • Soft",
           "Lavender provides the gentle floral opening, cedarwood brings a warm woody heart, and frankincense leaves behind a subtle, grounding finish. The result is intentionally soft and natural rather than perfume-heavy.",
-          "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home—on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space."
+          "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space."
         ]
       },
       {
@@ -1180,7 +1221,7 @@ const PRODUCTS = [
       "Distilled Water creates a light mist that allows the fragrance to gently settle throughout a room and onto suitable fabrics rather than producing a heavy, oily spray.",
       "Calming • Woody • Earthy • Botanical • Soft",
       "Lavender provides the gentle floral opening, cedarwood brings a warm woody heart, and frankincense leaves behind a subtle, grounding finish. The result is intentionally soft and natural rather than perfume-heavy.",
-      "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home—on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space.",
+      "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space.",
       "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
       "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets."
     ],
@@ -1202,7 +1243,7 @@ const PRODUCTS = [
     "category": "home-linen",
     "name": "Non-Toxic Solid Dish Soap",
     "kicker": "Just B Clean",
-    "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, low-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
+    "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
     "cardDescription": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning.",
     "ingredients": [
       "Saponified Organic Coconut Oil, Saponified Organic Castor Oil, All-Natural Citric Acid, Kaolin Clay."
@@ -1211,7 +1252,7 @@ const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, low-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning."
+          "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning."
         ]
       },
       {
@@ -1242,16 +1283,17 @@ const PRODUCTS = [
     "category": "artisan-soap",
     "name": "Blue Cedar",
     "kicker": "Just B Clean",
-    "description": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
-    "cardDescription": "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish.",
+    "description": "A simple, timeless bar made with nourishing oils, creamy coconut milk, and naturally derived indigo powder. Designed around a straightforward formula, this soap delivers a rich, creamy lather and a clean, uncomplicated wash for everyday use. A classic with a gentle woody scent, perfect for anyone who appreciates simple ingredients and an understated, natural aroma.",
+    "cardDescription": "A simple, timeless coconut-milk bar with naturally derived indigo and a gentle cedarwood scent.",
     "ingredients": [
-      "Full ingredient list coming soon."
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic coconut milk, steam-distilled cedarwood essential oil, indigo powder."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A small-batch artisan soap with a cool, woodsy character and a clean, grounding feel. Each bar is hand-poured and naturally individual in colour and finish."
+          "A simple, timeless bar made with nourishing oils, creamy coconut milk, and naturally derived indigo powder. Designed around a straightforward formula, this soap delivers a rich, creamy lather and a clean, uncomplicated wash for everyday use.",
+          "A classic with a gentle woody scent and creamy lather, perfect for anyone who appreciates simple ingredients and an understated, natural aroma."
         ]
       }
     ],
@@ -1274,16 +1316,17 @@ const PRODUCTS = [
     "category": "artisan-soap",
     "name": "Chamomile",
     "kicker": "Just B Clean",
-    "description": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
-    "cardDescription": "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse.",
+    "description": "A soft, nurturing bar crafted with chamomile-infused organic olive oil, shea butter, coconut oil, castor oil, and creamy organic coconut milk. Turmeric lends a warm natural hue, while steam-distilled sweet orange and frankincense essential oils create a subtle citrus-resinous scent. Dried chamomile flowers finish each bar with a simple botanical detail.",
+    "cardDescription": "A nurturing chamomile-infused bar with coconut milk, turmeric, sweet orange, frankincense, and dried chamomile flowers.",
     "ingredients": [
-      "Full ingredient list coming soon."
+      "Saponified oils (organic olive oil infused with dried chamomile flower buds, shea butter, organic coconut oil, castor oil), organic coconut milk, turmeric powder, steam-distilled essential oils (sweet orange, frankincense), dried chamomile flowers for décor."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A gentle, comforting artisan soap with a soft botanical character. Each bar is made in small batches for a naturally creamy everyday cleanse."
+          "A soft, nurturing bar crafted with chamomile-infused organic olive oil, shea butter, coconut oil, castor oil, and creamy organic coconut milk.",
+          "Turmeric lends a warm natural hue, while steam-distilled sweet orange and frankincense essential oils create a subtle citrus-resinous scent. Dried chamomile flowers finish each bar with a simple botanical detail."
         ]
       }
     ],
@@ -1306,16 +1349,17 @@ const PRODUCTS = [
     "category": "artisan-soap",
     "name": "Forest",
     "kicker": "Just B Clean",
-    "description": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
-    "cardDescription": "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind.",
+    "description": "A three-tone, forest-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy everyday cleanse. Chlorella, cocoa, and kaolin powders create its earthy layers, while cedarwood, fir, frankincense, peppermint, and eucalyptus essential oils give it a crisp, fresh, grounding scent.",
+    "cardDescription": "A three-tone forest bar with earthy botanical powders and a crisp blend of woodsy, minty essential oils.",
     "ingredients": [
-      "Full ingredient list coming soon."
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), steam-distilled essential oils (cedarwood, fir, frankincense, peppermint, eucalyptus), chlorella powder, cocoa powder, kaolin clay."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A fresh, earthy artisan soap inspired by quiet walks beneath the trees. Its naturally varied green tones make every hand-poured bar one of a kind."
+          "A three-tone, forest-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy everyday cleanse.",
+          "Chlorella, cocoa, and kaolin powders create its earthy layers, while cedarwood, fir, frankincense, peppermint, and eucalyptus essential oils give it a crisp, fresh, grounding scent."
         ]
       }
     ],
@@ -1334,52 +1378,21 @@ const PRODUCTS = [
     "featured": false
   },
   {
-    "id": "lavender-oat-soap",
-    "category": "artisan-soap",
-    "name": "Lavender and Oat",
-    "kicker": "Just B Clean",
-    "description": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
-    "cardDescription": "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse.",
-    "ingredients": [
-      "Full ingredient list coming soon."
-    ],
-    "sections": [
-      {
-        "title": "About this product",
-        "paragraphs": [
-          "A soothing small-batch bar pairing a calm lavender character with the warm, familiar feel of oat. Made for a gentle and comforting daily cleanse."
-        ]
-      }
-    ],
-    "details": [],
-    "note": "",
-    "use": "",
-    "safety": "",
-    "availability": null,
-    "price": null,
-    "stock": null,
-    "image": "images/catalog/soap-lavender-oat.webp",
-    "imageNote": null,
-    "art": "bar",
-    "tone": "#ded2bf",
-    "accent": "#745f47",
-    "featured": false
-  },
-  {
     "id": "ocean-soap",
     "category": "artisan-soap",
     "name": "Ocean",
     "kicker": "Just B Clean",
-    "description": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
-    "cardDescription": "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique.",
+    "description": "A seaside-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy wash. French green clay and indigo powder create its cool ocean hues, while Himalayan salt adds gentle texture. Lavender, cedarwood, and peppermint essential oils give it a fresh, airy scent.",
+    "cardDescription": "A fresh seaside-inspired bar with green clay, indigo, Himalayan salt, lavender, cedarwood, and peppermint.",
     "ingredients": [
-      "Full ingredient list coming soon."
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), French green clay, steam-distilled essential oils (lavender, cedarwood, peppermint), indigo powder, Himalayan salt."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A clean, refreshing artisan bar with cool ocean-inspired tones. Handcrafted in small batches, with natural variations that make each bar unique."
+          "A seaside-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy wash.",
+          "French green clay and indigo powder create its cool ocean hues, while Himalayan salt adds gentle texture. Lavender, cedarwood, and peppermint essential oils give it a fresh, airy scent."
         ]
       }
     ],
@@ -1400,18 +1413,19 @@ const PRODUCTS = [
   {
     "id": "rose-matter-soap",
     "category": "artisan-soap",
-    "name": "Rose Matter",
+    "name": "Rose Madder",
     "kicker": "Just B Clean",
-    "description": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
-    "cardDescription": "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish.",
+    "description": "A rustic dusty rose-coloured bar naturally tinted with madder root and enriched with organic coconut milk and raw honey. Clary sage brings a soft herbal-floral note, bergamot adds delicate citrus, and frankincense lends a warm, resinous finish. The result is earthy, elegant, and gently botanical.",
+    "cardDescription": "A dusty rose botanical bar with coconut milk, raw honey, madder root, clary sage, bergamot, and frankincense.",
     "ingredients": [
-      "Full ingredient list coming soon."
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic coconut milk, organic raw honey, steam-distilled essential oils (clary sage, bergamot, frankincense), madder root powder."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A rosy, botanical-inspired artisan soap with a soft and elegant character. Its naturally varied blush colour gives every small-batch bar a unique finish."
+          "A rustic dusty rose-coloured bar naturally tinted with madder root and enriched with organic coconut milk and raw honey.",
+          "Clary sage brings a soft herbal-floral note, bergamot adds delicate citrus, and frankincense lends a warm, resinous finish. The result is earthy, elegant, and gently botanical."
         ]
       }
     ],
@@ -1448,10 +1462,11 @@ const NAV_ITEMS = [
   ["shop.html", "Shop all", "shop"],
   ["artisan-soap.html", "Artisan soap", "artisan-soap"],
   ["sugar-scrubs.html", "Sugar scrubs", "sugar-scrubs"],
-  ["roller-oils.html", "Roll-on oils", "roller-oils"],
+  ["roller-oils.html", "Botanical oils", "roller-oils"],
   ["body-care.html", "Body care", "body-care"],
   ["home-linen.html", "Home & linen", "home-linen"],
-  ["about.html", "About", "about"]
+  ["about.html", "About", "about"],
+  ["faq.html", "FAQ", "faq"]
 ];
 
 const currentPage = document.body.dataset.page || "";
@@ -1463,7 +1478,7 @@ const generalOrderUrl = `mailto:${STORE.orderEmail}?subject=${encodeURIComponent
 const CATEGORY_LABELS = Object.freeze({
   "artisan-soap": "Artisan Soaps",
   "sugar-scrubs": "Sugar Scrubs",
-  "roller-oils": "Roll-On Oils",
+  "roller-oils": "Botanical Oils",
   "body-care": "Body Care",
   "home-linen": "Home & Linen"
 });
@@ -1483,27 +1498,41 @@ function completeEmail(value) {
 
 function formatReadyDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value || "")) return "";
-  return new Date(`${value}T12:00:00`).toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" });
+  return new Date(`${value}T12:00:00`).toLocaleDateString(globalThis.JBN_FR?.isFrench ? "fr-CA" : "en-CA", { month: "long", day: "numeric", year: "numeric" });
 }
 
 function productAvailabilityText(product) {
-  if (product.availabilityStatus === "preorder") return product.availableDate ? `Preorder • Available ${formatReadyDate(product.availableDate)}` : "Available for preorder";
+  if (product.availabilityStatus === "preorder") return product.availableDate ? `Preorder • Available ${formatReadyDate(product.availableDate)}` : "Preorder";
   if (product.stock === 0) return "Out of stock";
   if (product.availabilityStatus === "unavailable" || product.active === false) return "Currently unavailable";
   if (Number.isInteger(product.stock)) return `${product.stock} in stock`;
   return product.availability || "";
 }
 
+function productAvailabilityMarkup(product) {
+  if (product.availabilityStatus === "preorder" && product.availableDate) {
+    return `<span class="stock-status-kind">Preorder</span><span class="stock-status-date">Available ${escapeHtml(formatReadyDate(product.availableDate))}</span>`;
+  }
+  return escapeHtml(productAvailabilityText(product));
+}
+
+function availabilitySummary(products) {
+  const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0).length;
+  const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
+  const parts = [];
+  if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
+  if (preorder) parts.push(`${preorder} available for preorder`);
+  return parts.length ? parts.join(" • ") : "No products currently available";
+}
+
 function updateAvailabilitySummaries() {
   document.querySelectorAll("[data-category-summary]").forEach(node => {
     const category = node.dataset.categorySummary;
-    const products = category === "all" ? PRODUCTS : PRODUCTS.filter(product => product.category === category);
-    const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0).length;
-    const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
-    const parts = [];
-    if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
-    if (preorder) parts.push(`${preorder} available for preorder`);
-    node.textContent = parts.length ? parts.join(" • ") : "No products currently available";
+    const visibleIds = String(node.dataset.visibleProductIds || "").split(",").filter(Boolean);
+    const products = visibleIds.length || node.hasAttribute("data-visible-product-ids")
+      ? visibleIds.map(id => PRODUCTS.find(product => product.id === id)).filter(Boolean)
+      : category === "all" ? PRODUCTS : PRODUCTS.filter(product => product.category === category);
+    node.textContent = availabilitySummary(products);
   });
 }
 
@@ -1609,12 +1638,14 @@ function updateCheckoutTotals() {
   document.querySelectorAll("[data-promotion-message]").forEach(node=>{node.textContent=promotionMessage(pricing);node.hidden=!node.textContent;});
   document.querySelectorAll("[data-cart-total]").forEach(node=>{node.textContent=formatPrice(subtotal/100);});
   const deliverySelected = form?.elements.fulfillment?.value === "delivery";
-  const deliveryFee = deliverySelected ? Number(form?.elements.deliveryFeeCents?.value) : 0;
-  const hasDeliveryFee = deliverySelected && Number.isInteger(deliveryFee) && deliveryFee >= 0;
+  const deliveryDistance = Number(form?.elements.deliveryDistanceKm?.value);
+  const hasConfirmedAddress = deliverySelected && Number.isFinite(deliveryDistance) && deliveryDistance > 0 && deliveryDistance <= LOCAL_DELIVERY_MAX_KM;
+  const deliveryFee = hasConfirmedAddress ? (subtotal >= FREE_DELIVERY_THRESHOLD_CENTS ? 0 : LOCAL_DELIVERY_FEE_CENTS) : 0;
+  if (form?.elements.deliveryFeeCents) form.elements.deliveryFeeCents.value = hasConfirmedAddress ? String(deliveryFee) : "";
   document.querySelectorAll("[data-checkout-subtotal]").forEach(node => { node.textContent = formatPrice(pricing.regularSubtotalCents / 100); });
   document.querySelectorAll("[data-checkout-delivery-row]").forEach(node => { node.hidden = !deliverySelected; });
-  document.querySelectorAll("[data-checkout-delivery]").forEach(node => { node.textContent = hasDeliveryFee ? formatPrice(deliveryFee / 100) : t("Select an address"); });
-  document.querySelectorAll("[data-checkout-total]").forEach(node => { node.textContent = hasDeliveryFee || !deliverySelected ? formatPrice((subtotal + (hasDeliveryFee ? deliveryFee : 0)) / 100)  : t("Pending address"); });
+  document.querySelectorAll("[data-checkout-delivery]").forEach(node => { node.textContent = hasConfirmedAddress ? (deliveryFee === 0 ? t("Free","Gratuit") : formatPrice(deliveryFee / 100)) : t("Select an address"); });
+  document.querySelectorAll("[data-checkout-total]").forEach(node => { node.textContent = hasConfirmedAddress || !deliverySelected ? formatPrice((subtotal + (hasConfirmedAddress ? deliveryFee : 0)) / 100) : t("Pending address"); });
 }
 
 function buildOrderSummary(details = {}) {
@@ -1636,7 +1667,7 @@ function buildOrderSummary(details = {}) {
     details.area ? `Area: ${details.area}` : "",
     details.deliveryAddress ? `Delivery address: ${details.deliveryAddress}` : "",
     Number.isFinite(details.deliveryDistanceKm) ? `Estimated driving distance: ${details.deliveryDistanceKm.toFixed(1)} km` : "",
-    Number.isInteger(details.deliveryFeeCents) ? `Estimated local delivery fee: ${formatPrice(details.deliveryFeeCents / 100)} CAD (additional)` : "",
+    Number.isInteger(details.deliveryFeeCents) ? `Local delivery: ${details.deliveryFeeCents === 0 ? "Free" : `${formatPrice(details.deliveryFeeCents / 100)} CAD`}` : "",
     `Fulfillment: ${details.fulfillment === "delivery" ? "Local delivery" : "Local pickup"}`,
     `Payment: ${details.payment === "cash" ? "Cash" : "Interac e-Transfer"}`,
     details.marketingConsent ? "Promotional emails: Yes, consent given" : "Promotional emails: No"
@@ -1721,8 +1752,8 @@ function renderSiteChrome() {
     </dialog>`;
 
   if (footer) footer.innerHTML = `
-    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">${t('Stay in the loop')}</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">${t('Email address')}</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">${t('Join the list')}</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>${t('I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.')}</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
-    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Gatineau, Quebec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Roll-on oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
+    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
+    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Gatineau, Québec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Botanical oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a><a href="faq.html">Ingredients & FAQ</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
 
@@ -1737,38 +1768,52 @@ function fallbackArtMarkup(product) {
 }
 
 const PRODUCT_IMAGE_POSITIONS = Object.freeze({
-  "blue-cedar-soap": "50% 84%",
-  "chamomile-soap": "50% 85%",
-  "mint-eucalyptus-spa-soap": "50% 85%",
-  "forest-soap": "50% 86%",
-  "lavender-oat-soap": "50% 86%",
-  "honey-oat-comfort-soap": "50% 85%",
-  "ocean-soap": "50% 84%",
-  "rose-matter-soap": "50% 84%",
-  "spiced-banana-soap": "50% 85%",
-  "sweater-weather-soap": "50% 69%",
-  "coconut-lavender-soap": "50% 50%"
+  "almond-milk-mocha-soap": "50% 69%",
+  "blue-cedar-soap": "50% 91%",
+  "chamomile-soap": "50% 93%",
+  "mint-eucalyptus-spa-soap": "50% 93%",
+  "forest-soap": "50% 93%",
+  "coconut-lavender-soap": "50% 93%",
+  "chocolate-pumpkin-pie-soap": "50% 58%",
+  "harvest-spa-scrub": "50% 72%",
+  "honey-oat-comfort-soap": "50% 93%",
+  "ocean-soap": "50% 92%",
+  "rose-matter-soap": "50% 92%",
+  "spiced-banana-soap": "50% 93%",
+  "sweater-weather-soap": "50% 76%",
+  "just-b-calm": "50% 50%",
+  "just-b-relieved": "50% 54%",
+  "cycle-harmony": "50% 50%"
 });
 
-const SOAP_IMAGE_TREATMENTS = Object.freeze({
-  "blue-cedar-soap": "brightness(1.08) contrast(.92) saturate(.86)",
-  "chamomile-soap": "brightness(.91) contrast(.98) saturate(.86)",
-  "mint-eucalyptus-spa-soap": "brightness(1.02) contrast(.95) saturate(.88)",
-  "forest-soap": "brightness(1.16) contrast(.88) saturate(.82)",
-  "lavender-oat-soap": "brightness(.93) contrast(.98) saturate(.86)",
-  "honey-oat-comfort-soap": "brightness(1.04) contrast(.94) saturate(.86)",
-  "ocean-soap": "brightness(1.12) contrast(.9) saturate(.8)",
-  "rose-matter-soap": "brightness(.98) contrast(.95) saturate(.86)",
-  "spiced-banana-soap": "brightness(1.03) contrast(.94) saturate(.86)",
-  "sweater-weather-soap": "brightness(1.05) contrast(.94) saturate(.85)"
-});
+const ARTISAN_DISPLAY_ORDER = Object.freeze([
+  "matcha-lavender-soap",
+  "blue-cedar-soap",
+  "rosemary-sage-soap",
+  "chamomile-soap",
+  "lemon-rosemary-soap",
+  "forest-soap",
+  "ember-ash-soap",
+  "ocean-soap",
+  "whisper-citrus-soap",
+  "rose-matter-soap",
+  "charcoal-blush-soap",
+  "sweater-weather-soap",
+  "cedar-eucalyptus-loofah-soap",
+  "mint-eucalyptus-spa-soap",
+  "lemongrass-lavender-soap",
+  "spiced-banana-soap",
+  "ylang-ylang-soap",
+  "coconut-lavender-soap",
+  "unscented-loofah-soap",
+  "honey-oat-comfort-soap",
+  "cedar-lemon-soap",
+  "chocolate-pumpkin-pie-soap",
+  "almond-milk-mocha-soap"
+]);
 
 function productImageStyle(product) {
-  const imageTreatment = SOAP_IMAGE_TREATMENTS[product.id];
-  const treatment = imageTreatment
-    ? `;--image-treatment:${imageTreatment};--image-treatment-hover:${imageTreatment}`
-    : "";
-  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}${treatment}`;
+  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}`;
 }
 
 function artMarkup(product) {
@@ -1776,7 +1821,8 @@ function artMarkup(product) {
 }
 
 function productCard(product) {
-  const availability = product.availability ? `<p class="stock-status" data-stock-product="${product.id}">${product.availability}</p>` : `<p class="stock-status" data-stock-product="${product.id}" hidden></p>`;
+  const availabilityText = productAvailabilityText(product);
+  const availability = availabilityText ? `<p class="stock-status${product.availabilityStatus === "preorder" ? " is-preorder" : ""}" data-stock-product="${product.id}">${productAvailabilityMarkup(product)}</p>` : `<p class="stock-status" data-stock-product="${product.id}" hidden></p>`;
   return `<article class="product-card" data-product-id="${product.id}" style="--tone:${product.tone};--accent:${product.accent}">
     <a class="product-art" href="${productPageUrl(product)}" aria-label="View ${product.name}"><span class="art-ring"></span>${artMarkup(product)}<span class="image-hint">View product</span></a>
     <div class="product-copy">
@@ -1803,7 +1849,12 @@ function renderProductGrid(grid, matches) {
   grid.innerHTML = matches.map(productCard).join("");
   grid.dataset.productIds = matches.map(product => product.id).join(",");
   const count = grid.closest("section")?.querySelector("[data-product-count]");
-  if (count) count.textContent = `${matches.length} product${matches.length === 1 ? "" : "s"}`;
+  if (count?.hasAttribute("data-category-summary")) {
+    count.dataset.visibleProductIds = matches.map(product => product.id).join(",");
+    count.textContent = availabilitySummary(matches);
+  } else if (count) {
+    count.textContent = `${matches.length} product${matches.length === 1 ? "" : "s"}`;
+  }
   const empty = grid.closest("section")?.querySelector("[data-catalog-empty]");
   if (empty) empty.hidden = matches.length !== 0;
   activateImageFallbacks(grid);
@@ -2095,7 +2146,7 @@ function initializeOrderList() {
       const copyPromise = copyOrderSummary(buildOrderSummary());
       window.open(STORE.instagramDmUrl, "_blank", "noopener,noreferrer");
       copyPromise.then(
-        () => showOrderToast("Order copied — paste it into the Instagram DM."),
+        () => showOrderToast("Order copied. Paste it into the Instagram DM."),
         () => showOrderToast("Instagram opened. Please copy your order details manually.")
       );
     }
@@ -2136,6 +2187,28 @@ function initializeCatalogueFeatures() {
   const search = document.querySelector("[data-product-search]");
   const sort = document.querySelector("[data-product-sort]");
   const shopGrid = document.querySelector('[data-catalog="all"]');
+  const categoryGrid = document.querySelector("[data-category]");
+  const requestedSearch = new URLSearchParams(location.search).get("search");
+  if (search && requestedSearch && !search.value) search.value = requestedSearch;
+
+  const selectAndSortProducts = (products, query, categoryContext = "") => {
+    const matches = products.filter(product => {
+      const searchable = [product.name, product.kicker, product.description, ...product.ingredients, ...productTags(product)].join(" ").toLowerCase();
+      return searchable.includes(query);
+    });
+    if (sort?.value === "name") matches.sort((a, b) => a.name.localeCompare(b.name));
+    if (sort?.value === "featured" && categoryContext === "artisan-soap") {
+      matches.sort((a, b) => ARTISAN_DISPLAY_ORDER.indexOf(a.id) - ARTISAN_DISPLAY_ORDER.indexOf(b.id));
+    } else if (sort?.value === "featured") {
+      matches.sort((a, b) => Number(b.featured) - Number(a.featured));
+    }
+    if (sort?.value === "price-low") matches.sort((a, b) => (Number.isFinite(a.price) ? a.price : Infinity) - (Number.isFinite(b.price) ? b.price : Infinity) || a.name.localeCompare(b.name));
+    if (sort?.value === "price-high") matches.sort((a, b) => (Number.isFinite(b.price) ? b.price : -Infinity) - (Number.isFinite(a.price) ? a.price : -Infinity) || a.name.localeCompare(b.name));
+    return sort?.value === "preorder"
+      ? matches.filter(product => product.active !== false && product.availabilityStatus === "preorder")
+      : matches;
+  };
+
   if (shopGrid) {
     const filterButtons = [...document.querySelectorAll("[data-category-filter]")];
     const hashCategory = window.location.hash.replace("#", "");
@@ -2143,18 +2216,8 @@ function initializeCatalogueFeatures() {
 
     const updateShopGrid = () => {
       const query = search?.value.trim().toLowerCase() || "";
-      const matches = PRODUCTS.filter(product => {
-        const searchable = [product.name, product.kicker, product.description, ...product.ingredients].join(" ").toLowerCase();
-        const matchesCategory = activeCategory === "all" || product.category === activeCategory;
-        return matchesCategory && searchable.includes(query);
-      });
-      if (sort?.value === "name") matches.sort((a, b) => a.name.localeCompare(b.name));
-      if (sort?.value === "featured") matches.sort((a, b) => Number(b.featured) - Number(a.featured));
-      if (sort?.value === "price-low") matches.sort((a, b) => (Number.isFinite(a.price) ? a.price : Infinity) - (Number.isFinite(b.price) ? b.price : Infinity) || a.name.localeCompare(b.name));
-      if (sort?.value === "price-high") matches.sort((a, b) => (Number.isFinite(b.price) ? b.price : -Infinity) - (Number.isFinite(a.price) ? a.price : -Infinity) || a.name.localeCompare(b.name));
-      const visibleMatches = sort?.value === "preorder"
-        ? matches.filter(product => product.active !== false && product.availabilityStatus === "preorder")
-        : matches;
+      const products = PRODUCTS.filter(product => activeCategory === "all" || product.category === activeCategory);
+      const visibleMatches = selectAndSortProducts(products, query, activeCategory);
       renderProductGrid(shopGrid, visibleMatches);
       filterButtons.forEach(button => {
         const selected = button.dataset.categoryFilter === activeCategory;
@@ -2172,6 +2235,16 @@ function initializeCatalogueFeatures() {
     search?.addEventListener("input", updateShopGrid);
     sort?.addEventListener("change", updateShopGrid);
     updateShopGrid();
+  } else if (categoryGrid) {
+    const category = categoryGrid.dataset.category;
+    const updateCategoryGrid = () => {
+      const query = search?.value.trim().toLowerCase() || "";
+      const products = PRODUCTS.filter(product => product.category === category);
+      renderProductGrid(categoryGrid, selectAndSortProducts(products, query, category));
+    };
+    search?.addEventListener("input", updateCategoryGrid);
+    sort?.addEventListener("change", updateCategoryGrid);
+    updateCategoryGrid();
   }
 
 
@@ -2243,6 +2316,89 @@ function productGuidance(product) {
   return selected;
 }
 
+function conciseProductUse(product) {
+  const french = Boolean(globalThis.JBN_FR?.isFrench);
+  const specific = {
+    "solid-dish-soap": french ? "Mouiller la brosse, la frotter sur le savon pour créer une mousse, laver, puis bien rincer." : "Wet the brush, swirl it over the soap to create a lather, wash, then rinse thoroughly.",
+    "just-b-rested-room-spray": french ? "Agiter doucement, puis vaporiser légèrement à une distance sécuritaire. Tester d'abord sur une zone peu visible." : "Shake gently and mist lightly from a safe distance. Test a hidden area first."
+  };
+  if (specific[product.id]) return specific[product.id];
+  const byCategory = {
+    "artisan-soap": french ? "Faire mousser avec de l'eau, laver, puis bien rincer. Convient au nettoyage quotidien, sauf indication contraire." : "Lather with water, wash and rinse thoroughly. Suitable for everyday cleansing unless otherwise noted.",
+    "sugar-scrubs": french ? "Masser une petite quantité sur la peau humide en mouvements circulaires, puis bien rincer." : "Massage a small amount over damp skin using gentle circular motions, then rinse well.",
+    "roller-oils": french ? "Appliquer sur les points de pulsation, respirer les arômes, puis renouveler au besoin." : "Apply to pulse points, breathe in the aroma, and reapply as needed.",
+    "body-care": french ? "Réchauffer une petite quantité entre les mains, puis masser sur la peau sèche. Une petite quantité suffit." : "Warm a small amount between clean hands, then massage into dry skin. A little goes a long way.",
+    "home-linen": french ? "Utiliser une petite quantité selon les besoins et suivre les indications propres au produit." : "Use a small amount as needed and follow the product-specific directions."
+  };
+  return byCategory[product.category] || product.use || "Follow the directions provided with the product.";
+}
+
+function productDetailCards(product, sections) {
+  const french = Boolean(globalThis.JBN_FR?.isFrench);
+  const labels = {
+    "artisan-soap": french ? ["Mousse et fabrication", "Senteur et caractère", "Rituel quotidien"] : ["Craft & lather", "Scent & character", "Daily ritual"],
+    "sugar-scrubs": french ? ["Texture et soin", "Senteur et fini", "Rituel quotidien"] : ["Texture & care", "Scent & finish", "Daily ritual"],
+    "roller-oils": french ? ["Mélange et intention", "Arômes et rituel", "À emporter"] : ["Blend & purpose", "Aroma & ritual", "Made to travel"],
+    "body-care": french ? ["Texture et soin", "Formule simple", "Rituel quotidien"] : ["Texture & care", "Simple formula", "Daily ritual"],
+    "home-linen": french ? ["Usage et caractère", "Formule réfléchie", "Au quotidien"] : ["Purpose & character", "Thoughtful formula", "Everyday use"]
+  };
+  const fallback = french ? ["Ce qui le distingue", "Caractère", "Au quotidien"] : ["What makes it special", "Character", "Everyday use"];
+  const headings = labels[product.category] || fallback;
+  const paragraphs = sections.flatMap(section => section.paragraphs || []).slice(0, 3);
+  return paragraphs.map((paragraph, index) => {
+    const sentences = String(paragraph).trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+    const copy = sentences.slice(0, 2).join(" ");
+    return { heading: headings[index] || headings[headings.length - 1], copy };
+  });
+}
+
+const PRODUCT_TAG_RULES = Object.freeze([
+  { pattern: /calm|sooth|relax|comfort|apais|calm|réconfort/i, en: "Calming", fr: "Apaisant" },
+  { pattern: /refresh|cool|peppermint|eucalyptus|mint|frais|menthe|eucalyptus/i, en: "Refreshing", fr: "Rafraîchissant" },
+  { pattern: /floral|lavender|rose|geranium|ylang|chamomile|fleur|lavande|géranium|camomille/i, en: "Floral", fr: "Floral" },
+  { pattern: /citrus|grapefruit|lemon|orange|agrum|pamplemousse|citron/i, en: "Citrus", fr: "Agrumes" },
+  { pattern: /woody|wood|cedar|forest|frankincense|bois|boisé|cèdre|forêt|encens/i, en: "Woody", fr: "Boisé" },
+  { pattern: /earthy|resin|patchouli|terreux|résine/i, en: "Earthy", fr: "Terreux" },
+  { pattern: /botanical|herbal|rosemary|sage|plant|botanique|herbac|romarin|sauge/i, en: "Botanical", fr: "Botanique" },
+  { pattern: /soft|gentle|mild|doux|douce|délicat/i, en: "Soft", fr: "Doux" },
+  { pattern: /warm|spice|cinnamon|pumpkin|cocoa|coffee|vanilla|chaleur|épic|cannelle|citrouille|cacao|café|vanille/i, en: "Warm", fr: "Chaleureux" },
+  { pattern: /unscented|fragrance.free|essential.oil.free|au naturel/i, en: "Unscented", fr: "Au naturel" }
+]);
+
+function productTags(product) {
+  const french = Boolean(globalThis.JBN_FR?.isFrench);
+  const floralProducts = new Set(["coconut-lavender-soap", "ylang-ylang-soap"]);
+  const excludedTags = {
+    "rosemary-sage-soap": new Set(["Botanical"]),
+    "ember-ash-soap": new Set(["Citrus"]),
+    "vanilla-infused-tallow": new Set(["Woody", "Earthy"]),
+    "unscented-tallow": new Set(["Botanical", "Soft", "Warm"])
+  };
+  const overrides = {
+    "just-b-rested-room-spray": french ? ["Apaisant", "Boisé", "Terreux", "Botanique", "Doux"] : ["Calming", "Woody", "Earthy", "Botanical", "Soft"],
+    "just-b-calm": french ? ["Apaisant", "Ancrant", "Agrumes", "Floral", "Herbacé"] : ["Calming", "Grounding", "Citrus", "Floral", "Herbal"],
+    "just-b-relieved": french ? ["Rafraîchissant", "Mentholé", "Herbacé", "Ancrant", "Portatif"] : ["Cooling", "Minty", "Herbal", "Grounding", "Portable"],
+    "cycle-harmony": french ? ["Apaisant", "Floral", "Herbacé", "Ancrant", "Soin du cycle"] : ["Soothing", "Floral", "Herbal", "Grounding", "Cycle care"]
+  };
+  if (overrides[product.id]) return overrides[product.id];
+  const categoryTags = {
+    "artisan-soap": french ? ["Mousse crémeuse"] : ["Creamy lather"],
+    "sugar-scrubs": french ? ["Exfoliant", "Nourrissant"] : ["Exfoliating", "Nourishing"],
+    "roller-oils": french ? ["Huile botanique", "Portatif"] : ["Botanical oil", "Portable"],
+    "body-care": french ? ["Hydratant", "Sans eau"] : ["Moisturizing", "Water-free"],
+    "home-linen": french ? ["Pratique", "Zéro déchet"] : ["Practical", "Zero-waste"]
+  };
+  const source = [product.name, product.description, product.cardDescription, ...(product.ingredients || []), ...(product.details || [])].join(" ");
+  const tags = [...(categoryTags[product.category] || [])];
+  PRODUCT_TAG_RULES.forEach(rule => {
+    if (rule.en === "Floral" && !floralProducts.has(product.id)) return;
+    if (excludedTags[product.id]?.has(rule.en)) return;
+    const label = french ? rule.fr : rule.en;
+    if (rule.pattern.test(source) && !tags.includes(label)) tags.push(label);
+  });
+  return tags.slice(0, 5);
+}
+
 function renderProductPage() {
   const mount = document.querySelector("[data-product-page]");
   if (!mount) return;
@@ -2256,12 +2412,41 @@ function renderProductPage() {
   const productSections = Array.isArray(product.sections) && product.sections.length
     ? product.sections
     : [{ title: "About this product", paragraphs: [product.description, ...(product.details || [])] }];
-  const storySections = productSections.filter(section => !["How to use", "Before using"].includes(section.title));
-  const howTo = productSections.find(section => section.title === "How to use")?.paragraphs.join(" ") || product.use || guide.use;
+  const fullDescription = String(product.description || "").trim();
+  const cardDescription = String(product.cardDescription || "").trim();
+  const firstSentence = fullDescription.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || fullDescription;
+  const heroDescription = fullDescription.length > 360
+    ? (cardDescription && !/[.…]$/.test(cardDescription) ? cardDescription : firstSentence)
+    : fullDescription;
+  const normalizeCopy = value => String(value || "").trim().replace(/\s+/g, " ");
+  const storySections = productSections
+    .filter(section => !["How to use", "Before using"].includes(section.title))
+    .map(section => ({
+      ...section,
+      paragraphs: section.paragraphs.map(paragraph => {
+        if (normalizeCopy(paragraph) !== normalizeCopy(fullDescription)) return paragraph;
+        if (normalizeCopy(heroDescription) === normalizeCopy(fullDescription)) return "";
+        return fullDescription.startsWith(heroDescription) ? fullDescription.slice(heroDescription.length).trim() : paragraph;
+      }).filter(Boolean)
+    }))
+    .filter(section => section.paragraphs.length);
+  const howTo = conciseProductUse(product);
   const beforeUsing = productSections.find(section => section.title === "Before using")?.paragraphs.join(" ") || product.safety || "Review the complete ingredient list before use. Stop use if irritation occurs. For external use only.";
-  const stockMarkup = product.availability ? `<p class="stock-status product-detail-stock" data-stock-product="${product.id}">${product.availability}</p>` : `<p class="stock-status product-detail-stock" data-stock-product="${product.id}" hidden></p>`;
+  const availabilityText = productAvailabilityText(product);
+  const stockMarkup = availabilityText ? `<p class="stock-status product-detail-stock${product.availabilityStatus === "preorder" ? " is-preorder" : ""}" data-stock-product="${product.id}">${productAvailabilityMarkup(product)}</p>` : `<p class="stock-status product-detail-stock" data-stock-product="${product.id}" hidden></p>`;
   const categoryLabel = CATEGORY_LABELS[product.category] || "Just B Natural";
   const related = PRODUCTS.filter(item => item.category === product.category && item.id !== product.id).slice(0, 3);
+  const ingredientsText = product.ingredients.join(" ");
+  const tags = productTags(product);
+  const useDetailsOpen = window.matchMedia("(max-width: 620px)").matches ? "" : " open";
+  const detailCards = productDetailCards(product, storySections);
+  const storyMarkup = storySections.length ? `
+    <section class="product-story-section">
+      <details class="shell product-more-details">
+        <summary><span><small>Product details</small><strong>More about this product</strong></span><b aria-hidden="true">＋</b></summary>
+        <div class="product-more-copy product-more-copy--${Math.min(detailCards.length, 3)}">${detailCards.map(card => `<article class="product-detail-highlight"><strong>${card.heading}</strong><p>${card.copy}</p></article>`).join("")}</div>
+      </details>
+    </section>` : "";
   document.title = `${product.name} | ${STORE.name}`;
   const description = document.querySelector('meta[name="description"]');
   if (description) description.content = product.description;
@@ -2276,24 +2461,24 @@ function renderProductPage() {
           <h1>${product.name}</h1>
           <p class="product-detail-kicker">${categoryLabel}</p>
           ${Number.isFinite(product.price) ? `<p class="product-detail-price" data-price-product="${product.id}">${formatPrice(product.price)}</p>` : `<p class="product-detail-price" data-price-product="${product.id}" hidden></p>`}
-          <p class="product-detail-description">${product.description}</p>
+          <p class="product-detail-description">${heroDescription}</p>
+          <div class="product-ingredients-card">
+            <strong>Ingredients</strong>
+            <p>${ingredientsText}</p>
+            ${product.note ? `<small>${product.note}</small>` : ""}
+          </div>
           ${stockMarkup}
           <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart")} <span>＋</span></button>
           <button class="notify-product-button notify-product-button--detail" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button>
-          <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Gatineau</span><span>Made with care</span></div>
+          <div class="product-detail-tags" aria-label="Product tags">${tags.map(tag => `<a href="shop.html?search=${encodeURIComponent(tag)}">${tag}</a>`).join("")}</div>
         </div>
       </section>
     </div>
-    <section class="product-story-section">
-      <div class="shell product-story-grid">
-        <article class="product-source-copy"><p class="eyebrow">Complete product details</p><h2>Everything from the product guide.</h2>${storySections.map(section => `<section><h3>${section.title}</h3>${section.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("")}</section>`).join("")}</article>
-        <aside class="ingredient-panel"><h2>Ingredients</h2><ul>${product.ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}</ul>${product.note ? `<p>${product.note}</p>` : ""}</aside>
-      </div>
-    </section>
+    ${storyMarkup}
     <section class="shell product-use-section">
-      <article><span>01</span><h2>How to use</h2><p>${howTo}</p></article>
-      <article><span>02</span><h2>Care & storage</h2><p>${guide.care}</p></article>
-      <article><span>03</span><h2>Before using</h2><p>${beforeUsing}</p></article>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>How to use</h2><span aria-hidden="true">＋</span></summary><p>${howTo}</p></details>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>Care & storage</h2><span aria-hidden="true">＋</span></summary><p>${guide.care}</p></details>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>Before using</h2><span aria-hidden="true">＋</span></summary><p>${beforeUsing}</p></details>
     </section>
     <section class="related-products section shell" ${related.length ? "" : "hidden"}>
       <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="shop.html#${product.category}">View category <span>→</span></a></div>
@@ -2323,7 +2508,9 @@ function checkoutPayload(form) {
     payment: String(data.get("payment") || "etransfer"),
     notes: String(data.get("notes") || "").trim(),
     marketingConsent: data.get("marketingConsent") === "on",
-    consentText: "I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.",
+    locale: globalThis.JBN_FR?.isFrench ? "fr" : "en",
+    language: campaignLanguage,
+    consentText: globalThis.JBN_FR?.isFrench ? "J'accepte de recevoir occasionnellement des nouvelles et promotions de Just B Natural. Je peux me désabonner en tout temps." : "I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.",
     consentedAt: new Date().toISOString(),
     website: String(data.get("website") || ""),
     items: orderList.map(item => ({ id: item.id, quantity: item.quantity }))
@@ -2354,34 +2541,36 @@ function initializeDeliveryEstimator(form) {
     placeId.value = "";
     distance.value = "";
     fee.value = "";
-    status.textContent = "Choose the matching address from the suggestion list to calculate delivery.";
+    status.textContent = "Choose the matching address from the suggestion list to confirm local delivery.";
     status.classList.remove("is-ready", "is-error");
-    if (form.elements.fulfillment.value === "delivery") address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
+    if (form.elements.fulfillment.value === "delivery") address.setCustomValidity("Please select a suggested address so we can confirm local delivery.");
     updateCheckoutTotals();
   };
 
   const showUnavailable = () => {
     closeSuggestions();
-    status.textContent = "We could not calculate this address. Choose a suggested address before placing the order.";
+    status.textContent = "We could not confirm local delivery for this address. Choose a suggested address before placing the order.";
     status.classList.add("is-error");
     status.classList.remove("is-ready");
-    address.setCustomValidity("Please select a suggested address so we can calculate the delivery fee.");
+    address.setCustomValidity("Please select a suggested address so we can confirm local delivery.");
   };
 
   const estimate = async (selectedPlaceId, selectedAddress) => {
-    status.textContent = "Calculating the driving-distance estimate…";
+    status.textContent = "Confirming the local delivery zone…";
     status.classList.remove("is-ready", "is-error");
     try {
       const response = await fetch(STORE.deliveryEstimateEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ placeId: selectedPlaceId, address: selectedAddress })
+        body: JSON.stringify({ placeId: selectedPlaceId, address: selectedAddress, subtotalCents: cartSubtotalCents() })
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Estimate unavailable");
       distance.value = String(result.distanceKm);
       fee.value = String(result.feeCents);
-      status.textContent = `Estimated local delivery: ${Number(result.distanceKm).toFixed(1)} km • ${formatPrice(Number(result.feeCents) / 100)} CAD extra`;
+      status.textContent = Number(result.feeCents) === 0
+        ? `Address confirmed: ${Number(result.distanceKm).toFixed(1)} km from Aylmer • Free local delivery`
+        : `Address confirmed: ${Number(result.distanceKm).toFixed(1)} km from Aylmer • $10.00 local delivery`;
       status.classList.add("is-ready");
       status.classList.remove("is-error");
       address.setCustomValidity("");
@@ -2448,7 +2637,7 @@ function initializeDeliveryEstimator(form) {
     panel.hidden = !deliverySelected;
     if (pickupArea) pickupArea.hidden = deliverySelected;
     address.required = deliverySelected;
-    address.setCustomValidity(deliverySelected && !fee.value ? "Please select a suggested address so we can calculate the delivery fee." : "");
+    address.setCustomValidity(deliverySelected && !distance.value ? "Please select a suggested address so we can confirm local delivery." : "");
     if (!deliverySelected) {
       closeSuggestions();
       clearEstimate();
@@ -2629,7 +2818,7 @@ function initializeCheckout() {
     if (fallback) fallback.hidden = true;
 
     if (window.location.protocol === "file:") {
-      if (status) status.textContent = "This saved copy cannot submit automatically. Use the prepared email to send your request—no payment is due yet.";
+      if (status) status.textContent = "This saved copy cannot submit automatically. Use the prepared email to send your request; no payment is due yet.";
       if (fallback) {
         fallback.href = checkoutEmailUrl(details);
         fallback.hidden = false;
@@ -2793,7 +2982,7 @@ function initializeScrollLife() {
 
 async function loadInventory() {
   try {
-    const response = await fetch("/api/products", { headers: { Accept: "application/json" } });
+    const response = await fetch("/api/products", { cache: "no-store", headers: { Accept: "application/json" } });
     if (!response.ok) return;
     const payload = await response.json();
     const inventory = new Map((payload.products || []).map(item => [item.id, item]));
@@ -2805,7 +2994,10 @@ async function loadInventory() {
       product.active = record.active !== false;
       product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
       product.availableDate = record.availableDate || null;
+      product.availability = productAvailabilityText(product);
     });
+    const catalogueSort = document.querySelector("[data-product-sort]");
+    if (catalogueSort) catalogueSort.dispatchEvent(new Event("change"));
     document.querySelectorAll('[data-catalog="featured"]').forEach(grid => {
       renderProductGrid(grid, featuredProducts());
       initializeFeaturedCarousel(grid);
@@ -2827,8 +3019,10 @@ async function loadInventory() {
     document.querySelectorAll("[data-stock-product]").forEach(node => {
       const product = PRODUCTS.find(item => item.id === node.dataset.stockProduct);
       if (!product) return;
-      node.textContent = productAvailabilityText(product);
-      node.hidden = !node.textContent;
+      const text = productAvailabilityText(product);
+      node.innerHTML = productAvailabilityMarkup(product);
+      node.classList.toggle("is-preorder", product.availabilityStatus === "preorder" && Boolean(product.availableDate));
+      node.hidden = !text;
     });
     document.querySelectorAll("[data-notify-product]").forEach(button => {
       const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
@@ -2885,6 +3079,7 @@ function initializeAvailabilityNotifications() {
   dialog.addEventListener("close", () => { form.querySelector('button[type="submit"]').hidden = false; });
 }
 
+globalThis.JBN_FR?.prepare(PRODUCTS);
 renderSiteChrome();
 initializeCampaignLanguage();
 renderCampaign();

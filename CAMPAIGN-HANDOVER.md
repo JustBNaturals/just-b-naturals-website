@@ -1,6 +1,6 @@
 # October campaign — implementation and publishing status
 
-This branch implements the campaign against GitHub main at `1e75072dee04b1b32a9412b00df621edb7977911`. **Do not deploy it over production before reconciling the newer deployed source.** On October 12, the live site exposed `fr.js?v=20260915-botanical-oils`, a French switch, Botanical Oils labels, and an FAQ that are absent from GitHub main. Cloudflare login through the connected browser returned `API Request Failed … (403)`. Production has not been changed.
+The October campaign now incorporates the public storefront recovered from justbnatural.ca on October 12: existing fr.js language support, FAQ, current product details, Botanical Oils labels, updated images, and local delivery terms ($10 within 20 km, free from $75 after discounts). Cloudflare email sign-in still returns HTTP 403 in the connected browser. No marketing emails have been sent. Worker source is not publicly served; existing server integrations are retained from the repository, with delivery calculations aligned to the recovered checkout.
 
 ## Implemented
 
@@ -16,13 +16,13 @@ This branch implements the campaign against GitHub main at `1e75072dee04b1b32a94
 
 ## Editing
 
-After safe integration/deployment, use the existing inventory passcode at `inventory.html`. Under **Soap offer & donation tracker**, edit enabled, dates, pair price and donation amount. Mark orders Paid when money is received; Completed does not double count. For a partial refund enter actual complete pairs retained. Updated status does not send emails.
+After deployment, use the existing inventory passcode at `inventory.html`. Under **Soap offer & donation tracker**, edit enabled, dates, pair price and donation amount. Mark orders Paid when money is received; Completed does not double count. For a partial refund enter actual complete pairs retained. Updated status does not send emails.
 
 Page copy is in `october-rose.html`; hero copy is in `campaign-ui.js`. Original defaults and eligibility are in `promotion.js`. Email content and import guidance are in `campaign-emails/README.md`.
 
 ## Required before production
 
-1. Retrieve the deployed Worker source and storefront files from Cloudflare and reconcile changes, particularly `fr.js`, FAQ, botanical oil labels, security headers and current checkout behaviour. Preserve the site's existing language system; the fallback language support on this branch must be adapted to it.
+1. Public storefront reconciliation is complete. Confirm the deployment uses the existing Worker bindings and secrets; current deployed Worker source could not be retrieved publicly.
 2. Review corrected health-graphic drafts and repeat-pair donation terms.
 3. Confirm the original D1 and protected Brevo secrets remain bound. New campaign tables should initialize on `/api/campaign`.
 4. Run tests and check real desktop/mobile interactions, actual current inventory, language switch and live email previews. No real emails were sent by tests; Brevo requests were mocked.

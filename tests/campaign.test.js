@@ -64,3 +64,24 @@ test('trusted order totals match saved ledger and both emails; status/refund tot
     const lower=await worker.fetch(request('/api/order',{firstName:'Test',lastName:'Customer',email:'customer@example.com',fulfillment:'pickup',payment:'cash',items:[{id:SOAP_IDS[0],quantity:2}]}),env);assert.equal((await lower.json()).pricing.itemSubtotalCents,1200);
   }finally{globalThis.fetch=originalFetch;db.close();}
 });
+
+test('current local delivery terms use trusted discounted subtotal in order and both emails',async()=>{
+  const {db,api}=database();db.prepare('UPDATE inventory SET stock_count=100').run();
+  const env={INVENTORY_DB:api,INVENTORY_ADMIN_KEY:'test-key',BREVO_API_KEY:'fake-for-local-test',ORDER_EMAIL:'test@example.com',DELIVERY_ORIGIN_ADDRESS:'Test origin'};
+  const sent=[];const originalFetch=globalThis.fetch;
+  globalThis.fetch=async(url,options)=>{
+    if(String(url).includes('photon.komoot.io'))return Response.json({features:[{geometry:{coordinates:[-75.8,45.4]}}]});
+    if(String(url).includes('router.project-osrm.org'))return Response.json({routes:[{distance:10000,duration:600}]});
+    sent.push(JSON.parse(options.body));return Response.json({messageId:'local-test'});
+  };
+  try{
+    const today=torontoDate();await worker.fetch(request('/api/campaign',{config:{...CAMPAIGN_DEFAULTS,startDate:today,endDate:today}},true),env);
+    for(const [quantity,subtotal,fee,total] of [[10,7000,1000,8000],[12,8400,0,8400]]){
+      const response=await worker.fetch(request('/api/order',{firstName:'Test',lastName:'Customer',email:'customer@example.com',fulfillment:'delivery',payment:'cash',deliveryAddress:'123 Test Street',deliveryPlaceId:'osm:-75.9,45.5',deliveryFeeCents:0,items:[{id:SOAP_IDS[0],quantity}]}),env);
+      assert.equal(response.status,200);const result=await response.json();
+      const order=JSON.parse(db.prepare('SELECT order_json FROM campaign_orders WHERE order_id=?').get(result.orderId).order_json);
+      assert.equal(order.itemSubtotalCents,subtotal);assert.equal(order.deliveryFeeCents,fee);assert.equal(order.estimatedTotalCents,total);
+      for(const email of sent.slice(-2))assert.match(email.htmlContent,new RegExp((total/100).toFixed(2).replace('.','\\.')));
+    }
+  }finally{globalThis.fetch=originalFetch;db.close();}
+});

@@ -7,7 +7,7 @@ export const SOAP_IDS = Object.freeze([
   "matcha-lavender-soap", "rosemary-sage-soap", "lemon-rosemary-soap", "ember-ash-soap",
   "sweater-weather-soap", "coconut-lavender-soap", "whisper-citrus-soap", "charcoal-blush-soap",
   "cedar-eucalyptus-loofah-soap", "lemongrass-lavender-soap", "ylang-ylang-soap",
-  "honey-oat-comfort-soap", "chocolate-pumpkin-pie-soap", "unscented-loofah-soap",
+  "honey-oat-comfort-soap", "almond-milk-mocha-soap", "chocolate-pumpkin-pie-soap", "unscented-loofah-soap",
   "mint-eucalyptus-spa-soap", "spiced-banana-soap", "cedar-lemon-soap", "blue-cedar-soap",
   "chamomile-soap", "forest-soap", "lavender-oat-soap", "ocean-soap", "rose-matter-soap"
 ]);
