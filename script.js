@@ -1,3 +1,6 @@
+import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
+import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js";
+let soapCampaign = { ...CAMPAIGN_DEFAULTS, enabled: false };
 /*
   STORE SETTINGS
   Cart contents stay in the shopper's browser. The Cloudflare Worker endpoints
@@ -1471,7 +1474,7 @@ function productPageUrl(productOrId) {
 }
 
 function formatPrice(price) {
-  return Number.isFinite(price) ? new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(price) : "";
+  return Number.isFinite(price) ? new Intl.NumberFormat(campaignLanguage === "fr" ? "fr-CA" : "en-CA", { style: "currency", currency: "CAD" }).format(price) : "";
 }
 
 function completeEmail(value) {
@@ -1585,23 +1588,33 @@ function orderItemCount() {
   return orderList.reduce((total, item) => total + item.quantity, 0);
 }
 
-function cartSubtotalCents() {
-  return orderList.reduce((total, item) => {
-    const product = PRODUCTS.find(candidate => candidate.id === item.id);
-    return total + (product && Number.isFinite(product.price) ? Math.round(product.price * 100) * item.quantity : 0);
-  }, 0);
+function cartPricing(items = orderList) {
+  return priceOrder(items.map(item => {
+    const product=PRODUCTS.find(p=>p.id===item.id);
+    return {id:item.id,quantity:item.quantity,priceCents:Math.round((product?.price||0)*100)};
+  }),soapCampaign);
 }
-
+function cartSubtotalCents() { return cartPricing().itemSubtotalCents; }
+function promotionMessage(pricing) {
+  if (!pricing.active) return "";
+  if (!pricing.qualifyingPairs) return pricing.eligibleQuantity===1?t("Add one more artisan soap to unlock 2 for $14.","Ajoutez un savon artisanal pour obtenir 2 savons pour 14 $.").replace('14',String(soapCampaign.pairPriceCents/100)):"";
+  return `${t("October soap offer applied")} · ${t("Just B will donate","Just B versera")} ${formatPrice(pricing.donationCommitmentCents/100)} ${t("to Ruban Rose after payment. No extra charge.","au Ruban Rose après paiement. Aucun supplément.")}`;
+}
 function updateCheckoutTotals() {
   const form = document.querySelector("[data-checkout-form]");
-  const subtotal = cartSubtotalCents();
+  const pricing=cartPricing();
+  const subtotal = pricing.itemSubtotalCents;
+  document.querySelectorAll("[data-promotion-row]").forEach(node=>{node.hidden=!pricing.qualifyingPairs;});
+  document.querySelectorAll("[data-promotion-discount]").forEach(node=>{node.textContent=`−${formatPrice(pricing.discountCents/100)}`;});
+  document.querySelectorAll("[data-promotion-message]").forEach(node=>{node.textContent=promotionMessage(pricing);node.hidden=!node.textContent;});
+  document.querySelectorAll("[data-cart-total]").forEach(node=>{node.textContent=formatPrice(subtotal/100);});
   const deliverySelected = form?.elements.fulfillment?.value === "delivery";
   const deliveryFee = deliverySelected ? Number(form?.elements.deliveryFeeCents?.value) : 0;
   const hasDeliveryFee = deliverySelected && Number.isInteger(deliveryFee) && deliveryFee >= 0;
-  document.querySelectorAll("[data-checkout-subtotal]").forEach(node => { node.textContent = formatPrice(subtotal / 100); });
+  document.querySelectorAll("[data-checkout-subtotal]").forEach(node => { node.textContent = formatPrice(pricing.regularSubtotalCents / 100); });
   document.querySelectorAll("[data-checkout-delivery-row]").forEach(node => { node.hidden = !deliverySelected; });
-  document.querySelectorAll("[data-checkout-delivery]").forEach(node => { node.textContent = hasDeliveryFee ? formatPrice(deliveryFee / 100) : "Select an address"; });
-  document.querySelectorAll("[data-checkout-total]").forEach(node => { node.textContent = hasDeliveryFee || !deliverySelected ? formatPrice((subtotal + (hasDeliveryFee ? deliveryFee : 0)) / 100) : "Pending address"; });
+  document.querySelectorAll("[data-checkout-delivery]").forEach(node => { node.textContent = hasDeliveryFee ? formatPrice(deliveryFee / 100) : t("Select an address"); });
+  document.querySelectorAll("[data-checkout-total]").forEach(node => { node.textContent = hasDeliveryFee || !deliverySelected ? formatPrice((subtotal + (hasDeliveryFee ? deliveryFee : 0)) / 100)  : t("Pending address"); });
 }
 
 function buildOrderSummary(details = {}) {
@@ -1612,10 +1625,8 @@ function buildOrderSummary(details = {}) {
     return `${index + 1}. ${product.name}\n   Quantity: ${item.quantity}${Number.isFinite(product.price) ? `\n   Line total: ${formatPrice(product.price * item.quantity)}` : ""}`;
   }).filter(Boolean);
 
-  const subtotalCents = selectedItems.reduce((total, item) => {
-    const product = PRODUCTS.find(candidate => candidate.id === item.id);
-    return total + (product && Number.isFinite(product.price) ? Math.round(product.price * 100) * item.quantity : 0);
-  }, 0);
+  const pricing=cartPricing(selectedItems);
+  const subtotalCents=pricing.itemSubtotalCents;
   const deliveryFeeCents = Number.isInteger(details.deliveryFeeCents) ? details.deliveryFeeCents : 0;
 
   const customerLines = details.email ? [
@@ -1639,7 +1650,9 @@ function buildOrderSummary(details = {}) {
     "",
     lines.join("\n\n"),
     "",
-    `Products subtotal: ${formatPrice(subtotalCents / 100)}`,
+    `Products subtotal: ${formatPrice(pricing.regularSubtotalCents / 100)}`,
+    ...(pricing.qualifyingPairs?[`October soap offer: −${formatPrice(pricing.discountCents/100)}`,`Business donation commitment after payment: ${formatPrice(pricing.donationCommitmentCents/100)} to Ruban Rose (no customer charge)`]:[]),
+    `Subtotal after promotion: ${formatPrice(subtotalCents/100)}`,
     ...(details.fulfillment === "delivery" ? [Number.isInteger(details.deliveryFeeCents) ? `Estimated delivery: ${formatPrice(deliveryFeeCents / 100)}` : "Estimated delivery: pending address", `Estimated order total: ${formatPrice((subtotalCents + deliveryFeeCents) / 100)}`] : [`Estimated order total: ${formatPrice(subtotalCents / 100)}`]),
     "",
     details.notes?.trim() ? `Notes:\n${details.notes.trim()}\n` : (orderNotes.trim() ? `Notes:\n${orderNotes.trim()}\n` : "Notes:\n"),
@@ -1658,7 +1671,7 @@ function fullOrderEmailUrl() {
 }
 
 function navMarkup(mobile = false) {
-  return NAV_ITEMS.map(([href, label, page]) => `<a href="${href}"${currentPage === page ? ' class="active" aria-current="page"' : ""}>${label}${mobile ? "<span>→</span>" : ""}</a>`).join("");
+  return NAV_ITEMS.map(([href, label, page]) => `<a href="${href}"${currentPage === page ? ' class="active" aria-current="page"' : ""}>${t(label)}${mobile ? "<span>→</span>" : ""}</a>`).join("");
 }
 
 function renderSiteChrome() {
@@ -1667,40 +1680,40 @@ function renderSiteChrome() {
 
   if (header) header.innerHTML = `
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
-    <div class="announcement">Just B pure • Just B natural • Handmade in Gatineau, Quebec</div>
+    <div class="announcement pink-announcement" data-pink-announcement hidden></div>
     <header class="site-header">
       <div class="shell header-inner">
         <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
         <a class="brand" href="index.html" aria-label="${STORE.name} home"><img class="brand-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a>
         <nav class="desktop-nav" aria-label="Main navigation">${navMarkup()}</nav>
-        <div class="header-actions"><a class="header-order header-order-instagram" href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Instagram</a><button class="header-order header-order-list" type="button" data-order-list-open>Cart <span class="order-count" data-order-count>0</span></button></div>
+        <div class="header-actions"><div class="campaign-language" aria-label="Language / Langue"><button type="button" data-campaign-language="en" aria-label="English">EN</button><button type="button" data-campaign-language="fr" aria-label="Français">FR</button></div><a class="header-order header-order-instagram" href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Instagram</a><button class="header-order header-order-list" type="button" data-order-list-open>${t("Cart")} <span class="order-count" data-order-count>0</span></button></div>
       </div>
     </header>
     <nav class="mobile-category-nav" aria-label="Browse product categories">${navMarkup()}</nav>
     <aside class="mobile-menu" id="mobile-menu" aria-hidden="true"><div class="mobile-menu-top"><a class="mobile-menu-brand" href="index.html"><img src="images/just-b-logo.jpg" alt="Just B Natural"><strong>Browse Just B</strong></a><button type="button" aria-label="Close menu">&times;</button></div><nav>${navMarkup(true)}<a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals <span>↗</span></a></nav><div class="mobile-order-options"><button class="button button-order-list" type="button" data-order-list-open>View cart <span data-order-count>0</span></button></div></aside>
     <button class="menu-backdrop" type="button" aria-label="Close menu" hidden></button>
-    <nav class="mobile-bottom-nav" aria-label="Quick navigation"><a href="index.html"><span aria-hidden="true">⌂</span>Home</a><a href="shop.html"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 8h12l1 12H5L6 8Zm3 1V6a3 3 0 0 1 6 0v3"/></svg></span>Products</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-fill" cx="17.5" cy="6.5" r="1"/></svg></span>Instagram</a><button type="button" data-order-list-open><span class="mobile-list-icon" aria-hidden="true">≡<b data-order-count>0</b></span>Cart</button></nav>
+    <nav class="mobile-bottom-nav" aria-label="Quick navigation"><a href="index.html"><span aria-hidden="true">⌂</span>Home</a><a href="shop.html"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 8h12l1 12H5L6 8Zm3 1V6a3 3 0 0 1 6 0v3"/></svg></span>Products</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-fill" cx="17.5" cy="6.5" r="1"/></svg></span>Instagram</a><button type="button" data-order-list-open><span class="mobile-list-icon" aria-hidden="true">≡<b data-order-count>0</b></span>${t('Cart')}</button></nav>
     <button class="order-drawer-backdrop" type="button" aria-label="Close cart" data-order-list-close hidden></button>
     <aside class="order-drawer" id="order-drawer" aria-hidden="true" aria-labelledby="order-drawer-title">
-      <div class="order-drawer-header"><div><p class="eyebrow">Your selections</p><h2 id="order-drawer-title">Cart</h2></div><button class="order-drawer-close" type="button" aria-label="Close cart" data-order-list-close>&times;</button></div>
+      <div class="order-drawer-header"><div><p class="eyebrow">${t('Your selections')}</p><h2 id="order-drawer-title">${t('Cart')}</h2></div><button class="order-drawer-close" type="button" aria-label="Close cart" data-order-list-close>&times;</button></div>
       <div class="order-drawer-body">
-        <div class="order-empty" data-order-empty><span>＋</span><h3>Your cart is empty</h3><p>Add a few favourites, then send an order request. Payment comes only after confirmation.</p><a class="button button-outline" href="shop.html">Browse products</a></div>
+        <div class="order-empty" data-order-empty><span>＋</span><h3>${t('Your cart is empty')}</h3><p>Add a few favourites, then send an order request. Payment comes only after confirmation.</p><a class="button button-outline" href="shop.html">${t('Browse products')}</a></div>
         <div class="order-list-items" data-order-items></div>
       </div>
-      <div class="order-drawer-footer" data-order-footer hidden>
-        <p class="order-confirmation-note">No payment is taken now. Availability is confirmed before you pay.</p>
-        <div class="order-send-options"><a class="button button-dark" href="checkout.html">Review request <span>→</span></a><a class="button button-outline" href="shop.html">Keep shopping</a></div>
-        <button class="clear-order-list" type="button" data-order-clear>Clear cart</button>
+      <div class="order-drawer-footer" data-order-footer hidden><dl class="pink-cart-totals"><div><dt>${t("Products subtotal")}</dt><dd data-checkout-subtotal></dd></div><div data-promotion-row hidden><dt>${t("October soap offer applied")}</dt><dd data-promotion-discount></dd></div><div><dt>${t("Subtotal after promotion")}</dt><dd data-cart-total></dd></div></dl><p class="pink-cart-message" data-promotion-message aria-live="polite" hidden></p>
+        <p class="order-confirmation-note">${t('No payment is taken now. Availability is confirmed before you pay.')}</p>
+        <div class="order-send-options"><a class="button button-dark" href="checkout.html">Review request <span>→</span></a><a class="button button-outline" href="shop.html">${t('Keep shopping')}</a></div>
+        <button class="clear-order-list" type="button" data-order-clear>${t('Clear cart')}</button>
       </div>
     </aside>
-    <button class="order-list-fab" type="button" data-order-list-open hidden>Cart <span data-order-count>0</span></button>
+    <button class="order-list-fab" type="button" data-order-list-open hidden>${t("Cart")} <span data-order-count>0</span></button>
     <div class="order-toast" role="status" aria-live="polite" aria-atomic="true"></div>
     <dialog class="notify-dialog" data-notify-dialog aria-labelledby="notify-title">
       <form method="dialog" class="notify-dialog-close-form"><button type="submit" aria-label="Close notification form">×</button></form>
       <form class="notify-form" data-notify-form novalidate>
         <p class="eyebrow">One-time product update</p><h2 id="notify-title">Let me know when it’s ready</h2>
         <p>We’ll send one email when <strong data-notify-product-name>this product</strong> becomes available. No promotional emails are added from this request.</p>
-        <input type="hidden" name="productId"><label for="notify-email">Email address</label>
+        <input type="hidden" name="productId"><label for="notify-email">${t('Email address')}</label>
         <input id="notify-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" placeholder="you@example.com" required>
         <p class="notify-status" data-notify-status aria-live="polite"></p>
         <button class="button button-dark" type="submit">Notify me <span>→</span></button>
@@ -1708,7 +1721,7 @@ function renderSiteChrome() {
     </dialog>`;
 
   if (footer) footer.innerHTML = `
-    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
+    <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">${t('Stay in the loop')}</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">${t('Email address')}</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">${t('Join the list')}</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>${t('I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.')}</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
     <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Gatineau, Quebec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Roll-on oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
@@ -1771,7 +1784,7 @@ function productCard(product) {
       <div class="product-title-row"><h2><a href="${productPageUrl(product)}">${product.name}</a></h2>${Number.isFinite(product.price) ? `<span class="product-price">${formatPrice(product.price)}</span>` : ""}</div>
       <p class="product-description">${product.cardDescription || product.description}</p>
       ${availability}
-      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? "Preorder" : "Add to cart"} <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">View full details</a></div>
+      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart")} <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">${t("View full details")}</a></div>
     </div>
   </article>`;
 }
@@ -1894,8 +1907,8 @@ function orderItemMarkup(item) {
   const key = orderLineKey(item);
   return `<article class="order-list-item" data-order-item="${escapeHtml(key)}">
     <a href="${productPageUrl(product)}" aria-label="View ${product.name}"><img src="${product.image}" alt="" loading="lazy"></a>
-    <div class="order-item-copy"><h3><a href="${productPageUrl(product)}">${product.name}</a></h3><p>${CATEGORY_LABELS[product.category] || "Just B Natural"}${Number.isFinite(product.price) ? ` · ${formatPrice(product.price * item.quantity)}` : ""}</p>
-      <div class="order-item-controls"><div class="quantity-control" aria-label="Quantity for ${product.name}"><button type="button" data-order-quantity="-1" data-order-key="${escapeHtml(key)}" aria-label="Remove one ${product.name}">−</button><strong aria-live="polite">${item.quantity}</strong><button type="button" data-order-quantity="1" data-order-key="${escapeHtml(key)}" aria-label="Add one ${product.name}">+</button></div><button class="remove-order-item" type="button" data-order-remove="${escapeHtml(key)}">Remove</button></div>
+    <div class="order-item-copy"><h3><a href="${productPageUrl(product)}">${product.name}</a></h3><p>${t(CATEGORY_LABELS[product.category] || "Just B Natural")}${Number.isFinite(product.price) ? ` · ${formatPrice(product.price * item.quantity)}` : ""}</p>
+      <div class="order-item-controls"><div class="quantity-control" aria-label="Quantity for ${product.name}"><button type="button" data-order-quantity="-1" data-order-key="${escapeHtml(key)}" aria-label="Remove one ${product.name}">−</button><strong aria-live="polite">${item.quantity}</strong><button type="button" data-order-quantity="1" data-order-key="${escapeHtml(key)}" aria-label="Add one ${product.name}">+</button></div><button class="remove-order-item" type="button" data-order-remove="${escapeHtml(key)}">${t("Remove")}</button></div>
     </div>
   </article>`;
 }
@@ -1907,8 +1920,8 @@ function updateAddButton(button) {
   button.disabled = false;
   button.hidden = Boolean(unavailable);
   button.classList.toggle("is-added", Boolean(item));
-  const base = product?.availabilityStatus === "preorder" ? "Preorder" : "Add to cart";
-  button.innerHTML = `${item ? `Add another (${item.quantity})` : base} <span>＋</span>`;
+  const base = product?.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart");
+  button.innerHTML = `${item ? `${t("Add another","Ajouter encore")} (${item.quantity})` : base} <span>＋</span>`;
 }
 
 function renderOrderList() {
@@ -2265,7 +2278,7 @@ function renderProductPage() {
           ${Number.isFinite(product.price) ? `<p class="product-detail-price" data-price-product="${product.id}">${formatPrice(product.price)}</p>` : `<p class="product-detail-price" data-price-product="${product.id}" hidden></p>`}
           <p class="product-detail-description">${product.description}</p>
           ${stockMarkup}
-          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? "Preorder" : "Add to cart"} <span>＋</span></button>
+          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart")} <span>＋</span></button>
           <button class="notify-product-button notify-product-button--detail" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button>
           <div class="product-detail-badges"><span>Small batch</span><span>Handmade in Gatineau</span><span>Made with care</span></div>
         </div>
@@ -2296,6 +2309,7 @@ function checkoutPayload(form) {
   const deliveryDistanceKm = Number(data.get("deliveryDistanceKm"));
   const deliveryFeeCents = Number(data.get("deliveryFeeCents"));
   return {
+    language: campaignLanguage,
     firstName: String(data.get("firstName") || "").trim(),
     lastName: String(data.get("lastName") || "").trim(),
     email: String(data.get("email") || "").trim(),
@@ -2826,6 +2840,7 @@ async function loadInventory() {
     });
     document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
     updateAvailabilitySummaries();
+    renderCampaignProducts();
     renderOrderList();
   } catch (_) {
     // The catalog remains usable if inventory status is temporarily unavailable.
@@ -2871,6 +2886,8 @@ function initializeAvailabilityNotifications() {
 }
 
 renderSiteChrome();
+initializeCampaignLanguage();
+renderCampaign();
 renderCatalogues();
 renderProductPage();
 initializeMenu();
@@ -2882,3 +2899,55 @@ initializeScrollLife();
 initializeAvailabilityNotifications();
 loadInventory();
 
+
+
+function renderCampaignProducts(){
+  const grid=document.querySelector('[data-campaign-products]');
+  if(!grid)return;
+  const products=PRODUCTS.filter(p=>p.category==='artisan-soap'&&p.active!==false&&p.availabilityStatus!=='unavailable'&&p.availabilityStatus!=='preorder'&&p.stock!==0);
+  renderProductGrid(grid,products);
+  if(campaignLanguage==='fr') grid.querySelectorAll('.product-description').forEach(n=>n.textContent='Un savon artisanal fabriqué en petites quantités. Consultez la fiche pour les ingrédients et les détails.');
+  const stock=document.querySelector('[data-campaign-stock-note]');
+  if(stock)stock.textContent=products.length?t(`${products.length} soaps to choose from. Mix and match your favourites.`,`${products.length} savons au choix. Combinez vos préférés.`):t('No soaps are available right now. Please check back soon.','Aucun savon disponible en ce moment. Revenez bientôt.');
+  grid.querySelectorAll('[data-stock-product]').forEach(n=>{const p=PRODUCTS.find(p=>p.id===n.dataset.stockProduct);n.hidden=false;n.textContent=Number.isInteger(p.stock)?t(`${p.stock} in stock`,`${p.stock} en stock`):t('Available to order','Disponible à commander');});
+}
+function renderCampaign(){
+  const active=campaignActive(soapCampaign);
+  const announcement=document.querySelector('[data-pink-announcement]');
+  if(announcement){announcement.hidden=!active;announcement.innerHTML=`<a href="artisan-soap.html" data-promo-open>${t('October with love','Octobre, avec amour')} · ${t('2 artisan soaps for','2 savons artisanaux pour')} ${formatPrice(soapCampaign.pairPriceCents/100)} · ${formatPrice(soapCampaign.donationPerPairCents/100)} ${t('to Ruban Rose per pair','au Ruban Rose par paire')} <span aria-hidden="true">→</span></a>`;}
+  const home=document.querySelector('[data-home-campaign]');
+  if(home){home.hidden=!active;const regular=document.querySelector('.home-hero');if(regular)regular.hidden=false;const key=JSON.stringify(soapCampaign);if(active&&home.dataset.campaign!==key){home._carouselAbort?.abort();home._carouselAbort=new AbortController();home.innerHTML=octoberHomeCard(soapCampaign);home.dataset.campaign=key;let slide=0;home.addEventListener('click',event=>{const button=event.target.closest('[data-october-step]');if(!button)return;slide=(slide+Number(button.dataset.octoberStep)+2)%2;const image=home.querySelector('[data-october-photo]');image.src=`images/october/slide-${slide===0?1:6}.webp`;image.alt=slide===0?t('Handmade soaps arranged as a pink awareness ribbon','Savons artisanaux disposés en ruban rose'):t('Handmade soaps with pink ribbons','Savons artisanaux avec des rubans roses');home.querySelector('[data-october-position]').textContent=`${slide+1} / 2`;},{signal:home._carouselAbort?.signal});}if(active)initializePromotionPopup();}
+  const hero=document.querySelector('[data-campaign-hero]');
+  if(hero)hero.innerHTML=campaignHero(soapCampaign,{active});
+  const awareness=document.querySelector('[data-awareness-gallery]');
+  if(awareness&&!awareness.dataset.rendered){const content=awarenessContent();awareness.innerHTML=content.slides.map((slide,i)=>`<button type="button" data-awareness-slide="${slide}" aria-label="${t('Enlarge','Agrandir')} ${content.labels[i]}"><img src="images/october/slide-${slide}.webp" width="1080" height="1350" loading="lazy" alt="${content.labels[i]}. ${t('Full text and current guidance below.','Texte complet et conseils actuels ci-dessous.')}"/><span>${content.labels[i]} · ${t('Tap to enlarge','Agrandir')} ↗</span></button>`).join('');document.querySelector('[data-awareness-text]').innerHTML=content.text;awareness.dataset.rendered='true';
+    const dialog=document.querySelector('[data-awareness-dialog]');
+    awareness.addEventListener('click',event=>{const button=event.target.closest('[data-awareness-slide]');if(!button)return;const image=dialog.querySelector('img');image.src=`images/october/slide-${button.dataset.awarenessSlide}.webp`;image.alt=button.getAttribute('aria-label');dialog.showModal();});
+    dialog?.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+  }
+  const step=document.querySelector('.pink-steps .shell>div:last-child p');
+  if(step)step.textContent=t(`Just B donates ${formatPrice(soapCampaign.donationPerPairCents/100)} per qualifying pair after payment.`,`Just B verse ${formatPrice(soapCampaign.donationPerPairCents/100)} par paire admissible après paiement.`);
+  renderCampaignProducts();
+  updateCheckoutTotals();
+}
+async function loadCampaign(){
+  try{const response=await fetch('/api/campaign',{cache:'no-store'});if(!response.ok)throw new Error('unavailable');const payload=await response.json();soapCampaign=payload.config;}
+  catch(_){soapCampaign={...CAMPAIGN_DEFAULTS,enabled:false};}
+  renderCampaign();
+}
+loadCampaign();
+// Refresh date-sensitive pricing in tabs left open across midnight or inventory edits.
+setInterval(()=>{loadCampaign();},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadCampaign();});
+
+const campaignExpand=document.querySelector('[data-campaign-expand]');
+campaignExpand?.addEventListener('click',()=>{const grid=document.querySelector('[data-campaign-products]');const expanded=grid.classList.toggle('is-expanded');campaignExpand.setAttribute('aria-expanded',String(expanded));campaignExpand.textContent=expanded?t('Show fewer scents','Voir moins de parfums'):t('See all soap scents','Voir tous les parfums');});
+
+function initializePromotionPopup(){
+  let dialog=document.querySelector('[data-promo-popup]');
+  if(!dialog){document.body.insertAdjacentHTML('beforeend',campaignPopup(soapCampaign));dialog=document.querySelector('[data-promo-popup]');dialog.querySelectorAll('[data-promo-close]').forEach(button=>button.addEventListener('click',()=>dialog.close()));dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});}
+  const key=`jbn-promo-seen-${soapCampaign.startDate}-${soapCampaign.endDate}`;
+  let seen=initializePromotionPopup.seen;try{seen=seen||sessionStorage.getItem(key);}catch(_){}
+  if(!seen){initializePromotionPopup.seen=true;try{sessionStorage.setItem(key,'1');}catch(_){}dialog.showModal();}
+}
+document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
