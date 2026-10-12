@@ -1,0 +1,11 @@
+.git/
+node_modules/
+tests/
+worker/
+*.md
+*.sql
+package*.json
+wrangler.jsonc
+campaign-emails/
+review/
+images/october/*-original.jpg
