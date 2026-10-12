@@ -1,3 +1,4 @@
+import { launchEmailHtml } from "../email-preview.js";
 import { localDeliveryFee } from "../delivery.js";
 import { CAMPAIGN_DEFAULTS, campaignConfig, priceOrder } from "../promotion.js";
 const PRODUCT_CATALOG = Object.freeze({
@@ -183,6 +184,18 @@ async function handleOrder(request,env){
     return json({ok:true,orderId:order.orderId,status:"pending_confirmation",subscriberAdded,pricing:{regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,estimatedTotalCents:order.estimatedTotalCents,donationCommitmentCents:order.donationCommitmentCents}});
   }catch(_){if(savedOrderId)try{await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET email_status='failed' WHERE order_id=?").bind(savedOrderId).run();}catch(_){}return json({error:"The order could not be sent. Please try again or use the email option.",...(savedOrderId?{orderId:savedOrderId}:{})},500)}
 }
+async function handleEmailPreview(request,env){
+  if(request.method!=="POST")return json({error:"Method not allowed."},405);
+  if(!await inventoryAuthorized(request,env))return json({error:"Please open inventory first."},401);
+  if(request.headers.get("Origin")&&request.headers.get("Origin")!==new URL(request.url).origin)return json({error:"Request not allowed."},403);
+  try{
+    const data=await request.json();const email=clean(data.email,160).toLowerCase();
+    if(!validEmail(email))return json({error:"Enter a complete email address."},400);
+    await sendEmail(env,{to:email,toName:"",replyTo:{email:env.ORDER_EMAIL||"justbnaturalss@gmail.com",name:"Just B Naturals"},subject:"[TEST] Any 2 handmade soaps for $14 this October",htmlContent:launchEmailHtml});
+    return json({ok:true,message:"Brevo accepted the test email."});
+  }catch(_){return json({error:"The preview could not be sent. Check the existing Brevo sender setup."},502)}
+}
+
 async function handleSubscribe(request,env){
   try{const data=await request.json(),email=clean(data.email,160).toLowerCase(),consentText=clean(data.consentText,300),consentedAt=clean(data.consentedAt,60)||new Date().toISOString(),source=clean(data.source,100)||"website";if(!validEmail(email))return json({error:"Please enter a valid email address."},400);if(data.consent!==true||!consentText)return json({error:"Consent is required before joining the promotional list."},400);await addSubscriber(env,email);await recordConsent(env,{email,consentText,consentedAt,source});return json({ok:true})}catch(_){return json({error:"The signup could not be completed right now."},500)}
 }
@@ -320,5 +333,5 @@ async function serveAsset(request,env){
   headers.set("Pragma","no-cache");
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
 }
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/campaign")return handleCampaign(request,env);if(path==="/api/campaign/orders")return handleCampaignOrders(request,env);if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
+export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/campaign/email-preview")return handleEmailPreview(request,env);if(path==="/api/campaign")return handleCampaign(request,env);if(path==="/api/campaign/orders")return handleCampaignOrders(request,env);if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
 

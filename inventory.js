@@ -271,3 +271,15 @@ campaignForm?.addEventListener('submit',async event=>{event.preventDefault();con
 
 const rememberedKey = sessionStorage.getItem("jbn-inventory-key");
 if (rememberedKey) openInventory(rememberedKey).catch(() => sessionStorage.removeItem("jbn-inventory-key"));
+
+const emailPreviewForm=document.querySelector('[data-email-preview-form]');
+emailPreviewForm?.addEventListener('submit',async event=>{
+  event.preventDefault();if(!emailPreviewForm.reportValidity())return;
+  const button=emailPreviewForm.querySelector('button[type="submit"]');const status=emailPreviewForm.querySelector('[data-email-preview-status]');
+  button.disabled=true;status.textContent='Sending your test email…';
+  try{
+    const response=await authorizedFetch('/api/campaign/email-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailPreviewForm.elements.email.value.trim()})});
+    const result=await response.json();if(!response.ok)throw new Error(result.error||'The preview could not be sent.');
+    status.textContent='Test email sent. Check your inbox.';
+  }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
+});

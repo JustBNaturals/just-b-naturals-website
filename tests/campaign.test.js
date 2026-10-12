@@ -85,3 +85,19 @@ test('current local delivery terms use trusted discounted subtotal in order and 
     }
   }finally{globalThis.fetch=originalFetch;db.close();}
 });
+
+test('email preview is admin-only and sends exactly the frozen launch draft to one inbox',async()=>{
+  const env={INVENTORY_ADMIN_KEY:'test-key',BREVO_API_KEY:'fake-for-local-test',ORDER_EMAIL:'test@example.com'};
+  const originalFetch=globalThis.fetch;const sent=[];
+  globalThis.fetch=async(url,options)=>{sent.push({url,body:JSON.parse(options.body)});return Response.json({messageId:'preview-test'});};
+  try{
+    assert.equal((await worker.fetch(request('/api/campaign/email-preview',{email:'preview@example.com'}),env)).status,401);
+    assert.equal((await worker.fetch(request('/api/campaign/email-preview',{email:'invalid'},true),env)).status,400);
+    const crossOrigin=new Request('https://justbnatural.ca/api/campaign/email-preview',{method:'POST',headers:{Authorization:'Bearer test-key',Origin:'https://other.example','Content-Type':'application/json'},body:JSON.stringify({email:'preview@example.com'})});
+    assert.equal((await worker.fetch(crossOrigin,env)).status,403);assert.equal(sent.length,0);
+    const response=await worker.fetch(request('/api/campaign/email-preview',{email:'preview@example.com',htmlContent:'untrusted content'},true),env);
+    assert.equal(response.status,200);assert.equal(sent.length,1);assert.match(sent[0].url,/\/smtp\/email$/);
+    assert.deepEqual(sent[0].body.to,[{email:'preview@example.com',name:'preview@example.com'}]);assert.match(sent[0].body.subject,/^\[TEST\]/);
+    assert.match(sent[0].body.htmlContent,/slide-6.webp/);assert.match(sent[0].body.htmlContent,/slide-1.webp/);assert.match(sent[0].body.htmlContent,/Breast cancer has become part of my journey/);assert.doesNotMatch(sent[0].body.htmlContent,/untrusted content/);
+  }finally{globalThis.fetch=originalFetch;}
+});
