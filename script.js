@@ -1717,7 +1717,7 @@ function renderSiteChrome() {
         <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
         <a class="brand" href="index.html" aria-label="${STORE.name} home"><img class="brand-logo" src="images/just-b-logo.jpg" alt=""><span>JUST B<br>NATURAL</span></a>
         <nav class="desktop-nav" aria-label="Main navigation">${navMarkup()}</nav>
-        <div class="header-actions"><div class="campaign-language" aria-label="Language / Langue"><button type="button" data-campaign-language="en" aria-label="English">EN</button><button type="button" data-campaign-language="fr" aria-label="Français">FR</button></div><a class="header-order header-order-instagram" href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Instagram</a><button class="header-order header-order-list" type="button" data-order-list-open>${t("Cart")} <span class="order-count" data-order-count>0</span></button></div>
+        <div class="header-actions"><a class="header-order header-order-instagram" href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Instagram</a><button class="header-order header-order-list" type="button" data-order-list-open>${t("Cart")} <span class="order-count" data-order-count>0</span></button></div>
       </div>
     </header>
     <nav class="mobile-category-nav" aria-label="Browse product categories">${navMarkup()}</nav>
