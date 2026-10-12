@@ -3101,10 +3101,10 @@ function renderCampaignProducts(){
   if(!grid)return;
   const products=PRODUCTS.filter(p=>p.category==='artisan-soap'&&p.active!==false&&p.availabilityStatus!=='unavailable'&&p.availabilityStatus!=='preorder'&&p.stock!==0);
   renderProductGrid(grid,products);
-  if(campaignLanguage==='fr') grid.querySelectorAll('.product-description').forEach(n=>n.textContent='Un savon artisanal fabriqué en petites quantités. Consultez la fiche pour les ingrédients et les détails.');
   const stock=document.querySelector('[data-campaign-stock-note]');
-  if(stock)stock.textContent=products.length?t(`${products.length} soaps to choose from. Mix and match your favourites.`,`${products.length} savons au choix. Combinez vos préférés.`):t('No soaps are available right now. Please check back soon.','Aucun savon disponible en ce moment. Revenez bientôt.');
+  if(stock){stock.hidden=products.length>0;stock.textContent=products.length?'':t('No soaps are available right now. Please check back soon.','Aucun savon disponible en ce moment. Revenez bientôt.');}
   grid.querySelectorAll('[data-stock-product]').forEach(n=>{const p=PRODUCTS.find(p=>p.id===n.dataset.stockProduct);n.hidden=false;n.textContent=Number.isInteger(p.stock)?t(`${p.stock} in stock`,`${p.stock} en stock`):t('Available to order','Disponible à commander');});
+  initializeFeaturedCarousel(grid);
 }
 function renderCampaign(){
   const active=campaignActive(soapCampaign);
@@ -3134,9 +3134,6 @@ loadCampaign();
 // Refresh date-sensitive pricing in tabs left open across midnight or inventory edits.
 setInterval(()=>{loadCampaign();},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadCampaign();});
-
-const campaignExpand=document.querySelector('[data-campaign-expand]');
-campaignExpand?.addEventListener('click',()=>{const grid=document.querySelector('[data-campaign-products]');const expanded=grid.classList.toggle('is-expanded');campaignExpand.setAttribute('aria-expanded',String(expanded));campaignExpand.textContent=expanded?t('Show fewer scents','Voir moins de parfums'):t('See all soap scents','Voir tous les parfums');});
 
 function initializePromotionPopup(){
   let dialog=document.querySelector('[data-promo-popup]');
