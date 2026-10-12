@@ -1,6 +1,6 @@
-# October campaign — implementation and publishing status
+# October campaign — published October 12, 2026
 
-The October campaign now incorporates the public storefront recovered from justbnatural.ca on October 12: existing fr.js language support, FAQ, current product details, Botanical Oils labels, updated images, and local delivery terms ($10 within 20 km, free from $75 after discounts). Cloudflare email sign-in still returns HTTP 403 in the connected browser. No marketing emails have been sent. Worker source is not publicly served; existing server integrations are retained from the repository, with delivery calculations aligned to the recovered checkout.
+The October campaign now incorporates the public storefront recovered from justbnatural.ca on October 12: existing fr.js language support, FAQ, current product details, Botanical Oils labels, updated images, and local delivery terms ($10 within 20 km, free from $75 after discounts). Published through the existing GitHub-to-Cloudflare integration after merging PR #1. The live homepage popup, campaign page, French translations, FAQ and enabled promotion API were verified. Cloudflare email sign-in still returns HTTP 403 in the connected browser. No marketing emails have been sent. Worker source is not publicly served; existing server integrations are retained from the repository, with delivery calculations aligned to the recovered checkout.
 
 ## Implemented
 
@@ -20,7 +20,7 @@ After deployment, use the existing inventory passcode at `inventory.html`. Under
 
 Page copy is in `october-rose.html`; hero copy is in `campaign-ui.js`. Original defaults and eligibility are in `promotion.js`. Email content and import guidance are in `campaign-emails/README.md`.
 
-## Required before production
+## Remaining owner review
 
 1. Public storefront reconciliation is complete. Confirm the deployment uses the existing Worker bindings and secrets; current deployed Worker source could not be retrieved publicly.
 2. Review corrected health-graphic drafts and repeat-pair donation terms.
@@ -30,6 +30,6 @@ Page copy is in `october-rose.html`; hero copy is in `campaign-ui.js`. Original 
 
 ## Validation
 
-`node --test tests/*.test.js` covers 0–4 eligible bars, same/mixed scents, excluded categories, price variation, low regular prices, date boundaries, cart edits/removal/persistence, trusted database prices despite forged browser totals, matching saved totals and both emails, admin auth and paid/refund commitments. Syntax checks pass. Live browser QA and production deployment remain blocked.
+`node --test tests/*.test.js` covers 0–4 eligible bars, same/mixed scents, excluded categories, price variation, low regular prices, date boundaries, cart edits/removal/persistence, trusted database prices despite forged browser totals, matching saved totals and both emails, admin auth and paid/refund commitments. Eight tests and syntax checks pass. Production deployment is verified, including live English/French content, popup image loading, FAQ and campaign API settings. Mobile viewport and full browser checkout interactions remain unverified because the connected browser restricts interactions after credential delivery. No real test orders or emails were sent.
 
 With regular $8 bars: 1=$8, 2=$14, 3=$22, 4=$28. Donation commitments are $0/$1/$1/$2 respectively. Other products and delivery add normally. The existing site does not calculate separate taxes; this change introduces no new tax policy.
