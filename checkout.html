@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260908-catalog">
-  <script src="script.js?v=20260908-catalog" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261012-october">
+  <script type="module" src="script.js?v=20261012-october" defer></script>
 </head>
 <body data-page="checkout">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -24,13 +24,13 @@
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html">Products</a><span>/</span><span>Order request</span></nav>
       <p class="eyebrow">Guest order request</p>
       <h1>Request your order</h1>
-      <p>Review your cart and send your request. Nothing is charged now—you will receive payment instructions by email.</p>
+      <p>Review your cart and send your request. Nothing is charged now. You will receive payment instructions by email.</p>
     </header>
 
     <section class="checkout-process shell" aria-label="How ordering works">
-      <div><span>01</span><p><strong>Send your request</strong>Your cart and contact details go to Just B Natural.</p></div>
-      <div><span>02</span><p><strong>We review your request</strong>You receive the final details and payment instructions by email.</p></div>
-      <div><span>03</span><p><strong>Pay after confirmation</strong>You receive payment and pickup or delivery details by email.</p></div>
+      <div><p><strong>Send your request</strong>Your cart and contact details go to Just B Natural.</p></div>
+      <div><p><strong>We review your request</strong>You receive the final details and payment instructions by email.</p></div>
+      <div><p><strong>Pay after confirmation</strong>You receive payment and pickup or delivery details by email.</p></div>
     </section>
 
     <section class="checkout-section shell" data-checkout>
@@ -44,7 +44,7 @@
       <div class="checkout-layout" data-checkout-content hidden>
         <form class="checkout-form" data-checkout-form>
           <section class="checkout-card">
-            <div class="checkout-card-heading"><span>01</span><div><p class="eyebrow">Contact</p><h2>Your information</h2></div></div>
+            <div class="checkout-card-heading"><div><p class="eyebrow">Contact</p><h2>Your information</h2></div></div>
             <div class="form-grid form-grid-two">
               <label><span>First name</span><input name="firstName" autocomplete="given-name" minlength="2" maxlength="80" pattern="[A-Za-zÀ-ÖØ-öø-ÿ'’ -]{2,80}" title="Enter a valid first name using letters, spaces, apostrophes or hyphens." required></label>
               <label><span>Last name</span><input name="lastName" autocomplete="family-name" minlength="2" maxlength="80" pattern="[A-Za-zÀ-ÖØ-öø-ÿ'’ -]{2,80}" title="Enter a valid last name using letters, spaces, apostrophes or hyphens." required></label>
@@ -54,27 +54,27 @@
           </section>
 
           <section class="checkout-card">
-            <div class="checkout-card-heading"><span>02</span><div><p class="eyebrow">Fulfillment</p><h2>How will you receive it?</h2></div></div>
+            <div class="checkout-card-heading"><div><p class="eyebrow">Fulfillment</p><h2>How will you receive it?</h2></div></div>
             <div class="choice-grid">
               <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
-              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>$0.50 per driving kilometre from Aylmer. Select an address to see your estimate.</small></span></label>
+              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>$10 within 20 km of Aylmer. Free on product orders of $75 or more.</small></span></label>
             </div>
             <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" minlength="2" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
             <div class="delivery-estimator" data-delivery-estimator hidden>
-              <p class="delivery-extra-note"><strong>Local delivery is an additional charge.</strong> Select your address below to see the distance and estimated fee before sending the request. The final amount is confirmed by email.</p>
+              <p class="delivery-extra-note"><strong>Simple local delivery.</strong> Delivery is $10 within 20 km of Aylmer, or free when your product subtotal is $75 or more.</p>
               <div class="delivery-address-wrap">
                 <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" minlength="8" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false" aria-controls="delivery-address-suggestions" aria-describedby="delivery-address-instruction delivery-estimate-status"></label>
                 <div class="delivery-suggestions" id="delivery-address-suggestions" data-delivery-suggestions role="listbox" hidden></div>
               </div>
               <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
-              <p class="field-instruction" id="delivery-address-instruction">Type your address, then choose the matching address from the suggestion list. This is required to calculate delivery.</p>
-              <p class="delivery-estimate-status" id="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion for a delivery estimate.</p>
-              <p class="delivery-estimate-help">Estimated at $0.50 per driving kilometre from our Aylmer location. Your delivery estimate appears in the order total and in both order emails.</p>
+              <p class="field-instruction" id="delivery-address-instruction">Type your address, then choose the matching suggestion to confirm that it is inside our local delivery zone.</p>
+              <p class="delivery-estimate-status" id="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion to confirm local delivery.</p>
+              <p class="delivery-estimate-help">The calculator only confirms the delivery zone and applies the flat fee. Your total appears here and in your order email.</p>
             </div>
           </section>
 
           <section class="checkout-card">
-            <div class="checkout-card-heading"><span>03</span><div><p class="eyebrow">After approval</p><h2>Preferred payment method</h2></div></div>
+            <div class="checkout-card-heading"><div><p class="eyebrow">After approval</p><h2>Preferred payment method</h2></div></div>
             <div class="choice-grid">
               <label class="choice-card"><input type="radio" name="payment" value="etransfer" checked><span><strong>Interac e-Transfer</strong><small>Do not send payment yet. Instructions arrive only after your items are confirmed.</small></span></label>
               <label class="choice-card"><input type="radio" name="payment" value="cash"><span><strong>Cash</strong><small>Pay at pickup or delivery, after your order has been confirmed.</small></span></label>
@@ -82,7 +82,7 @@
           </section>
 
           <section class="checkout-card">
-            <div class="checkout-card-heading"><span>04</span><div><p class="eyebrow">Finishing touches</p><h2>Order notes</h2></div></div>
+            <div class="checkout-card-heading"><div><p class="eyebrow">Finishing touches</p><h2>Order notes</h2></div></div>
             <label class="field-block"><span>Anything we should know? <small>optional</small></span><textarea name="notes" rows="4" maxlength="1000" placeholder="Special instructions, allergies, preferred timing, or a gift note"></textarea></label>
             <label class="consent-check consent-check-dark"><input name="marketingConsent" type="checkbox"><span>Send me occasional news and promotions from Just B Natural. I can unsubscribe anytime.</span></label>
             <p class="privacy-note">Promotional emails are optional. See the <a href="privacy.html">privacy note</a>.</p>
@@ -99,12 +99,13 @@
         <aside class="checkout-summary" aria-label="Order summary">
           <div class="checkout-summary-heading"><div><p class="eyebrow">Your cart</p><h2>Order summary</h2></div><span><b data-checkout-count>0</b> items</span></div>
           <div class="order-list-items checkout-order-items" data-order-items></div>
-          <dl class="checkout-totals">
+          <p class="pink-cart-message" data-promotion-message aria-live="polite" hidden></p><dl class="checkout-totals">
             <div><dt>Products subtotal</dt><dd data-checkout-subtotal>$0.00</dd></div>
-            <div data-checkout-delivery-row hidden><dt>Estimated local delivery <small>($0.50/km)</small></dt><dd data-checkout-delivery>Select an address</dd></div>
+            <div data-promotion-row hidden><dt data-en="October soap offer applied" data-fr="Promotion de savons d’octobre">October soap offer applied</dt><dd data-promotion-discount></dd></div>
+            <div data-checkout-delivery-row hidden><dt>Local delivery</dt><dd data-checkout-delivery>Select an address</dd></div>
             <div class="checkout-grand-total"><dt>Estimated order total</dt><dd data-checkout-total>$0.00</dd></div>
           </dl>
-          <p>The item subtotal comes from the current inventory prices. Local delivery is added after a recognized address is selected.</p>
+          <p>Local delivery is available within 20 km of Aylmer for a flat $10, or free on product orders of $75 or more.</p>
         </aside>
       </div>
 
@@ -120,4 +121,3 @@
   <div data-site-footer></div>
 </body>
 </html>
-

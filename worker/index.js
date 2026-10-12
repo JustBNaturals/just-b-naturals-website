@@ -1,5 +1,7 @@
+import { localDeliveryFee } from "../delivery.js";
+import { CAMPAIGN_DEFAULTS, campaignConfig, priceOrder } from "../promotion.js";
 const PRODUCT_CATALOG = Object.freeze({
-  "matcha-lavender-soap":"Matcha & Lavender","rosemary-sage-soap":"Rosemary & Sage","lemon-rosemary-soap":"Lemon & Rosemary","ember-ash-soap":"Ember & Ash","sweater-weather-soap":"Sweater Weather","coconut-lavender-soap":"Coconut Lavender","whisper-citrus-soap":"Whisper of Citrus","charcoal-blush-soap":"Charcoal & Blush","cedar-eucalyptus-loofah-soap":"Cedarwood & Eucalyptus Loofah","lemongrass-lavender-soap":"Lemongrass & Lavender","ylang-ylang-soap":"Ylang Ylang","honey-oat-comfort-soap":"Oat and Tallow","chocolate-pumpkin-pie-soap":"Chocolate Pumpkin Pie","unscented-loofah-soap":"Unscented Loofah","mint-eucalyptus-spa-soap":"Mint & Eucalyptus Spa Bar","spiced-banana-soap":"Spiced Banana","cedar-lemon-soap":"Cedar Lemon","blue-cedar-soap":"Blue Cedar","chamomile-soap":"Chamomile","forest-soap":"Forest","lavender-oat-soap":"Lavender and Oat","ocean-soap":"Ocean","rose-matter-soap":"Rose Matter","mango-butter":"Mango Butter","vanilla-infused-tallow":"Vanilla Infused Tallow","unscented-tallow":"Unscented Tallow","just-b-calm":"Hormonal Balance Roll-On","just-b-relieved":"Headache Relief Roll-On","cycle-harmony":"Cramp and Bloat Relief","lavender-bloom-scrub":"Lavender Bloom","harvest-spa-scrub":"Harvest Spa","vanilla-scrub":"Vanilla","just-b-rested-room-spray":"Linen Room Spray","solid-dish-soap":"Non-Toxic Solid Dish Soap"
+  "almond-milk-mocha-soap":"Mocha Latté","matcha-lavender-soap":"Matcha & Lavender","rosemary-sage-soap":"Rosemary & Sage","lemon-rosemary-soap":"Lemon & Rosemary","ember-ash-soap":"Ember & Ash","sweater-weather-soap":"Sweater Weather","coconut-lavender-soap":"Coconut Lavender","whisper-citrus-soap":"Whisper of Citrus","charcoal-blush-soap":"Charcoal & Blush","cedar-eucalyptus-loofah-soap":"Cedarwood & Eucalyptus Loofah","lemongrass-lavender-soap":"Lemongrass & Lavender","ylang-ylang-soap":"Ylang Ylang","honey-oat-comfort-soap":"Oat and Tallow","chocolate-pumpkin-pie-soap":"Chocolate Pumpkin Pie","unscented-loofah-soap":"Unscented Loofah","mint-eucalyptus-spa-soap":"Mint & Eucalyptus Spa Bar","spiced-banana-soap":"Spiced Banana","cedar-lemon-soap":"Cedar Lemon","blue-cedar-soap":"Blue Cedar","chamomile-soap":"Chamomile","forest-soap":"Forest","lavender-oat-soap":"Lavender and Oat","ocean-soap":"Ocean","rose-matter-soap":"Rose Matter","mango-butter":"Mango Butter","vanilla-infused-tallow":"Vanilla Infused Tallow","unscented-tallow":"Unscented Tallow","just-b-calm":"Hormonal Balance Roll-On","just-b-relieved":"Headache Relief Roll-On","cycle-harmony":"Cramp and Bloat Relief","lavender-bloom-scrub":"Lavender Bloom","harvest-spa-scrub":"Harvest Spa","vanilla-scrub":"Vanilla","just-b-rested-room-spray":"Linen Room Spray","solid-dish-soap":"Non-Toxic Solid Dish Soap"
 });
 const BREVO_BASE="https://api.brevo.com/v3";
 const GOOGLE_PLACES_BASE="https://places.googleapis.com/v1";
@@ -14,7 +16,7 @@ function validName(value){return /^[\p{L}][\p{L}\p{M}'’ -]{1,79}$/u.test(Strin
 function validPhone(value){return !value||/^[0-9+() .-]{7,25}$/.test(String(value))}
 function validArea(value){return !value||(String(value).length>=2&&String(value).length<=120)}
 function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c])}
-function deliveryRate(env){const value=Number.parseInt(env.DELIVERY_RATE_PER_KM_CENTS,10);return Number.isInteger(value)&&value>=0?value:50}
+
 function money(cents){return `$${(Number(cents)/100).toFixed(2)} CAD`}
 
 async function googleRequest(env,url,body,fieldMask){
@@ -44,8 +46,7 @@ async function calculateOpenDelivery(env,destination){
   if(!response.ok)throw new Error(`Routing service error: ${response.status}`);
   const result=await response.json(),route=result.routes?.[0],distanceMeters=Number(route?.distance);
   if(!Number.isFinite(distanceMeters)||distanceMeters<=0)throw new Error("No driving route was found.");
-  const rateCentsPerKm=deliveryRate(env);
-  return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:Number.isFinite(route.duration)?`${Math.round(route.duration)}s`:"",feeCents:Math.round(distanceMeters/1000*rateCentsPerKm),rateCentsPerKm,originLabel:"Aylmer"};
+  return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:Number.isFinite(route.duration)?`${Math.round(route.duration)}s`:"",feeCents:localDeliveryFee(distanceMeters/1000,0),originLabel:"Aylmer"};
 }
 async function calculateDelivery(env,placeId){
   const openDestination=osmCoordinates(placeId);
@@ -55,8 +56,7 @@ async function calculateDelivery(env,placeId){
   const result=await googleRequest(env,GOOGLE_ROUTES_URL,{origin:{address:originAddress},destination:{placeId},travelMode:"DRIVE",routingPreference:"TRAFFIC_UNAWARE",computeAlternativeRoutes:false,languageCode:"en-CA",units:"METRIC"},"routes.distanceMeters,routes.duration");
   const route=result.routes?.[0],distanceMeters=Number(route?.distanceMeters);
   if(!Number.isFinite(distanceMeters)||distanceMeters<=0)throw new Error("No driving route was found.");
-  const rateCentsPerKm=deliveryRate(env);
-  return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:clean(route.duration,30),feeCents:Math.round(distanceMeters/1000*rateCentsPerKm),rateCentsPerKm,originLabel:"Aylmer"};
+  return {distanceMeters,distanceKm:Math.round(distanceMeters/100)/10,duration:clean(route.duration,30),feeCents:localDeliveryFee(distanceMeters/1000,0),originLabel:"Aylmer"};
 }
 async function handleDeliveryAutocomplete(request,env){
   try{
@@ -76,7 +76,9 @@ async function handleDeliveryEstimate(request,env){
   try{
     const data=await request.json(),placeId=clean(data.placeId,300),address=clean(data.address,220);
     if(!placeId)return json({error:"Please select a recognized address."},400);
-    return json({address,...await calculateDelivery(env,placeId)});
+    const estimate=await calculateDelivery(env,placeId);
+    estimate.feeCents=localDeliveryFee(estimate.distanceKm,Number.isInteger(data.subtotalCents)&&data.subtotalCents>=0?data.subtotalCents:0);
+    return json({address,...estimate});
   }catch(_){return json({error:"A driving-distance estimate could not be calculated for that address."},502)}
 }
 
@@ -111,8 +113,16 @@ async function recordConsent(env,{email,consentText,consentedAt,source}){
 }
 
 function normalizeItems(items){
-  if(!Array.isArray(items))return [];
-  return items.slice(0,50).map(item=>{const id=clean(item?.id,100),name=PRODUCT_CATALOG[id],quantity=Math.min(99,Math.max(1,Number.parseInt(item?.quantity,10)||1));return name?{id,name,quantity}:null}).filter(Boolean);
+  if(!Array.isArray(items)||items.length>50)throw new Error("Invalid cart.");
+  const grouped=new Map();
+  for(const item of items){
+    const id=clean(item?.id,100),name=PRODUCT_CATALOG[id],quantity=Number(item?.quantity);
+    if(!name||!Number.isInteger(quantity)||quantity<1||quantity>99)throw new Error("Invalid cart item.");
+    const total=(grouped.get(id)?.quantity||0)+quantity;
+    if(total>99)throw new Error("Too many units of one product.");
+    grouped.set(id,{id,name,quantity:total});
+  }
+  return [...grouped.values()];
 }
 async function attachInventory(env,items){
   if(!env.INVENTORY_DB||!items.length)return items;
@@ -124,15 +134,16 @@ async function attachInventory(env,items){
 function orderHtml(order){
   const items=order.items.map(item=>`<li style="padding:8px 0">${escapeHtml(item.name)} × ${item.quantity}${Number.isInteger(item.priceCents)?` — $${(item.priceCents*item.quantity/100).toFixed(2)} CAD`:""}${item.availabilityStatus==="preorder"&&item.availableDate?` <strong>(preorder — expected ${escapeHtml(item.availableDate)})</strong>`:""}${Number.isInteger(item.stock)?` <small>(${item.stock} currently recorded in stock)</small>`:""}</li>`).join("");
   const customer=[["Name",`${order.firstName} ${order.lastName}`],["Email",order.email],["Phone",order.phone||"Not provided"],[order.fulfillment==="delivery"?"Delivery address":"Area",order.fulfillment==="delivery"?order.deliveryAddress||order.area||"Not provided":order.area||"Not provided"],["Fulfillment",order.fulfillment==="delivery"?"Local delivery — additional charge":"Local pickup"],...(Number.isFinite(order.deliveryDistanceKm)?[["Estimated driving distance",`${order.deliveryDistanceKm.toFixed(1)} km`]]:[]),...(Number.isInteger(order.deliveryFeeCents)?[["Estimated delivery fee",`${money(order.deliveryFeeCents)} additional`]]:[]),["Payment",order.payment==="cash"?"Cash":"Interac e-Transfer"],["Promotional emails",order.marketingConsent?"Yes — consent given":"No"],["Notes",order.notes||"None"]].map(([a,b])=>`<tr><th style="padding:7px 12px 7px 0;text-align:left">${escapeHtml(a)}</th><td style="padding:7px 0">${escapeHtml(b)}</td></tr>`).join("");
-  const totals=`<table style="width:100%;margin:18px 0;border-collapse:collapse"><tr><th style="padding:8px 0;text-align:left;border-top:1px solid #d8cfbf">Products subtotal</th><td style="padding:8px 0;text-align:right;border-top:1px solid #d8cfbf">${escapeHtml(money(order.itemSubtotalCents))}</td></tr>${order.fulfillment==="delivery"?`<tr><th style="padding:8px 0;text-align:left">Estimated local delivery ($0.50/km)</th><td style="padding:8px 0;text-align:right">${escapeHtml(Number.isInteger(order.deliveryFeeCents)?money(order.deliveryFeeCents):"Pending address")}</td></tr>`:`<tr><th style="padding:8px 0;text-align:left">Delivery</th><td style="padding:8px 0;text-align:right">Local pickup — no delivery charge</td></tr>`}<tr><th style="padding:10px 0;text-align:left;border-top:1px solid #d8cfbf">Estimated order total</th><td style="padding:10px 0;text-align:right;border-top:1px solid #d8cfbf;font-size:20px"><strong>${escapeHtml(money(order.estimatedTotalCents))}</strong></td></tr></table>`;
+  const totals=`<table style="width:100%;margin:18px 0;border-collapse:collapse"><tr><th style="padding:8px 0;text-align:left;border-top:1px solid #d8cfbf">Products subtotal</th><td style="padding:8px 0;text-align:right;border-top:1px solid #d8cfbf">${escapeHtml(money(order.regularSubtotalCents))}</td></tr>${promotionEmailRows(order)}<tr><th style="padding:8px 0;text-align:left">${order.language==="fr"?"Sous-total après promotion":"Subtotal after promotion"}</th><td style="text-align:right">${escapeHtml(money(order.itemSubtotalCents))}</td></tr>${order.fulfillment==="delivery"?`<tr><th style="padding:8px 0;text-align:left">Local delivery</th><td style="padding:8px 0;text-align:right">${escapeHtml(Number.isInteger(order.deliveryFeeCents)?money(order.deliveryFeeCents):"Pending address")}</td></tr>`:`<tr><th style="padding:8px 0;text-align:left">Delivery</th><td style="padding:8px 0;text-align:right">Local pickup — no delivery charge</td></tr>`}<tr><th style="padding:10px 0;text-align:left;border-top:1px solid #d8cfbf">Estimated order total</th><td style="padding:10px 0;text-align:right;border-top:1px solid #d8cfbf;font-size:20px"><strong>${escapeHtml(money(order.estimatedTotalCents))}</strong></td></tr></table>`;
   return `<div style="max-width:680px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>Order request ${escapeHtml(order.orderId)}</h1><p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Keep this order together:</strong> use Gmail’s Reply button on this message. Your reply will go directly to ${escapeHtml(order.firstName)} and remain attached to the original order in this email thread.</p><div style="margin:14px 0;padding:14px 16px;border:1px solid #d8cfbf;background:#fffdf8"><strong>Suggested reply template</strong><p style="margin-bottom:0">Hi ${escapeHtml(order.firstName)},<br><br>Your Just B Natural order ${escapeHtml(order.orderId)} is confirmed. [Add availability, pickup or delivery details, final total, and payment instructions here.]<br><br>Thank you!<br>Brigitte</p></div><ul>${items}</ul>${totals}<table>${customer}</table></div>`;
 }
-function customerHtml(order){const deliveryRow=order.fulfillment==="delivery"?`<tr><th style="padding:8px 0;text-align:left">Estimated local delivery ($0.50/km)</th><td style="padding:8px 0;text-align:right">${escapeHtml(Number.isInteger(order.deliveryFeeCents)?money(order.deliveryFeeCents):"Pending address")}</td></tr>`:`<tr><th style="padding:8px 0;text-align:left">Delivery</th><td style="padding:8px 0;text-align:right">Local pickup — no delivery charge</td></tr>`;const totals=`<table style="width:100%;margin:18px 0;border-collapse:collapse"><tr><th style="padding:8px 0;text-align:left;border-top:1px solid #d8cfbf">Products subtotal</th><td style="padding:8px 0;text-align:right;border-top:1px solid #d8cfbf">${escapeHtml(money(order.itemSubtotalCents))}</td></tr>${deliveryRow}<tr><th style="padding:10px 0;text-align:left;border-top:1px solid #d8cfbf">Estimated order total</th><td style="padding:10px 0;text-align:right;border-top:1px solid #d8cfbf;font-size:20px"><strong>${escapeHtml(money(order.estimatedTotalCents))}</strong></td></tr></table>`;const delivery=order.fulfillment==="delivery"?`<p>Your delivery estimate is calculated at $0.50 per driving kilometre from Aylmer and is included above. The final delivery fee will be confirmed before payment.</p>`:`<p>You selected local pickup, so there is no delivery charge in this estimate.</p>`;return `<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>We received your request, ${escapeHtml(order.firstName)}.</h1><p>Your request number is <strong>${escapeHtml(order.orderId)}</strong>.</p>${totals}<p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Please do not send payment yet.</strong> Nothing has been charged or finalized.</p>${delivery}<p>We will confirm availability, ${order.fulfillment==="delivery"?"delivery":"pickup"} details, and payment instructions separately.</p></div>`}
+function customerHtml(order){if(order.language==="fr")return frenchCustomerHtml(order);const deliveryRow=order.fulfillment==="delivery"?`<tr><th style="padding:8px 0;text-align:left">Local delivery</th><td style="padding:8px 0;text-align:right">${escapeHtml(Number.isInteger(order.deliveryFeeCents)?money(order.deliveryFeeCents):"Pending address")}</td></tr>`:`<tr><th style="padding:8px 0;text-align:left">Delivery</th><td style="padding:8px 0;text-align:right">Local pickup — no delivery charge</td></tr>`;const totals=`<table style="width:100%;margin:18px 0;border-collapse:collapse"><tr><th style="padding:8px 0;text-align:left;border-top:1px solid #d8cfbf">Products subtotal</th><td style="padding:8px 0;text-align:right;border-top:1px solid #d8cfbf">${escapeHtml(money(order.regularSubtotalCents))}</td></tr>${promotionEmailRows(order)}<tr><th style="padding:8px 0;text-align:left">${order.language==="fr"?"Sous-total après promotion":"Subtotal after promotion"}</th><td style="text-align:right">${escapeHtml(money(order.itemSubtotalCents))}</td></tr>${deliveryRow}<tr><th style="padding:10px 0;text-align:left;border-top:1px solid #d8cfbf">Estimated order total</th><td style="padding:10px 0;text-align:right;border-top:1px solid #d8cfbf;font-size:20px"><strong>${escapeHtml(money(order.estimatedTotalCents))}</strong></td></tr></table>`;const delivery=order.fulfillment==="delivery"?`<p>Local delivery within 20 km of Aylmer is $10, or free for a product subtotal of $75 or more after discounts. Your delivery fee is included above.</p>`:`<p>You selected local pickup, so there is no delivery charge in this estimate.</p>`;return `<div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>We received your request, ${escapeHtml(order.firstName)}.</h1><p>Your request number is <strong>${escapeHtml(order.orderId)}</strong>.</p>${totals}<p style="border-left:4px solid #d38044;padding:12px 16px;background:#fbf4ec"><strong>Please do not send payment yet.</strong> Nothing has been charged or finalized.</p>${delivery}<p>We will confirm availability, ${order.fulfillment==="delivery"?"delivery":"pickup"} details, and payment instructions separately.</p></div>`}
 
 async function handleOrder(request,env){
+  let savedOrderId=null;
   try{
     const data=await request.json();if(clean(data.website,50))return json({ok:true,orderId:"Submitted"});
-    const order={firstName:clean(data.firstName,80),lastName:clean(data.lastName,80),email:clean(data.email,160).toLowerCase(),phone:clean(data.phone,40),area:clean(data.area,220),fulfillment:["pickup","delivery"].includes(data.fulfillment)?data.fulfillment:"pickup",deliveryAddress:clean(data.deliveryAddress,220),deliveryPlaceId:clean(data.deliveryPlaceId,300),deliveryDistanceKm:null,deliveryFeeCents:null,payment:["cash","etransfer"].includes(data.payment)?data.payment:"etransfer",notes:clean(data.notes,1000),marketingConsent:data.marketingConsent===true,consentText:clean(data.consentText,300),consentedAt:clean(data.consentedAt,60)||new Date().toISOString(),items:normalizeItems(data.items),orderId:`JB-${new Date().toISOString().slice(2,10).replaceAll("-","")}-${crypto.randomUUID().slice(0,4).toUpperCase()}`,orderEmail:env.ORDER_EMAIL||"justbnaturalss@gmail.com"};
+    const order={language:(data.language||data.locale)==="fr"?"fr":"en",firstName:clean(data.firstName,80),lastName:clean(data.lastName,80),email:clean(data.email,160).toLowerCase(),phone:clean(data.phone,40),area:clean(data.area,220),fulfillment:["pickup","delivery"].includes(data.fulfillment)?data.fulfillment:"pickup",deliveryAddress:clean(data.deliveryAddress,220),deliveryPlaceId:clean(data.deliveryPlaceId,300),deliveryDistanceKm:null,deliveryFeeCents:null,payment:["cash","etransfer"].includes(data.payment)?data.payment:"etransfer",notes:clean(data.notes,1000),marketingConsent:data.marketingConsent===true,consentText:clean(data.consentText,300),consentedAt:clean(data.consentedAt,60)||new Date().toISOString(),items:normalizeItems(data.items),orderId:`JB-${new Date().toISOString().slice(2,10).replaceAll("-","")}-${crypto.randomUUID().slice(0,4).toUpperCase()}`,orderEmail:env.ORDER_EMAIL||"justbnaturalss@gmail.com"};
     if(!validName(order.firstName)||!validName(order.lastName))return json({error:"Please provide a valid first and last name."},400);
     if(!validEmail(order.email))return json({error:"Please provide a complete, valid email address."},400);
     if(!validPhone(order.phone))return json({error:"Please provide a valid phone number or leave it blank."},400);
@@ -157,17 +168,83 @@ async function handleOrder(request,env){
     const unavailable=order.items.find(item=>item.active===false||item.availabilityStatus==="unavailable"||(item.stock===0&&item.availabilityStatus!=="preorder"));
     if(unavailable)return json({error:`${unavailable.name} is currently unavailable. Please remove it from your cart before sending the request.`},400);
     if(order.items.some(item=>!Number.isInteger(item.priceCents)))return json({error:"One or more product prices need to be set before this order can be sent."},400);
-    order.itemSubtotalCents=order.items.reduce((total,item)=>total+item.priceCents*item.quantity,0);
+    order.campaignConfig=await readCampaign(env);
+    order.createdAt=new Date().toISOString();
+    Object.assign(order,priceOrder(order.items,order.campaignConfig,new Date(order.createdAt)));
+    if(order.fulfillment==="delivery")order.deliveryFeeCents=localDeliveryFee(order.deliveryDistanceKm,order.itemSubtotalCents);
     order.estimatedTotalCents=order.itemSubtotalCents+(Number.isInteger(order.deliveryFeeCents)?order.deliveryFeeCents:0);
-    const conversationSubject=`${order.orderId} — Order request`;
+    await saveCampaignOrder(env,order);
+    savedOrderId=order.orderId;
+    const conversationSubject=`${order.orderId} — ${order.language==="fr"?"Demande de commande":"Order request"}`;
     await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:conversationSubject,htmlContent:orderHtml(order)});
     await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:conversationSubject,htmlContent:customerHtml(order)});
+    await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET email_status='sent' WHERE order_id=?").bind(order.orderId).run();
     let subscriberAdded=false;if(order.marketingConsent&&order.consentText){try{await addSubscriber(env,order.email);await recordConsent(env,{email:order.email,consentText:order.consentText,consentedAt:order.consentedAt,source:`checkout ${order.orderId}`});subscriberAdded=true}catch(_){subscriberAdded=false}}
-    return json({ok:true,orderId:order.orderId,status:"pending_confirmation",subscriberAdded});
-  }catch(_){return json({error:"The order could not be sent. Please try again or use the email option."},500)}
+    return json({ok:true,orderId:order.orderId,status:"pending_confirmation",subscriberAdded,pricing:{regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,estimatedTotalCents:order.estimatedTotalCents,donationCommitmentCents:order.donationCommitmentCents}});
+  }catch(_){if(savedOrderId)try{await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET email_status='failed' WHERE order_id=?").bind(savedOrderId).run();}catch(_){}return json({error:"The order could not be sent. Please try again or use the email option.",...(savedOrderId?{orderId:savedOrderId}:{})},500)}
 }
 async function handleSubscribe(request,env){
   try{const data=await request.json(),email=clean(data.email,160).toLowerCase(),consentText=clean(data.consentText,300),consentedAt=clean(data.consentedAt,60)||new Date().toISOString(),source=clean(data.source,100)||"website";if(!validEmail(email))return json({error:"Please enter a valid email address."},400);if(data.consent!==true||!consentText)return json({error:"Consent is required before joining the promotional list."},400);await addSubscriber(env,email);await recordConsent(env,{email,consentText,consentedAt,source});return json({ok:true})}catch(_){return json({error:"The signup could not be completed right now."},500)}
+}
+
+function promotionEmailRows(order){
+  const fr=order.language==="fr";
+  if(!order.qualifyingPairs)return "";
+  return `<tr><th style="padding:8px 0;text-align:left;color:#9a405f">${fr?"Promotion de savons d’octobre":"October soap offer applied"}</th><td style="text-align:right">−${money(order.discountCents)}</td></tr><tr><td colspan="2" style="padding:8px 0">${fr?"Engagement de Just B envers Ruban Rose":"Just B’s commitment to Ruban Rose"}: ${money(order.donationCommitmentCents)} (${fr?"après paiement; aucun supplément":"after payment; no extra charge"}).</td></tr>`;
+}
+function frenchCustomerHtml(order){
+  return `<div lang="fr" style="max-width:620px;margin:auto;font-family:Arial,sans-serif;color:#173329"><p>Just B Natural</p><h1>Votre demande a été reçue, ${escapeHtml(order.firstName)}.</h1><p>Numéro de demande : <strong>${escapeHtml(order.orderId)}</strong>.</p><ul>${order.items.map(i=>`<li>${escapeHtml(i.name)} × ${i.quantity} — ${money(i.priceCents*i.quantity)}</li>`).join("")}</ul><table style="width:100%"><tr><th style="text-align:left">Sous-total des produits</th><td>${money(order.regularSubtotalCents)}</td></tr>${promotionEmailRows(order)}<tr><th style="text-align:left">Sous-total après promotion</th><td>${money(order.itemSubtotalCents)}</td></tr><tr><th style="text-align:left">${order.fulfillment==="delivery"?"Livraison locale estimée":"Ramassage local"}</th><td>${money(order.deliveryFeeCents||0)}</td></tr><tr><th style="text-align:left">Total estimé</th><td><strong>${money(order.estimatedTotalCents)}</strong></td></tr></table><p><strong>Veuillez attendre avant de payer.</strong> Rien n’a été facturé ou finalisé. Nous confirmerons la disponibilité, le ${order.fulfillment==="delivery"?"prix de livraison":"ramassage"} et les instructions de paiement par courriel.</p></div>`;
+}
+
+async function ensureCampaignTables(env){
+  if(!env.INVENTORY_DB)throw new Error("Inventory database is not connected.");
+  await env.INVENTORY_DB.exec(`CREATE TABLE IF NOT EXISTS campaign_settings (id INTEGER PRIMARY KEY CHECK(id=1), config_json TEXT NOT NULL); CREATE TABLE IF NOT EXISTS campaign_orders (order_id TEXT PRIMARY KEY, created_at TEXT NOT NULL, order_json TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', retained_pairs INTEGER NOT NULL, email_status TEXT NOT NULL DEFAULT 'pending', updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);`);
+}
+async function readCampaign(env){
+  await ensureCampaignTables(env);
+  const row=await env.INVENTORY_DB.prepare("SELECT config_json FROM campaign_settings WHERE id=1").first();
+  return campaignConfig(row?JSON.parse(row.config_json):CAMPAIGN_DEFAULTS);
+}
+async function saveCampaignOrder(env,order){
+  // No customer contact details in the donation ledger. Snapshot preserves the original offer.
+  const snapshot={items:order.items.map(({id,name,quantity,priceCents})=>({id,name,quantity,priceCents})),campaignConfig:order.campaignConfig,qualifyingPairs:order.qualifyingPairs,regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,donationCommitmentCents:order.donationCommitmentCents,estimatedTotalCents:order.estimatedTotalCents,deliveryFeeCents:order.deliveryFeeCents,language:order.language};
+  await env.INVENTORY_DB.prepare("INSERT INTO campaign_orders(order_id,created_at,order_json,retained_pairs) VALUES(?,?,?,?)").bind(order.orderId,order.createdAt,JSON.stringify(snapshot),order.qualifyingPairs).run();
+}
+async function handleCampaign(request,env){
+  try{
+    if(request.method==="GET")return json({config:await readCampaign(env)});
+    if(request.method!=="POST")return json({error:"Method not allowed."},405);
+    if(!await inventoryAuthorized(request,env))return json({error:"Please open inventory first."},401);
+    if(request.headers.get("Origin")&&request.headers.get("Origin")!==new URL(request.url).origin)return json({error:"Request not allowed."},403);
+    const config=campaignConfig((await request.json()).config);
+    await ensureCampaignTables(env);
+    await env.INVENTORY_DB.prepare("INSERT INTO campaign_settings(id,config_json) VALUES(1,?) ON CONFLICT(id) DO UPDATE SET config_json=excluded.config_json").bind(JSON.stringify(config)).run();
+    return json({ok:true,config});
+  }catch(error){return json({error:request.method==="POST"?error.message:"Campaign settings are temporarily unavailable."},request.method==="POST"?400:503)}
+}
+async function handleCampaignOrders(request,env){
+  if(!await inventoryAuthorized(request,env))return json({error:"Please open inventory first."},401);
+  try{
+    await ensureCampaignTables(env);
+    if(request.method==="POST"){
+      if(request.headers.get("Origin")&&request.headers.get("Origin")!==new URL(request.url).origin)return json({error:"Request not allowed."},403);
+      const data=await request.json(),id=clean(data.orderId,40);
+      if(!["pending","paid","completed","cancelled","refunded","partial_refund"].includes(data.status))return json({error:"Choose a valid order status."},400);
+      const row=await env.INVENTORY_DB.prepare("SELECT order_json FROM campaign_orders WHERE order_id=?").bind(id).first();
+      if(!row)return json({error:"Order not found."},404);
+      const order=JSON.parse(row.order_json);
+      const pairs=["cancelled","refunded"].includes(data.status)?0:data.status==="partial_refund"?Number(data.retainedPairs):order.qualifyingPairs;
+      if(!Number.isInteger(pairs)||pairs<0||pairs>order.qualifyingPairs)return json({error:"Pairs kept must be between zero and the original number of qualifying pairs."},400);
+      await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET status=?,retained_pairs=?,updated_at=CURRENT_TIMESTAMP WHERE order_id=?").bind(data.status,pairs,id).run();
+      return json({ok:true});
+    }
+    if(request.method!=="GET")return json({error:"Method not allowed."},405);
+    const result=await env.INVENTORY_DB.prepare("SELECT * FROM campaign_orders ORDER BY created_at DESC LIMIT 100").all();
+    const totals=await env.INVENTORY_DB.prepare("SELECT status,retained_pairs,order_json FROM campaign_orders WHERE retained_pairs>0").all();
+    let pendingCents=0,earnedCents=0;
+    for(const row of totals.results||[]){const value=row.retained_pairs*JSON.parse(row.order_json).campaignConfig.donationPerPairCents;if(row.status==="pending")pendingCents+=value;else if(["paid","completed","partial_refund"].includes(row.status))earnedCents+=value;}
+    return json({pendingCents,earnedCents,orders:(result.results||[]).map(row=>({...row,order:JSON.parse(row.order_json),order_json:undefined}))});
+  }catch(_){return json({error:"The donation tracker could not be updated."},503)}
 }
 async function handleProducts(env){
   if(!env.INVENTORY_DB)return json({products:[]});
@@ -243,5 +320,5 @@ async function serveAsset(request,env){
   headers.set("Pragma","no-cache");
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
 }
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
+export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/campaign")return handleCampaign(request,env);if(path==="/api/campaign/orders")return handleCampaignOrders(request,env);if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
 

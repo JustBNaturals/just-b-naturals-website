@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Inventory | Just B Natural</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260915-botanical-oils">
 </head>
 <body class="inventory-page">
   <header class="inventory-header">
@@ -16,7 +16,7 @@
     <section class="inventory-intro">
       <p class="eyebrow">Private stock manager</p>
       <h1>Inventory</h1>
-      <p>Set the stock and price, choose Preorder only when a product is curing, then press <strong>Save changes</strong>. A stock number of <strong>0 automatically shows Out of stock</strong>. Stock can stay blank when you do not want a number shown. Prices are in Canadian dollars.</p>
+      <p>Set the stock and price, choose Preorder only when a product is curing, then press <strong>Save changes</strong> or hit <strong>Enter</strong>. A stock number of <strong>0 automatically shows Out of stock</strong>. Stock can stay blank when you do not want a number shown. Prices are in Canadian dollars.</p>
     </section>
 
     <form class="inventory-login" data-inventory-login>
@@ -31,7 +31,7 @@
         <p><b>Available now</b> lets customers order whenever stock is above 0. <b>Preorder</b> shows the ready date and allows advance orders. Setting stock to <b>0</b> automatically shows Out of stock.</p>
       </div>
       <div class="inventory-actions">
-        <div><strong data-inventory-count>0 products</strong><span>Changes appear on the shop after saving.</span></div>
+        <div><strong data-inventory-count>0 products</strong><span>Save with the button or press Enter. Changes appear on the shop immediately.</span></div>
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
       </div>
       <div class="inventory-table-wrap">
@@ -44,9 +44,21 @@
         <p data-inventory-save-status role="status" aria-live="polite"></p>
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
       </div>
+      <section class="campaign-admin" aria-labelledby="campaign-admin-title">
+        <p class="eyebrow">October with love</p><h2 id="campaign-admin-title">Soap offer & donation tracker</h2>
+        <p class="campaign-admin-note">Each complete pair receives the offer: 4 soaps make 2 pairs, 3 soaps make 1 pair plus a regular-price bar. Just B funds the donation. No customer surcharge.</p>
+        <form data-campaign-settings>
+          <label><input type="checkbox" name="enabled"> Show the campaign and apply the soap offer</label>
+          <div class="campaign-admin-fields"><label>Start date<input type="date" name="startDate" required></label><label>Last day (Toronto time)<input type="date" name="endDate" required></label><label>Price for two soaps (CAD)<input type="number" name="pairPrice" step="0.01" min="0" max="1000" required></label><label>Just B donation per pair (CAD)<input type="number" name="donation" step="0.01" min="0" max="1000" required></label></div>
+          <p><button class="button button-dark" type="submit">Save campaign</button></p><p data-campaign-admin-status role="status"></p>
+        </form>
+        <div class="campaign-donation-summary"><div><span>Pending payment</span><strong data-donation-pending>$0</strong></div><div><span>Committed from paid orders</span><strong data-donation-earned>$0</strong></div></div>
+        <p class="campaign-admin-note">These are commitments, not proof of donations already sent. Mark an order Paid after receiving payment. Completed keeps the same commitment. Cancelled / Full refund removes it. For a partial refund, enter the number of complete qualifying pairs the customer kept. Updates do not send emails or issue refunds. All-order totals appear above; the latest 100 requests appear below.</p>
+        <p data-campaign-orders-status role="status"></p><div data-campaign-orders></div>
+      </section>
     </section>
-    <div class="inventory-save-toast" data-inventory-toast role="status" aria-live="polite" hidden><strong>Changes saved</strong><span>The website inventory is up to date.</span></div>
+    <div class="inventory-save-toast" data-inventory-toast role="status" aria-live="polite" hidden><strong>Saved. It’s live! ✓</strong><span>The shop now has your latest inventory.</span></div>
   </main>
-  <script src="inventory.js"></script>
+  <script src="fr.js?v=20260915-botanical-oils" defer></script><script src="inventory.js?v=20260914-layout"></script>
 </body>
 </html>
