@@ -1288,3 +1288,8 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
   }
 }
 .pink-index-offer { margin-bottom: 28px; }
+
+/* Feather the mobile photograph into the page without a visible bottom seam. */
+@media(max-width:680px){
+ .home-zen-scene::after{content:"";position:absolute;z-index:5;left:0;right:0;bottom:0;height:112px;pointer-events:none;background:linear-gradient(180deg,rgba(250,247,239,0) 0%,rgba(250,247,239,.38) 38%,rgba(250,247,239,.82) 73%,#faf7ef 100%)}
+}
