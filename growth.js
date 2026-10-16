@@ -1,4 +1,5 @@
 import {priceOrder} from './promotion.js';
+import {cartSuggestions} from './recommendations.js';
 export function scentFamilies(product){
  if(product.scentFamilies)return product.scentFamilies;
  const text=[product.name,...(product.ingredients||[])].join(' ').toLowerCase();
@@ -12,7 +13,7 @@ export function scentFamilies(product){
 }
 const escape=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initializeGrowth(api){
- const {products,t,language}=api;let inventory=new Map(),inventoryReady=false,selected=['',''],storefront=null;
+ const {products,t,language}=api;let inventory=new Map(),inventoryReady=false,storefront=null;
  const format=cents=>new Intl.NumberFormat(language==='fr'?'fr-CA':'en-CA',{style:'currency',currency:'CAD'}).format(cents/100);
  const available=p=>inventoryReady&&inventory.has(p.id)&&p.active!==false&&p.availabilityStatus!=='preorder'&&p.availabilityStatus!=='unavailable'&&p.stock!==0&&Number.isInteger(inventory.get(p.id).priceCents);
  let statisticsEnabled=true;try{statisticsEnabled=localStorage.getItem('jbn-usage-optout')!=='1';}catch(_){}
@@ -35,25 +36,19 @@ export function initializeGrowth(api){
   const grid=document.querySelector('[data-catalog="all"],[data-category]');grid?.before(controls);
   controls.addEventListener('click',e=>{const b=e.target.closest('[data-scent]');if(!b)return;document.body.dataset.scent=b.dataset.scent;controls.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));search.dispatchEvent(new Event('input'));});
  }
- const duoMount=document.querySelector('[data-duo-builder]');
- if(duoMount){duoMount.innerHTML=`<div class="duo-intro"><p class="eyebrow">${t('A pair, your way','Un duo à votre goût')}</p><h2>${t('Find your two favourites.','Trouvez vos deux préférés.')}</h2><p>${t('Two of the same, or one of each. Pick the scents you love.','Deux du même parfum ou un de chaque. Choisissez ce qui vous plaît.')}</p></div><div class="duo-slots">${[0,1].map(i=>`<div class="duo-slot"><div class="duo-photo" data-duo-image="${i}" aria-hidden="true">${i+1}</div><label for="duo-${i}">${t('Soap','Savon')} ${i+1}</label><select id="duo-${i}" data-duo-slot="${i}"><option value="">${t('Loading available soaps…','Chargement des savons…')}</option></select></div>`).join('')}</div><div class="duo-summary"><strong data-duo-price></strong><p data-duo-note aria-live="polite"></p><button class="button button-dark" type="button" data-duo-add disabled>${t('Add my duo to cart','Ajouter mon duo au panier')}</button><p data-duo-status role="status"></p></div>`;
-  duoMount.addEventListener('change',e=>{if(!e.target.matches('[data-duo-slot]'))return;selected[Number(e.target.dataset.duoSlot)]=e.target.value;updateDuo();});
-  duoMount.querySelector('[data-duo-add]').addEventListener('click',()=>{if(!duoValid())return;selected.forEach(id=>api.add(id));track('duo_added');duoMount.querySelector('[data-duo-status]').textContent=t('Your duo is in the cart.','Votre duo est dans le panier.');});
+ const recommendations=document.querySelector('[data-cart-suggestions]');
+ let recommendationKey='';
+ function renderSuggestions(){
+  if(!recommendations)return;
+  const state=cartSuggestions(products,[...inventory.values()],api.cart(),api.config(),scentFamilies);
+  const key=JSON.stringify({ready:inventoryReady,items:state.items.map(i=>[i.product.id,i.priceCents,i.completesPair]),remaining:state.remaining,language});
+  if(key===recommendationKey)return;recommendationKey=key;
+  recommendations.hidden=!inventoryReady||!api.cart().length;
+  if(recommendations.hidden){recommendations.innerHTML='';return;}
+  const delivery=state.remaining===null?'':`<p class="cart-delivery-progress">${state.remaining?t('You’re '+format(state.remaining)+' away from free local delivery.','Il vous manque '+format(state.remaining)+' pour la livraison locale gratuite.'):t('Your cart qualifies for free local delivery.','Votre panier est admissible à la livraison locale gratuite.')} <span>${t('Within 20 km of Aylmer.','Dans un rayon de 20 km d’Aylmer.')}</span></p>`;
+  recommendations.innerHTML=delivery+(state.items.length?`<h3>${t('A little something to go with it','Pour accompagner votre choix')}</h3><div class="cart-suggestion-list">${state.items.map(item=>{const p=item.product;return `<article class="cart-suggestion"><a href="product-${encodeURIComponent(p.id)}.html${language==='fr'?'?lang=fr':''}"><img src="${escape(p.image)}" alt="${escape(p.name)}" width="64" height="64" loading="lazy"></a><div><a href="product-${encodeURIComponent(p.id)}.html${language==='fr'?'?lang=fr':''}">${escape(p.name)}</a><p>${format(item.priceCents)}${item.completesPair?' · '+t('Completes your soap pair','Complète votre duo de savons'):''}</p></div><button type="button" data-recommend-add="${p.id}" aria-label="${escape(t('Add '+p.name+' to cart','Ajouter '+p.name+' au panier'))}">${t('Add','Ajouter')} +</button></article>`;}).join('')}</div>`:'');
  }
- function duoValid(){
-  if(!selected.every(Boolean))return false;
-  return [...new Set(selected)].every(id=>{const p=products.find(p=>p.id===id),quantity=selected.filter(x=>x===id).length+(api.cart().find(i=>i.id===id)?.quantity||0);return p&&available(p)&&(!Number.isInteger(p.stock)||quantity<=p.stock);});
- }
- function updateDuo(){
-  if(!duoMount)return;
-  selected.forEach((id,i)=>{const p=products.find(p=>p.id===id);duoMount.querySelector(`[data-duo-image="${i}"]`).innerHTML=p?`<img src="${escape(p.image)}" alt="">`:String(i+1);});
-  const chosen=selected.map(id=>products.find(p=>p.id===id));const price=duoMount.querySelector('[data-duo-price]'),note=duoMount.querySelector('[data-duo-note]');
-  if(chosen.every(Boolean)){
-   const result=priceOrder(selected.map(id=>({id,quantity:1,priceCents:inventory.get(id)?.priceCents||0})),api.config());price.textContent=format(result.itemSubtotalCents);
-   note.textContent=duoValid()?(result.discountCents?t('October offer included automatically.','Promotion d’octobre appliquée automatiquement.'):t('Your two soaps at their current price.','Vos deux savons à leur prix actuel.')):t('Choose a different soap or reduce the quantity already in your cart.','Choisissez un autre savon ou réduisez la quantité déjà au panier.');
-  }else{price.textContent='';note.textContent=t('Choose two available soaps to see your total.','Choisissez deux savons disponibles pour voir le total.');}
-  duoMount.querySelector('[data-duo-add]').disabled=!duoValid();
- }
+ recommendations?.addEventListener('click',e=>{const button=e.target.closest('[data-recommend-add]');if(!button)return;const id=button.dataset.recommendAdd;const item=cartSuggestions(products,[...inventory.values()],api.cart(),api.config(),scentFamilies).items.find(i=>i.product.id===id);if(!item)return;if(api.add(id)){track('recommendation_added',id);document.querySelector('[data-order-drawer-title]')?.focus();}});
  const gifts=document.querySelector('[data-gift-sets]');
  function renderGifts(){
   if(!gifts)return;const sets=[{key:'duo',title:t('A soap duo','Un duo de savons'),categories:['artisan-soap','artisan-soap']},{key:'soft',title:t('Soap & a little softness','Savon et douceur'),categories:['artisan-soap','body-care']},{key:'ritual',title:t('An everyday ritual','Un rituel quotidien'),categories:['artisan-soap','sugar-scrubs']}];
@@ -71,5 +66,5 @@ export function initializeGrowth(api){
  }
  fetch('/api/storefront',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{storefront=data;addBuyingFacts();showReviews();}).catch(()=>{});
  addBuyingFacts();
- return {track,refresh(){updateDuo();renderGifts();addBuyingFacts();},setInventory(records){inventory=new Map(records.map(r=>[r.id,r]));inventoryReady=true;if(duoMount){const soaps=products.filter(p=>p.category==='artisan-soap'&&available(p));duoMount.querySelectorAll('select').forEach((select,i)=>{select.innerHTML=`<option value="">${t('Choose a soap','Choisir un savon')}</option>`+soaps.map(p=>`<option value="${p.id}">${escape(p.name)} · ${format(inventory.get(p.id).priceCents)}</option>`).join('');select.value=selected[i];});}updateDuo();renderGifts();}};
+ return {track,refresh(){renderSuggestions();renderGifts();addBuyingFacts();},setInventory(records){inventory=new Map(records.map(r=>[r.id,r]));inventoryReady=true;renderSuggestions();renderGifts();}};
 }

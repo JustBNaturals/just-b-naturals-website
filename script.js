@@ -1,4 +1,4 @@
-import { initializeGrowth, scentFamilies } from "./growth.js";
+import { initializeGrowth, scentFamilies } from "./growth.js?v=20261016-cart";
 import { PRODUCTS } from "./product-data.js";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
 import "./fr.js";
@@ -310,10 +310,10 @@ function renderSiteChrome() {
     <nav class="mobile-bottom-nav" aria-label="Quick navigation"><a href="index.html"><span aria-hidden="true">⌂</span>Home</a><a href="shop.html"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 8h12l1 12H5L6 8Zm3 1V6a3 3 0 0 1 6 0v3"/></svg></span>Products</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-fill" cx="17.5" cy="6.5" r="1"/></svg></span>Instagram</a><button type="button" data-order-list-open><span class="mobile-list-icon" aria-hidden="true">≡<b data-order-count>0</b></span>${t('Cart')}</button></nav>
     <button class="order-drawer-backdrop" type="button" aria-label="Close cart" data-order-list-close hidden></button>
     <aside class="order-drawer" id="order-drawer" aria-hidden="true" aria-labelledby="order-drawer-title">
-      <div class="order-drawer-header"><div><p class="eyebrow">${t('Your selections')}</p><h2 id="order-drawer-title">${t('Cart')}</h2></div><button class="order-drawer-close" type="button" aria-label="Close cart" data-order-list-close>&times;</button></div>
+      <div class="order-drawer-header"><div><p class="eyebrow">${t('Your selections')}</p><h2 id="order-drawer-title" data-order-drawer-title tabindex="-1">${t('Cart')}</h2></div><button class="order-drawer-close" type="button" aria-label="Close cart" data-order-list-close>&times;</button></div>
       <div class="order-drawer-body">
         <div class="order-empty" data-order-empty><span>＋</span><h3>${t('Your cart is empty')}</h3><p>Add a few favourites, then send an order request. Payment comes only after confirmation.</p><a class="button button-outline" href="shop.html">${t('Browse products')}</a></div>
-        <div class="order-list-items" data-order-items></div>
+        <div class="order-list-items" data-order-items></div><section class="cart-suggestions" data-cart-suggestions aria-label="${t("Suggestions for your cart","Suggestions pour votre panier")}" hidden></section>
       </div>
       <div class="order-drawer-footer" data-order-footer hidden><dl class="pink-cart-totals"><div><dt>${t("Products subtotal")}</dt><dd data-checkout-subtotal></dd></div><div data-promotion-row hidden><dt>${t("October soap offer applied")}</dt><dd data-promotion-discount></dd></div><div><dt>${t("Subtotal after promotion")}</dt><dd data-cart-total></dd></div></dl><p class="pink-cart-message" data-promotion-message aria-live="polite" hidden></p>
         <p class="order-confirmation-note">${t('No payment is taken now. Availability is confirmed before you pay.')}</p>
@@ -1743,3 +1743,9 @@ function initializePromotionPopup(){
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
 
 growthTools=initializeGrowth({products:PRODUCTS,t,language:campaignLanguage,add:addToOrderList,cart:()=>orderList,config:()=>soapCampaign});
+
+// Keep selections consistent when a shopper uses more than one tab.
+window.addEventListener('storage',event=>{
+ if(event.key!==ORDER_STORAGE_KEY&&event.key!==ORDER_NOTES_KEY&&event.key!==null)return;
+ orderList=loadOrderList();orderNotes=loadOrderNotes();renderOrderList();growthTools?.refresh();
+});

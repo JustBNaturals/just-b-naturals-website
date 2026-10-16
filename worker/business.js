@@ -8,6 +8,9 @@ export async function ensureBusiness(db){
  CREATE TABLE IF NOT EXISTS business_reviews(id INTEGER PRIMARY KEY AUTOINCREMENT,author TEXT NOT NULL,quote_en TEXT NOT NULL,quote_fr TEXT NOT NULL DEFAULT '',permission INTEGER NOT NULL DEFAULT 0,published INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
  CREATE TABLE IF NOT EXISTS business_metrics(day TEXT NOT NULL,event TEXT NOT NULL,product_id TEXT NOT NULL DEFAULT '',source TEXT NOT NULL DEFAULT 'direct',count INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(day,event,product_id,source));
  CREATE TABLE IF NOT EXISTS order_delivery(order_id TEXT PRIMARY KEY,request_key TEXT UNIQUE,order_json TEXT NOT NULL,business_sent INTEGER NOT NULL DEFAULT 0,customer_sent INTEGER NOT NULL DEFAULT 0,business_attempt_at TEXT,customer_attempt_at TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+ CREATE INDEX IF NOT EXISTS campaign_orders_created ON campaign_orders(created_at);
+ CREATE INDEX IF NOT EXISTS order_delivery_created ON order_delivery(created_at);
+ CREATE INDEX IF NOT EXISTS reviews_public ON business_reviews(published,permission,id);
  CREATE TABLE IF NOT EXISTS order_stock(order_id TEXT NOT NULL,product_id TEXT NOT NULL,quantity INTEGER NOT NULL,PRIMARY KEY(order_id,product_id));
 `);
  await db.prepare(` CREATE TRIGGER IF NOT EXISTS reserve_order_stock BEFORE INSERT ON order_stock WHEN NOT EXISTS(SELECT 1 FROM order_stock WHERE order_id=NEW.order_id AND product_id=NEW.product_id) BEGIN
@@ -70,7 +73,7 @@ export async function businessRoute(request,env,h){
   if(path==='/api/metrics'&&request.method==='POST'){
    if(request.headers.get('DNT')==='1'||request.headers.get('Sec-GPC')==='1')return h.json({ok:true});
    if(Number(request.headers.get('Content-Length')||0)>1000)return h.json({error:'Request too large.'},413);
-   const data=await request.json();if(!['page_view','product_view','add_to_cart','checkout_start','duo_added','gift_added','signup'].includes(data.event))return h.json({error:'Invalid event.'},400);
+   const data=await request.json();if(!['page_view','product_view','add_to_cart','checkout_start','gift_added','recommendation_added','signup'].includes(data.event))return h.json({error:'Invalid event.'},400);
    const productId=h.names[data.productId]?data.productId:'';
    const source=['instagram','email','google','direct','other'].includes(data.source)?data.source:'direct';
    await recordMetric(db,data.event,productId,source);return h.json({ok:true});
