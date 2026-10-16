@@ -3144,24 +3144,23 @@ function initializePromotionPopup(){
 }
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
 
-// A small, decorative interaction; no shopping links or autoplay.
-const botanicalMoment=document.querySelector('[data-botanical-moment]');
-if(botanicalMoment){
-  const scene=botanicalMoment.querySelector('[data-botanical-breeze]');
-  scene.setAttribute('aria-label',campaignLanguage==='fr'?'Faire danser les feuilles':'Stir the leaves');
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let breezeTimer;
-  scene.addEventListener('pointermove',event=>{
-    if(reducedMotion.matches||event.pointerType==='touch')return;
-    const box=scene.getBoundingClientRect();
-    scene.style.setProperty('--leaf-x',`${((event.clientX-box.left)/box.width-.5)*12}px`);
-    scene.style.setProperty('--leaf-y',`${((event.clientY-box.top)/box.height-.5)*10}px`);
-  });
-  scene.addEventListener('pointerleave',()=>{scene.style.setProperty('--leaf-x','0px');scene.style.setProperty('--leaf-y','0px');});
-  scene.addEventListener('click',()=>{
-    if(reducedMotion.matches)return;
-    clearTimeout(breezeTimer);scene.classList.remove('is-breezy');
-    void scene.offsetWidth;scene.classList.add('is-breezy');
-    breezeTimer=setTimeout(()=>scene.classList.remove('is-breezy'),1800);
-  });
+// Natural photographic depth follows the page; never traps or changes scrolling.
+const homeZenScene=document.querySelector('.home-zen-scene');
+if(homeZenScene){
+  const homeZenHero=homeZenScene.closest('.home-hero');
+  const zenReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let zenFrame=0;
+  function updateZenScroll(){
+    zenFrame=0;
+    if(zenReducedMotion.matches){homeZenScene.style.setProperty('--zen-scroll','0px');return;}
+    const bounds=homeZenHero.getBoundingClientRect();
+    if(bounds.bottom<0||bounds.top>window.innerHeight)return;
+    const progress=(window.innerHeight/2-bounds.top-bounds.height/2)/(window.innerHeight+bounds.height);
+    homeZenScene.style.setProperty('--zen-scroll',`${Math.round(Math.max(-1,Math.min(1,progress))*64)}px`);
+  }
+  function requestZenScroll(){if(!zenFrame)zenFrame=requestAnimationFrame(updateZenScroll);}
+  window.addEventListener('scroll',requestZenScroll,{passive:true});
+  window.addEventListener('resize',requestZenScroll,{passive:true});
+  zenReducedMotion.addEventListener('change',requestZenScroll);
+  requestZenScroll();
 }

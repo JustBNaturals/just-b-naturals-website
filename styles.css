@@ -1193,29 +1193,20 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .pink-hero-copy .hero-actions>.pink-button{justify-content:center}
 @media(min-width:681px) and (max-width:1050px){.category-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.category-grid .category-card:nth-child(n){grid-column:span 2}.category-grid .category-card:nth-child(4){grid-column:2/span 2}.category-grid .category-card:nth-child(5){grid-column:4/span 2}}
 
-/* Linen, leaves and a touch of light. The scene responds to visitors, never autoplay. */
-.botanical-moment{min-width:0;width:100%;max-width:570px;margin:28px auto 20px;position:relative}
-.botanical-scene{--leaf-x:0px;--leaf-y:0px;position:relative;isolation:isolate;display:block;width:100%;height:470px;padding:0;border:0;background:#e9e9da;border-radius:46% 48% 40% 43% / 36% 42% 51% 48%;color:#344e3e;cursor:pointer;box-shadow:0 20px 60px #4e5f3510;-webkit-tap-highlight-color:transparent;touch-action:pan-y}
-.botanical-photo{position:absolute;inset:0;overflow:hidden;border-radius:inherit;background:url('images/linen-eucalyptus-hero.webp') 82% center/auto 110% no-repeat;transform:translate(var(--leaf-x),var(--leaf-y));transition:transform .65s ease-out}
-.botanical-sunlight{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 20% 25%,#fff9dc99,transparent 65%);mix-blend-mode:soft-light;pointer-events:none}
-.botanical-sprig{position:absolute;pointer-events:none;filter:drop-shadow(8px 14px 7px #47593e20);transform-origin:50% 100%;transition:transform .65s ease-out}
-.botanical-sprig--olive{width:39%;height:78%;left:-8%;bottom:-2%;transform:translate(var(--leaf-x),var(--leaf-y)) rotate(-13deg)}
-.botanical-sprig--flower{width:25%;height:58%;right:-3%;bottom:0;transform:translate(var(--leaf-x),var(--leaf-y)) rotate(14deg)}
-.botanical-caption{position:absolute;left:21%;right:17%;bottom:14%;font:italic 28px/1.15 Newsreader,Georgia,serif;text-align:center;text-shadow:0 1px 10px #fffdf8}
-.botanical-hint{font:11px/1.5 Manrope,sans-serif;color:#61725a;text-align:center;margin:20px 0 0;letter-spacing:.025em}.botanical-hint>span:first-child{font-size:20px;vertical-align:middle;margin-right:6px}
-.botanical-scene:focus-visible{outline:3px solid #702b4a;outline-offset:8px}
-.botanical-ring{position:absolute;inset:20%;border:1px solid #fffdf8;border-radius:50%;opacity:0;pointer-events:none}
-.botanical-petal{position:absolute;left:45%;top:40%;width:10px;height:17px;background:#d9b7bf;border-radius:80% 10% 80% 20%;opacity:0;pointer-events:none}
-.botanical-petal--two{left:65%;top:25%;background:#a9b697}.botanical-petal--three{left:30%;top:60%;background:#e4cda5}
-.is-breezy .botanical-sprig--olive{animation:leaf-dance 1.8s ease-in-out}.is-breezy .botanical-sprig--flower{animation:flower-dance 1.8s ease-in-out}
-.is-breezy .botanical-ring{animation:calm-ripple 1.8s ease-out}.is-breezy .botanical-petal{animation:petal-drift 1.8s ease-out}.is-breezy .botanical-petal--two{animation-delay:.1s}.is-breezy .botanical-petal--three{animation-delay:.2s}
-@keyframes leaf-dance{0%,100%{transform:rotate(-13deg)}35%{transform:rotate(-3deg)}70%{transform:rotate(-17deg)}}
-@keyframes flower-dance{0%,100%{transform:rotate(14deg)}40%{transform:rotate(3deg)}75%{transform:rotate(19deg)}}
-@keyframes calm-ripple{0%{transform:scale(.5);opacity:0}20%{opacity:.8}100%{transform:scale(1.7);opacity:0}}
-@keyframes petal-drift{0%{opacity:0;transform:translate(0,0) rotate(0)}20%{opacity:.9}100%{opacity:0;transform:translate(65px,85px) rotate(170deg)}}
-@media(max-width:1050px){.botanical-scene{height:400px}.botanical-caption{font-size:25px}}
+/* Quiet photographic depth, driven only by ordinary page scrolling. */
+.home-hero{position:relative;isolation:isolate;overflow:hidden;background:#f4f0e6!important}
+.home-hero .hero-grid{position:relative;z-index:1;display:block;min-height:580px}
+.home-hero .hero-copy{width:51%;max-width:650px;padding:76px 0 72px}
+.home-hero .hero-copy h1{font-size:clamp(44px,4.6vw,66px);line-height:1.06}
+.home-hero .hero-copy>p:not(.eyebrow){max-width:510px;line-height:1.9}
+.home-zen-scene{position:absolute;inset:0;z-index:0;pointer-events:none;--zen-scroll:0px}
+.home-zen-photo{position:absolute;inset:-40px 0;background:url('images/linen-eucalyptus-hero.webp') center right/cover no-repeat;transform:translate3d(0,var(--zen-scroll),0) scale(1.04);transform-origin:70% 50%}
+.home-zen-light{position:absolute;inset:-12%;background:linear-gradient(120deg,transparent 38%,#fff9df44 52%,transparent 68%);transform:translate3d(0,calc(var(--zen-scroll) * -.5),0);mix-blend-mode:soft-light}
+.home-zen-shade{position:absolute;inset:0;background:linear-gradient(90deg,#f4f0e6 0%,#f4f0e6f5 30%,#f4f0e6cc 47%,#f4f0e622 72%,transparent 100%)}
+@media(max-width:1050px){.home-hero .hero-copy{width:57%;padding:60px 0}.home-hero .hero-copy h1{font-size:48px}.home-zen-shade{background:linear-gradient(90deg,#f4f0e6 0%,#f4f0e6ed 42%,#f4f0e655 75%,transparent)}}
 @media(max-width:680px){
- .botanical-moment{max-width:370px;margin:8px auto 12px;padding:0 14px;box-sizing:border-box}.botanical-scene{height:280px}.botanical-caption{font-size:24px;bottom:16%}.botanical-hint{margin-top:14px;font-size:10px}
- .category-grid{gap:10px}.category-grid .category-card:nth-child(n){min-height:0;padding:13px 9px 14px;gap:8px;border-radius:12px}.category-grid .category-visual,.category-grid .category-visual img{width:80px;height:80px}.category-grid .category-card h3{font-size:19px;line-height:1.15;margin:0}.category-grid .circle-arrow{width:25px;height:25px;top:7px;right:7px;font-size:16px}.category-grid .category-card:last-child{min-height:0;flex-direction:row;justify-content:center;gap:16px;padding:12px 35px}.category-grid .category-card:last-child .category-visual,.category-grid .category-card:last-child .category-visual img{width:62px;height:62px}
+ .home-hero .hero-grid{min-height:0;padding-bottom:0}.home-hero .hero-copy{width:100%;max-width:none;padding:38px 0 22px}.home-hero .hero-copy h1{font-size:clamp(38px,9vw,49px);line-height:1.08;margin-bottom:22px}.home-hero .hero-copy>p:not(.eyebrow){font-size:13px;line-height:1.85;margin-bottom:26px}.home-hero .hero-actions{gap:24px}
+ .home-zen-scene{position:relative;inset:auto;height:250px;margin-top:0;overflow:hidden}.home-zen-photo{inset:-28px 0;background-position:right center;transform:translate3d(0,calc(var(--zen-scroll) * .6),0) scale(1.04)}.home-zen-shade{background:linear-gradient(180deg,#f4f0e6 0%,#f4f0e600 28%,#f4f0e600 78%,#f4f0e6 100%)}
+ .category-grid{gap:18px 14px}.category-grid .category-card:nth-child(n){min-height:184px;padding:23px 12px 22px;gap:17px;border-radius:14px;justify-content:center}.category-grid .category-visual,.category-grid .category-visual img{width:88px;height:88px}.category-grid .category-visual img{border-width:3px}.category-grid .category-card h3{font-size:20px;line-height:1.2;margin:0}.category-grid .circle-arrow{width:26px;height:26px;top:10px;right:10px;font-size:16px}.category-grid .category-card:last-child{grid-column:1/-1;width:calc((100% - 14px)/2);justify-self:center;min-height:184px;flex-direction:column;gap:17px;padding:23px 12px 22px}.category-grid .category-card:last-child .category-visual,.category-grid .category-card:last-child .category-visual img{width:88px;height:88px}
 }
-@media(prefers-reduced-motion:reduce){.botanical-scene *{animation:none!important;transition:none!important}.botanical-photo{transform:none}.botanical-sprig--olive{transform:rotate(-13deg)}.botanical-sprig--flower{transform:rotate(14deg)}.botanical-hint{display:none}.botanical-scene{cursor:default}}
+@media(prefers-reduced-motion:reduce){.home-zen-photo,.home-zen-light{transform:none!important}}
