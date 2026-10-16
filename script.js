@@ -3144,15 +3144,24 @@ function initializePromotionPopup(){
 }
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
 
-// The homepage photo collection reuses the shop's real product photography.
-const homePhotoGallery=document.querySelector('[data-home-gallery]');
-homePhotoGallery?.addEventListener('click',event=>{
-  const button=event.target.closest('[data-hero-photo]');if(!button)return;
-  homePhotoGallery.querySelectorAll('[data-hero-photo]').forEach(control=>control.setAttribute('aria-pressed',String(control===button)));
-  const image=homePhotoGallery.querySelector('[data-hero-image]');image.src=button.dataset.src;
-  image.alt=campaignLanguage==='fr'?button.dataset.altFr:button.dataset.altEn;
-  const caption=homePhotoGallery.querySelector('[data-hero-caption]');
-  caption.dataset.en=button.dataset.labelEn;caption.dataset.fr=button.dataset.labelFr;
-  caption.textContent=campaignLanguage==='fr'?button.dataset.labelFr:button.dataset.labelEn;
-  homePhotoGallery.querySelector('[data-hero-shop]').href=button.dataset.href;
-});
+// A small, decorative interaction; no shopping links or autoplay.
+const botanicalMoment=document.querySelector('[data-botanical-moment]');
+if(botanicalMoment){
+  const scene=botanicalMoment.querySelector('[data-botanical-breeze]');
+  scene.setAttribute('aria-label',campaignLanguage==='fr'?'Faire danser les feuilles':'Stir the leaves');
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let breezeTimer;
+  scene.addEventListener('pointermove',event=>{
+    if(reducedMotion.matches||event.pointerType==='touch')return;
+    const box=scene.getBoundingClientRect();
+    scene.style.setProperty('--leaf-x',`${((event.clientX-box.left)/box.width-.5)*12}px`);
+    scene.style.setProperty('--leaf-y',`${((event.clientY-box.top)/box.height-.5)*10}px`);
+  });
+  scene.addEventListener('pointerleave',()=>{scene.style.setProperty('--leaf-x','0px');scene.style.setProperty('--leaf-y','0px');});
+  scene.addEventListener('click',()=>{
+    if(reducedMotion.matches)return;
+    clearTimeout(breezeTimer);scene.classList.remove('is-breezy');
+    void scene.offsetWidth;scene.classList.add('is-breezy');
+    breezeTimer=setTimeout(()=>scene.classList.remove('is-breezy'),1800);
+  });
+}

@@ -1,6 +1,6 @@
 # October email drafts
 
-Six English/French drafts, updated to sound like Brigitte. Nothing sent or scheduled.
+Six English/French drafts, updated to sound like Brigitte. No campaign sent or scheduled. One English test preview was sent at Joshua’s request; these updated drafts have not been sent.
 
 Suggested timing: launch after approval; optional October 20 reminder; final reminder October 29. Send only while the offer is active. Before sending, publish the campaign and images, replace the mailing-address placeholder, choose the opted-in audience, and test the Brevo unsubscribe link.
 
@@ -58,7 +58,7 @@ Unsubscribe / Me désabonner: {{ unsubscribe }}
 
 ## reminder-en
 
-**Subject:** A little reminder: two soaps for $14
+**Subject:** Your favourite handmade soaps, 2 for $14
 
 **Preview text:** My October soap offer is still on, with $1 to Ruban Rose for every two soaps sold.
 
@@ -68,7 +68,7 @@ Unsubscribe / Me désabonner: {{ unsubscribe }}
 
 Hi everyone,
 
-Just a little reminder that my two-for-$14 soap offer is still on until October 31.
+In honour of Breast Cancer Awareness Month, choose any two of my handmade soaps for $14 through October 31.
 
 Choose whichever scents you like, and I’ll donate $1 to Ruban Rose for every two soaps sold.
 
@@ -83,7 +83,7 @@ Unsubscribe / Me désabonner: {{ unsubscribe }}
 
 ## reminder-fr
 
-**Subject:** Petit rappel : deux savons pour 14 $
+**Subject:** Vos savons artisanaux préférés, 2 pour 14 $
 
 **Preview text:** La promotion d’octobre se poursuit, avec 1 $ au Ruban Rose pour chaque duo de savons vendu.
 
@@ -93,7 +93,7 @@ Unsubscribe / Me désabonner: {{ unsubscribe }}
 
 Bonjour à tous,
 
-Un petit rappel : mes deux savons pour 14 $ sont toujours offerts jusqu’au 31 octobre.
+Pour le mois de la sensibilisation au cancer du sein, choisissez deux de mes savons faits à la main pour 14 $, jusqu’au 31 octobre.
 
 Choisissez les parfums qui vous plaisent. Je verserai 1 $ au Ruban Rose pour chaque duo de savons vendu.
 
@@ -160,3 +160,8 @@ Unsubscribe / Me désabonner: {{ unsubscribe }}
 ## Added awareness section
 
 All six HTML drafts now include lifetime-risk context, Quebec screening information and links to the October awareness page, Quebec’s official program and the Canadian Cancer Society. Preserve these resource links when importing into Brevo. The expanded HTML drafts are the current versions.
+
+
+## October 16 copy and layout update
+
+All six drafts use centred “Browse artisan soaps” / “Voir les savons artisanaux” buttons with a quieter type size. The launch keeps only the approved personal journey paragraph, without a quotation or signature. Reminder wording no longer uses “a little reminder.” Original Instagram photographs and language-matched awareness graphics, detailed screening guidance, and all resource links remain in every HTML draft. The protected test sender uses the same current English launch HTML. No new send or scheduling action was taken.
