@@ -1194,7 +1194,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 @media(min-width:681px) and (max-width:1050px){.category-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.category-grid .category-card:nth-child(n){grid-column:span 2}.category-grid .category-card:nth-child(4){grid-column:2/span 2}.category-grid .category-card:nth-child(5){grid-column:4/span 2}}
 
 /* Quiet photographic depth, driven only by ordinary page scrolling. */
-.home-hero{position:relative;isolation:isolate;overflow:hidden;background:#f4f0e6!important}
+.home-hero{position:relative;isolation:isolate;overflow:clip;background:#f4f0e6!important}
 .home-hero .hero-grid{position:relative;z-index:1;display:block;min-height:580px}
 .home-hero .hero-copy{width:51%;max-width:650px;padding:76px 0 72px}
 .home-hero .hero-copy h1{font-size:clamp(44px,4.6vw,66px);line-height:1.06}
