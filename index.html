@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261016-simple-linen">
-  <script type="module" src="script.js?v=20261016-simple-linen" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261016-home-restore">
+  <script type="module" src="script.js?v=20261016-home-restore" defer></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +35,13 @@
         </div>
 
       </div>
-      <div class="home-zen-scene" aria-hidden="true"><div class="home-zen-photo"></div><div class="home-zen-shade"></div></div>
+      <div class="home-zen-scene" aria-hidden="true">
+        <picture class="home-zen-photo">
+          <source media="(max-width: 760px)" srcset="images/hero-home-mobile.jpg">
+          <img src="images/hero-home-new.webp" alt="" width="1600" height="1200">
+        </picture>
+        <div class="home-zen-shade"></div>
+      </div>
     </section>
 
     <section class="section shell" aria-labelledby="category-title">
