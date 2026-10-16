@@ -1,7 +1,7 @@
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
 import "./fr.js";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
-import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-simple-fade";
+import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let soapCampaign = { ...CAMPAIGN_DEFAULTS, enabled: false };
 /*
   STORE SETTINGS
