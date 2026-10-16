@@ -3152,11 +3152,13 @@ if(homeZenScene){
   let zenFrame=0;
   function updateZenScroll(){
     zenFrame=0;
-    if(zenReducedMotion.matches){homeZenScene.style.setProperty('--zen-scroll','0px');return;}
+    if(zenReducedMotion.matches){homeZenScene.style.setProperty('--zen-scroll','0px');homeZenScene.style.setProperty('--zen-scale','1.07');return;}
     const bounds=homeZenHero.getBoundingClientRect();
     if(bounds.bottom<0||bounds.top>window.innerHeight)return;
-    const progress=(window.innerHeight/2-bounds.top-bounds.height/2)/(window.innerHeight+bounds.height);
-    homeZenScene.style.setProperty('--zen-scroll',`${Math.round(Math.max(-1,Math.min(1,progress))*64)}px`);
+    const progress=Math.max(-1,Math.min(1,(window.innerHeight/2-bounds.top-bounds.height/2)/((window.innerHeight+bounds.height)/2)));
+    const distance=window.innerWidth<=680?64:96;
+    homeZenScene.style.setProperty('--zen-scroll',`${Math.round(progress*distance)}px`);
+    homeZenScene.style.setProperty('--zen-scale',String(1.07+(progress+1)*.015));
   }
   function requestZenScroll(){if(!zenFrame)zenFrame=requestAnimationFrame(updateZenScroll);}
   window.addEventListener('scroll',requestZenScroll,{passive:true});
