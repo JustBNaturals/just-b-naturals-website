@@ -1,0 +1,1423 @@
+// Shared product content. Prices and stock come from the trusted inventory service.
+export const PRODUCTS = [
+  {
+    "id": "matcha-lavender-soap",
+    "category": "artisan-soap",
+    "name": "Matcha & Lavender",
+    "kicker": "Just B Clean",
+    "description": "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather that nourishes the skin. Kaolin clay, matcha powder, and French green clay lend a soft, earthy color and a gentle detoxifying touch.",
+    "cardDescription": "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather…",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Castor Oil) , Kaolin Clay, Matcha Powder, French Green Clay, Steam-Distilled Essential Oils (Lavender, Bergamot, Patchouli, Cedarwood)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This soothing, mineral-rich bar is crafted with organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil, creating a creamy, conditioning lather that nourishes the skin. Kaolin clay, matcha powder, and French green clay lend a soft, earthy color and a gentle detoxifying touch.",
+          "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral, balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
+        ]
+      }
+    ],
+    "details": [
+      "Scented with steam-distilled lavender, bergamot, patchouli, and cedarwood essential oils, the aroma is fresh, grounding, and lightly floral, balanced with warm, woodsy undertones. A calming, nature-inspired bar perfect for everyday use."
+    ],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-matcha-lavender.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": true
+  },
+  {
+    "id": "rosemary-sage-soap",
+    "category": "artisan-soap",
+    "name": "Rosemary & Sage",
+    "kicker": "Just B Clean",
+    "description": "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing lather. French green clay offers a gentle detoxifying cleanse, while activated charcoal adds a deeper purifying touch and a striking natural contrast in the swirl.",
+    "cardDescription": "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing…",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Castor Oil), French Green Clay, Activated Charcoal, Steam-Distilled Essential Oils (Rosemary, Clary Sage, Cedarwood)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A refreshing, herbaceous bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and castor oil to create a creamy, nourishing lather. French green clay offers a gentle detoxifying cleanse, while activated charcoal adds a deeper purifying touch and a striking natural contrast in the swirl.",
+          "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma, bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
+        ]
+      }
+    ],
+    "details": [
+      "Scented with steam-distilled rosemary, clary sage, and cedarwood essential oils, this bar carries a crisp, grounding aroma, bright herbal notes balanced with warm, woodsy depth. It’s an invigorating, nature-inspired soap perfect for morning showers or anyone who loves clean, botanical scents."
+    ],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-rosemary-sage.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "lemon-rosemary-soap",
+    "category": "artisan-soap",
+    "name": "Lemon & Rosemary",
+    "kicker": "Just B Clean",
+    "description": "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a creamy, conditioning lather that leaves skin soft and nourished. Kaolin clay, French green clay, and matcha powder give the soap its beautiful light green swirls, adding gentle detoxifying and soothing properties.",
+    "cardDescription": "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a…",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Castor Oil), Kaolin Clay, French Green Clay, Steam-Distilled Essential Oils (Lemongrass, Rosemary, Clary Sage)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This refreshing, nature-inspired bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural castor oil, creating a creamy, conditioning lather that leaves skin soft and nourished. Kaolin clay, French green clay, and matcha powder give the soap its beautiful light green swirls, adding gentle detoxifying and soothing properties.",
+          "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean, an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
+          "A pure, handcrafted bar that brings a breath of fresh air to your daily routine."
+        ]
+      }
+    ],
+    "details": [
+      "Scented with steam-distilled essential oils of lemon, rosemary, and clary sage, the aroma is bright, herbal, and clean, an uplifting blend that feels crisp and revitalizing. Perfect for anyone who loves fresh, green, botanical scents and a naturally vibrant aesthetic.",
+      "A pure, handcrafted bar that brings a breath of fresh air to your daily routine."
+    ],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-lemon-rosemary.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "ember-ash-soap",
+    "category": "artisan-soap",
+    "name": "Ember & Ash",
+    "kicker": "Just B Clean",
+    "description": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color, clean, modern, and visually striking.",
+    "cardDescription": "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy…",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Sweet Almond Oil, All Natural castor Oil) , Activated Charcoal, Steam-Distilled Essential Oils (Patchouli, Frankincense, Sweet Orange)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This bold, minimalist bar is crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and sweet almond oil, creating a creamy, conditioning lather that feels gentle and nourishing on the skin. Activated charcoal gives the soap its dramatic, deep black color, clean, modern, and visually striking.",
+          "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint, a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
+        ]
+      }
+    ],
+    "details": [
+      "Scented with steam-distilled patchouli, frankincense, and sweet orange essential oils, the aroma is intentionally very faint, a soft whisper of earthy resin and subtle citrus that never overwhelms. Perfect for those who prefer an understated fragrance or want a bar that lets its natural ingredients and bold appearance speak for themselves."
+    ],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-ember-ash.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": true
+  },
+  {
+    "id": "sweater-weather-soap",
+    "category": "artisan-soap",
+    "name": "Sweater Weather",
+    "kicker": "Just B Clean",
+    "description": "Handcrafted in small batches, this nourishing soap is made with saponified organic olive oil, grass-fed tallow, organic coconut oil, and organic castor oil for a rich, creamy lather that deeply comforts the skin. Organic coconut milk, raw honey, and colloidal oats add soothing moisture, creating a gentle bar ideal for daily use.",
+    "cardDescription": "Handcrafted in small batches, this nourishing soap is made with saponified organic olive oil, grass-fed tallow, organic coconut oil, and organic castor oil for a rich…",
+    "ingredients": [
+      "Saponified oils (Organic Olive, Grass-Fed Tallow, Organic Coconut, All-natural Castor), Organic Coconut Milk, Raw Honey, Colloidal Oats, Activated Charcoal, Cocoa Powder, Indigo Powder, Steam-Distilled Essential Oils (Cedarwood, Fir, Clary Sage, Peppermint)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Handcrafted in small batches, this nourishing soap is made with saponified organic olive oil, grass-fed tallow, organic coconut oil, and organic castor oil for a rich, creamy lather that deeply comforts the skin. Organic coconut milk, raw honey, and colloidal oats add soothing moisture, creating a gentle bar ideal for daily use.",
+          "Naturally tinted with activated charcoal, cocoa powder, and indigo, each bar carries an earthy, mineral-washed aesthetic. Scented with steam-distilled essential oils of cedarwood, fir, clary sage, and peppermint, it offers a grounding, forest-fresh aroma that feels clean, crisp, and deeply calming."
+        ]
+      }
+    ],
+    "details": [
+      "Naturally tinted with activated charcoal, cocoa powder, and indigo, each bar carries an earthy, mineral-washed aesthetic. Scented with steam-distilled essential oils of cedarwood, fir, clary sage, and peppermint, it offers a grounding, forest-fresh aroma that feels clean, crisp, and deeply calming."
+    ],
+    "note": "Available October 15",
+    "use": "",
+    "safety": "",
+    "availability": "Available October 15",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-sweater-weather.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "coconut-lavender-soap",
+    "category": "artisan-soap",
+    "name": "Coconut Lavender",
+    "kicker": "Just B Clean",
+    "description": "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather. Organic coconut milk adds silky moisture, creating a soothing cleanse that feels soft and comforting on the skin.",
+    "cardDescription": "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather.",
+    "ingredients": [
+      "Saponified oils (Organic Olive, unrefined shea butter, Organic Coxconut, Organic Castor), Organic coconut milk, steam-distilled lavender."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, creamy bar crafted with saponified organic olive oil, unrefined shea butter, organic coconut oil, and organic castor oil to deliver a rich, nourishing lather. Organic coconut milk adds silky moisture, creating a soothing cleanse that feels soft and comforting on the skin.",
+          "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma, light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
+        ]
+      }
+    ],
+    "details": [
+      "Infused with steam-distilled lavender essential oil, this bar carries a calming, floral aroma, light, clean, and beautifully relaxing. Perfect for unwinding at the end of the day or adding a touch of tranquility to your daily routine."
+    ],
+    "note": "Available October 15",
+    "use": "",
+    "safety": "",
+    "availability": "Available October 15",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-coconut-lavender.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "whisper-citrus-soap",
+    "category": "artisan-soap",
+    "name": "Whisper of Citrus",
+    "kicker": "Just B Clean",
+    "description": "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy, nourishing lather that feels delicate on the skin. The formula is intentionally simple and soothing, perfect for those who prefer an understated, fragrance-light cleanse.",
+    "cardDescription": "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy…",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Raw Unrefined Shea Butter, All-Natural Sweet Almond Oil, All-Natural Castor Oil) Steam-Distilled Essential Oils (Grapefruit, cedarwood)"
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soft, minimalist bar crafted with saponified organic olive oil, organic coconut oil, raw unrefined shea butter, and all-natural sweet almond oil to create a creamy, nourishing lather that feels delicate on the skin. The formula is intentionally simple and soothing, perfect for those who prefer an understated, fragrance-light cleanse.",
+          "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint, a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
+          "A gentle, airy bar designed for lovers of barely-there scents and naturally elegant simplicity."
+        ]
+      }
+    ],
+    "details": [
+      "Infused with steam-distilled grapefruit and cedarwood essential oils, the scent is very faint, a subtle hint of bright citrus wrapped in a whisper of warm wood. It’s clean, quiet, and refreshing without ever becoming overpowering.",
+      "A gentle, airy bar designed for lovers of barely-there scents and naturally elegant simplicity."
+    ],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-whisper-citrus.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "charcoal-blush-soap",
+    "category": "artisan-soap",
+    "name": "Charcoal & Blush",
+    "kicker": "Just B Clean",
+    "description": "A gentle activated charcoal bar with a very light, natural aroma. Soft earthy notes of patchouli and frankincense are balanced by a delicate hint of sweet orange, creating a clean, understated scent that stays close to the soap rather than lingering heavily.",
+    "cardDescription": "A gentle activated charcoal bar with a very light, natural aroma.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Unrefined Shea Butter, Organic Coconut Oil, All-natural Sweet Almond Oil, All-Natural Castor Oil), Activated Charcoal, French Pink Clay, Steam-Distilled Essential Oils ( Patchouili, Frankincense, Orange)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle activated charcoal bar with a very light, natural aroma. Soft earthy notes of patchouli and frankincense are balanced by a delicate hint of sweet orange, creating a clean, understated scent that stays close to the soap rather than lingering heavily."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-charcoal-blush.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "cedar-eucalyptus-loofah-soap",
+    "category": "artisan-soap",
+    "name": "Cedarwood & Eucalyptus Loofah",
+    "kicker": "Just B Clean",
+    "description": "A refreshing exfoliating bar with natural loofah for a satisfying scrub. Crisp eucalyptus and cooling peppermint create a clean, invigorating aroma, while cedarwood adds a warm, earthy base. Mango and shea butters give the bar a rich, creamy feel that balances the exfoliation.",
+    "cardDescription": "A refreshing exfoliating bar with natural loofah for a satisfying scrub.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Raw Mango Butter, Unrefined Shea Butter), Natural Loofah, Steam-Distilled Essential Oils (Cedarwood, Eucalyptus, Peppermint)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A refreshing exfoliating bar with natural loofah for a satisfying scrub. Crisp eucalyptus and cooling peppermint create a clean, invigorating aroma, while cedarwood adds a warm, earthy base. Mango and shea butters give the bar a rich, creamy feel that balances the exfoliation."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-cedar-eucalyptus-loofah.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "lemongrass-lavender-soap",
+    "category": "artisan-soap",
+    "name": "Lemongrass & Lavender",
+    "kicker": "Just B Clean",
+    "description": "A gentle, earthy bar crafted with nourishing organic oils, turmeric, and natural Brazilian purple and kaolin clays. Fresh lemongrass and soft lavender create a clean, calming botanical scent, while the clays give the bar its naturally rich character.",
+    "cardDescription": "A gentle, earthy bar crafted with nourishing organic oils, turmeric, and natural Brazilian purple and kaolin clays.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Unrefined Shea Butter, Organic Jojoba Oil, Organic Coconut Oil, All-Natural Castor Oil), Turmeric Powder, Brazilian Purple Clay, Kaolin Clay, Steam-Distilled Essential Oils (Lemongrass, Lavender)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, earthy bar crafted with nourishing organic oils, turmeric, and natural Brazilian purple and kaolin clays. Fresh lemongrass and soft lavender create a clean, calming botanical scent, while the clays give the bar its naturally rich character."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-lemongrass-lavender.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "ylang-ylang-soap",
+    "category": "artisan-soap",
+    "name": "Ylang Ylang",
+    "kicker": "Just B Clean",
+    "description": "A soft, creamy bar made with nourishing organic oils, unrefined shea butter, and coconut milk. French pink clay adds a gentle, silky touch, while ylang-ylang, sweet orange, and cedarwood create a warm, lightly floral scent with soft citrus and woody notes.",
+    "cardDescription": "A soft, creamy bar made with nourishing organic oils, unrefined shea butter, and coconut milk.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Unrefined Shea Butter, All-Natural Castor Oil), Organic Coconut Milk, French Pink Clay, Steam-Distilled Essential Oils (Ylang-Ylang, Sweet Orange, Cedarwood)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soft, creamy bar made with nourishing organic oils, unrefined shea butter, and coconut milk. French pink clay adds a gentle, silky touch, while ylang-ylang, sweet orange, and cedarwood create a warm, lightly floral scent with soft citrus and woody notes."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-ylang-ylang.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "honey-oat-comfort-soap",
+    "category": "artisan-soap",
+    "name": "Oat Tallow",
+    "kicker": "Just B Clean",
+    "description": "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin. Grass-fed tallow creates a rich, creamy lather while providing skin-conditioning fatty acids that help leave skin feeling soft and nourished. Calendula-infused olive oil, traditionally valued for its soothing properties, pairs beautifully with colloidal oatmeal to comfort and condition the skin. Organic coconut milk adds extra creaminess for a mild, luxurious everyday cleanse.",
+    "cardDescription": "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin.",
+    "ingredients": [
+      "Saponified oils (calendula-infused olive oil, grass-fed tallow, organic coconut oil, all-natural castor oil), organic coconut milk, colloidal oatmeal."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, unscented bar crafted especially for dry, delicate and sensitive-feeling skin.",
+          "Grass-fed tallow creates a rich, creamy lather while providing skin-conditioning fatty acids that help leave skin feeling soft and nourished. Calendula-infused olive oil, traditionally valued for its soothing properties, pairs beautifully with colloidal oatmeal to comfort and condition the skin. Organic coconut milk adds extra creaminess for a mild, luxurious everyday cleanse."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-oat-tallow.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "chocolate-pumpkin-pie-soap",
+    "category": "artisan-soap",
+    "name": "Pumpkin",
+    "kicker": "Just B Clean",
+    "description": "This cozy, skin-nourishing bar is crafted with saponified organic olive oil, shea butter, coconut oil, and castor oil for a rich, creamy lather. Real pumpkin purée and 10% cream give the soap its velvety texture and naturally moisturizing feel. Turmeric adds a warm golden hue, while steam-distilled sweet orange, lavender, and clove essential oils create a soft, comforting aroma.",
+    "cardDescription": "A cozy, creamy seasonal bar made with real pumpkin purée, 10% cream, turmeric, and pure essential oils.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), 10% cream, real pumpkin purée, steam-distilled essential oils (sweet orange, lavender, clove), kaolin clay, turmeric powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This cozy, skin-nourishing bar is crafted with a blend of saponified organic olive oil, shea butter, coconut oil, and castor oil for a rich, creamy lather. Real pumpkin purée and 10% cream give the soap its velvety texture and naturally moisturizing feel.",
+          "Turmeric adds a warm golden hue. Steam-distilled sweet orange, lavender, and clove essential oils create a soft, comforting aroma that makes each use feel like a warm, cozy moment.",
+          "A seasonal favourite with a naturally luxurious finish, perfect for anyone who loves a gentle, creamy bar made from real ingredients."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": "Preorder • Available September 24, 2026",
+    "availabilityStatus": "preorder",
+    "availableDate": "2026-09-24",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-pumpkin.jpg",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "almond-milk-mocha-soap",
+    "category": "artisan-soap",
+    "name": "Mocha Latté",
+    "kicker": "Just B Clean",
+    "description": "This indulgent bar blends creamy nourishment with the warm comfort of coffee. Made with saponified organic olive oil, shea butter, coconut oil, and castor oil, organic almond milk adds a soft, creamy feel while brewed espresso, coffee grounds, and cocoa powder give the bar its rich mocha character.",
+    "cardDescription": "A creamy mocha-inspired bar made with organic almond milk, brewed espresso, coffee grounds, and cocoa powder.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic almond milk, brewed espresso, coffee grounds, cocoa powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "This indulgent bar blends creamy nourishment with the warm comfort of coffee.",
+          "Made with saponified organic olive oil, shea butter, coconut oil, and castor oil, organic almond milk adds a soft, creamy feel while brewed espresso, coffee grounds, and cocoa powder give the bar its rich mocha character."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-mocha-latte.jpg",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "unscented-loofah-soap",
+    "category": "artisan-soap",
+    "name": "Unscented Loofah",
+    "kicker": "Just B Clean",
+    "description": "A creamy, naturally exfoliating bar made with nourishing organic oils, unrefined shea butter, and coconut milk. Sugar and natural loofah provide a gentle scrub, leaving skin feeling smooth, refreshed, and clean.",
+    "cardDescription": "A creamy, naturally exfoliating bar made with nourishing organic oils, unrefined shea butter, and coconut milk.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Unrefined Shea Butter, All- Natural  Castor Oil), Organic Coconut Milk, Sugar, All-Natural Loofah."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A creamy, naturally exfoliating bar made with nourishing organic oils, unrefined shea butter, and coconut milk. Sugar and natural loofah provide a gentle scrub, leaving skin feeling smooth, refreshed, and clean."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-unscented-loofah.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "mint-eucalyptus-spa-soap",
+    "category": "artisan-soap",
+    "name": "Mint & Eucalyptus Spa Bar",
+    "kicker": "Just B Clean",
+    "description": "A fresh, invigorating bar crafted with nourishing organic oils and rich unrefined shea butter. Cooling peppermint and crisp eucalyptus create a refreshing, clean aroma that awakens the senses and leaves you feeling fresh and revitalized.",
+    "cardDescription": "A fresh, invigorating bar crafted with nourishing organic oils and rich unrefined shea butter.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Unrefined Shea Butter, Organic Coconut Oil, All- Natural Castor Oil), Steam-Distilled Essential Oils (Peppermint, Eucalyptus)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A fresh, invigorating bar crafted with nourishing organic oils and rich unrefined shea butter. Cooling peppermint and crisp eucalyptus create a refreshing, clean aroma that awakens the senses and leaves you feeling fresh and revitalized."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "Available October 15",
+    "use": "",
+    "safety": "",
+    "availability": "Available October 15",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-mint-eucalyptus-spa.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "spiced-banana-soap",
+    "category": "artisan-soap",
+    "name": "Spiced Banana",
+    "kicker": "Just B Clean",
+    "description": "A warm, creamy bar made with real banana, organic coconut milk, raw honey, and nourishing oils and butters. A touch of ground cinnamon adds a cozy, comforting aroma, while decorative oats give each bar a naturally rustic finish.",
+    "cardDescription": "A warm, creamy bar made with real banana, organic coconut milk, raw honey, and nourishing oils and butters.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Unrefined Shea Butter, Organic Coconut Oil, All-Natural Castor Oil), Organic Coconut Milk, Banana, Raw Honey, Ground Cinnamon, Decorative Oats."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A warm, creamy bar made with real banana, organic coconut milk, raw honey, and nourishing oils and butters. A touch of ground cinnamon adds a cozy, comforting aroma, while decorative oats give each bar a naturally rustic finish."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "Available October 15",
+    "use": "",
+    "safety": "",
+    "availability": "Available October 15",
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-spiced-banana.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "cedar-lemon-soap",
+    "category": "artisan-soap",
+    "name": "Cedar Lemon",
+    "kicker": "Just B Clean",
+    "description": "A fresh, earthy bar crafted with nourishing oils and butters, French green clay, matcha, and turmeric. Bright lemongrass gives the soap a clean, citrusy freshness, while cedarwood and patchouli add warm, woody, grounding notes. The natural clays and botanicals give the bar its distinctive colour and character, creating a refreshing everyday soap with a balanced, nature-inspired aroma.",
+    "cardDescription": "A fresh, earthy bar crafted with nourishing oils and butters, French green clay, matcha, and turmeric.",
+    "ingredients": [
+      "Saponified Oils ( Organic Olive Oil, Organic Coconut Oil, Unrefined Shea Butter, All-Natural Jojoba Oil, All-Natural Castor Oil), Steam-Distilled Essential Oils ( Cedarwood, Lemongrass, Patchouli) ,French Green Clay, Matcha Powder, Tumeric."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A fresh, earthy bar crafted with nourishing oils and butters, French green clay, matcha, and turmeric. Bright lemongrass gives the soap a clean, citrusy freshness, while cedarwood and patchouli add warm, woody, grounding notes. The natural clays and botanicals give the bar its distinctive colour and character, creating a refreshing everyday soap with a balanced, nature-inspired aroma."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-cedar-lemon.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "mango-butter",
+    "category": "body-care",
+    "name": "Mango Butter",
+    "kicker": "Just B Nourished",
+    "description": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin. The combination of raw mango butter and unrefined shea butter creates a protective, emollient base, while jojoba and rosehip oils provide additional fatty acids and naturally occurring antioxidants. Arrowroot helps give the butter a smoother, less-greasy finish, and lavender, cedarwood, and real Madagascar vanilla create a soft, warm botanical aroma.",
+    "cardDescription": "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin.",
+    "ingredients": [
+      "Raw Mango Butter, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Arrowroot Powder, Steam-Distilled Essential Oils (Lavender, Cedarwood), Vitamin E, Madagascar Vanilla Bean."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rich, water-free body butter formulated with nutrient-rich plant butters and oils to deeply moisturize, soften, and condition dry skin. The combination of raw mango butter and unrefined shea butter creates a protective, emollient base, while jojoba and rosehip oils provide additional fatty acids and naturally occurring antioxidants. Arrowroot helps give the butter a smoother, less-greasy finish, and lavender, cedarwood, and real Madagascar vanilla create a soft, warm botanical aroma.",
+          "Naturally provides: fatty acids including oleic, stearic, linoleic and alpha-linolenic acids; naturally occurring vitamin E, carotenoids and other plant antioxidants; plus rich emollients that help moisturize, soften, condition and support the skin's natural moisture barrier.",
+          "Raw Mango Butter is naturally rich in fatty acids, particularly oleic and stearic acids, which help soften the skin and reduce moisture loss. It also contains naturally occurring compounds including vitamin E and carotenoids/provitamin A compounds. Its rich emollient properties make it particularly useful for rough, dry areas such as hands, elbows, knees, and heels.",
+          "Unrefined Shea Butter provides a rich source of oleic, stearic, linoleic, and palmitic fatty acids, along with naturally occurring vitamin E and other unsaponifiable plant compounds. It forms an emollient layer over the skin that helps retain moisture and leaves dry or tight-feeling skin softer and more supple.",
+          "Organic Jojoba Oil is technically a liquid wax rather than a conventional vegetable oil. Its wax esters are similar in structure to some of the lipids naturally found on the skin's surface. It provides lightweight conditioning, improves softness, and helps reduce moisture loss without giving the body butter an excessively heavy feel.",
+          "Organic Rosehip Oil contributes linoleic and alpha-linolenic essential fatty acids, along with naturally occurring carotenoids and other antioxidants. It is particularly valued in cosmetic skincare for conditioning dry, dull-looking skin and helping maintain a smoother, more even and healthy-looking appearance.",
+          "Vitamin E is a lipid-soluble antioxidant. In addition to conditioning the skin, it helps protect the oils and butters in the formula from oxidation, contributing to the stability and freshness of an anhydrous product.",
+          "Arrowroot Powder gives the butter a softer, silkier texture and helps absorb some of the excess oil left on the skin. This allows you to get the richness of mango and shea butter with a smoother, less greasy finish.",
+          "Lavender Essential Oil provides a soft floral-herbal aroma traditionally associated with relaxation and calm, making the butter especially pleasant as part of an evening or after-bath routine.",
+          "Cedarwood Essential Oil adds a warm, dry, woody character that grounds the lavender and balances the sweetness of the vanilla. Together, lavender and cedarwood create a relaxing, earthy botanical scent rather than an overpowering perfume.",
+          "Madagascar Vanilla Bean provides a naturally warm, creamy sweetness and rounds out the sharper botanical notes of lavender and cedarwood, giving the finished butter a subtle, comforting aroma.",
+          "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
+        ]
+      }
+    ],
+    "details": [
+      "Naturally provides: fatty acids including oleic, stearic, linoleic and alpha-linolenic acids; naturally occurring vitamin E, carotenoids and other plant antioxidants; plus rich emollients that help moisturize, soften, condition and support the skin's natural moisture barrier.",
+      "Raw Mango Butter is naturally rich in fatty acids, particularly oleic and stearic acids, which help soften the skin and reduce moisture loss. It also contains naturally occurring compounds including vitamin E and carotenoids/provitamin A compounds. Its rich emollient properties make it particularly useful for rough, dry areas such as hands, elbows, knees, and heels.",
+      "Unrefined Shea Butter provides a rich source of oleic, stearic, linoleic, and palmitic fatty acids, along with naturally occurring vitamin E and other unsaponifiable plant compounds. It forms an emollient layer over the skin that helps retain moisture and leaves dry or tight-feeling skin softer and more supple.",
+      "Organic Jojoba Oil is technically a liquid wax rather than a conventional vegetable oil. Its wax esters are similar in structure to some of the lipids naturally found on the skin's surface. It provides lightweight conditioning, improves softness, and helps reduce moisture loss without giving the body butter an excessively heavy feel.",
+      "Organic Rosehip Oil contributes linoleic and alpha-linolenic essential fatty acids, along with naturally occurring carotenoids and other antioxidants. It is particularly valued in cosmetic skincare for conditioning dry, dull-looking skin and helping maintain a smoother, more even and healthy-looking appearance.",
+      "Vitamin E is a lipid-soluble antioxidant. In addition to conditioning the skin, it helps protect the oils and butters in the formula from oxidation, contributing to the stability and freshness of an anhydrous product.",
+      "Arrowroot Powder gives the butter a softer, silkier texture and helps absorb some of the excess oil left on the skin. This allows you to get the richness of mango and shea butter with a smoother, less greasy finish.",
+      "Lavender Essential Oil provides a soft floral-herbal aroma traditionally associated with relaxation and calm, making the butter especially pleasant as part of an evening or after-bath routine.",
+      "Cedarwood Essential Oil adds a warm, dry, woody character that grounds the lavender and balances the sweetness of the vanilla. Together, lavender and cedarwood create a relaxing, earthy botanical scent rather than an overpowering perfume.",
+      "Madagascar Vanilla Bean provides a naturally warm, creamy sweetness and rounds out the sharper botanical notes of lavender and cedarwood, giving the finished butter a subtle, comforting aroma.",
+      "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp."
+    ],
+    "note": "",
+    "use": "Overall, this is an excellent head-to-toe moisturizer for dry and rough-feeling skin. It can be massaged into the body after bathing, used as an intensive hand and foot butter, applied to elbows and knees, worked into dry cuticles, or used anywhere that needs extra moisture. Because the formula contains no added water, a small amount goes a long way. Warm a little between your hands and massage it into the skin, ideally while the skin is still slightly damp.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/mango-butter.webp",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#eadfc8",
+    "accent": "#8b6b48",
+    "featured": true
+  },
+  {
+    "id": "vanilla-infused-tallow",
+    "category": "body-care",
+    "name": "Vanilla Infused Tallow",
+    "kicker": "Just B Nourished",
+    "description": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled frankincense essential oil. Whipping transforms the naturally dense tallow into a soft, cloud-like texture that melts effortlessly on contact with the skin, making a small amount easy to spread over larger areas.",
+    "cardDescription": "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled…",
+    "ingredients": [
+      "Grass-Fed Tallow, Organic Jojoba Oil, Vitamin E, Madagascar Vanilla Bean, Steam-Distilled Frankincense Essential Oil."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A luxuriously whipped, rich yet airy moisturizer crafted with grass-fed tallow, organic jojoba oil, vitamin E, real Madagascar vanilla bean, and steam-distilled frankincense essential oil. Whipping transforms the naturally dense tallow into a soft, cloud-like texture that melts effortlessly on contact with the skin, making a small amount easy to spread over larger areas."
+        ]
+      },
+      {
+        "title": "Key benefits",
+        "paragraphs": [
+          "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Water-Free • Concentrated • Naturally Derived",
+          "Designed especially for dry, rough, and moisture-depleted skin, this concentrated, water-free formula coats the skin with nourishing lipids that help reduce moisture loss and leave it feeling noticeably softer, smoother, and more supple.",
+          "Grass-Fed Tallow forms the foundation of the formula. It is naturally composed of skin-conditioning fatty acids, particularly oleic, stearic, and palmitic acids. These fatty acids act as emollients, filling spaces between dry surface skin cells and creating a protective layer that helps reduce moisture loss. This makes whipped tallow particularly useful for dry hands, cracked-feeling heels, rough elbows and knees, cuticles, and skin exposed to cold or dry weather.",
+          "Organic Jojoba Oil gives the whipped tallow a smoother, silkier application. Jojoba is technically a liquid wax made primarily of wax esters, which are structurally similar to some of the lipids naturally present on the skin's surface. It conditions and softens the skin while helping balance the richness of the tallow so the finished product spreads more easily.",
+          "Vitamin E provides antioxidant and skin-conditioning benefits. Within the formula, it also helps protect the tallow and jojoba oil against oxidation, contributing to the stability and freshness of this water-free product.",
+          "Organic Frankincense Essential Oil gives the tallow its warm, resinous, woody character. Its grounding aroma pairs especially well with the richness of the balm and creates a subtle botanical scent rather than an overpowering fragrance.",
+          "Madagascar Vanilla Bean rounds out the frankincense with a soft, naturally sweet and creamy aroma. Together, frankincense and vanilla create a warm, comforting, earthy scent that stays understated on the skin."
+        ]
+      },
+      {
+        "title": "Why whipped?",
+        "paragraphs": [
+          "Whipping gives traditional tallow balm a completely different experience. Air is incorporated into the formula, creating a lighter, fluffier texture that's easy to scoop and melts almost instantly from the warmth of your hands. You still get the concentrated moisturizing qualities of an anhydrous tallow balm, but with a softer, more luxurious application."
+        ]
+      },
+      {
+        "title": "Benefits",
+        "paragraphs": [
+          "Ideal for dry and rough skin, hands, elbows, knees, heels, feet, cuticles, and other areas needing intensive moisture. It can also be used as an all-over body moisturizer, particularly after bathing or showering.",
+          "Because there is no added water, this whipped tallow is highly concentrated. A little goes a long way."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Scoop out a small amount and warm it between your fingertips or palms. Gently massage into the skin until absorbed. For maximum moisture retention, apply after bathing while the skin is still slightly damp. Use more sparingly on the face and patch-test first, particularly if you have sensitive or acne-prone skin."
+        ]
+      }
+    ],
+    "details": [
+      "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Water-Free • Concentrated • Naturally Derived",
+      "Designed especially for dry, rough, and moisture-depleted skin, this concentrated, water-free formula coats the skin with nourishing lipids that help reduce moisture loss and leave it feeling noticeably softer, smoother, and more supple.",
+      "Grass-Fed Tallow forms the foundation of the formula. It is naturally composed of skin-conditioning fatty acids, particularly oleic, stearic, and palmitic acids. These fatty acids act as emollients, filling spaces between dry surface skin cells and creating a protective layer that helps reduce moisture loss. This makes whipped tallow particularly useful for dry hands, cracked-feeling heels, rough elbows and knees, cuticles, and skin exposed to cold or dry weather.",
+      "Organic Jojoba Oil gives the whipped tallow a smoother, silkier application. Jojoba is technically a liquid wax made primarily of wax esters, which are structurally similar to some of the lipids naturally present on the skin's surface. It conditions and softens the skin while helping balance the richness of the tallow so the finished product spreads more easily.",
+      "Vitamin E provides antioxidant and skin-conditioning benefits. Within the formula, it also helps protect the tallow and jojoba oil against oxidation, contributing to the stability and freshness of this water-free product.",
+      "Organic Frankincense Essential Oil gives the tallow its warm, resinous, woody character. Its grounding aroma pairs especially well with the richness of the balm and creates a subtle botanical scent rather than an overpowering fragrance.",
+      "Madagascar Vanilla Bean rounds out the frankincense with a soft, naturally sweet and creamy aroma. Together, frankincense and vanilla create a warm, comforting, earthy scent that stays understated on the skin.",
+      "Whipping gives traditional tallow balm a completely different experience. Air is incorporated into the formula, creating a lighter, fluffier texture that's easy to scoop and melts almost instantly from the warmth of your hands. You still get the concentrated moisturizing qualities of an anhydrous tallow balm, but with a softer, more luxurious application.",
+      "Ideal for dry and rough skin, hands, elbows, knees, heels, feet, cuticles, and other areas needing intensive moisture. It can also be used as an all-over body moisturizer, particularly after bathing or showering.",
+      "Because there is no added water, this whipped tallow is highly concentrated. A little goes a long way.",
+      "Scoop out a small amount and warm it between your fingertips or palms. Gently massage into the skin until absorbed. For maximum moisture retention, apply after bathing while the skin is still slightly damp. Use more sparingly on the face and patch-test first, particularly if you have sensitive or acne-prone skin."
+    ],
+    "note": "",
+    "use": "Scoop out a small amount and warm it between your fingertips or palms. Gently massage into the skin until absorbed. For maximum moisture retention, apply after bathing while the skin is still slightly damp. Use more sparingly on the face and patch-test first, particularly if you have sensitive or acne-prone skin.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/vanilla-tallow.webp",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#eadfc8",
+    "accent": "#8b6b48",
+    "featured": false
+  },
+  {
+    "id": "unscented-tallow",
+    "category": "body-care",
+    "name": "Unscented Tallow",
+    "kicker": "Just B Nourished",
+    "description": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E. With no essential oils, added fragrance, or vanilla, this simple water-free formula is designed for those who prefer uncomplicated skincare, especially for dry, delicate, or fragrance-sensitive skin.",
+    "cardDescription": "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E.",
+    "ingredients": [
+      "Grass-Fed Tallow, Organic Jojoba Oil, All-Natural Vitamin E."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A pure, luxuriously whipped moisturizer made with just three thoughtfully selected ingredients: grass-fed tallow, organic jojoba oil, and vitamin E. With no essential oils, added fragrance, or vanilla, this simple water-free formula is designed for those who prefer uncomplicated skincare, especially for dry, delicate, or fragrance-sensitive skin.",
+          "Grass-Fed Tallow forms the rich, nourishing base of this whipped moisturizer. It naturally contains skin-conditioning fatty acids, particularly oleic, stearic, and palmitic acids. These lipids act as emollients, helping soften rough skin and form a protective layer that reduces moisture loss. This makes it especially useful for areas that become very dry, including hands, elbows, knees, heels, feet, and cuticles.",
+          "Organic Jojoba Oil gives the tallow a smoother, silkier feel and makes it easier to spread. Jojoba is technically a liquid wax composed primarily of wax esters, which are similar to some of the lipids naturally present on the skin's surface. It helps condition and soften the skin while balancing the richness of the tallow.",
+          "Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils and fats in the formula from oxidation. It contributes to the product's stability while leaving skin feeling soft and conditioned."
+        ]
+      },
+      {
+        "title": "Why whipped?",
+        "paragraphs": [
+          "Whipping incorporates air into the formula, transforming dense tallow into a soft, light, cloud-like texture. It melts almost immediately from the warmth of your skin and spreads easily, providing the richness of a traditional tallow balm with a more luxurious application."
+        ]
+      },
+      {
+        "title": "Benefits",
+        "paragraphs": [
+          "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Fragrance-Free • Essential-Oil-Free • Water-Free • Concentrated",
+          "Its simple, unscented formula makes it a versatile head-to-toe moisturizer. Use it for dry hands, rough elbows and knees, cracked-feeling heels, feet, cuticles, weather-exposed skin, or anywhere that needs additional moisture. It can also be worked through a dry beard and the skin underneath to soften and condition.",
+          "Because there is no added water, the formula is highly concentrated, so a little goes a long way."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Warm a small amount between your fingertips or palms and gently massage into the skin. For best moisture retention, apply after bathing or showering while the skin is still slightly damp. When using on the face, start with a very small amount and patch-test first, particularly if you have sensitive or acne-prone skin."
+        ]
+      }
+    ],
+    "details": [
+      "Grass-Fed Tallow forms the rich, nourishing base of this whipped moisturizer. It naturally contains skin-conditioning fatty acids, particularly oleic, stearic, and palmitic acids. These lipids act as emollients, helping soften rough skin and form a protective layer that reduces moisture loss. This makes it especially useful for areas that become very dry, including hands, elbows, knees, heels, feet, and cuticles.",
+      "Organic Jojoba Oil gives the tallow a smoother, silkier feel and makes it easier to spread. Jojoba is technically a liquid wax composed primarily of wax esters, which are similar to some of the lipids naturally present on the skin's surface. It helps condition and soften the skin while balancing the richness of the tallow.",
+      "Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils and fats in the formula from oxidation. It contributes to the product's stability while leaving skin feeling soft and conditioned.",
+      "Whipping incorporates air into the formula, transforming dense tallow into a soft, light, cloud-like texture. It melts almost immediately from the warmth of your skin and spreads easily, providing the richness of a traditional tallow balm with a more luxurious application.",
+      "Deep Moisture • Skin Barrier Support • Softening • Conditioning • Fragrance-Free • Essential-Oil-Free • Water-Free • Concentrated",
+      "Its simple, unscented formula makes it a versatile head-to-toe moisturizer. Use it for dry hands, rough elbows and knees, cracked-feeling heels, feet, cuticles, weather-exposed skin, or anywhere that needs additional moisture. It can also be worked through a dry beard and the skin underneath to soften and condition.",
+      "Because there is no added water, the formula is highly concentrated, so a little goes a long way.",
+      "Warm a small amount between your fingertips or palms and gently massage into the skin. For best moisture retention, apply after bathing or showering while the skin is still slightly damp. When using on the face, start with a very small amount and patch-test first, particularly if you have sensitive or acne-prone skin."
+    ],
+    "note": "",
+    "use": "Warm a small amount between your fingertips or palms and gently massage into the skin. For best moisture retention, apply after bathing or showering while the skin is still slightly damp. When using on the face, start with a very small amount and patch-test first, particularly if you have sensitive or acne-prone skin.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/unscented-tallow.webp",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#eadfc8",
+    "accent": "#8b6b48",
+    "featured": false
+  },
+  {
+    "id": "just-b-calm",
+    "category": "roller-oils",
+    "name": "Calm",
+    "kicker": "Just B Botanical Oil",
+    "description": "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability. With cooling citrus, soft florals, and herbal notes, it provides gentle, everyday support for moments when you want to feel more centered and at ease.",
+    "cardDescription": "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability.",
+    "ingredients": [
+      "Organic Jojoba Oil, Organic Essential Oils (Clary Sage, Grapefruit, Cypress, Lavender, Peppermint), All-Natural Vitamin E."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Created with botanicals long appreciated for their calming and grounding qualities, this blend offers a quiet sense of comfort and stability. With cooling citrus, soft florals, and herbal notes, it provides gentle, everyday support for moments when you want to feel more centered and at ease.",
+          "Organic Jojoba Oil provides the lightweight base. Technically a liquid wax rather than a conventional oil, jojoba spreads easily across the skin and helps condition and soften it while carrying the essential oils at a diluted concentration.",
+          "Clary Sage provides a distinctive earthy, herbaceous and slightly floral aroma. It gives the blend much of its balancing, grounding character and pairs particularly well with lavender and grapefruit.",
+          "Grapefruit adds a bright, clean citrus note that lifts the heavier herbal oils. Its fresh aroma gives the roll-on an energizing quality and keeps the overall scent from becoming overly floral or earthy.",
+          "Cypress contributes a crisp, woody, evergreen-like aroma. It bridges the citrus and herbal components of the blend and gives it a clean, grounding base.",
+          "Lavender softens the formula with its familiar floral-herbal aroma. It is widely used in aromatherapy blends intended to encourage relaxation and creates a calmer counterpoint to the sharper peppermint and grapefruit notes.",
+          "Peppermint provides the most noticeable cooling and refreshing sensation. Its crisp menthol character makes the roll-on feel immediately fresh when applied to the skin and gives the overall aroma an invigorating finish.",
+          "All-Natural Vitamin E conditions the skin while providing antioxidant activity. It also helps protect the carrier oil from oxidation, supporting the stability and freshness of the finished product.",
+          "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy. Peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience."
+        ]
+      },
+      {
+        "title": "Before using",
+        "paragraphs": [
+          "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs"
+        ]
+      }
+    ],
+    "details": [
+      "Organic Jojoba Oil provides the lightweight base. Technically a liquid wax rather than a conventional oil, jojoba spreads easily across the skin and helps condition and soften it while carrying the essential oils at a diluted concentration.",
+      "Clary Sage provides a distinctive earthy, herbaceous and slightly floral aroma. It gives the blend much of its balancing, grounding character and pairs particularly well with lavender and grapefruit.",
+      "Grapefruit adds a bright, clean citrus note that lifts the heavier herbal oils. Its fresh aroma gives the roll-on an energizing quality and keeps the overall scent from becoming overly floral or earthy.",
+      "Cypress contributes a crisp, woody, evergreen-like aroma. It bridges the citrus and herbal components of the blend and gives it a clean, grounding base.",
+      "Lavender softens the formula with its familiar floral-herbal aroma. It is widely used in aromatherapy blends intended to encourage relaxation and creates a calmer counterpoint to the sharper peppermint and grapefruit notes.",
+      "Peppermint provides the most noticeable cooling and refreshing sensation. Its crisp menthol character makes the roll-on feel immediately fresh when applied to the skin and gives the overall aroma an invigorating finish.",
+      "All-Natural Vitamin E conditions the skin while providing antioxidant activity. It also helps protect the carrier oil from oxidation, supporting the stability and freshness of the finished product.",
+      "Together, the essential oils create a scent that is cooling, fresh, herbaceous, lightly floral and citrusy. Peppermint provides the initial burst of freshness, grapefruit brightens it, lavender and clary sage soften the middle, and cypress provides a clean woody foundation.",
+      "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience.",
+      "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs"
+    ],
+    "note": "",
+    "use": "Roll a small amount onto pulse points such as the wrists and back of the neck, then gently massage into the skin. Bring your wrists near your nose and take a few slow breaths to enjoy the aroma. It can be reapplied as desired when you're looking for a cooling, refreshing aromatic experience.",
+    "safety": "For external use only. Avoid the eyes, mucous membranes, and broken or irritated skin. Discontinue use if irritation occurs",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/calm-botanical-oil.jpg",
+    "imageNote": null,
+    "art": "roller",
+    "tone": "#d5dfd6",
+    "accent": "#456b59",
+    "featured": true
+  },
+  {
+    "id": "just-b-relieved",
+    "category": "roller-oils",
+    "name": "Eased",
+    "kicker": "Just B Botanical Oil",
+    "description": "A cooling, aromatic roll-on made with organic jojoba oil and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
+    "cardDescription": "A cooling, aromatic botanical oil made with organic jojoba and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
+    "ingredients": [
+      "Organic Jojoba Oil, Organic Essential Oils (Peppermint, Eucalyptus, Rosemary, Lavender, Frankincense), All-Natural Vitamin E."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A cooling, aromatic roll-on made with organic jojoba oil and a concentrated blend of peppermint, eucalyptus, rosemary, lavender, and frankincense.",
+          "Designed for application around the head, neck, and shoulders, the aroma begins intensely fresh and minty, develops into crisp herbal notes, and finishes with the softer, grounding character of lavender and frankincense.",
+          "Peppermint Essential Oil provides the dominant cooling, minty sensation and immediately recognizable freshness of the blend. Peppermint naturally contains menthol, which activates cold-sensitive receptors in the skin and produces its characteristic cooling and tingling sensation. This makes it particularly well suited to a roll-on intended for a refreshing sensation around the temples, hairline, neck, and shoulders.",
+          "Eucalyptus Essential Oil reinforces that cooling sensation with its powerful, clean, almost camphoraceous aroma. Its naturally occurring eucalyptol (1,8-cineole) gives eucalyptus its distinctive fresh character and works beautifully alongside peppermint to create that crisp, open, invigorating aromatic experience.",
+          "Rosemary Essential Oil introduces a stimulating herbal note that bridges the sharp freshness of peppermint and eucalyptus with the softer oils in the formula. Rosemary naturally contains aromatic compounds such as alpha-pinene, and its warm, herbaceous character makes the blend feel refreshing without being purely minty.",
+          "Lavender Essential Oil provides balance. Peppermint, eucalyptus, and rosemary can create a very sharp aromatic profile on their own; lavender introduces a softer floral-herbal note traditionally associated with relaxation. This gives the formula both a refreshing and calming character, rather than making it smell medicinal or overwhelmingly minty.",
+          "Frankincense Essential Oil is what gives your version its own identity. Its warm, resinous, woody aroma provides a grounding base beneath the brighter mint and eucalyptus notes. It rounds out the formula and creates a deeper, smoother finish while complementing lavender particularly well.",
+          "Organic Jojoba Oil acts as the carrier for the essential oils. Technically a liquid wax composed primarily of wax esters, jojoba provides excellent slip, helps condition the skin, and allows the essential oil blend to be applied precisely without the heaviness of many conventional carrier oils.",
+          "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils within the formula from oxidation.",
+          "Peppermint and eucalyptus provide the immediate cooling sensation, rosemary adds an invigorating herbal middle, lavender softens and balances the blend, and frankincense leaves behind a subtle earthy warmth.",
+          "It's an ideal pocket-sized aromatic roll-on for moments when you want a cooling, refreshing sensation around the head, neck, and shoulders, whether during a long workday, while travelling, after physical activity, or whenever you're looking for a fresh botanical pick-me-up."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma."
+        ]
+      },
+      {
+        "title": "Before using",
+        "paragraphs": [
+          "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs"
+        ]
+      }
+    ],
+    "details": [
+      "Designed for application around the head, neck, and shoulders, the aroma begins intensely fresh and minty, develops into crisp herbal notes, and finishes with the softer, grounding character of lavender and frankincense.",
+      "Peppermint Essential Oil provides the dominant cooling, minty sensation and immediately recognizable freshness of the blend. Peppermint naturally contains menthol, which activates cold-sensitive receptors in the skin and produces its characteristic cooling and tingling sensation. This makes it particularly well suited to a roll-on intended for a refreshing sensation around the temples, hairline, neck, and shoulders.",
+      "Eucalyptus Essential Oil reinforces that cooling sensation with its powerful, clean, almost camphoraceous aroma. Its naturally occurring eucalyptol (1,8-cineole) gives eucalyptus its distinctive fresh character and works beautifully alongside peppermint to create that crisp, open, invigorating aromatic experience.",
+      "Rosemary Essential Oil introduces a stimulating herbal note that bridges the sharp freshness of peppermint and eucalyptus with the softer oils in the formula. Rosemary naturally contains aromatic compounds such as alpha-pinene, and its warm, herbaceous character makes the blend feel refreshing without being purely minty.",
+      "Lavender Essential Oil provides balance. Peppermint, eucalyptus, and rosemary can create a very sharp aromatic profile on their own; lavender introduces a softer floral-herbal note traditionally associated with relaxation. This gives the formula both a refreshing and calming character, rather than making it smell medicinal or overwhelmingly minty.",
+      "Frankincense Essential Oil is what gives your version its own identity. Its warm, resinous, woody aroma provides a grounding base beneath the brighter mint and eucalyptus notes. It rounds out the formula and creates a deeper, smoother finish while complementing lavender particularly well.",
+      "Organic Jojoba Oil acts as the carrier for the essential oils. Technically a liquid wax composed primarily of wax esters, jojoba provides excellent slip, helps condition the skin, and allows the essential oil blend to be applied precisely without the heaviness of many conventional carrier oils.",
+      "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils within the formula from oxidation.",
+      "Peppermint and eucalyptus provide the immediate cooling sensation, rosemary adds an invigorating herbal middle, lavender softens and balances the blend, and frankincense leaves behind a subtle earthy warmth.",
+      "It's an ideal pocket-sized aromatic roll-on for moments when you want a cooling, refreshing sensation around the head, neck, and shoulders, whether during a long workday, while travelling, after physical activity, or whenever you're looking for a fresh botanical pick-me-up.",
+      "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma.",
+      "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs"
+    ],
+    "note": "",
+    "use": "Roll a small amount along the temples, hairline, back of the neck, and across the shoulders, keeping well away from the eyes. Gently massage into the skin and enjoy the cooling botanical aroma.",
+    "safety": "For external use only. Avoid contact with eyes and mucous membranes and do not apply to broken or irritated skin. Discontinue use if irritation occurs",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/eased-botanical-oil.jpg",
+    "imageNote": null,
+    "art": "roller",
+    "tone": "#d5dfd6",
+    "accent": "#456b59",
+    "featured": false
+  },
+  {
+    "id": "cycle-harmony",
+    "category": "roller-oils",
+    "name": "Balanced",
+    "kicker": "Just B Botanical Oil",
+    "description": "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
+    "cardDescription": "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle.",
+    "ingredients": [
+      "Grapeseed Oil, Organic Essential Oils (Geranium, Lavender, Roman Chamomile, Frankincense), All-Natural Vitamin E."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A gentle, soothing botanical oil designed for lower-abdominal massage and comforting self-care throughout your cycle. Organic essential oils of geranium, lavender, Roman chamomile, and frankincense are blended into lightweight grapeseed oil to create a soft floral, herbaceous, and grounding aroma.",
+          "A fragrant oil blend for a quiet moment of self-care and gentle massage.",
+          "Geranium Essential Oil gives the blend its fresh, green-floral character. It works particularly well alongside lavender and chamomile, adding a balancing botanical note without making the finished oil overly sweet or perfume-like.",
+          "Lavender Essential Oil provides a soft floral and herbaceous aroma and forms much of the relaxing character of the blend. It makes this oil especially suited to quiet self-care, rest, and gentle massage when you want to unwind.",
+          "Roman Chamomile Essential Oil adds a delicate, sweet, herbaceous aroma. Its gentle aromatic character pairs beautifully with lavender and helps give the blend its comforting, calming profile.",
+          "Frankincense Essential Oil grounds the lighter floral notes with a warm, resinous and slightly woody aroma. It gives the blend greater depth and creates a peaceful, earthy finish.",
+          "Grapeseed Oil is an excellent massage carrier because of its relatively lightweight texture and good spreadability. It allows the hands to glide comfortably over the abdomen without the extremely heavy or waxy finish of richer butters and balms.",
+          "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils in the formula against oxidation."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula."
+        ]
+      },
+      {
+        "title": "Before using",
+        "paragraphs": [
+          "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs."
+        ]
+      }
+    ],
+    "details": [
+      "A fragrant oil blend for a quiet moment of self-care and gentle massage.",
+      "Geranium Essential Oil gives the blend its fresh, green-floral character. It works particularly well alongside lavender and chamomile, adding a balancing botanical note without making the finished oil overly sweet or perfume-like.",
+      "Lavender Essential Oil provides a soft floral and herbaceous aroma and forms much of the relaxing character of the blend. It makes this oil especially suited to quiet self-care, rest, and gentle massage when you want to unwind.",
+      "Roman Chamomile Essential Oil adds a delicate, sweet, herbaceous aroma. Its gentle aromatic character pairs beautifully with lavender and helps give the blend its comforting, calming profile.",
+      "Frankincense Essential Oil grounds the lighter floral notes with a warm, resinous and slightly woody aroma. It gives the blend greater depth and creates a peaceful, earthy finish.",
+      "Grapeseed Oil is an excellent massage carrier because of its relatively lightweight texture and good spreadability. It allows the hands to glide comfortably over the abdomen without the extremely heavy or waxy finish of richer butters and balms.",
+      "All-Natural Vitamin E provides antioxidant and skin-conditioning benefits while also helping protect the oils in the formula against oxidation.",
+      "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula.",
+      "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs."
+    ],
+    "note": "",
+    "use": "Apply a small amount to the lower abdomen and gently massage using slow, circular motions. It can also be massaged into the lower back as part of your self-care routine. Use as desired during your menstrual cycle, following the dilution and usage limits established for your finished formula.",
+    "safety": "For external use only. Do not apply to broken or irritated skin, and discontinue use if irritation occurs.",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/balanced-botanical-oil.jpg",
+    "imageNote": null,
+    "art": "roller",
+    "tone": "#d5dfd6",
+    "accent": "#456b59",
+    "featured": false
+  },
+  {
+    "id": "lavender-bloom-scrub",
+    "category": "sugar-scrubs",
+    "name": "Lavender Bloom",
+    "kicker": "Just B Scrubbed",
+    "description": "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba, rosehip, and castor oils, vitamin E, and a botanical essential-oil blend. This formula combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother.",
+    "cardDescription": "A rich, naturally exfoliating body scrub with organic cane sugar, unrefined shea butter, and organic jojoba, rosehip, and castor oils.",
+    "ingredients": [
+      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Lavender, Grapefruit, Geranium, Frankincense)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rich, naturally exfoliating body scrub crafted with organic cane sugar, unrefined shea butter, organic jojoba, rosehip, and castor oils, vitamin E, and a botanical essential-oil blend. This formula combines physical exfoliation with rich emollients that leave the skin feeling soft, conditioned, moisturized, and noticeably smoother.",
+          "Organic Cane Sugar provides the exfoliating action. The sugar crystals physically lift away dry, flaky surface skin as they're massaged over the body, helping improve the immediate appearance and texture of rough areas. As the sugar dissolves with water, the scrub gradually becomes gentler during use.",
+          "Unrefined Shea Butter gives this scrub its rich, nourishing character. Shea butter contains a mixture of fatty acids and naturally occurring unsaponifiable compounds that make it an effective emollient. It helps soften and condition dry skin while leaving behind a protective, moisturized feel after rinsing.",
+          "Organic Jojoba Oil is technically a liquid wax composed largely of wax esters. It provides excellent slip, allowing the sugar to glide over the skin rather than feeling excessively abrasive. It also conditions and softens the skin and complements the heavier shea and castor components.",
+          "Organic Castor Oil adds richness and helps give the scrub its substantial, conditioning texture. It's a heavier emollient than jojoba, making it particularly useful in a body product intended for dry, rough-feeling areas such as elbows, knees, hands, and feet.",
+          "Arrowroot Powder helps balance the richness of the oils and shea butter. It contributes a soft, silky texture and helps reduce some of the excessively oily feel that can come from an anhydrous scrub.",
+          "All-Natural Vitamin E provides antioxidant benefits while conditioning the skin. It also serves a practical purpose within an oil-based formula by helping protect susceptible oils from oxidation."
+        ]
+      },
+      {
+        "title": "The essential oil blend",
+        "paragraphs": [
+          "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
+          "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
+          "Grapefruit Essential Oil provides the bright side of the blend: a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
+          "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
+          "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
+          "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath."
+        ]
+      },
+      {
+        "title": "Benefits",
+        "paragraphs": [
+          "Exfoliates • Smooths • Softens • Moisturizes • Conditions • Refreshes",
+          "Regular, gentle exfoliation can help keep areas prone to roughness feeling smoother, while the butter and oils help counteract the dry feeling that can follow exfoliation. For body scrubs, once or twice weekly is generally sufficient rather than daily scrubbing."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Apply a very small amount to damp skin using the spoon provided. Gently massage onto the body in circular motions, concentrating on dry or rough areas such as the arms, legs, elbows, knees, hands, and feet. Rinse thoroughly with warm water and gently pat skin dry.",
+          "Use up to twice per week. Always use the spoon provided and keep water out of the jar to help maintain the freshness and quality of your scrub. Avoid using on the face, broken or irritated skin, or freshly shaved areas. Use caution in the shower or bath, as the oils may make surfaces slippery."
+        ]
+      }
+    ],
+    "details": [
+      "Organic Cane Sugar provides the exfoliating action. The sugar crystals physically lift away dry, flaky surface skin as they're massaged over the body, helping improve the immediate appearance and texture of rough areas. As the sugar dissolves with water, the scrub gradually becomes gentler during use.",
+      "Unrefined Shea Butter gives this scrub its rich, nourishing character. Shea butter contains a mixture of fatty acids and naturally occurring unsaponifiable compounds that make it an effective emollient. It helps soften and condition dry skin while leaving behind a protective, moisturized feel after rinsing.",
+      "Organic Jojoba Oil is technically a liquid wax composed largely of wax esters. It provides excellent slip, allowing the sugar to glide over the skin rather than feeling excessively abrasive. It also conditions and softens the skin and complements the heavier shea and castor components.",
+      "Organic Castor Oil adds richness and helps give the scrub its substantial, conditioning texture. It's a heavier emollient than jojoba, making it particularly useful in a body product intended for dry, rough-feeling areas such as elbows, knees, hands, and feet.",
+      "Arrowroot Powder helps balance the richness of the oils and shea butter. It contributes a soft, silky texture and helps reduce some of the excessively oily feel that can come from an anhydrous scrub.",
+      "All-Natural Vitamin E provides antioxidant benefits while conditioning the skin. It also serves a practical purpose within an oil-based formula by helping protect susceptible oils from oxidation.",
+      "The scent was designed to be floral, fresh, citrusy, and grounding, rather than overwhelmingly sweet.",
+      "Lavender Essential Oil brings a soft floral-herbal aroma traditionally associated with calm and relaxation. It gives the scrub a soothing aromatic character that works especially well for an evening shower or self-care routine.",
+      "Grapefruit Essential Oil provides the bright side of the blend: a fresh, lively citrus aroma that cuts through the heavier floral and earthy notes. It gives the scrub an uplifting, clean-smelling freshness.",
+      "Geranium Essential Oil adds a sophisticated floral note with fresh, slightly green undertones. It bridges the bright grapefruit and soft lavender while giving the blend a more complex botanical character.",
+      "Frankincense Essential Oil grounds everything with a warm, resinous, woody aroma. Rather than allowing the formula to smell predominantly floral, frankincense provides depth and an earthy finish.",
+      "Together, the four create a beautifully balanced aroma: bright grapefruit first, soft lavender and geranium through the middle, and warm frankincense underneath.",
+      "Exfoliates • Smooths • Softens • Moisturizes • Conditions • Refreshes",
+      "Regular, gentle exfoliation can help keep areas prone to roughness feeling smoother, while the butter and oils help counteract the dry feeling that can follow exfoliation. For body scrubs, once or twice weekly is generally sufficient rather than daily scrubbing.",
+      "Apply a very small amount to damp skin using the spoon provided. Gently massage onto the body in circular motions, concentrating on dry or rough areas such as the arms, legs, elbows, knees, hands, and feet. Rinse thoroughly with warm water and gently pat skin dry.",
+      "Use up to twice per week. Always use the spoon provided and keep water out of the jar to help maintain the freshness and quality of your scrub. Avoid using on the face, broken or irritated skin, or freshly shaved areas. Use caution in the shower or bath, as the oils may make surfaces slippery."
+    ],
+    "note": "",
+    "use": "Apply a very small amount to damp skin using the spoon provided. Gently massage onto the body in circular motions, concentrating on dry or rough areas such as the arms, legs, elbows, knees, hands, and feet. Rinse thoroughly with warm water and gently pat skin dry. Use up to twice per week. Always use the spoon provided and keep water out of the jar to help maintain the freshness and quality of your scrub. Avoid using on the face, broken or irritated skin, or freshly shaved areas. Use caution in the shower or bath, as the oils may make surfaces slippery.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/lavender-bloom-scrub.webp",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#ead8c8",
+    "accent": "#9a684f",
+    "featured": true
+  },
+  {
+    "id": "harvest-spa-scrub",
+    "category": "sugar-scrubs",
+    "name": "Harvest",
+    "kicker": "Just B Scrubbed",
+    "description": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed.",
+    "cardDescription": "A refreshing sugar scrub with organic cane sugar, unrefined shea butter, and organic jojoba, rosehip, and castor oils.",
+    "ingredients": [
+      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Sweet Orange, Lavender, Peppermint, Frankincense)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas."
+        ]
+      }
+    ],
+    "details": [
+      "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas."
+    ],
+    "note": "",
+    "use": "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/harvest-spa-scrub.jpg",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#ead8c8",
+    "accent": "#9a684f",
+    "featured": false
+  },
+  {
+    "id": "vanilla-scrub",
+    "category": "sugar-scrubs",
+    "name": "Vanilla",
+    "kicker": "Just B Scrubbed",
+    "description": "A simple, luxurious scrub made with organic cane sugar infused with Madagascar vanilla bean. Unrefined shea butter, jojoba, rosehip, and castor oils complement the exfoliating sugar base, while vanilla oleoresin creates a warm, creamy, true-vanilla aroma without synthetic fragrance.",
+    "cardDescription": "A luxurious cane-sugar scrub infused with Madagascar vanilla bean and nourishing botanical oils.",
+    "ingredients": [
+      "Organic cane sugar infused with Madagascar vanilla bean, unrefined shea butter, organic jojoba oil, organic rosehip oil, all-natural castor oil, arrowroot powder, vitamin E, vanilla oleoresin."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Organic cane sugar infused with Madagascar vanilla bean gently exfoliates, while unrefined shea butter and jojoba, rosehip, and castor oils help leave skin feeling soft and moisturized.",
+          "Vanilla oleoresin creates a warm, creamy, true-vanilla aroma without synthetic fragrance."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/vanilla-scrub.jpg",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#ead8c8",
+    "accent": "#9a684f",
+    "featured": false
+  },
+  {
+    "id": "just-b-rested-room-spray",
+    "category": "home-linen",
+    "name": "Linen Room Spray",
+    "kicker": "Just B Rested",
+    "description": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils. Designed as a simple alternative to heavily perfumed conventional room sprays, this blend fills your space with a soft, calming botanical aroma without synthetic fragrance.",
+    "cardDescription": "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils.",
+    "ingredients": [
+      "All-Natural Distilled Witch Hazel (Containing 14% Natural Grain Alcohol), Organic Witch Hazel Extract, Distilled Water, Steam-Distilled Essential Oils (Lavender, Cedarwood, Frankincense)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A naturally aromatic room and linen spray created with distilled witch hazel, organic witch hazel extract, distilled water, and pure steam-distilled essential oils. Designed as a simple alternative to heavily perfumed conventional room sprays, this blend fills your space with a soft, calming botanical aroma without synthetic fragrance.",
+          "Lavender Essential Oil forms the calming heart of the blend. Its soft floral and herbaceous aroma is traditionally associated with relaxation and tranquility, making it particularly well suited for bedrooms, pillows, linens, and evening routines.",
+          "Cedarwood Essential Oil adds warmth and depth with its dry, woody, slightly earthy aroma. It balances lavender's floral character and gives the spray a cozy, grounded quality that works beautifully in bedrooms and living spaces.",
+          "Frankincense Essential Oil completes the blend with a warm, resinous and subtly earthy aroma. It adds depth without overpowering the lavender and cedarwood, creating a more sophisticated, peaceful scent.",
+          "Distilled Witch Hazel acts as the base for the spray and contains 14% naturally derived grain alcohol. It helps create a light, quick-drying mist and assists in dispersing the aromatic ingredients throughout the formula.",
+          "Organic Witch Hazel Extract complements the distilled witch hazel and keeps the formula rooted in simple, botanical ingredients.",
+          "Distilled Water creates a light mist that allows the fragrance to gently settle throughout a room and onto suitable fabrics rather than producing a heavy, oily spray."
+        ]
+      },
+      {
+        "title": "The aroma",
+        "paragraphs": [
+          "Calming • Woody • Earthy • Botanical • Soft",
+          "Lavender provides the gentle floral opening, cedarwood brings a warm woody heart, and frankincense leaves behind a subtle, grounding finish. The result is intentionally soft and natural rather than perfume-heavy.",
+          "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens."
+        ]
+      },
+      {
+        "title": "Before using",
+        "paragraphs": [
+          "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets."
+        ]
+      }
+    ],
+    "details": [
+      "Lavender Essential Oil forms the calming heart of the blend. Its soft floral and herbaceous aroma is traditionally associated with relaxation and tranquility, making it particularly well suited for bedrooms, pillows, linens, and evening routines.",
+      "Cedarwood Essential Oil adds warmth and depth with its dry, woody, slightly earthy aroma. It balances lavender's floral character and gives the spray a cozy, grounded quality that works beautifully in bedrooms and living spaces.",
+      "Frankincense Essential Oil completes the blend with a warm, resinous and subtly earthy aroma. It adds depth without overpowering the lavender and cedarwood, creating a more sophisticated, peaceful scent.",
+      "Distilled Witch Hazel acts as the base for the spray and contains 14% naturally derived grain alcohol. It helps create a light, quick-drying mist and assists in dispersing the aromatic ingredients throughout the formula.",
+      "Organic Witch Hazel Extract complements the distilled witch hazel and keeps the formula rooted in simple, botanical ingredients.",
+      "Distilled Water creates a light mist that allows the fragrance to gently settle throughout a room and onto suitable fabrics rather than producing a heavy, oily spray.",
+      "Calming • Woody • Earthy • Botanical • Soft",
+      "Lavender provides the gentle floral opening, cedarwood brings a warm woody heart, and frankincense leaves behind a subtle, grounding finish. The result is intentionally soft and natural rather than perfume-heavy.",
+      "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space.",
+      "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
+      "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets."
+    ],
+    "note": "",
+    "use": "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
+    "safety": "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets.",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/rested-room-spray.webp",
+    "imageNote": null,
+    "art": "spray",
+    "tone": "#d9ded7",
+    "accent": "#526b60",
+    "featured": true
+  },
+  {
+    "id": "solid-dish-soap",
+    "category": "home-linen",
+    "name": "Non-Toxic Solid Dish Soap",
+    "kicker": "Just B Clean",
+    "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
+    "cardDescription": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning.",
+    "ingredients": [
+      "Saponified Organic Coconut Oil, Saponified Organic Castor Oil, All-Natural Citric Acid, Kaolin Clay."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning."
+        ]
+      },
+      {
+        "title": "How to use",
+        "paragraphs": [
+          "Wet the bamboo bristle brush and gently swirl it directly over the soap to create a lather. Scrub dishes, cookware, and utensils as needed, then rinse thoroughly with clean water. Allow both the soap and brush to dry between uses to help them last longer."
+        ]
+      }
+    ],
+    "details": [
+      "Wet the bamboo bristle brush and gently swirl it directly over the soap to create a lather. Scrub dishes, cookware, and utensils as needed, then rinse thoroughly with clean water. Allow both the soap and brush to dry between uses to help them last longer."
+    ],
+    "note": "",
+    "use": "Wet the bamboo bristle brush and gently swirl it directly over the soap to create a lather. Scrub dishes, cookware, and utensils as needed, then rinse thoroughly with clean water. Allow both the soap and brush to dry between uses to help them last longer.",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/solid-dish-soap.webp",
+    "imageNote": null,
+    "art": "spray",
+    "tone": "#d9ded7",
+    "accent": "#526b60",
+    "featured": true
+  },
+  {
+    "id": "blue-cedar-soap",
+    "category": "artisan-soap",
+    "name": "Blue Cedar",
+    "kicker": "Just B Clean",
+    "description": "A simple, timeless bar made with nourishing oils, creamy coconut milk, and naturally derived indigo powder. Designed around a straightforward formula, this soap delivers a rich, creamy lather and a clean, uncomplicated wash for everyday use. A classic with a gentle woody scent, perfect for anyone who appreciates simple ingredients and an understated, natural aroma.",
+    "cardDescription": "A simple, timeless coconut-milk bar with naturally derived indigo and a gentle cedarwood scent.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic coconut milk, steam-distilled cedarwood essential oil, indigo powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A simple, timeless bar made with nourishing oils, creamy coconut milk, and naturally derived indigo powder. Designed around a straightforward formula, this soap delivers a rich, creamy lather and a clean, uncomplicated wash for everyday use.",
+          "A classic with a gentle woody scent and creamy lather, perfect for anyone who appreciates simple ingredients and an understated, natural aroma."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-blue-cedar.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "chamomile-soap",
+    "category": "artisan-soap",
+    "name": "Chamomile",
+    "kicker": "Just B Clean",
+    "description": "A soft, nurturing bar crafted with chamomile-infused organic olive oil, shea butter, coconut oil, castor oil, and creamy organic coconut milk. Turmeric lends a warm natural hue, while steam-distilled sweet orange and frankincense essential oils create a subtle citrus-resinous scent. Dried chamomile flowers finish each bar with a simple botanical detail.",
+    "cardDescription": "A nurturing chamomile-infused bar with coconut milk, turmeric, sweet orange, frankincense, and dried chamomile flowers.",
+    "ingredients": [
+      "Saponified oils (organic olive oil infused with dried chamomile flower buds, shea butter, organic coconut oil, castor oil), organic coconut milk, turmeric powder, steam-distilled essential oils (sweet orange, frankincense), dried chamomile flowers for décor."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soft, nurturing bar crafted with chamomile-infused organic olive oil, shea butter, coconut oil, castor oil, and creamy organic coconut milk.",
+          "Turmeric lends a warm natural hue, while steam-distilled sweet orange and frankincense essential oils create a subtle citrus-resinous scent. Dried chamomile flowers finish each bar with a simple botanical detail."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-chamomile.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "forest-soap",
+    "category": "artisan-soap",
+    "name": "Forest",
+    "kicker": "Just B Clean",
+    "description": "A three-tone, forest-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy everyday cleanse. Chlorella, cocoa, and kaolin powders create its earthy layers, while cedarwood, fir, frankincense, peppermint, and eucalyptus essential oils give it a crisp, fresh, grounding scent.",
+    "cardDescription": "A three-tone forest bar with earthy botanical powders and a crisp blend of woodsy, minty essential oils.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), steam-distilled essential oils (cedarwood, fir, frankincense, peppermint, eucalyptus), chlorella powder, cocoa powder, kaolin clay."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A three-tone, forest-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy everyday cleanse.",
+          "Chlorella, cocoa, and kaolin powders create its earthy layers, while cedarwood, fir, frankincense, peppermint, and eucalyptus essential oils give it a crisp, fresh, grounding scent."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-forest.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "ocean-soap",
+    "category": "artisan-soap",
+    "name": "Ocean",
+    "kicker": "Just B Clean",
+    "description": "A seaside-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy wash. French green clay and indigo powder create its cool ocean hues, while Himalayan salt adds gentle texture. Lavender, cedarwood, and peppermint essential oils give it a fresh, airy scent.",
+    "cardDescription": "A fresh seaside-inspired bar with green clay, indigo, Himalayan salt, lavender, cedarwood, and peppermint.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), French green clay, steam-distilled essential oils (lavender, cedarwood, peppermint), indigo powder, Himalayan salt."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A seaside-inspired bar made with organic olive oil, shea butter, coconut oil, and castor oil for a creamy wash.",
+          "French green clay and indigo powder create its cool ocean hues, while Himalayan salt adds gentle texture. Lavender, cedarwood, and peppermint essential oils give it a fresh, airy scent."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-ocean.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "rose-matter-soap",
+    "category": "artisan-soap",
+    "name": "Rose Madder",
+    "kicker": "Just B Clean",
+    "description": "A rustic dusty rose-coloured bar naturally tinted with madder root and enriched with organic coconut milk and raw honey. Clary sage brings a soft herbal-floral note, bergamot adds delicate citrus, and frankincense lends a warm, resinous finish. The result is earthy, elegant, and gently botanical.",
+    "cardDescription": "A dusty rose botanical bar with coconut milk, raw honey, madder root, clary sage, bergamot, and frankincense.",
+    "ingredients": [
+      "Saponified oils (organic olive oil, shea butter, organic coconut oil, castor oil), organic coconut milk, organic raw honey, steam-distilled essential oils (clary sage, bergamot, frankincense), madder root powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A rustic dusty rose-coloured bar naturally tinted with madder root and enriched with organic coconut milk and raw honey.",
+          "Clary sage brings a soft herbal-floral note, bergamot adds delicate citrus, and frankincense lends a warm, resinous finish. The result is earthy, elegant, and gently botanical."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-rose-matter.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  }
+];

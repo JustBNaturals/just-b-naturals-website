@@ -34,10 +34,11 @@ test('invalid settings and prices rejected',()=>{
   assert.throws(()=>priceOrder([soap(1.5)],CAMPAIGN_DEFAULTS,now));
 });
 function database(){
-  const db=new DatabaseSync(':memory:');db.exec('CREATE TABLE inventory(product_id TEXT PRIMARY KEY,stock_count INTEGER,price_cents INTEGER,is_active INTEGER,availability_status TEXT,available_date TEXT)');
-  for(const id of SOAP_IDS)db.prepare("INSERT INTO inventory VALUES(?,10,800,1,'available',NULL)").run(id);
-  db.prepare("INSERT INTO inventory VALUES('solid-dish-soap',10,2000,1,'available',NULL)").run();
+  const db=new DatabaseSync(':memory:');db.exec('CREATE TABLE inventory(product_id TEXT PRIMARY KEY,stock_count INTEGER,price_cents INTEGER,is_active INTEGER,availability_status TEXT,available_date TEXT,updated_at TEXT DEFAULT CURRENT_TIMESTAMP)');
+  for(const id of SOAP_IDS)db.prepare("INSERT INTO inventory(product_id,stock_count,price_cents,is_active,availability_status,available_date) VALUES(?,10,800,1,'available',NULL)").run(id);
+  db.prepare("INSERT INTO inventory(product_id,stock_count,price_cents,is_active,availability_status,available_date) VALUES('solid-dish-soap',10,2000,1,'available',NULL)").run();
   const api={exec:async sql=>db.exec(sql),prepare(sql){let values=[];return {bind(...args){values=args;return this},async all(){return {results:db.prepare(sql).all(...values)}},async first(){return db.prepare(sql).get(...values)||null},async run(){return db.prepare(sql).run(...values)}}}};
+  api.batch=async statements=>{db.exec('BEGIN');try{const results=[];for(const statement of statements)results.push(await statement.run());db.exec('COMMIT');return results;}catch(error){db.exec('ROLLBACK');throw error;}};
   return {db,api};
 }
 const request=(path,data,auth=false)=>new Request('https://justbnatural.ca'+path,{method:data?'POST':'GET',headers:{...(data?{'Content-Type':'application/json'}:{}),...(auth?{Authorization:'Bearer test-key'}:{})},...(data?{body:JSON.stringify(data)}:{})});

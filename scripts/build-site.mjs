@@ -1,0 +1,33 @@
+import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
+import vm from 'node:vm';
+import {PRODUCTS} from '../product-data.js';
+const root='https://justbnatural.ca';
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safe=o=>JSON.stringify(o).replaceAll('<','\\u003c');
+const ctx={location:{search:'?lang=fr'},URLSearchParams,document:{addEventListener(){}}};vm.createContext(ctx);vm.runInContext(readFileSync('fr.js','utf8'),ctx);
+const french=structuredClone(PRODUCTS);ctx.JBN_FR.prepare(french);
+const seo=Object.fromEntries(PRODUCTS.map((p,i)=>[p.id,{name:p.name,description:p.cardDescription||p.description,image:p.image,frName:french[i].name,frDescription:french[i].cardDescription||french[i].description,category:p.category}]));
+writeFileSync('product-seo.js','// Generated from the shared catalogue and French translations.\nexport const PRODUCT_SEO = '+safe(seo)+';\n');
+writeFileSync('product-names.js','// Generated from product-data.js.\nexport const PRODUCT_NAMES = Object.freeze('+safe(Object.fromEntries(PRODUCTS.map(p=>[p.id,p.name])))+');\n');
+writeFileSync('catalog.json',JSON.stringify(PRODUCTS,null,2)+'\n');
+let files=readdirSync('.').filter(f=>f.endsWith('.html')&&f!=='inventory.html');
+for(const p of PRODUCTS){const file=`product-${p.id}.html`;if(!files.includes(file))continue;let html=readFileSync(file,'utf8');
+ const desc=(p.cardDescription||p.description).slice(0,220);
+ html=html.replace(/<title>.*?<\/title>/s,`<title>${esc(p.name)} | Just B Natural</title>`).replace(/<meta name="description"[^>]*>/,`<meta name="description" content="${esc(desc)}">`);
+ const fallback=`<section class="shell product-prerender"><p>Handcrafted in Gatineau, Québec</p><h1>${esc(p.name)}</h1><img src="${esc(p.image)}" width="480" height="480" alt="${esc(p.name)}"><p>${esc(desc)}</p><h2>Ingredients</h2><p>${esc((p.ingredients||[]).join(' '))}</p><a href="shop.html">Browse all products</a></section>`;
+ html=html.replace(/(<main[^>]*data-product-page[^>]*>)[\s\S]*?(<\/main>)/,`$1${fallback}$2`);
+ writeFileSync(file,html);
+}
+for(const file of files){let html=readFileSync(file,'utf8');const slug=file==='index.html'?'':file.replace(/\.html$/,'');const url=root+'/'+slug;
+ html=html.replace(/\n?<!-- SEARCH-METADATA -->[\s\S]*?<!-- \/SEARCH-METADATA -->/g,'').replace(/<link rel="canonical"[^>]*>/g,'');
+ const title=html.match(/<title>(.*?)<\/title>/s)?.[1]||'Just B Natural';const description=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'Handcrafted soaps and natural care in Gatineau, Québec.';
+ const p=PRODUCTS.find(p=>file===`product-${p.id}.html`);const image=root+'/'+(p?.image||'images/october/slide-1.webp');
+ const schema=p?{'@context':'https://schema.org','@type':'Product',name:p.name,description:p.cardDescription||p.description,image:[image],sku:p.id,brand:{'@type':'Brand',name:'Just B Natural'}}:{'@context':'https://schema.org','@type':'Organization',name:'Just B Natural',url:root+'/',logo:root+'/images/just-b-logo-192.webp',email:'justbnaturalss@gmail.com',sameAs:['https://www.instagram.com/justb.naturals/'],areaServed:{'@type':'City',name:'Gatineau, Québec'}};
+ const meta=`\n<!-- SEARCH-METADATA --><link rel="canonical" href="${url}"><link rel="alternate" hreflang="en-CA" href="${url}"><link rel="alternate" hreflang="fr-CA" href="${url}?lang=fr"><link rel="alternate" hreflang="x-default" href="${url}"><meta property="og:type" content="${p?'product':'website'}"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${url}"><meta property="og:image" content="${esc(image)}"><meta property="og:site_name" content="Just B Natural"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json" data-product-schema>${safe(schema)}</script><!-- /SEARCH-METADATA -->\n`;
+ html=html.replace('</head>',meta+'</head>').replace(/styles\.css\?v=[^"']*/g,'styles.css?v=20261016-growth').replace(/script\.js\?v=[^"']*/g,'script.js?v=20261016-growth');
+ writeFileSync(file,html);
+}
+const publicFiles=files.filter(f=>f!=='checkout.html'&&f!=='product-lavender-oat-soap.html');
+writeFileSync('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+publicFiles.map(f=>{let u=root+'/'+(f==='index.html'?'':f.replace(/\.html$/,''));return ['en','fr'].map(l=>`<url><loc>${u}${l==='fr'?'?lang=fr':''}</loc><xhtml:link rel="alternate" hreflang="en-CA" href="${u}"/><xhtml:link rel="alternate" hreflang="fr-CA" href="${u}?lang=fr"/></url>`).join('')}).join('')+'</urlset>\n');
+writeFileSync('robots.txt',`User-agent: *\nAllow: /\nDisallow: /inventory\nDisallow: /api/\nSitemap: ${root}/sitemap.xml\n`);
+console.log(`Updated ${files.length} pages and bilingual sitemap.`);

@@ -126,6 +126,7 @@ async function openInventory(key) {
   loginForm.hidden = true;
   manager.hidden = false;
   loginStatus.textContent = "";
+  import("./business-admin.js").then(module=>module.openBusinessAdmin({fetcher:authorizedFetch,catalog})).catch(()=>{saveStatus.textContent="Inventory is ready. Business tools could not load; refresh to try again.";});
 }
 
 loginForm.addEventListener("submit", async event => {
@@ -283,3 +284,5 @@ emailPreviewForm?.addEventListener('submit',async event=>{
     status.textContent='Test email sent. Check your inbox.';
   }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
 });
+
+document.addEventListener("jbn:orders-changed",()=>loadDonationOrders().catch(()=>{}));

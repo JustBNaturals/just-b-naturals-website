@@ -4,8 +4,9 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import * as promotion from '../promotion.js';
 import * as delivery from '../delivery.js';
+import {PRODUCTS} from '../product-data.js';
 function storefront(french=false){
-  const storage=new Map();const context={...promotion,...delivery,console,URLSearchParams,Intl,Date,Map,Set,JSON,Math,Number,String,Array,Boolean,encodeURIComponent,decodeURIComponent,setTimeout,clearTimeout,
+  const storage=new Map();const context={PRODUCTS:structuredClone(PRODUCTS),...promotion,...delivery,console,URLSearchParams,Intl,Date,Map,Set,JSON,Math,Number,String,Array,Boolean,encodeURIComponent,decodeURIComponent,setTimeout,clearTimeout,
     location:{search:french?'?lang=fr':''},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},
     document:{documentElement:{classList:{add(){}}},body:{dataset:{}},cookie:'',querySelector:()=>null,querySelectorAll:()=>[],addEventListener(){}},
     window:{location:{protocol:'https:'}},campaignLanguage:french?'fr':'en',t:en=>en};

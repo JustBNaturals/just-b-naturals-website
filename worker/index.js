@@ -1,9 +1,10 @@
+import { businessRoute, ensureBusiness, recordMetric, changeOrderStatus } from "./business.js";
+import { PRODUCT_SEO } from "../product-seo.js";
+import { PRODUCT_NAMES } from "../product-names.js";
 import { launchEmailHtml } from "../email-preview.js";
 import { localDeliveryFee } from "../delivery.js";
 import { CAMPAIGN_DEFAULTS, campaignConfig, priceOrder } from "../promotion.js";
-const PRODUCT_CATALOG = Object.freeze({
-  "almond-milk-mocha-soap":"Mocha Latté","matcha-lavender-soap":"Matcha & Lavender","rosemary-sage-soap":"Rosemary & Sage","lemon-rosemary-soap":"Lemon & Rosemary","ember-ash-soap":"Ember & Ash","sweater-weather-soap":"Sweater Weather","coconut-lavender-soap":"Coconut Lavender","whisper-citrus-soap":"Whisper of Citrus","charcoal-blush-soap":"Charcoal & Blush","cedar-eucalyptus-loofah-soap":"Cedarwood & Eucalyptus Loofah","lemongrass-lavender-soap":"Lemongrass & Lavender","ylang-ylang-soap":"Ylang Ylang","honey-oat-comfort-soap":"Oat and Tallow","chocolate-pumpkin-pie-soap":"Chocolate Pumpkin Pie","unscented-loofah-soap":"Unscented Loofah","mint-eucalyptus-spa-soap":"Mint & Eucalyptus Spa Bar","spiced-banana-soap":"Spiced Banana","cedar-lemon-soap":"Cedar Lemon","blue-cedar-soap":"Blue Cedar","chamomile-soap":"Chamomile","forest-soap":"Forest","lavender-oat-soap":"Lavender and Oat","ocean-soap":"Ocean","rose-matter-soap":"Rose Matter","mango-butter":"Mango Butter","vanilla-infused-tallow":"Vanilla Infused Tallow","unscented-tallow":"Unscented Tallow","just-b-calm":"Hormonal Balance Roll-On","just-b-relieved":"Headache Relief Roll-On","cycle-harmony":"Cramp and Bloat Relief","lavender-bloom-scrub":"Lavender Bloom","harvest-spa-scrub":"Harvest Spa","vanilla-scrub":"Vanilla","just-b-rested-room-spray":"Linen Room Spray","solid-dish-soap":"Non-Toxic Solid Dish Soap"
-});
+const PRODUCT_CATALOG = PRODUCT_NAMES;
 const BREVO_BASE="https://api.brevo.com/v3";
 const GOOGLE_PLACES_BASE="https://places.googleapis.com/v1";
 const GOOGLE_ROUTES_URL="https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -152,6 +153,17 @@ async function handleOrder(request,env){
     if(!["pickup","delivery"].includes(data.fulfillment)||!["cash","etransfer"].includes(data.payment))return json({error:"Please select valid fulfillment and payment options."},400);
     if(!order.items.length)return json({error:"Your cart is empty."},400);
     if(order.fulfillment==="delivery"&&(order.deliveryAddress.length<8||!order.deliveryPlaceId))return json({error:"Please select a recognized local delivery address and calculate its fee."},400);
+    await ensureBusiness(env.INVENTORY_DB);
+    order.requestKey=/^[a-zA-Z0-9-]{20,80}$/.test(String(data.requestKey||''))?data.requestKey:null;
+    if(order.requestKey){
+      const previous=await env.INVENTORY_DB.prepare('SELECT order_json FROM order_delivery WHERE request_key=?').bind(order.requestKey).first();
+      if(previous){
+        const saved=JSON.parse(previous.order_json);
+        const lines=o=>JSON.stringify(o.items.map(i=>[i.id,i.quantity]).sort());
+        if(saved.email!==order.email||lines(saved)!==lines(order)||saved.fulfillment!==order.fulfillment||saved.deliveryAddress!==order.deliveryAddress||saved.payment!==order.payment)return json({error:'This request key belongs to a different order. Refresh and try again.'},409);
+        const delivered=await deliverOrderEmails(env,saved);return json({ok:true,orderId:saved.orderId,status:'pending_confirmation',emailPending:!delivered.complete,reused:true});
+      }
+    }
     if(order.fulfillment==="delivery"){
       try{
         const estimate=await calculateDelivery(env,order.deliveryPlaceId);
@@ -166,6 +178,8 @@ async function handleOrder(request,env){
     }
     if(order.fulfillment==="delivery"&&(!Number.isInteger(order.deliveryFeeCents)||order.deliveryFeeCents<0))return json({error:"A delivery fee is required before this order can be emailed."},400);
     order.items=await attachInventory(env,order.items);
+    const insufficient=order.items.find(item=>item.availabilityStatus!=="preorder"&&Number.isInteger(item.stock)&&item.quantity>item.stock);
+    if(insufficient)return json({error:`Only ${insufficient.stock} ${insufficient.name} remain. Please reduce the quantity.`},400);
     const unavailable=order.items.find(item=>item.active===false||item.availabilityStatus==="unavailable"||(item.stock===0&&item.availabilityStatus!=="preorder"));
     if(unavailable)return json({error:`${unavailable.name} is currently unavailable. Please remove it from your cart before sending the request.`},400);
     if(order.items.some(item=>!Number.isInteger(item.priceCents)))return json({error:"One or more product prices need to be set before this order can be sent."},400);
@@ -176,14 +190,37 @@ async function handleOrder(request,env){
     order.estimatedTotalCents=order.itemSubtotalCents+(Number.isInteger(order.deliveryFeeCents)?order.deliveryFeeCents:0);
     await saveCampaignOrder(env,order);
     savedOrderId=order.orderId;
-    const conversationSubject=`${order.orderId} — ${order.language==="fr"?"Demande de commande":"Order request"}`;
-    await sendEmail(env,{to:order.orderEmail,toName:"Just B Natural",replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject:conversationSubject,htmlContent:orderHtml(order)});
-    await sendEmail(env,{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:"Just B Natural"},subject:conversationSubject,htmlContent:customerHtml(order)});
-    await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET email_status='sent' WHERE order_id=?").bind(order.orderId).run();
+    const emailDelivery=await deliverOrderEmails(env,order);
+    try{await recordMetric(env.INVENTORY_DB,'request_created');}catch(_){}
     let subscriberAdded=false;if(order.marketingConsent&&order.consentText){try{await addSubscriber(env,order.email);await recordConsent(env,{email:order.email,consentText:order.consentText,consentedAt:order.consentedAt,source:`checkout ${order.orderId}`});subscriberAdded=true}catch(_){subscriberAdded=false}}
-    return json({ok:true,orderId:order.orderId,status:"pending_confirmation",subscriberAdded,pricing:{regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,estimatedTotalCents:order.estimatedTotalCents,donationCommitmentCents:order.donationCommitmentCents}});
+    return json({ok:true,orderId:order.orderId,status:"pending_confirmation",emailPending:!emailDelivery.complete,subscriberAdded,pricing:{regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,estimatedTotalCents:order.estimatedTotalCents,donationCommitmentCents:order.donationCommitmentCents}});
   }catch(_){if(savedOrderId)try{await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET email_status='failed' WHERE order_id=?").bind(savedOrderId).run();}catch(_){}return json({error:"The order could not be sent. Please try again or use the email option.",...(savedOrderId?{orderId:savedOrderId}:{})},500)}
 }
+async function deliverOrderEmails(env,order){
+ const subject=`${order.orderId} — ${order.language==='fr'?'Demande de commande':'Order request'}`;
+ for(const kind of ['business','customer']){
+  const claim=await env.INVENTORY_DB.prepare(`UPDATE order_delivery SET ${kind}_sent=2,${kind}_attempt_at=CURRENT_TIMESTAMP WHERE order_id=? AND (${kind}_sent=0 OR (${kind}_sent=2 AND ${kind}_attempt_at<datetime('now','-10 minutes')))` ).bind(order.orderId).run();
+  if(Number(claim.meta?.changes??claim.changes??0)===0)continue;
+  try{
+   await sendEmail(env,kind==='business'?{to:order.orderEmail,toName:'Just B Natural',replyTo:{email:order.email,name:`${order.firstName} ${order.lastName}`},subject,htmlContent:orderHtml(order)}:{to:order.email,toName:`${order.firstName} ${order.lastName}`,replyTo:{email:order.orderEmail,name:'Just B Natural'},subject,htmlContent:customerHtml(order)});
+   await env.INVENTORY_DB.prepare(`UPDATE order_delivery SET ${kind}_sent=1 WHERE order_id=?`).bind(order.orderId).run();
+  }catch(_){await env.INVENTORY_DB.prepare(`UPDATE order_delivery SET ${kind}_sent=0 WHERE order_id=?`).bind(order.orderId).run();}
+ }
+ const state=await env.INVENTORY_DB.prepare('SELECT business_sent,customer_sent FROM order_delivery WHERE order_id=?').bind(order.orderId).first();
+ const complete=state?.business_sent===1&&state?.customer_sent===1;
+ await env.INVENTORY_DB.prepare('UPDATE campaign_orders SET email_status=? WHERE order_id=?').bind(complete?'sent':'failed',order.orderId).run();
+ return {complete};
+}
+async function retryOrderEmail(request,env){
+ if(request.method!=='POST')return json({error:'Method not allowed.'},405);
+ if(!await inventoryAuthorized(request,env))return json({error:'Open the private manager first.'},401);
+ if(request.headers.get('Origin')&&request.headers.get('Origin')!==new URL(request.url).origin)return json({error:'Request not allowed.'},403);
+ await ensureBusiness(env.INVENTORY_DB);
+ const data=await request.json();const row=await env.INVENTORY_DB.prepare("SELECT order_json FROM order_delivery WHERE order_id=? AND created_at>=datetime('now','-90 days')").bind(clean(data.orderId,40)).first();
+ if(!row)return json({error:'The private order copy is unavailable or has expired.'},404);
+ const result=await deliverOrderEmails(env,JSON.parse(row.order_json));return json({ok:result.complete,...result});
+}
+
 async function handleEmailPreview(request,env){
   if(request.method!=="POST")return json({error:"Method not allowed."},405);
   if(!await inventoryAuthorized(request,env))return json({error:"Please open inventory first."},401);
@@ -219,9 +256,13 @@ async function readCampaign(env){
   return campaignConfig(row?JSON.parse(row.config_json):CAMPAIGN_DEFAULTS);
 }
 async function saveCampaignOrder(env,order){
-  // No customer contact details in the donation ledger. Snapshot preserves the original offer.
+  // Public campaign ledger remains free of contact details. Private fulfillment copies expire after 90 days.
+  await ensureBusiness(env.INVENTORY_DB);
   const snapshot={items:order.items.map(({id,name,quantity,priceCents})=>({id,name,quantity,priceCents})),campaignConfig:order.campaignConfig,qualifyingPairs:order.qualifyingPairs,regularSubtotalCents:order.regularSubtotalCents,discountCents:order.discountCents,itemSubtotalCents:order.itemSubtotalCents,donationCommitmentCents:order.donationCommitmentCents,estimatedTotalCents:order.estimatedTotalCents,deliveryFeeCents:order.deliveryFeeCents,language:order.language};
-  await env.INVENTORY_DB.prepare("INSERT INTO campaign_orders(order_id,created_at,order_json,retained_pairs) VALUES(?,?,?,?)").bind(order.orderId,order.createdAt,JSON.stringify(snapshot),order.qualifyingPairs).run();
+  await env.INVENTORY_DB.batch([
+    env.INVENTORY_DB.prepare("INSERT INTO campaign_orders(order_id,created_at,order_json,retained_pairs) VALUES(?,?,?,?)").bind(order.orderId,order.createdAt,JSON.stringify(snapshot),order.qualifyingPairs),
+    env.INVENTORY_DB.prepare("INSERT INTO order_delivery(order_id,request_key,order_json) VALUES(?,?,?)").bind(order.orderId,order.requestKey||null,JSON.stringify(order))
+  ]);
 }
 async function handleCampaign(request,env){
   try{
@@ -242,20 +283,15 @@ async function handleCampaignOrders(request,env){
     if(request.method==="POST"){
       if(request.headers.get("Origin")&&request.headers.get("Origin")!==new URL(request.url).origin)return json({error:"Request not allowed."},403);
       const data=await request.json(),id=clean(data.orderId,40);
-      if(!["pending","paid","completed","cancelled","refunded","partial_refund"].includes(data.status))return json({error:"Choose a valid order status."},400);
-      const row=await env.INVENTORY_DB.prepare("SELECT order_json FROM campaign_orders WHERE order_id=?").bind(id).first();
-      if(!row)return json({error:"Order not found."},404);
-      const order=JSON.parse(row.order_json);
-      const pairs=["cancelled","refunded"].includes(data.status)?0:data.status==="partial_refund"?Number(data.retainedPairs):order.qualifyingPairs;
-      if(!Number.isInteger(pairs)||pairs<0||pairs>order.qualifyingPairs)return json({error:"Pairs kept must be between zero and the original number of qualifying pairs."},400);
-      await env.INVENTORY_DB.prepare("UPDATE campaign_orders SET status=?,retained_pairs=?,updated_at=CURRENT_TIMESTAMP WHERE order_id=?").bind(data.status,pairs,id).run();
-      return json({ok:true});
+      if(!["pending","confirmed","paid","completed","cancelled","refunded","partial_refund"].includes(data.status))return json({error:"Choose a valid order status."},400);
+      try{return json(await changeOrderStatus(env.INVENTORY_DB,{orderId:id,status:data.status,retainedPairs:data.retainedPairs,restock:data.restock===true}));}
+      catch(error){return json({error:error.message},400);}
     }
     if(request.method!=="GET")return json({error:"Method not allowed."},405);
     const result=await env.INVENTORY_DB.prepare("SELECT * FROM campaign_orders ORDER BY created_at DESC LIMIT 100").all();
     const totals=await env.INVENTORY_DB.prepare("SELECT status,retained_pairs,order_json FROM campaign_orders WHERE retained_pairs>0").all();
     let pendingCents=0,earnedCents=0;
-    for(const row of totals.results||[]){const value=row.retained_pairs*JSON.parse(row.order_json).campaignConfig.donationPerPairCents;if(row.status==="pending")pendingCents+=value;else if(["paid","completed","partial_refund"].includes(row.status))earnedCents+=value;}
+    for(const row of totals.results||[]){const value=row.retained_pairs*JSON.parse(row.order_json).campaignConfig.donationPerPairCents;if(["pending","confirmed"].includes(row.status))pendingCents+=value;else if(["paid","completed","partial_refund"].includes(row.status))earnedCents+=value;}
     return json({pendingCents,earnedCents,orders:(result.results||[]).map(row=>({...row,order:JSON.parse(row.order_json),order_json:undefined}))});
   }catch(_){return json({error:"The donation tracker could not be updated."},503)}
 }
@@ -326,12 +362,21 @@ async function handleInventoryAdmin(request,env){
 }
 
 async function serveAsset(request,env){
-  const response=await env.ASSETS.fetch(request),url=new URL(request.url);
-  if(!/\.(?:html|css|js|json)$/.test(url.pathname)&&url.pathname!=="/")return response;
-  const headers=new Headers(response.headers);
-  headers.set("Cache-Control","no-cache, no-store, must-revalidate");
-  headers.set("Pragma","no-cache");
-  return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
+ const response=await env.ASSETS.fetch(request),url=new URL(request.url);
+ if(!response.headers.get('Content-Type')?.includes('text/html'))return response;
+ const headers=new Headers(response.headers);headers.set('Cache-Control','no-cache');
+ const id=/^\/product-(.+?)(?:\.html)?\/?$/.exec(url.pathname)?.[1];
+ const product=PRODUCT_SEO[id];if(!product)return new Response(response.body,{status:response.status,headers});
+ let html=await response.text();const fr=url.searchParams.get('lang')==='fr';
+ const name=fr?product.frName:product.name,description=fr?product.frDescription:product.description;
+ const schema={'@context':'https://schema.org','@type':'Product',name,description,image:['https://justbnatural.ca/'+product.image],sku:id,brand:{'@type':'Brand',name:'Just B Natural'}};
+ try{const stock=await env.INVENTORY_DB.prepare('SELECT price_cents,stock_count,is_active,availability_status FROM inventory WHERE product_id=?').bind(id).first();
+  if(stock&&stock.is_active!==0&&Number.isInteger(stock.price_cents))schema.offers={'@type':'Offer',url:'https://justbnatural.ca/product-'+id+(fr?'?lang=fr':''),priceCurrency:'CAD',price:(stock.price_cents/100).toFixed(2),availability:stock.availability_status==='preorder'?'https://schema.org/PreOrder':stock.stock_count===0?'https://schema.org/OutOfStock':'https://schema.org/InStock'};
+ }catch(_){}
+ html=html.replace(/<script type="application\/ld\+json" data-product-schema>.*?<\/script>/s,`<script type="application/ld+json" data-product-schema>${JSON.stringify(schema).replaceAll('<','\\u003c')}</script>`);
+ if(fr)html=html.replace('<html lang="en">','<html lang="fr">').replace(/<title>.*?<\/title>/s,`<title>${escapeHtml(name)} | Just B Natural</title>`).replace(/<meta name="description"[^>]*>/,`<meta name="description" content="${escapeHtml(description)}">`).replace(/<meta property="og:title"[^>]*>/,`<meta property="og:title" content="${escapeHtml(name)} | Just B Natural">`).replace(/<meta property="og:description"[^>]*>/,`<meta property="og:description" content="${escapeHtml(description)}">`).replace(/<link rel="canonical"[^>]*>/,`<link rel="canonical" href="https://justbnatural.ca/product-${id}?lang=fr">`);
+ return new Response(html,{status:response.status,headers});
 }
-export default{async fetch(request,env){const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/campaign/email-preview")return handleEmailPreview(request,env);if(path==="/api/campaign")return handleCampaign(request,env);if(path==="/api/campaign/orders")return handleCampaignOrders(request,env);if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
+
+export default{async scheduled(event,env){await ensureBusiness(env.INVENTORY_DB);await env.INVENTORY_DB.prepare("DELETE FROM order_delivery WHERE created_at<datetime('now','-90 days')").run();},async fetch(request,env){if(new URL(request.url).pathname==='/api/business/retry-email')return retryOrderEmail(request,env);const business=await businessRoute(request,env,{json,auth:inventoryAuthorized,names:PRODUCT_CATALOG});if(business)return business;const path=new URL(request.url).pathname.replace(/\/+$/,"")||"/";if(path==="/api/campaign/email-preview")return handleEmailPreview(request,env);if(path==="/api/campaign")return handleCampaign(request,env);if(path==="/api/campaign/orders")return handleCampaignOrders(request,env);if(path==="/api/products")return request.method==="GET"?handleProducts(env):json({error:"Method not allowed."},405);if(path==="/api/inventory")return handleInventoryAdmin(request,env);if(path==="/api/notify")return handleNotify(request,env);if(path==="/api/order")return request.method==="POST"?handleOrder(request,env):json({error:"Method not allowed."},405);if(path==="/api/subscribe")return request.method==="POST"?handleSubscribe(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/autocomplete")return request.method==="POST"?handleDeliveryAutocomplete(request,env):json({error:"Method not allowed."},405);if(path==="/api/delivery/estimate")return request.method==="POST"?handleDeliveryEstimate(request,env):json({error:"Method not allowed."},405);return serveAsset(request,env)}};
 
