@@ -1,7 +1,7 @@
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
 import "./fr.js";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
-import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js";
+import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-simple-fade";
 let soapCampaign = { ...CAMPAIGN_DEFAULTS, enabled: false };
 /*
   STORE SETTINGS
@@ -3143,30 +3143,3 @@ function initializePromotionPopup(){
   if(!seen){initializePromotionPopup.seen=true;try{sessionStorage.setItem(key,'1');}catch(_){}dialog.showModal();}
 }
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
-
-// Homepage linen scene: small pointer parallax and a soft light bloom.
-(function initialiseHomeLinenEffects() {
-  const hero = document.querySelector('.home-hero');
-  if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  let frame = 0;
-  const reset = () => {
-    hero.style.setProperty('--hero-photo-x', '0px');
-    hero.style.setProperty('--hero-photo-y', '0px');
-    hero.style.setProperty('--hero-glow-x', '72%');
-    hero.style.setProperty('--hero-glow-y', '36%');
-  };
-  hero.addEventListener('pointermove', event => {
-    const box = hero.getBoundingClientRect();
-    const x = Math.max(0, Math.min(1, (event.clientX - box.left) / box.width));
-    const y = Math.max(0, Math.min(1, (event.clientY - box.top) / box.height));
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      hero.style.setProperty('--hero-photo-x', `${(x - .5) * 9}px`);
-      hero.style.setProperty('--hero-photo-y', `${(y - .5) * 7}px`);
-      hero.style.setProperty('--hero-glow-x', `${x * 100}%`);
-      hero.style.setProperty('--hero-glow-y', `${y * 100}%`);
-    });
-  }, { passive: true });
-  hero.addEventListener('pointerleave', reset, { passive: true });
-  reset();
-})();
