@@ -1156,10 +1156,10 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .home-photo-card{position:relative;margin:0 0 18px;padding:12px 12px 0;background:#fffdf8;box-shadow:0 14px 35px #1733291a;transform:rotate(-4deg);transition:transform .35s;animation:photo-welcome .8s ease-out both}
 .home-photo-card:hover,.home-photo-card:focus-within{transform:rotate(0deg) translateY(-5px)}
 .home-photo-card a{display:block;border-radius:100px 100px 6px 6px;overflow:hidden}
-.home-photo-card img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center}
+.home-photo-card img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center}
 .home-photo-card figcaption{padding:15px 8px 17px;font:italic 25px/1.15 Newsreader,Georgia,serif;text-align:center;color:#284b3c}
 .home-photo-peek{position:absolute;right:4px;top:42px;width:37%;height:60%;object-fit:cover;border:9px solid #fffdf8;transform:rotate(11deg);box-shadow:0 10px 28px #1733291a;z-index:-1}
-.home-photo-stamp{position:absolute;right:0;bottom:102px;width:92px;height:92px;padding:12px;box-sizing:border-box;display:grid;place-items:center;border-radius:50%;background:#ecd4da;border:1px solid #d6afb9;color:#70394d;font:italic 19px/1.05 Newsreader,Georgia,serif;text-align:center;transform:rotate(9deg);box-shadow:0 4px 12px #1733290b}
+.home-photo-stamp{position:absolute;right:0;bottom:102px;width:92px;height:92px;padding:12px;box-sizing:border-box;display:grid;place-items:center;border-radius:50%;background:#ecd4da;border:1px solid #d6afb9;color:#70394d;font:italic 17px/1.05 Newsreader,Georgia,serif;text-align:center;transform:rotate(9deg);box-shadow:0 4px 12px #1733290b}
 .home-photo-picks{display:flex;justify-content:center;gap:7px;position:relative;flex-wrap:wrap;margin-top:22px}
 .home-photo-picks button{font:600 11px/1.3 Manrope,sans-serif;cursor:pointer;min-height:44px;padding:10px 13px;border:1px solid #a9b59f;border-radius:999px;color:#294c3c;background:#faf7ef;transition:background .2s,color .2s}
 .home-photo-picks button[aria-pressed="true"],.home-photo-picks button:hover{background:#294c3c;color:#fffdf8;border-color:#294c3c}
@@ -1201,7 +1201,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
  .home-hero .hero-grid{grid-template-columns:1fr;gap:0;min-height:0;padding-bottom:24px}
  .home-hero .hero-copy{padding:34px 0 18px}.home-hero .hero-copy h1{font-size:clamp(39px,9vw,54px);max-width:530px;margin-bottom:18px}
  .home-hero .hero-copy>p:not(.eyebrow){font-size:12px;line-height:1.8;margin-bottom:22px}.home-hero .hero-actions{gap:20px;flex-wrap:wrap}
- .home-photo-gallery{max-width:380px;margin:6px auto 12px;padding:20px 42px 10px}.home-photo-card figcaption{font-size:22px;padding:12px 6px 14px}.home-photo-stamp{right:0;bottom:82px;width:76px;height:76px;font-size:16px}.home-photo-picks{margin-top:16px;gap:6px}
+ .home-photo-gallery{max-width:380px;margin:6px auto 12px;padding:20px 42px 10px}.home-photo-card figcaption{font-size:22px;padding:12px 6px 14px}.home-photo-stamp{right:0;bottom:82px;width:76px;height:76px;font-size:14px;padding:8px}.home-photo-picks{margin-top:16px;gap:6px}
  .category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.category-grid .category-card:nth-child(n){grid-column:auto;min-height:216px;padding:18px 10px 16px;gap:13px}.category-grid .category-card:last-child{grid-column:1/-1;min-height:190px}.category-grid .category-visual,.category-grid .category-visual img{width:108px;height:108px}.category-grid .category-card h3{font-size:21px;margin-bottom:0}.category-grid .category-card p{display:none}
  .pink-popup-grid{grid-template-columns:1fr}.pink-popup-photo{width:100%;height:155px;max-height:none;padding:12px;margin:0;transform:none;border-radius:20px 20px 0 0}.pink-popup-copy{padding:18px 22px 16px}.pink-popup-copy h2{font-size:26px;margin-bottom:17px}.pink-popup-price{font-size:21px;margin-bottom:12px}.pink-popup-price strong{font-size:34px}.pink-popup-awareness{padding:12px 14px;margin-bottom:14px}.pink-popup-note{margin-bottom:14px}.pink-popup-copy>.button,.pink-index-copy .pink-button,.pink-hero-copy .pink-button{font-size:13px;min-height:50px;padding:14px 18px;justify-content:center}.pink-popup-close{width:44px;height:44px}.pink-index-card{padding:18px;gap:18px}
 }
