@@ -1,7 +1,9 @@
+import {SECURITY_HEADERS} from '../worker/security.js';
 import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
 import vm from 'node:vm';
 import {PRODUCTS} from '../product-data.js';
 const root='https://justbnatural.ca';
+writeFileSync('_headers','/*\n'+Object.entries(SECURITY_HEADERS).map(([key,value])=>'  '+key+': '+value).join('\n')+'\n\n/images/*\n  Cache-Control: public, max-age=86400\n\n/inventory*\n  Cache-Control: no-store\n  X-Robots-Tag: noindex, nofollow\n\n/checkout*\n  Cache-Control: no-store\n  X-Robots-Tag: noindex, follow\n');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=o=>JSON.stringify(o).replaceAll('<','\\u003c');
 const ctx={location:{search:'?lang=fr'},URLSearchParams,document:{addEventListener(){}}};vm.createContext(ctx);vm.runInContext(readFileSync('fr.js','utf8'),ctx);
@@ -9,6 +11,7 @@ const french=structuredClone(PRODUCTS);ctx.JBN_FR.prepare(french);
 const seo=Object.fromEntries(PRODUCTS.map((p,i)=>[p.id,{name:p.name,description:p.cardDescription||p.description,image:p.image,frName:french[i].name,frDescription:french[i].cardDescription||french[i].description,category:p.category}]));
 writeFileSync('product-seo.js','// Generated from the shared catalogue and French translations.\nexport const PRODUCT_SEO = '+safe(seo)+';\n');
 writeFileSync('product-names.js','// Generated from product-data.js.\nexport const PRODUCT_NAMES = Object.freeze('+safe(Object.fromEntries(PRODUCTS.map(p=>[p.id,p.name])))+');\n');
+writeFileSync('inventory-catalog.json',JSON.stringify(PRODUCTS.map(({id,name,category})=>({id,name,category})))+'\n');
 writeFileSync('catalog.json',JSON.stringify(PRODUCTS,null,2)+'\n');
 let files=readdirSync('.').filter(f=>f.endsWith('.html')&&f!=='inventory.html');
 for(const p of PRODUCTS){const file=`product-${p.id}.html`;if(!files.includes(file))continue;let html=readFileSync(file,'utf8');
@@ -21,10 +24,10 @@ for(const p of PRODUCTS){const file=`product-${p.id}.html`;if(!files.includes(fi
 for(const file of files){let html=readFileSync(file,'utf8');const slug=file==='index.html'?'':file.replace(/\.html$/,'');const url=root+'/'+slug;
  html=html.replace(/\n?<!-- SEARCH-METADATA -->[\s\S]*?<!-- \/SEARCH-METADATA -->/g,'').replace(/<link rel="canonical"[^>]*>/g,'');
  const title=html.match(/<title>(.*?)<\/title>/s)?.[1]||'Just B Natural';const description=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'Handcrafted soaps and natural care in Gatineau, Québec.';
- const p=PRODUCTS.find(p=>file===`product-${p.id}.html`);const image=root+'/'+(p?.image||'images/october/slide-1.webp');
+ const p=PRODUCTS.find(p=>file===`product-${p.id}.html`);const image=root+'/'+(p?.image||(file==='october-rose.html'?'images/october/slide-6.webp':'images/wooden-product-display.webp'));
  const schema=p?{'@context':'https://schema.org','@type':'Product',name:p.name,description:p.cardDescription||p.description,image:[image],sku:p.id,brand:{'@type':'Brand',name:'Just B Natural'}}:{'@context':'https://schema.org','@type':'Organization',name:'Just B Natural',url:root+'/',logo:root+'/images/just-b-logo-192.webp',email:'justbnaturalss@gmail.com',sameAs:['https://www.instagram.com/justb.naturals/'],areaServed:{'@type':'City',name:'Gatineau, Québec'}};
- const meta=`\n<!-- SEARCH-METADATA --><link rel="canonical" href="${url}"><link rel="alternate" hreflang="en-CA" href="${url}"><link rel="alternate" hreflang="fr-CA" href="${url}?lang=fr"><link rel="alternate" hreflang="x-default" href="${url}"><meta property="og:type" content="${p?'product':'website'}"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${url}"><meta property="og:image" content="${esc(image)}"><meta property="og:site_name" content="Just B Natural"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json" data-product-schema>${safe(schema)}</script><!-- /SEARCH-METADATA -->\n`;
- html=html.replace('</head>',meta+'</head>').replace(/styles\.css\?v=[^"']*/g,'styles.css?v=20261016-cart').replace(/script\.js\?v=[^"']*/g,'script.js?v=20261016-cart');
+ const meta=`\n<!-- SEARCH-METADATA --><link rel="canonical" href="${url}"><link rel="alternate" hreflang="en-CA" href="${url}"><link rel="alternate" hreflang="fr-CA" href="${url}?lang=fr"><link rel="alternate" hreflang="x-default" href="${url}"><meta property="og:type" content="${p?'product':'website'}"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${url}"><meta property="og:image" content="${esc(image)}"><meta property="og:locale" content="en_CA"><meta property="og:locale:alternate" content="fr_CA"><meta property="og:image:alt" content="${esc(p?.name||'Just B Natural handmade soaps and natural care')}"><meta property="og:site_name" content="Just B Natural"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json" data-product-schema>${safe(schema)}</script><!-- /SEARCH-METADATA -->\n`;
+ html=html.replace('</head>',meta+'</head>').replace(/styles\.css\?v=[^"']*/g,'styles.css?v=20261016-overview').replace(/script\.js\?v=[^"']*/g,'script.js?v=20261016-overview');
  writeFileSync(file,html);
 }
 const publicFiles=files.filter(f=>f!=='checkout.html'&&f!=='product-lavender-oat-soap.html');

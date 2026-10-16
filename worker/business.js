@@ -79,12 +79,15 @@ export async function businessRoute(request,env,h){
    await recordMetric(db,data.event,productId,source);return h.json({ok:true});
   }
   if(path==='/api/business/summary'&&request.method==='GET'){
-   await db.prepare("DELETE FROM order_delivery WHERE created_at<datetime('now','-90 days')").run();
    const days=new URL(request.url).searchParams.get('days')==='7'?7:30;
    const metrics=await db.prepare("SELECT event,product_id,source,SUM(count) AS count FROM business_metrics WHERE day>=date('now',?) GROUP BY event,product_id,source").bind(`-${days-1} days`).all();
-   const orders=await db.prepare("SELECT order_id,status,created_at,email_status,order_json FROM campaign_orders WHERE created_at>=datetime('now',?) ORDER BY created_at DESC LIMIT 250").bind(`-${days} days`).all();
-   const inventory=await db.prepare('SELECT i.product_id,i.stock_count,COALESCE(d.low_stock,3) AS low_stock FROM inventory i LEFT JOIN business_details d ON d.product_id=i.product_id WHERE i.is_active=1 AND i.availability_status<>\'preorder\' AND i.stock_count<=COALESCE(d.low_stock,3)').all();
-   return h.json({days,metrics:metrics.results||[],orders:(orders.results||[]).map(row=>({...row,order:JSON.parse(row.order_json),order_json:undefined})),lowStock:inventory.results||[]});
+   const [orderStats,daily,inventory,stockOverview]=await Promise.all([
+    db.prepare("SELECT COUNT(*) AS request_count,COALESCE(SUM(CASE WHEN status IN ('paid','completed') THEN 1 ELSE 0 END),0) AS paid_count,COALESCE(SUM(CASE WHEN status IN ('paid','completed') THEN CAST(json_extract(order_json,'$.estimatedTotalCents') AS INTEGER) ELSE 0 END),0) AS paid_value_cents FROM campaign_orders WHERE created_at>=date('now',?)").bind(`-${days-1} days`).first(),
+    db.prepare("SELECT day,SUM(count) AS views FROM business_metrics WHERE event='page_view' AND day>=date('now',?) GROUP BY day ORDER BY day").bind(`-${days-1} days`).all(),
+    db.prepare("SELECT i.product_id,i.stock_count,COALESCE(d.low_stock,3) AS low_stock FROM inventory i LEFT JOIN business_details d ON d.product_id=i.product_id WHERE i.is_active=1 AND i.availability_status<>'preorder' AND i.stock_count<=COALESCE(d.low_stock,3) ORDER BY i.stock_count,i.product_id").all(),
+    db.prepare("SELECT COALESCE(SUM(CASE WHEN availability_status='preorder' THEN 1 ELSE 0 END),0) AS preorder,COALESCE(SUM(CASE WHEN availability_status<>'preorder' AND stock_count=0 THEN 1 ELSE 0 END),0) AS sold_out,COALESCE(SUM(CASE WHEN availability_status='available' AND (stock_count IS NULL OR stock_count>0) THEN 1 ELSE 0 END),0) AS available FROM inventory WHERE is_active=1").first()
+   ]);
+   return h.json({days,metrics:metrics.results||[],orderStats,daily:daily.results||[],stockOverview,lowStock:inventory.results||[]});
   }
   if(path==='/api/business/details'){
    if(request.method==='GET'){const result=await db.prepare('SELECT * FROM business_details').all();return h.json({details:result.results||[]});}
@@ -114,5 +117,5 @@ export async function businessRoute(request,env,h){
    const data=await request.json();return h.json(await changeOrderStatus(db,data));
   }
   return h.json({error:'Method not allowed.'},405);
- }catch(error){return h.json({error:error.message||'The business tools are temporarily unavailable.'},400);}
+ }catch(error){return h.json({error:publicRoute?'The shop information is temporarily unavailable.':error.message||'The business tools are temporarily unavailable.'},400);}
 }

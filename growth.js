@@ -5,7 +5,7 @@ export function scentFamilies(product){
  const text=[product.name,...(product.ingredients||[])].join(' ').toLowerCase();
  if(/unscented|sans parfum/.test(text))return ['unscented'];
  const tags=[];
- if(/lavender|lavande|geranium|géranium|ylang|chamomile|camomille|rose/.test(text))tags.push('floral');
+ if(/lavender|lavande|geranium|géranium|ylang|chamomile|camomille|\brose\b/.test(text))tags.push('floral');
  if(/lemon|citron|citrus|bergamot|orange|mint|menthe|eucalyptus|eucalypt/.test(text))tags.push('fresh');
  if(/cedar|cèdre|patchouli|rosemary|romarin|sage|sauge|frankincense|encens/.test(text))tags.push('woodsy');
  if(/vanilla|vanille|cinnamon|cannelle|coffee|café|espresso|clove|girofle/.test(text))tags.push('warm');
@@ -64,7 +64,7 @@ export function initializeGrowth(api){
   const mount=document.querySelector('[data-customer-reviews]');if(!mount||!storefront?.reviews?.length)return;
   const entries=storefront.reviews.filter(r=>language!=='fr'||r.quote_fr);if(!entries.length)return;mount.hidden=false;mount.innerHTML=`<p class="eyebrow">${t('From our customers','Les mots de nos clients')}</p><h2>${t('Little everyday favourites.','De petits favoris au quotidien.')}</h2><div class="customer-review-grid">${entries.slice(0,3).map(r=>`<figure><blockquote>${escape(language==='fr'?r.quote_fr:r.quote_en)}</blockquote><figcaption>${escape(r.author)}</figcaption></figure>`).join('')}</div>`;
  }
- fetch('/api/storefront',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{storefront=data;addBuyingFacts();showReviews();}).catch(()=>{});
+ if(document.querySelector('.product-detail-purchase,[data-customer-reviews]'))fetch('/api/storefront',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{storefront=data;addBuyingFacts();showReviews();}).catch(()=>{});
  addBuyingFacts();
  return {track,refresh(){renderSuggestions();renderGifts();addBuyingFacts();},setInventory(records){inventory=new Map(records.map(r=>[r.id,r]));inventoryReady=true;renderSuggestions();renderGifts();}};
 }

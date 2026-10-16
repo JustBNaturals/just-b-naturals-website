@@ -1,3 +1,7 @@
+# Current manager layout
+
+The inventory page now shows only the stock editor and Your shop at a glance. Order editing, product-detail, review and email panels were removed at the owner’s request. Existing drafts and stored records are preserved in source/database; no marketing emails were sent. The operational notes below document retained backend capabilities, not currently visible manager panels.
+
 # Just B Naturals business tools
 
 Open `/inventory` and use the existing stock-manager key. The key is never included in public code.
