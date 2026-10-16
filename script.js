@@ -3143,3 +3143,16 @@ function initializePromotionPopup(){
   if(!seen){initializePromotionPopup.seen=true;try{sessionStorage.setItem(key,'1');}catch(_){}dialog.showModal();}
 }
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
+
+// The homepage photo collection reuses the shop's real product photography.
+const homePhotoGallery=document.querySelector('[data-home-gallery]');
+homePhotoGallery?.addEventListener('click',event=>{
+  const button=event.target.closest('[data-hero-photo]');if(!button)return;
+  homePhotoGallery.querySelectorAll('[data-hero-photo]').forEach(control=>control.setAttribute('aria-pressed',String(control===button)));
+  const image=homePhotoGallery.querySelector('[data-hero-image]');image.src=button.dataset.src;
+  image.alt=campaignLanguage==='fr'?button.dataset.altFr:button.dataset.altEn;
+  const caption=homePhotoGallery.querySelector('[data-hero-caption]');
+  caption.dataset.en=button.dataset.labelEn;caption.dataset.fr=button.dataset.labelFr;
+  caption.textContent=campaignLanguage==='fr'?button.dataset.labelFr:button.dataset.labelEn;
+  homePhotoGallery.querySelector('[data-hero-shop]').href=button.dataset.href;
+});
