@@ -105,6 +105,7 @@
   }
 
   const text = new Map(Object.entries({
+    "Gift combinations":"Ensembles cadeaux", "Pickup & delivery":"Ramassage et livraison", "I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.":"J’accepte de recevoir occasionnellement les promotions de Just B Natural. Je peux me désabonner en tout temps.", "Voir this page in English":"View this page in English", "Back to top":"Retour en haut",
     "Skip to content":"Aller au contenu", "Home":"Accueil", "Shop":"Boutique", "Shop all":"Tout magasiner", "All products":"Tous les produits",
     "Artisan soap":"Savons artisanaux", "Artisan soaps":"Savons artisanaux", "Artisan Soaps":"Savons artisanaux", "Sugar scrubs":"Exfoliants au sucre", "Sugar Scrubs":"Exfoliants au sucre",
     "Botanical oils":"Huiles botaniques", "Botanical Oils":"Huiles botaniques", "Roll-on oils":"Huiles botaniques", "Roll-On Oils":"Huiles botaniques", "Body care":"Soins corporels", "Body Care":"Soins corporels", "Home & linen":"Maison et linge", "Home & Linen":"Maison et linge",
