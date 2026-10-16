@@ -1255,3 +1255,36 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 }
 .pink-index-offer > strong { display: block; margin: 0 0 4px; }
 .pink-index-offer > p { max-width: 100%; margin: 0; font-size: 14px; line-height: 1.55; }
+
+/* Final home blend: image fades into the exact page colour with no hard edges or card tilt. */
+.home-hero { background: #faf7ef !important; }
+.pink-popup-photo { transform: none !important; }
+
+@media (min-width: 681px) {
+  .home-zen-photo {
+    background-size: auto 122%;
+    background-position: right center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, rgba(0,0,0,.18) 43%, rgba(0,0,0,.72) 62%, #000 82%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, rgba(0,0,0,.18) 43%, rgba(0,0,0,.72) 62%, #000 82%, #000 100%);
+  }
+  .home-zen-shade {
+    background: linear-gradient(90deg,
+      #faf7ef 0%,
+      #faf7ef 28%,
+      rgba(250,247,239,.92) 45%,
+      rgba(250,247,239,.42) 63%,
+      transparent 84%);
+  }
+  .home-zen-scene::before {
+    background: linear-gradient(180deg,
+      #faf7ef 0%,
+      rgba(250,247,239,.88) 8%,
+      rgba(250,247,239,.32) 19%,
+      transparent 33%,
+      transparent 67%,
+      rgba(250,247,239,.30) 82%,
+      rgba(250,247,239,.84) 93%,
+      #faf7ef 100%);
+  }
+}
+.pink-index-offer { margin-bottom: 28px; }
