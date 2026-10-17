@@ -1,14 +1,5 @@
-const escape=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// These cards are direct doors into Instagram, without an embed or tracking script.
 export function initializeInstagramGallery(){
- const mount=document.querySelector('[data-instagram-gallery]');if(!mount)return;
- const fr=new URLSearchParams(location.search).get('lang')==='fr',t=(en,french)=>fr?french:en;
- const posts=[...mount.querySelectorAll('[data-social-photo]')].map(a=>({image:a.querySelector('img').getAttribute('src'),largeImage:a.querySelector('img').getAttribute('src'),alt:fr?a.querySelector('img').dataset.fr:a.querySelector('img').alt,caption:fr?(a.dataset.captionFr||a.dataset.caption):a.dataset.caption,href:a.href,type:'IMAGE'}));
- mount.querySelectorAll('[data-social-alt]').forEach(img=>{img.alt=fr?img.dataset.fr:img.dataset.en;});
- const dialog=document.createElement('dialog');dialog.className='social-post-dialog';dialog.setAttribute('aria-label',t('Instagram photo','Photo Instagram'));document.body.append(dialog);let selected=0,opener=null;
- function show(index){selected=(index+posts.length)%posts.length;const post=posts[selected];dialog.innerHTML=`<button class="social-dialog-close" type="button" aria-label="${t('Close photo','Fermer la photo')}">×</button><div class="social-post-photo"><img src="${escape(post.largeImage||post.image)}" alt="${escape(post.alt)}"></div><div class="social-post-copy"><p class="eyebrow">@justb.naturals</p><p class="social-post-caption">${escape(post.caption||t('From our Instagram.','Sur notre Instagram.'))}</p><a class="button button-dark" href="${escape(post.href)}" target="_blank" rel="noopener noreferrer">${t('View on Instagram','Voir sur Instagram')} ↗</a><div class="social-dialog-controls"><button type="button" data-social-step="-1" aria-label="${t('Previous photo','Photo précédente')}">←</button><span aria-live="polite">${selected+1} / ${posts.length}</span><button type="button" data-social-step="1" aria-label="${t('Next photo','Photo suivante')}">→</button></div></div>`;dialog.querySelector('.social-dialog-close').addEventListener('click',()=>dialog.close());dialog.querySelectorAll('[data-social-step]').forEach(button=>button.addEventListener('click',()=>{const step=Number(button.dataset.socialStep);show(selected+step);dialog.querySelector(`[data-social-step="${step}"]`).focus();}));}
- mount.addEventListener('click',e=>{const tile=e.target.closest('[data-social-photo]');if(!tile||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();opener=tile;show([...mount.querySelectorAll('[data-social-photo]')].indexOf(tile));dialog.showModal();});
- dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}});
- dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();show(selected+(event.key==='ArrowRight'?1:-1));dialog.querySelector('.social-dialog-close').focus();}});
- dialog.addEventListener('close',()=>{opener?.focus();});
-
+ const fr=new URLSearchParams(location.search).get('lang')==='fr';
+ document.querySelectorAll('[data-instagram-gallery] [data-social-alt]').forEach(img=>{img.alt=fr?img.dataset.fr:img.dataset.en;});
 }

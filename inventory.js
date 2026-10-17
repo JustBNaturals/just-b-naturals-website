@@ -143,7 +143,7 @@ async function openInventory(key) {
   loginForm.hidden = true;
   manager.hidden = false;
   loginStatus.textContent = "";
-  import("./business-admin.js?v=20261017-dashboard").then(module=>module.openBusinessAdmin({fetcher:authorizedFetch,catalog})).catch(()=>{saveStatus.textContent="Inventory is ready. Business tools could not load; refresh to try again.";});
+  import("./business-admin.js?v=20261017-portal").then(module=>module.openBusinessAdmin({fetcher:authorizedFetch,catalog})).catch(()=>{saveStatus.textContent="Inventory is ready. Business tools could not load; refresh to try again.";});
 }
 
 loginForm.addEventListener("submit", async event => {
