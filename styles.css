@@ -1344,3 +1344,8 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
  body:has(.mobile-purchase-bar:not([hidden])) .order-toast{bottom:calc(154px + env(safe-area-inset-bottom))}
  .shopping-delivery-note{font-size:11px!important;margin-top:18px!important}
 }
+
+/* A warm, distinct cart-added state, consistent across product cards and details. */
+[data-add-order].is-added,[data-add-order].is-added:hover{background:#b9d4c7!important;border-color:#527d6b!important;color:#173f31!important;box-shadow:inset 0 0 0 1px #527d6b;letter-spacing:.025em}
+.order-toast.is-visible{background:#e7ba74;color:#263a2d;border:1px solid #ad783d}
+.order-toast a{background:#fff8e7;border-radius:6px;padding:9px 12px;text-decoration:none}

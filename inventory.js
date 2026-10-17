@@ -13,6 +13,21 @@ const rows = document.querySelector("[data-inventory-rows]");
 const saveStatus = document.querySelector("[data-inventory-save-status]");
 let inventoryKey = "";
 let dirty = false;
+function inventoryRowValue(row){
+ const stock=row.querySelector('input[step="1"]').value.trim(),price=row.querySelector('.inventory-price-input').value.trim();
+ return {id:row.dataset.productId,stock:stock===''?null:Number(stock),priceCents:price===''?null:Math.round(Number(price)*100),availabilityStatus:row.querySelector('.inventory-status-select').value,availableDate:row.querySelector('.inventory-date-input').value||null};
+}
+function refreshDirtyState(){
+ let count=0;rows.querySelectorAll('tr').forEach(row=>{const changed=JSON.stringify(inventoryRowValue(row))!==row.dataset.savedValues;row.classList.toggle('is-dirty',changed);if(changed)count++;});dirty=count>0;
+ const badge=document.querySelector('[data-inventory-dirty]');if(badge){badge.textContent=count?`${count} product${count===1?'':'s'} with unsaved changes`:'All changes saved ✓';badge.classList.toggle('has-changes',dirty);}
+ document.querySelectorAll('[data-inventory-save]').forEach(button=>{if(!saving)button.disabled=!dirty;});
+}
+function filterInventory(){
+ const query=(document.querySelector('[data-inventory-search]')?.value||'').trim().toLowerCase(),category=document.querySelector('[data-inventory-category]')?.value||'all',filter=document.querySelector('[data-inventory-filter]')?.value||'all';let visible=0;const all=[...rows.querySelectorAll('tr')];
+ for(const row of all){const product=inventoryRowValue(row),name=row.querySelector('th').textContent.toLowerCase();const match=filter==='all'||(filter==='changed'&&row.classList.contains('is-dirty'))||(filter==='preorder'&&product.availabilityStatus==='preorder')||(filter==='out'&&product.stock===0&&product.availabilityStatus!=='preorder')||(filter==='low'&&product.stock!==null&&product.stock<=3&&product.availabilityStatus!=='preorder');row.hidden=!(name.includes(query)&&(category==='all'||row.dataset.category===category)&&match);if(!row.hidden)visible++;}
+ const label=document.querySelector('[data-inventory-visible]');if(label)label.textContent=`Showing ${visible} of ${all.length} products`;const empty=document.querySelector('[data-inventory-empty]');if(empty)empty.hidden=visible>0;
+}
+
 
 function setStatus(cell, status, date, stock) {
   if (status === "preorder") {
@@ -50,6 +65,7 @@ async function openInventory(key) {
   catalog.forEach(product => {
     const row = document.createElement("tr");
     row.dataset.productId = product.id;
+    row.dataset.category = product.category;
     const productCell = document.createElement("th");
     productCell.scope = "row";
     productCell.textContent = product.name;
@@ -109,7 +125,7 @@ async function openInventory(key) {
       else dateInput.setCustomValidity(dateInput.value ? "" : "Choose the date this product will be ready.");
       setStatus(websiteCell, statusSelect.value, dateInput.value, input.value);
     };
-    const markDirty = () => { dirty = true; syncRow(); saveStatus.textContent = "You have changes that are not saved yet."; };
+    const markDirty = () => { syncRow(); refreshDirtyState(); saveStatus.textContent = dirty ? "Highlighted rows have changes. Save when you’re ready." : "All changes match the live shop."; };
     input.addEventListener("input", () => {
       markDirty();
     });
@@ -119,13 +135,15 @@ async function openInventory(key) {
     syncRow();
     row.append(productCell, categoryCell, statusCell, dateCell, quantityCell, priceCell, websiteCell);
     rows.append(row);
+    row.dataset.savedValues=JSON.stringify(inventoryRowValue(row));
   });
   document.querySelector("[data-inventory-count]").textContent = `${catalog.length} products`;
+  refreshDirtyState();filterInventory();
   sessionStorage.setItem("jbn-inventory-key", inventoryKey);
   loginForm.hidden = true;
   manager.hidden = false;
   loginStatus.textContent = "";
-  import("./business-admin.js?v=20261016-overview").then(module=>module.openBusinessAdmin({fetcher:authorizedFetch,catalog})).catch(()=>{saveStatus.textContent="Inventory is ready. Business tools could not load; refresh to try again.";});
+  import("./business-admin.js?v=20261017-dashboard").then(module=>module.openBusinessAdmin({fetcher:authorizedFetch,catalog})).catch(()=>{saveStatus.textContent="Inventory is ready. Business tools could not load; refresh to try again.";});
 }
 
 loginForm.addEventListener("submit", async event => {
@@ -154,25 +172,18 @@ function showSavedToast(message) {
 }
 
 async function saveInventory() {
-  if (saving || manager.hidden) return;
-  const invalidDate = rows.querySelector(".inventory-date-input:invalid");
+  if (saving || manager.hidden || !dirty) return;
+  const invalidDate = rows.querySelector("tr.is-dirty .inventory-date-input:invalid");
   if (invalidDate) {
     invalidDate.reportValidity();
     invalidDate.focus();
     saveStatus.textContent = "Choose a ready date for every product marked Preorder.";
     return;
   }
-  const products = [...rows.querySelectorAll("tr")].map(row => {
-    const stockValue = row.querySelector('input[step="1"]').value.trim();
-    const priceValue = row.querySelector(".inventory-price-input").value.trim();
-    return {
-      id: row.dataset.productId,
-      stock: stockValue === "" ? null : Number(stockValue),
-      priceCents: priceValue === "" ? null : Math.round(Number(priceValue) * 100),
-      availabilityStatus: row.querySelector(".inventory-status-select").value,
-      availableDate: row.querySelector(".inventory-date-input").value || null
-    };
-  });
+  const changed=[...rows.querySelectorAll('tr.is-dirty')];
+  const invalid=changed.flatMap(row=>[...row.querySelectorAll('input,select')]).find(input=>!input.checkValidity());
+  if(invalid){invalid.reportValidity();invalid.focus();saveStatus.textContent='Please check the highlighted value before saving.';return;}
+  const products=changed.map(inventoryRowValue);
   saving = true;
   const buttons = [...document.querySelectorAll("[data-inventory-save]")];
   buttons.forEach(button => {
@@ -191,19 +202,20 @@ async function saveInventory() {
     if (!response.ok) throw new Error(payload.error || "The changes could not be saved.");
     const verification = await authorizedFetch("/api/inventory");
     if (!verification.ok) throw new Error("The inventory saved, but the live update could not be verified. Refresh and try again.");
-    dirty = false;
+    products.forEach(product=>{const row=[...rows.querySelectorAll('tr')].find(row=>row.dataset.productId===product.id);if(row)row.dataset.savedValues=JSON.stringify(product);});
+    refreshDirtyState();filterInventory();
     document.dispatchEvent(new Event("jbn:inventory-saved"));
     const notificationMessage = payload.notificationsSent ? `${payload.notificationsSent} customer notification${payload.notificationsSent === 1 ? " was" : "s were"} also sent.` : "The shop now has your latest inventory.";
     saveStatus.textContent = payload.notificationsSent ? `Saved and live. ${notificationMessage}` : "Saved and live. The website inventory is up to date.";
     buttons.forEach(button => { button.textContent = "Saved ✓"; });
-    showSavedToast(notificationMessage);
+    showSavedToast(dirty ? "Saved. You also have newer edits to save." : notificationMessage);
   } catch (error) {
     saveStatus.textContent = error.message;
   } finally {
     saving = false;
     setTimeout(() => {
       buttons.forEach(button => {
-        button.disabled = false;
+        button.disabled = !dirty;
         button.textContent = button.dataset.label || "Save changes";
       });
     }, 900);
@@ -227,5 +239,8 @@ window.addEventListener("beforeunload", event => {
 
 
 
+document.querySelector('[data-inventory-search]')?.addEventListener('input',filterInventory);
+document.querySelectorAll('[data-inventory-category],[data-inventory-filter]').forEach(field=>field.addEventListener('change',filterInventory));
+document.addEventListener('jbn:inventory-filter',filterInventory);
 const rememberedKey = sessionStorage.getItem("jbn-inventory-key");
 if (rememberedKey) openInventory(rememberedKey).catch(() => sessionStorage.removeItem("jbn-inventory-key"));

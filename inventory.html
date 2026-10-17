@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Inventory | Just B Natural</title>
-  <link rel="stylesheet" href="styles.min.css?v=20261017-shopping">
+  <link rel="stylesheet" href="styles.min.css?v=20261017-dashboard">
+  <link rel="stylesheet" href="inventory.css?v=20261017-dashboard">
 </head>
 <body class="inventory-page">
   <header class="inventory-header">
@@ -15,8 +16,8 @@
   <main class="inventory-shell">
     <section class="inventory-intro">
       <p class="eyebrow">Private stock manager</p>
-      <h1>Inventory</h1>
-      <p>Set the stock and price, choose Preorder only when a product is curing, then press <strong>Save changes</strong> or hit <strong>Enter</strong>. A stock number of <strong>0 automatically shows Out of stock</strong>. Stock can stay blank when you do not want a number shown. Prices are in Canadian dollars.</p>
+      <h1>Your shop, at a glance.</h1>
+      <p>Check how the shop is doing, then update products below. Your changes go live when you save.</p><nav class="inventory-shortcuts" aria-label="Manager sections"><a href="#shop-overview">Shop overview</a><a href="#stock-manager">Edit stock & prices ↓</a></nav>
     </section>
 
     <form class="inventory-login" data-inventory-login>
@@ -26,20 +27,22 @@
     </form>
 
     <section class="inventory-manager" data-inventory-manager hidden>
-      <div class="inventory-guide">
-        <strong>Two simple choices</strong>
+      <details class="inventory-guide">
+        <summary>How stock updates work</summary>
         <p><b>Available now</b> lets customers order whenever stock is above 0. <b>Preorder</b> shows the ready date and allows advance orders. Setting stock to <b>0</b> automatically shows Out of stock.</p>
-      </div>
-      <div class="inventory-actions">
-        <div><strong data-inventory-count>0 products</strong><span>Save with the button or press Enter. Changes appear on the shop immediately.</span></div>
+      </details>
+      <div class="inventory-actions" id="stock-manager">
+        <div><strong>Products & stock</strong><span data-inventory-count>0 products</span><span class="inventory-dirty-count" data-inventory-dirty aria-live="polite">All changes saved</span></div>
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
       </div>
+      <div class="inventory-filters"><label>Find a product<input type="search" data-inventory-search placeholder="Search by name…" autocomplete="off"></label><label>Category<select data-inventory-category><option value="all">All categories</option><option value="artisan-soap">Artisan soaps</option><option value="sugar-scrubs">Sugar scrubs</option><option value="roller-oils">Roll-on oils</option><option value="body-care">Body care</option><option value="home-linen">Home & linen</option></select></label><label>Show<select data-inventory-filter><option value="all">All products</option><option value="changed">Unsaved changes</option><option value="out">Out of stock</option><option value="low">3 or fewer left</option><option value="preorder">Preorders</option></select></label><p data-inventory-visible aria-live="polite"></p></div>
       <div class="inventory-table-wrap">
         <table class="inventory-table">
           <thead><tr><th>Product</th><th>Category</th><th>Status</th><th>Ready date</th><th>Stock</th><th>Price (CAD)</th><th>Website</th></tr></thead>
           <tbody data-inventory-rows></tbody>
         </table>
       </div>
+      <p class="inventory-empty" data-inventory-empty hidden>No matching products. Try another search or filter.</p>
       <div class="inventory-bottom-actions">
         <p data-inventory-save-status role="status" aria-live="polite"></p>
         <button class="button button-dark" type="button" data-inventory-save>Save changes</button>
@@ -47,6 +50,6 @@
     </section>
     <div class="inventory-save-toast" data-inventory-toast role="status" aria-live="polite" hidden><strong>Saved. It’s live! ✓</strong><span>The shop now has your latest inventory.</span></div>
   </main>
-  <script src="fr.js?v=20260915-botanical-oils" defer></script><script src="inventory.js?v=20261016-overview"></script>
+  <script src="fr.js?v=20260915-botanical-oils" defer></script><script src="inventory.js?v=20261017-dashboard"></script>
 </body>
 </html>

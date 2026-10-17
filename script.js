@@ -1,4 +1,4 @@
-import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-shopping";
+import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
 import { PRODUCTS } from "./product-data.js";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
 import "./fr.js";
@@ -337,7 +337,7 @@ function renderSiteChrome() {
 
   if (footer) footer.innerHTML = `
     <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
-    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo-192.webp" alt=""><span>JUST B<br>NATURAL</span></a><p>Small-batch, handcrafted soaps and natural care made in Gatineau, Québec.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Botanical oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a><a href="faq.html">Ingredients & FAQ</a><a href="gift-sets.html">Gift combinations</a><a href="local-pickup.html">Pickup & delivery</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
+    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo-192.webp" alt=""><span>JUST B<br>NATURAL</span></a><p>Handcrafted in Gatineau. For everyday rituals across Outaouais and nearby Ottawa.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Botanical oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a><a href="faq.html">Ingredients & FAQ</a><a href="gift-sets.html">Gift combinations</a><a href="local-pickup.html">Pickup & delivery</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
 
@@ -556,7 +556,7 @@ function updateAddButton(button) {
   button.hidden = Boolean(unavailable);
   button.classList.toggle("is-added", Boolean(item));
   const base = product?.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart");
-  button.innerHTML = `${item ? `${t("Add another","Ajouter encore")} (${item.quantity})` : base} <span>＋</span>`;
+  button.innerHTML = `${item ? `${t("Added","Ajouté")} ✓ · ${item.quantity} ${t("in cart","au panier")}` : base} <span>＋</span>`;
 }
 
 function renderOrderList() {

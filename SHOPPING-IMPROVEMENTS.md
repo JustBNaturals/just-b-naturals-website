@@ -2,7 +2,7 @@
 
 - Product pages show a mobile purchase bar once the main purchase panel has scrolled away. It uses live stock/prices and offers the existing one-time stock alert for unavailable items.
 - Adding a product shows an accessible “Added ✓” confirmation with a checkout link. Existing recommendations and delivery progress use the same trusted inventory and promotion calculations.
-- Homepage delivery information matches checkout: free Aylmer pickup, $10 delivery within 20 km, free from $75 after discounts.
+- Homepage delivery information matches checkout: free Aylmer pickup, $10 delivery within 20 km, free from $50 after discounts.
 - Shop-wide testimonials appear on product/catalogue pages only when genuine reviews have permission and are published. `/reviews.html` is a private editor using the existing inventory password. It is excluded from search and public navigation. Quotes are rendered as text; French pages show only reviews with a French translation. Nothing is fabricated if there are no reviews.
 - Stock-alert requests require an unchecked consent box and server-side consent validation, without joining marketing lists. Existing alert fulfillment remains in place.
 - Checkout-only code is in `checkout-ui.js` and is imported only on checkout; all totals still use the shared pricing system. Failed requests retain the cart and retry key.
@@ -10,3 +10,10 @@
 - `styles.css` remains the editable source. Run `node scripts/optimize-assets.mjs` after styling changes to rebuild `styles.min.css` and versioned page references; the metadata builder also invokes this step. Conservative compaction preserves rule order and quoted strings. No new dependencies, external widgets or trackers.
 
 Validation: `node --test tests/*.test.js` (27 tests), syntax checks and `git diff --check`. Includes retry/consent/review access regressions. No real orders or emails sent by verification. Live mobile-device performance scores have not been measured.
+
+
+## Follow-up — clearer manager and delivery threshold
+
+Free delivery now starts at CAD $50 after discounts, inside the existing 20 km delivery zone. Broader service wording names Outaouais and nearby Ottawa; outside-zone customers are directed to contact the business before payment. Checkout, trusted orders, receipts, recommendations and unsent marketing drafts use the updated threshold. No past orders are repriced.
+
+Added buttons use a pale eucalyptus green with a checkmark and quantity; the confirmation toast uses warm amber. The private inventory dashboard has separate sales cards and a daily bar chart with named dates and an exact-count table. Its daily data remains recorded in UTC. Search, category and stock-status filters help find products. Edited rows and a change count show unsaved work; saves submit only changed rows and preserve newer edits made while a save is in progress. No stock records are modified by publication.

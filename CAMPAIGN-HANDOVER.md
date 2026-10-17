@@ -1,6 +1,6 @@
 # October campaign — published October 12, 2026
 
-The October campaign now incorporates the public storefront recovered from justbnatural.ca on October 12: existing fr.js language support, FAQ, current product details, Botanical Oils labels, updated images, and local delivery terms ($10 within 20 km, free from $75 after discounts). Published through the existing GitHub-to-Cloudflare integration after merging PR #1. The live homepage popup, campaign page, French translations, FAQ and enabled promotion API were verified. Cloudflare email sign-in still returns HTTP 403 in the connected browser. No marketing emails have been sent. Worker source is not publicly served; existing server integrations are retained from the repository, with delivery calculations aligned to the recovered checkout.
+The October campaign now incorporates the public storefront recovered from justbnatural.ca on October 12: existing fr.js language support, FAQ, current product details, Botanical Oils labels, updated images, and local delivery terms ($10 within 20 km, free from $50 after discounts). Published through the existing GitHub-to-Cloudflare integration after merging PR #1. The live homepage popup, campaign page, French translations, FAQ and enabled promotion API were verified. Cloudflare email sign-in still returns HTTP 403 in the connected browser. No marketing emails have been sent. Worker source is not publicly served; existing server integrations are retained from the repository, with delivery calculations aligned to the recovered checkout.
 
 ## Implemented
 
