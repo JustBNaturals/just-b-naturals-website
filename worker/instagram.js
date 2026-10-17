@@ -17,13 +17,13 @@ export function feedPosts(feed){
 }
 async function loadFeed(request){
  const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/connected-v1',request.url));
- const saved=await cache?.match(key);if(saved)return saved.json();
- const upstream=await fetch(FEED_URL,{redirect:'error',signal:AbortSignal.timeout(8000),headers:{Accept:'application/json'}});
- if(!upstream.ok)throw new Error('Feed unavailable');
+ let saved;try{saved=await cache?.match(key);}catch{}if(saved)return saved.json();
+ const upstream=await fetch(FEED_URL,{redirect:'follow',signal:AbortSignal.timeout(15000),headers:{Accept:'application/json'}});
+ if(!upstream.ok)throw new Error('feed_http_'+upstream.status);
  const text=await upstream.text();if(text.length>1000000)throw new Error('Feed too large');
- const feed=JSON.parse(text);if(feed.username!=='justb.naturals'||!Array.isArray(feed.posts))throw new Error('Unexpected account');
- const posts=feedPosts(feed);if(!posts.length)throw new Error('No posts');
- await cache?.put(key,Response.json(posts,{headers:{'Cache-Control':'public, max-age=600'}}));return posts;
+ let feed;try{feed=JSON.parse(text);}catch{throw new Error('feed_format');}if(feed.username!=='justb.naturals'||!Array.isArray(feed.posts))throw new Error('feed_account');
+ const posts=feedPosts(feed);if(!posts.length)throw new Error('feed_empty');
+ try{await cache?.put(key,Response.json(posts,{headers:{'Cache-Control':'public, max-age=600'}}));}catch{}return posts;
 }
 export async function instagramRoute(request){
  const url=new URL(request.url);if(!['/api/instagram','/api/instagram/media'].includes(url.pathname))return null;
@@ -40,5 +40,5 @@ export async function instagramRoute(request){
   const headers=new Headers({'Content-Type':contentType,'Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'});
   for(const name of ['Content-Length','Content-Range','Accept-Ranges','ETag']){const value=upstream.headers.get(name);if(value)headers.set(name,value);}
   return new Response(upstream.body,{status:upstream.status,headers});
- }catch{return json({error:'Instagram is temporarily unavailable.'},502);}
+ }catch(error){const reason=/^feed_(?:http_\d{3}|format|account|empty)$/.test(error.message)?error.message:error.name==='TimeoutError'?'feed_timeout':'feed_unavailable';return json({error:'Instagram is temporarily unavailable.',reason},502);}
 }
