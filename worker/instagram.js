@@ -1,6 +1,6 @@
 // Public Behold JSON feed; no Instagram credentials are stored in the website.
 const FEED_URL='https://feeds.behold.so/ls8nqtVeRM7cA4xGR5lY';
-const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':status===200?'public, max-age=300':'no-store'}});
+const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':status===200?'no-cache':'no-store'}});
 export function trustedMedia(value){
  try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&(u.hostname==='behold.pictures'||u.hostname.endsWith('.behold.pictures')||u.hostname.endsWith('.cdninstagram.com')||u.hostname.endsWith('.fbcdn.net'))?u.href:null;}catch{return null;}
 }

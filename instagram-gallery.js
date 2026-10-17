@@ -17,7 +17,7 @@ export function initializeInstagramGallery(){
  async function load(){
   if(busy||active||mount.contains(document.activeElement))return;busy=true;
   try{
-   const response=await fetch('/api/instagram');if(!response.ok)return;const feed=await response.json();if(feed.username!=='justb.naturals'||!feed.posts?.length)return;
+   const response=await fetch('/api/instagram',{cache:'no-cache'});if(!response.ok)return;const feed=await response.json();if(feed.username!=='justb.naturals'||!feed.posts?.length)return;
    const nextSignature=JSON.stringify(feed.posts);if(nextSignature===signature)return;
    const fragment=document.createDocumentFragment();let tiles=[],nextReels=[];
    for(const post of feed.posts.slice(0,6)){
