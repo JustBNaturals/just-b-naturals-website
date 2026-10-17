@@ -15,6 +15,16 @@ export function feedPosts(feed){
   return [{id:p.id,permalink,image,video,caption:String(p.prunedCaption||p.caption||'').slice(0,2200),alt:String(p.altText||'').slice(0,500),type:video?'VIDEO':p.mediaType==='CAROUSEL_ALBUM'?'CAROUSEL':'IMAGE'}];
  });
 }
+async function mediaFetch(source,options){
+ let url=source;
+ for(let hop=0;hop<4;hop++){
+  const response=await fetch(url,{...options,redirect:'manual'});
+  if(![301,302,303,307,308].includes(response.status))return response;
+  const location=response.headers.get('Location');const next=location&&trustedMedia(new URL(location,url).href);
+  await response.body?.cancel();if(!next)throw new Error('Untrusted media redirect');url=next;
+ }
+ throw new Error('Too many media redirects');
+}
 async function loadFeed(request){
  const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/connected-v1',request.url));
  let saved;try{saved=await cache?.match(key);}catch{}if(saved)return saved.json();
@@ -34,7 +44,7 @@ export async function instagramRoute(request){
   const post=posts.find(p=>p.id===url.searchParams.get('id')),type=url.searchParams.get('type');
   if(!post||!['image','video'].includes(type)||!post[type])return json({error:'Media not found.'},404);
   const range=request.headers.get('Range');if(range&&!/^bytes=\d+-\d*$/.test(range))return json({error:'Invalid range.'},416);
-  const upstream=await fetch(post[type],{method:request.method,redirect:'error',signal:AbortSignal.timeout(20000),headers:range?{Range:range}:{}});
+  const upstream=await mediaFetch(post[type],{method:request.method,signal:AbortSignal.timeout(20000),headers:range?{Range:range}:{}});
   if(!upstream.ok)return json({error:'Media unavailable.'},502);
   const contentType=upstream.headers.get('Content-Type')||'';if(type==='video'?!contentType.startsWith('video/'):!contentType.startsWith('image/'))return json({error:'Unexpected media type.'},502);
   const headers=new Headers({'Content-Type':contentType,'Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'});

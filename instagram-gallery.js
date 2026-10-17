@@ -27,6 +27,9 @@ export function initializeInstagramGallery(){
     fragment.append(tile);tiles.push(tile);
    }
    if(!tiles.length)return;
+   // Verify the replacement photos before removing the working fallback gallery.
+   const photos=tiles.map(tile=>tile.querySelector('img'));photos.forEach(img=>{img.loading='eager';});
+   await Promise.race([Promise.all(photos.map(img=>img.decode())),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Photo timeout')),15000))]);
    const more=mount.querySelector('.social-profile-door');if(more&&tiles.length<6)fragment.append(more.cloneNode(true));mount.replaceChildren(fragment);mount.dataset.connected='true';
    const note=document.querySelector('.social-source-note');if(note)note.textContent=t('Fresh from @justb.naturals. Hover to preview reels, or tap ▶.','Du nouveau chez @justb.naturals. Survolez les reels ou touchez ▶.');
    if(typeof IntersectionObserver!=='undefined'){const visibility=new IntersectionObserver(entries=>{for(const e of entries)if(!e.isIntersecting&&active?.tile===e.target)stop();});tiles.forEach(tile=>visibility.observe(tile));}
