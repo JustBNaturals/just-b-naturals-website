@@ -1358,3 +1358,17 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .mobile-bottom-nav>a>span,.mobile-bottom-nav>button>span{width:24px;height:24px;display:grid;place-items:center;line-height:1}
 .mobile-bottom-nav svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
 .mobile-bottom-nav .mobile-list-icon b{top:-5px;right:-7px}
+
+/* Connected Instagram: videos download only when a preview is requested. */
+.social-live-tile{aspect-ratio:3/4;background:#eae7df;position:relative;overflow:hidden}
+.social-live-link{display:block;position:relative;width:100%;height:100%;color:#fff}
+.social-live-link>img{display:block;width:100%;height:100%;object-fit:cover}
+.social-live-link>.social-tile-overlay{position:absolute;inset:0;pointer-events:none}
+.social-live-link>.social-hover-video{opacity:0;transition:opacity .2s}
+.social-live-tile.is-previewing .social-hover-video{opacity:1}
+.social-play-toggle{position:absolute;z-index:3;top:12px;right:12px;width:44px;height:44px;display:grid;place-items:center;border:1px solid #ffffffb3;border-radius:50%;background:#173329d9;color:white;cursor:pointer;font-size:16px;line-height:1}
+.social-play-toggle:focus-visible{outline:3px solid #e7ba74;outline-offset:3px}
+.social-live-tile:hover .social-tile-overlay,.social-live-tile:focus-within .social-tile-overlay{opacity:1}
+.social-live-tile.is-previewing .social-tile-overlay{background:linear-gradient(transparent 65%,#17332980)}
+.social-live-tile .social-tile-caption{font-size:clamp(17px,2vw,25px)}
+@media(prefers-reduced-motion:reduce){.social-live-link>.social-hover-video{transition:none}}
