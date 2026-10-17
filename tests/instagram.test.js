@@ -1,9 +1,13 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {feedPosts,trustedMedia,instagramRoute} from '../worker/instagram.js';
 const post={id:'111',mediaType:'VIDEO',permalink:'https://www.instagram.com/reel/Real1/',mediaUrl:'https://scontent-test.cdninstagram.com/movie.mp4',sizes:{medium:{mediaUrl:'https://behold.pictures/preview.webp'}},caption:'Unmolding & cutting soap'};
+test('latest-six grid includes campaign posts and mixed post types without manual omissions',()=>{
+ const posts=Array.from({length:8},(_,i)=>({...post,id:String(100+i),mediaType:i%2?'IMAGE':'VIDEO'}));
+ const rows=feedPosts({username:'justb.naturals',posts});assert.equal(rows.length,6);assert.deepEqual(rows.map(p=>p.id),['100','101','102','103','104','105']);assert.equal(rows[1].type,'IMAGE');
+});
 test('Instagram feed accepts only the connected account, trusted media and actual post links',()=>{
  assert.equal(feedPosts({username:'someone-else',posts:[post]}).length,0);
- const rows=feedPosts({username:'justb.naturals',posts:[post,{...post,id:'18150794686550483'},{...post,permalink:'https://evil.example/reel/test/'},{...post,id:'<script>'}]});assert.equal(rows.length,1);assert.equal(rows[0].type,'VIDEO');
+ const rows=feedPosts({username:'justb.naturals',posts:[post,{...post,id:'18150794686550483'},{...post,permalink:'https://evil.example/reel/test/'},{...post,id:'<script>'}]});assert.equal(rows.length,2);assert.equal(rows[0].type,'VIDEO');
  for(const url of ['http://behold.pictures/x','https://behold.pictures.evil.example/x','https://user:password@behold.pictures/x','http://127.0.0.1/admin','https://evil.example/x'])assert.equal(trustedMedia(url),null);
 });
 test('connected feed is cached, exposes same-origin media and forwards real video ranges only',async()=>{

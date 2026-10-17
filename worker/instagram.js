@@ -1,6 +1,5 @@
 // Public Behold JSON feed; no Instagram credentials are stored in the website.
 const FEED_URL='https://feeds.behold.so/ls8nqtVeRM7cA4xGR5lY';
-const OMIT=new Set(['18150794686550483']); // October photograph already featured above.
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':status===200?'public, max-age=300':'no-store'}});
 export function trustedMedia(value){
  try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&(u.hostname==='behold.pictures'||u.hostname.endsWith('.behold.pictures')||u.hostname.endsWith('.cdninstagram.com')||u.hostname.endsWith('.fbcdn.net'))?u.href:null;}catch{return null;}
@@ -8,7 +7,7 @@ export function trustedMedia(value){
 export function feedPosts(feed){
  if(feed.username!=='justb.naturals'||!Array.isArray(feed.posts))return [];
  return feed.posts.slice(0,6).flatMap(p=>{
-  if(!/^\d{1,30}$/.test(p.id)||OMIT.has(p.id))return [];
+  if(!/^\d{1,30}$/.test(p.id))return [];
   let permalink;try{const u=new URL(p.permalink);if(u.protocol!=='https:'||u.hostname!=='www.instagram.com'||!/^\/(?:p|reel)\/[\w-]+\/?$/.test(u.pathname))return [];permalink=u.origin+u.pathname;}catch{return [];}
   const image=trustedMedia(p.sizes?.medium?.mediaUrl||p.sizes?.small?.mediaUrl||p.thumbnailUrl||p.mediaUrl);
   const video=p.mediaType==='VIDEO'?trustedMedia(p.mediaUrl):null;if(!image)return [];
@@ -26,7 +25,7 @@ async function mediaFetch(source,options){
  throw new Error('Too many media redirects');
 }
 async function loadFeed(request){
- const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/connected-v1',request.url));
+ const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/latest-six-v2',request.url));
  let saved;try{saved=await cache?.match(key);}catch{}if(saved)return saved.json();
  const upstream=await fetch(FEED_URL,{redirect:'follow',signal:AbortSignal.timeout(15000),headers:{Accept:'application/json'}});
  if(!upstream.ok)throw new Error('feed_http_'+upstream.status);
