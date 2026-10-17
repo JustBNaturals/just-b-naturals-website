@@ -101,7 +101,7 @@ export async function businessRoute(request,env,h){
   if(path==='/api/business/reviews'){
    if(request.method==='GET'){const result=await db.prepare('SELECT * FROM business_reviews ORDER BY id DESC LIMIT 100').all();return h.json({reviews:result.results||[]});}
    if(request.method==='POST'){
-    const d=await request.json();if(d.action==='delete'){await db.prepare('DELETE FROM business_reviews WHERE id=?').bind(Number(d.id)).run();return h.json({ok:true});}
+    const d=await request.json();if(['publish','unpublish'].includes(d.action)){const id=Number(d.id);if(!Number.isSafeInteger(id)||id<1)return h.json({error:'Choose a valid review.'},400);await db.prepare('UPDATE business_reviews SET published=? WHERE id=? AND permission=1').bind(d.action==='publish'?1:0,id).run();return h.json({ok:true});}if(d.action==='delete'){await db.prepare('DELETE FROM business_reviews WHERE id=?').bind(Number(d.id)).run();return h.json({ok:true});}
     const author=String(d.author||'').trim().slice(0,60),quote=String(d.quoteEn||'').trim().slice(0,600),fr=String(d.quoteFr||'').trim().slice(0,600);
     if(!author||!quote||d.permission!==true)return h.json({error:'Add a real name, quote and permission to display it.'},400);
     await db.prepare('INSERT INTO business_reviews(author,quote_en,quote_fr,permission,published) VALUES(?,?,?,?,?)').bind(author,quote,fr,1,d.published===true?1:0).run();return h.json({ok:true});

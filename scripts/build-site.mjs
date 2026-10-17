@@ -4,6 +4,8 @@ import vm from 'node:vm';
 import {PRODUCTS} from '../product-data.js';
 const root='https://justbnatural.ca';
 writeFileSync('_headers','/*\n'+Object.entries(SECURITY_HEADERS).map(([key,value])=>'  '+key+': '+value).join('\n')+'\n\n/images/*\n  Cache-Control: public, max-age=86400\n\n/inventory*\n  Cache-Control: no-store\n  X-Robots-Tag: noindex, nofollow\n\n/checkout*\n  Cache-Control: no-store\n  X-Robots-Tag: noindex, follow\n');
+import {appendFileSync} from 'node:fs';
+appendFileSync('_headers','\n/reviews*\n  Cache-Control: no-store\n  X-Robots-Tag: noindex, nofollow\n');
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=o=>JSON.stringify(o).replaceAll('<','\\u003c');
 const ctx={location:{search:'?lang=fr'},URLSearchParams,document:{addEventListener(){}}};vm.createContext(ctx);vm.runInContext(readFileSync('fr.js','utf8'),ctx);
@@ -13,7 +15,7 @@ writeFileSync('product-seo.js','// Generated from the shared catalogue and Frenc
 writeFileSync('product-names.js','// Generated from product-data.js.\nexport const PRODUCT_NAMES = Object.freeze('+safe(Object.fromEntries(PRODUCTS.map(p=>[p.id,p.name])))+');\n');
 writeFileSync('inventory-catalog.json',JSON.stringify(PRODUCTS.map(({id,name,category})=>({id,name,category})))+'\n');
 writeFileSync('catalog.json',JSON.stringify(PRODUCTS,null,2)+'\n');
-let files=readdirSync('.').filter(f=>f.endsWith('.html')&&f!=='inventory.html');
+let files=readdirSync('.').filter(f=>f.endsWith('.html')&&!['inventory.html','reviews.html'].includes(f));
 for(const p of PRODUCTS){const file=`product-${p.id}.html`;if(!files.includes(file))continue;let html=readFileSync(file,'utf8');
  const desc=(p.cardDescription||p.description).slice(0,220);
  html=html.replace(/<title>.*?<\/title>/s,`<title>${esc(p.name)} | Just B Natural</title>`).replace(/<meta name="description"[^>]*>/,`<meta name="description" content="${esc(desc)}">`);
@@ -34,3 +36,5 @@ const publicFiles=files.filter(f=>f!=='checkout.html'&&f!=='product-lavender-oat
 writeFileSync('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+publicFiles.map(f=>{let u=root+'/'+(f==='index.html'?'':f.replace(/\.html$/,''));return ['en','fr'].map(l=>`<url><loc>${u}${l==='fr'?'?lang=fr':''}</loc><xhtml:link rel="alternate" hreflang="en-CA" href="${u}"/><xhtml:link rel="alternate" hreflang="fr-CA" href="${u}?lang=fr"/></url>`).join('')}).join('')+'</urlset>\n');
 writeFileSync('robots.txt',`User-agent: *\nAllow: /\nDisallow: /inventory\nDisallow: /api/\nSitemap: ${root}/sitemap.xml\n`);
 console.log(`Updated ${files.length} pages and bilingual sitemap.`);
+
+await import('./optimize-assets.mjs');

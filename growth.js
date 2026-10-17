@@ -60,11 +60,33 @@ export function initializeGrowth(api){
   const mount=document.querySelector('.product-detail-purchase');if(!mount)return;mount.querySelector('.buying-facts')?.remove();
   const p=products.find(p=>p.id===document.body.dataset.productId);const detail=storefront?.details?.find(d=>d.product_id===p?.id);const box=document.createElement('div');box.className='buying-facts';box.innerHTML=`${detail?.size_label?`<p><strong>${t('Size','Format')}:</strong> ${escape(detail.size_label)}</p>`:''}<p>${t('Handmade in Gatineau · Local pickup','Fait à Gatineau · Ramassage local')}</p><p>${t('$10 delivery within 20 km of Aylmer · Free from $75','Livraison à 10 $ dans un rayon de 20 km d’Aylmer · Gratuite dès 75 $')}</p><p>${t('Cash or e-transfer after your order is confirmed.','Comptant ou virement après confirmation de la commande.')}</p><a href="local-pickup.html${language==='fr'?'?lang=fr':''}">${t('Pickup & delivery details','Détails du ramassage et de la livraison')} →</a>`;mount.querySelector('.product-detail-add')?.after(box);
  }
+ // Reuse the shop's permission-based reviews; these are shop-wide testimonials.
+ if(document.querySelector('.product-detail-purchase,[data-catalog],[data-category]')&&!document.querySelector('[data-customer-reviews]')){
+  const reviews=document.createElement('section');reviews.className='section shell';reviews.dataset.customerReviews='';reviews.hidden=true;
+  const before=document.querySelector('.related-products');if(before)before.before(reviews);else document.querySelector('main')?.append(reviews);
+ }
+ let sticky=null;
+ const purchase=document.querySelector('.product-detail-add');
+ if(purchase&&typeof IntersectionObserver!=='undefined'){
+  sticky=document.createElement('aside');sticky.className='mobile-purchase-bar';sticky.hidden=true;sticky.setAttribute('aria-label',t('Quick purchase','Achat rapide'));
+  const p=products.find(p=>p.id===document.body.dataset.productId);
+  if(p){sticky.innerHTML=`<div><strong>${escape(p.name)}</strong><span data-sticky-price></span></div><button class="button button-dark" type="button" data-add-order="${escape(p.id)}">${t('Add to cart','Ajouter au panier')} +</button><button class="button button-dark" type="button" data-notify-product="${escape(p.id)}" hidden>${t('Notify me','M’aviser')}</button>`;document.body.append(sticky);
+   const observer=new IntersectionObserver(entries=>{const entry=entries[0];sticky.dataset.past=String(!entry.isIntersecting&&entry.boundingClientRect.top<0);refreshSticky();});observer.observe(purchase.parentElement);
+  }
+ }
+ function refreshSticky(){
+  if(!sticky)return;const p=products.find(p=>p.id===document.body.dataset.productId),record=inventory.get(p?.id);
+  const soldOut=p&&(p.active===false||p.availabilityStatus==='unavailable'||(p.stock===0&&p.availabilityStatus!=='preorder'));
+  sticky.hidden=!inventoryReady||!record||(!Number.isInteger(record.priceCents)&&!soldOut)||sticky.dataset.past!=='true';
+  sticky.querySelector('[data-sticky-price]').textContent=Number.isInteger(record?.priceCents)?format(record.priceCents):'';
+  const add=sticky.querySelector('[data-add-order]'),notify=sticky.querySelector('[data-notify-product]');add.hidden=!!soldOut;notify.hidden=!soldOut;
+  add.textContent=p?.availabilityStatus==='preorder'?t('Preorder +','Précommander +'):t('Add to cart +','Ajouter au panier +');
+ }
  function showReviews(){
   const mount=document.querySelector('[data-customer-reviews]');if(!mount||!storefront?.reviews?.length)return;
-  const entries=storefront.reviews.filter(r=>language!=='fr'||r.quote_fr);if(!entries.length)return;mount.hidden=false;mount.innerHTML=`<p class="eyebrow">${t('From our customers','Les mots de nos clients')}</p><h2>${t('Little everyday favourites.','De petits favoris au quotidien.')}</h2><div class="customer-review-grid">${entries.slice(0,3).map(r=>`<figure><blockquote>${escape(language==='fr'?r.quote_fr:r.quote_en)}</blockquote><figcaption>${escape(r.author)}</figcaption></figure>`).join('')}</div>`;
+  const entries=storefront.reviews.filter(r=>language!=='fr'||r.quote_fr);if(!entries.length)return;mount.hidden=false;mount.innerHTML=`<p class="eyebrow">${t('From our customers','Les mots de nos clients')}</p><h2>${t('A few words from our customers.','Quelques mots de nos clients.')}</h2><div class="customer-review-grid">${entries.slice(0,3).map(r=>`<figure><blockquote>${escape(language==='fr'?r.quote_fr:r.quote_en)}</blockquote><figcaption>${escape(r.author)}</figcaption></figure>`).join('')}</div>`;
  }
  if(document.querySelector('.product-detail-purchase,[data-customer-reviews]'))fetch('/api/storefront',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{storefront=data;addBuyingFacts();showReviews();}).catch(()=>{});
  addBuyingFacts();
- return {track,refresh(){renderSuggestions();renderGifts();addBuyingFacts();},setInventory(records){inventory=new Map(records.map(r=>[r.id,r]));inventoryReady=true;renderSuggestions();renderGifts();}};
+ return {track,refresh(){renderSuggestions();renderGifts();addBuyingFacts();refreshSticky();},setInventory(records){inventory=new Map(records.map(r=>[r.id,r]));inventoryReady=true;renderSuggestions();renderGifts();refreshSticky();}};
 }

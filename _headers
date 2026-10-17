@@ -16,3 +16,7 @@
 /checkout*
   Cache-Control: no-store
   X-Robots-Tag: noindex, follow
+
+/reviews*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow

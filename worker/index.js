@@ -322,6 +322,7 @@ async function handleNotify(request,env){
   try{
     const data=await request.json(),productId=clean(data.productId,100),email=clean(data.email,160).toLowerCase(),productName=PRODUCT_CATALOG[productId];
     if(!productName)return json({error:"Please choose a valid product."},400);
+    if(data.consent!==true)return json({error:"Please agree to the one-time availability email."},400);
     if(!validEmail(email))return json({error:"Please enter a complete, valid email address."},400);
     const current=await env.INVENTORY_DB.prepare("SELECT availability_status,available_date FROM inventory WHERE product_id = ?").bind(productId).first();
     if(!current)return json({error:"That product could not be found."},404);
