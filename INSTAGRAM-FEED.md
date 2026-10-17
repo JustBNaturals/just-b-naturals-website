@@ -1,0 +1,7 @@
+# Instagram section
+
+The homepage replaces its previous single display image with a responsive photo grid, enlarged photo dialog, caption and direct Instagram links. It uses only two verified photographs from the original October carousel until the live feed is connected. These are explicitly labelled as carousel photos, not separate latest posts. No likes, dates or testimonials are invented.
+
+To enable automatic posts: connect @justb.naturals in Behold, create a JSON user feed (not a widget feed), and set the public feed ID as INSTAGRAM_BEHOLD_FEED_ID in the existing Cloudflare Worker environment. A public JSON feed URL is sufficient to configure this; never share Instagram passwords or access tokens in chat. The provider connection still needs the account owner’s sign-in. No Behold account was created and no paid plan was purchased.
+
+The Worker verifies the source username, permits Instagram post links only, limits the gallery to six posts, and uses Behold’s optimized images. Images are delivered via the existing Worker so the browser security policy stays unchanged. Feed requests are deferred until the section nears the viewport. Provider failures keep local photos visible. Live feed caching is five minutes per Worker isolate with Cloudflare fetch caching; image responses cache for one hour. Reels use thumbnails and open Instagram for playback. There is no autoplay or third-party executable widget.

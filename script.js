@@ -1749,3 +1749,5 @@ window.addEventListener('storage',event=>{
  if(event.key!==ORDER_STORAGE_KEY&&event.key!==ORDER_NOTES_KEY&&event.key!==null)return;
  orderList=loadOrderList();orderNotes=loadOrderNotes();renderOrderList();growthTools?.refresh();
 });
+
+if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261016-instagram').then(module=>module.initializeInstagramGallery()).catch(()=>{});
