@@ -1370,5 +1370,7 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .social-play-toggle:focus-visible{outline:3px solid #e7ba74;outline-offset:3px}
 .social-live-tile:hover .social-tile-overlay,.social-live-tile:focus-within .social-tile-overlay{opacity:1}
 .social-live-tile.is-previewing .social-tile-overlay{background:linear-gradient(transparent 65%,#17332980)}
-.social-live-tile .social-tile-caption{font-size:clamp(17px,2vw,25px)}
+.social-feed .social-tile-overlay{display:none}
+.social-feed{max-width:960px;margin-inline:auto}
+@media(min-width:681px){.social-live-tile{aspect-ratio:1}}
 @media(prefers-reduced-motion:reduce){.social-live-link>.social-hover-video{transition:none}}

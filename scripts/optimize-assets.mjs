@@ -13,6 +13,6 @@ for(let i=0;i<input.length;i++){
 if(quote)throw new Error('Unclosed CSS string');
 writeFileSync('styles.min.css',output.trim()+'\n');
 for(const file of readdirSync('.').filter(f=>f.endsWith('.html'))){
- const old=readFileSync(file,'utf8');const updated=old.replace(/styles(?:\.min)?\.css\?v=[^"']*/g,'styles.min.css?v=20261017-latest-six').replace(/script\.js\?v=[^"']*/g,'script.js?v=20261017-latest-six');if(updated!==old)writeFileSync(file,updated);
+ const old=readFileSync(file,'utf8');const updated=old.replace(/styles(?:\.min)?\.css\?v=[^"']*/g,'styles.min.css?v=20261017-clean-grid').replace(/script\.js\?v=[^"']*/g,'script.js?v=20261017-clean-grid');if(updated!==old)writeFileSync(file,updated);
 }
 console.log(`CSS: ${Buffer.byteLength(input)} → ${Buffer.byteLength(output)} bytes`);
