@@ -1462,4 +1462,4 @@ window.addEventListener('storage',event=>{
  orderList=loadOrderList();orderNotes=loadOrderNotes();renderOrderList();growthTools?.refresh();
 });
 
-if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261017-latest-six').then(module=>module.initializeInstagramGallery()).catch(()=>{});
+if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261017-mobile-reels').then(module=>module.initializeInstagramGallery()).catch(()=>{});
