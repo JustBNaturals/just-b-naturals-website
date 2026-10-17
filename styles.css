@@ -1353,3 +1353,8 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 /* A direct Instagram portal with original brand photography, separate from shop imagery. */
 .social-portal-photo{aspect-ratio:3/4;background:#ede9df}.social-portal-photo>img{object-fit:cover;object-position:center}.social-profile-door{aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:20px;padding:clamp(20px,3vw,42px);background:linear-gradient(140deg,#e6edde,#f2e6d7);color:#294d3a;border:1px solid #d9e0d0}.social-profile-door>svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.5}.social-profile-door .eyebrow{font-size:10px;margin:0;letter-spacing:.06em}.social-profile-door strong{font:400 clamp(24px,3vw,40px)/1.2 var(--serif)}.social-door-link{margin-top:8px;font-size:12px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:5px}.social-profile-door:hover .social-door-link{border-bottom-width:2px}.social-profile-door:focus-visible{outline:3px solid #ac623d;outline-offset:4px}
 @media(max-width:680px){.social-profile-door{gap:12px;padding:18px 14px}.social-profile-door strong{font-size:23px}.social-profile-door>svg{width:25px;height:25px}.social-door-link{font-size:10px;line-height:1.5}.social-profile-door .eyebrow{font-size:8px}}
+
+/* One outline icon family for the mobile shopping bar. */
+.mobile-bottom-nav>a>span,.mobile-bottom-nav>button>span{width:24px;height:24px;display:grid;place-items:center;line-height:1}
+.mobile-bottom-nav svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.mobile-bottom-nav .mobile-list-icon b{top:-5px;right:-7px}
