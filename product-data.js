@@ -413,7 +413,7 @@ export const PRODUCTS = [
   {
     "id": "chocolate-pumpkin-pie-soap",
     "category": "artisan-soap",
-    "name": "Pumpkin",
+    "name": "Pumpkin & Cream",
     "kicker": "Just B Clean",
     "description": "This cozy, skin-nourishing bar is crafted with saponified organic olive oil, shea butter, coconut oil, and castor oil for a rich, creamy lather. Real pumpkin purée and 10% cream give the soap its velvety texture and naturally moisturizing feel. Turmeric adds a warm golden hue, while steam-distilled sweet orange, lavender, and clove essential oils create a soft, comforting aroma.",
     "cardDescription": "A cozy, creamy seasonal bar made with real pumpkin purée, 10% cream, turmeric, and pure essential oils.",

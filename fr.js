@@ -14,7 +14,7 @@
     "lemongrass-lavender-soap": ["Citronnelle et lavande", "Un savon botanique équilibré où la fraîcheur de la citronnelle rencontre la douceur de la lavande."],
     "ylang-ylang-soap": ["Ylang-ylang", "Un savon floral et enveloppant à l'ylang-ylang, fabriqué avec des huiles biologiques et du beurre de karité brut."],
     "honey-oat-comfort-soap": ["Suif et avoine", "Un savon réconfortant au suif, au miel brut et à l'avoine colloïdale, sans huiles essentielles."],
-    "chocolate-pumpkin-pie-soap": ["Citrouille", "Un savon automnal à la citrouille, aux épices chaudes et à la couleur naturellement dorée du curcuma."],
+    "chocolate-pumpkin-pie-soap": ["Citrouille et crème", "Un savon automnal à la citrouille, aux épices chaudes et à la couleur naturellement dorée du curcuma."],
     "almond-milk-mocha-soap": ["Mocha Latté", "Un savon crémeux au lait d'amande biologique, au cacao et au café, inspiré d'un mocha latté réconfortant."],
     "unscented-loofah-soap": ["Luffa au naturel", "Un savon exfoliant au naturel, simple et pratique, enrichi d'un luffa naturel."],
     "mint-eucalyptus-spa-soap": ["Menthe et eucalyptus", "Un savon frais de style spa aux notes vivifiantes de menthe et d'eucalyptus."],
