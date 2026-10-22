@@ -1,8 +1,16 @@
 // Keep the local gallery as a fallback. Load connected media only near this section.
-// Verified Instagram post omitted by the provider. This is its real cover, not a playable video.
+// Verified Instagram reels omitted by the provider. These are real covers, not playable videos.
 // Connected copies take precedence, so a newly available video replaces this cover automatically.
-const LOCAL_POSTS=[{id:'local-maple-chai',permalink:'https://www.instagram.com/reel/DekMYRiNu_z/',image:'/images/instagram/maple-chai-cover.webp',type:'IMAGE',video:null,timestamp:'2026-10-16',caption:'Pour and cut of Maple Chai 🍁🫖',alt:'Maple Chai artisan soap from @justb.naturals on Instagram'}];
-export function chooseMobileReel(states,current){
+const LOCAL_POSTS=[
+ {id:'local-maple-chai',permalink:'https://www.instagram.com/reel/DekMYRiNu_z/',image:'/images/instagram/maple-chai-cover.webp',type:'IMAGE',video:null,timestamp:'2026-10-16',caption:'Pour and cut of Maple Chai 🍁🫖',alt:'Maple Chai artisan soap from @justb.naturals on Instagram'},
+ {id:'local-cozy',permalink:'https://www.instagram.com/reel/Dd4j-BBtVi9/',image:'/images/instagram/cozy-reel-cover.webp',type:'IMAGE',video:null,timestamp:'2026-09-29T20:11:41Z',caption:'Cozy 🪵☕️',alt:'Cozy artisan soap making reel from @justb.naturals on Instagram'},
+ {id:'local-boreal',permalink:'https://www.instagram.com/reel/Dd2TW0fOzcD/',image:'/images/instagram/boreal-reel-cover.webp',type:'IMAGE',video:null,timestamp:'2026-09-28T22:54:31Z',caption:'Winter is coming — Boréal',alt:'Blue and cream Boréal artisan soap making reel from @justb.naturals on Instagram'}
+];
+export function galleryPosts(connected){
+ const seen=new Set();
+ return [...connected,...LOCAL_POSTS].filter(post=>{const key=post.permalink?.split('/').filter(Boolean).at(-1);if(!key||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.timestamp)||0)-(Date.parse(a.timestamp)||0)).slice(0,9);
+}
+export function chooseVisibleReel(states,current){
  const visible=states.filter(s=>s.ratio>=0.55&&!s.userPaused&&!s.blockedAuto);
  return visible.find(s=>s.video===current)||visible.sort((a,b)=>b.ratio-a.ratio)[0]||null;
 }
@@ -11,19 +19,20 @@ export function initializeInstagramGallery(){
  const fr=new URLSearchParams(location.search).get('lang')==='fr',t=(en,french)=>fr?french:en;
  mount.querySelectorAll('[data-social-alt]').forEach(img=>{img.alt=fr?img.dataset.fr:img.dataset.en;});
  let active=null,busy=false,signature='',visibility=null,started=false,reels=[];
- const mobileAutoplay=()=>matchMedia('(hover: none) and (pointer: coarse)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!navigator.connection?.saveData;
- function updateMobile(){if(document.hidden||!mobileAutoplay())return;const next=chooseMobileReel(reels,active?.video);if(next&&active?.video!==next.video)start(next,'mobile');else if(!next&&active?.mode==='mobile')stop();}
+ const autoplayAllowed=()=>!matchMedia('(prefers-reduced-motion: reduce)').matches&&!navigator.connection?.saveData;
+ function updateAutoplay(){if(document.hidden||!autoplayAllowed()){if(active?.mode==='auto')stop();return;}const next=chooseVisibleReel(reels,active?.video);if(next&&active?.video!==next.video)start(next,'auto');else if(!next&&active?.mode==='auto')stop();}
  const profileDoor=mount.querySelector('.social-profile-door')?.cloneNode(true);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(started){load();updateMobile();}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(started){load();updateAutoplay();}});
+ matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateAutoplay);
+ navigator.connection?.addEventListener?.('change',updateAutoplay);
  function stop(){if(!active)return;active.video.pause();active.tile.classList.remove('is-previewing');active.button.setAttribute('aria-pressed','false');active.button.setAttribute('aria-label',t('Play reel preview','Lire l’aperçu du reel'));active.button.textContent='▶';active=null;}
- async function start(state,mode){stop();active={...state,mode};const {video,tile,button}=state;if(!video.src)video.src=video.dataset.src;try{await video.play();if(active?.video!==video){video.pause();return;}tile.classList.add('is-previewing');button.textContent='Ⅱ';button.setAttribute('aria-pressed','true');button.setAttribute('aria-label',t('Pause reel preview','Mettre l’aperçu en pause'));}catch{if(mode==='mobile')state.blockedAuto=true;if(active?.video===video)stop();}}
+ async function start(state,mode){stop();active={...state,mode};const {video,tile,button}=state;if(!video.src)video.src=video.dataset.src;try{await video.play();if(active?.video!==video){video.pause();return;}tile.classList.add('is-previewing');button.textContent='Ⅱ';button.setAttribute('aria-pressed','true');button.setAttribute('aria-label',t('Pause reel preview','Mettre l’aperçu en pause'));}catch{if(mode==='auto')state.blockedAuto=true;if(active?.video===video)stop();}}
  async function load(){
   if(busy||active||mount.contains(document.activeElement))return;busy=true;
   try{
    const response=await fetch('/api/instagram',{cache:'no-cache'});if(!response.ok)return;const feed=await response.json();if(feed.username!=='justb.naturals'||!feed.posts?.length)return;
    const nextSignature=JSON.stringify(feed.posts);if(nextSignature===signature)return;
-   const seen=new Set();
-   const posts=[...feed.posts,...LOCAL_POSTS].filter(post=>{const key=post.permalink?.split('/').filter(Boolean).at(-1);if(!key||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.timestamp)||0)-(Date.parse(a.timestamp)||0)).slice(0,6);
+   const posts=galleryPosts(feed.posts);
    const fragment=document.createDocumentFragment();let tiles=[],nextReels=[];
    for(const post of posts){
     const local=LOCAL_POSTS.includes(post);
@@ -38,8 +47,6 @@ export function initializeInstagramGallery(){
      const button=document.createElement('button');button.type='button';button.className='social-play-toggle';button.textContent='▶';button.setAttribute('aria-label',t('Play reel preview','Lire l’aperçu du reel'));button.setAttribute('aria-pressed','false');tile.append(button);const state={tile,video,button};
      nextReels.push(state);
      button.addEventListener('click',()=>{if(active?.video===video){state.userPaused=true;stop();}else{state.userPaused=false;state.blockedAuto=false;start(state,'manual');}});
-     tile.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'&&matchMedia('(hover: hover) and (pointer: fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!navigator.connection?.saveData)start(state,'hover');});
-     tile.addEventListener('pointerleave',()=>{if(active?.video===video&&active.mode==='hover')stop();});
     }
     fragment.append(tile);tiles.push(tile);
    }
@@ -48,8 +55,8 @@ export function initializeInstagramGallery(){
    const photos=tiles.map(tile=>tile.querySelector('img'));photos.forEach(img=>{img.loading='eager';});
    await Promise.race([Promise.all(photos.map(img=>img.decode())),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Photo timeout')),15000))]);
    if(active||mount.contains(document.activeElement))return;
-   if(profileDoor&&tiles.length<6)fragment.append(profileDoor.cloneNode(true));visibility?.disconnect();mount.replaceChildren(fragment);mount.dataset.connected='true';signature=nextSignature;reels=nextReels;
-   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state){state.ratio=e.isIntersecting?e.intersectionRatio:0;if(!e.isIntersecting){state.userPaused=false;state.blockedAuto=false;}}if(!e.isIntersecting&&active?.tile===e.target)stop();}updateMobile();},{threshold:[0,0.25,0.55,0.75,1]});tiles.forEach(tile=>visibility.observe(tile));}
+   if(profileDoor&&tiles.length<9)fragment.append(profileDoor.cloneNode(true));visibility?.disconnect();mount.replaceChildren(fragment);mount.dataset.connected='true';signature=nextSignature;reels=nextReels;
+   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state){state.ratio=e.isIntersecting?e.intersectionRatio:0;if(!e.isIntersecting){state.userPaused=false;state.blockedAuto=false;}}if(!e.isIntersecting&&active?.tile===e.target)stop();}updateAutoplay();},{threshold:[0,0.25,0.55,0.75,1]});tiles.forEach(tile=>visibility.observe(tile));}
   }catch{/* Preserve the original local gallery on feed failures. */}finally{busy=false;}
  }
  function begin(){if(started)return;started=true;load();setInterval(()=>{const box=mount.getBoundingClientRect();if(!document.hidden&&box.bottom>0&&box.top<innerHeight+300)load();},300000);}
