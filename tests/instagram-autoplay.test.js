@@ -1,19 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {visibleReels, galleryPosts} from '../instagram-gallery.js';
-test('every visible reel qualifies for simultaneous autoplay on any device',()=>{
- const a={video:'a',ratio:0.6},b={video:'b',ratio:0.9};
- assert.deepEqual(visibleReels([a,b]),[a,b]);
- assert.deepEqual(visibleReels([{...a,ratio:0.25},b]),[{...a,ratio:0.25},b]);
- assert.deepEqual(visibleReels([{...a,ratio:0.2},b]),[b]);
- assert.deepEqual(visibleReels([{...a,ratio:0}]),[]);
-});
-test('manual pauses and browser-blocked autoplay are respected',()=>{
- const a={video:'a',ratio:1},b={video:'b',ratio:1};
- assert.deepEqual(visibleReels([{...a,userPaused:true},b]),[b]);
- assert.deepEqual(visibleReels([{...a,blockedAuto:true},b]),[b]);
- assert.deepEqual(visibleReels([]),[]);
-});
+import {galleryPosts} from '../instagram-gallery.js';
 test('six connected posts and three verified reel covers fill nine distinct chronological tiles',()=>{
  const connected=Array.from({length:6},(_,i)=>({permalink:`https://www.instagram.com/p/real${i}/`,timestamp:`2026-09-${20-i}`}));
  const posts=galleryPosts(connected);

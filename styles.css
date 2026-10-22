@@ -1373,5 +1373,6 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .social-live-tile.is-previewing .social-tile-overlay{background:linear-gradient(transparent 65%,#17332980)}
 .social-feed .social-tile-overlay{display:none}
 .social-feed{max-width:960px;margin-inline:auto}
+@media(max-width:680px){[data-instagram-gallery]>.social-tile:nth-child(n+7){display:none}}
 @media(min-width:681px){.social-live-tile{aspect-ratio:1}}
 @media(prefers-reduced-motion:reduce){.social-live-link>.social-hover-video{transition:none}}
