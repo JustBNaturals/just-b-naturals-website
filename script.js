@@ -990,6 +990,23 @@ function productTags(product) {
   return tags.slice(0, 5);
 }
 
+function relatedProducts(product) {
+  const matches = PRODUCTS.filter(item => item.category === product.category && item.id !== product.id);
+  return product.category === "artisan-soap"
+    ? matches.filter(item => item.active !== false && item.availabilityStatus !== "unavailable" && item.availabilityStatus !== "preorder" && item.stock !== 0)
+    : matches.slice(0, 3);
+}
+
+function refreshRelatedSoapCarousel() {
+  const grid = document.querySelector("[data-related-soaps]");
+  const product = PRODUCTS.find(item => item.id === document.body.dataset.productId);
+  if (!grid || !product) return;
+  const matches = relatedProducts(product);
+  grid.closest("section").hidden = !matches.length;
+  renderProductGrid(grid, matches);
+  initializeFeaturedCarousel(grid);
+}
+
 function renderProductPage() {
   const mount = document.querySelector("[data-product-page]");
   if (!mount) return;
@@ -1026,7 +1043,7 @@ function renderProductPage() {
   const availabilityText = productAvailabilityText(product);
   const stockMarkup = availabilityText ? `<p class="stock-status product-detail-stock${product.availabilityStatus === "preorder" ? " is-preorder" : ""}" data-stock-product="${product.id}">${productAvailabilityMarkup(product)}</p>` : `<p class="stock-status product-detail-stock" data-stock-product="${product.id}" hidden></p>`;
   const categoryLabel = CATEGORY_LABELS[product.category] || "Just B Natural";
-  const related = PRODUCTS.filter(item => item.category === product.category && item.id !== product.id).slice(0, 3);
+  const related = relatedProducts(product);
   const ingredientsText = product.ingredients.join(" ");
   const tags = productTags(product);
   const useDetailsOpen = window.matchMedia("(max-width: 620px)").matches ? "" : " open";
@@ -1073,9 +1090,11 @@ function renderProductPage() {
     </section>
     <section class="related-products section shell" ${related.length ? "" : "hidden"}>
       <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="shop.html#${product.category}">View category <span>→</span></a></div>
-      <div class="product-grid">${related.map(productCard).join("")}</div>
+      <div class="product-grid" ${product.category === "artisan-soap" ? 'data-related-soaps role="region" aria-label="Artisan soaps / Savons artisanaux" tabindex="0"' : ""}>${related.map(productCard).join("")}</div>
     </section>`;
   activateImageFallbacks(mount);
+  const relatedCarousel = mount.querySelector("[data-related-soaps]");
+  if (relatedCarousel) initializeFeaturedCarousel(relatedCarousel);
 }
 
 function initializeInlineValidation(form) {
@@ -1304,6 +1323,7 @@ async function loadInventory() {
       renderProductGrid(grid, featuredProducts());
       initializeFeaturedCarousel(grid);
     });
+    refreshRelatedSoapCarousel();
     document.querySelectorAll(".product-card").forEach(card => {
       const product = PRODUCTS.find(item => item.id === card.dataset.productId);
       if (!product) return;
@@ -1462,4 +1482,4 @@ window.addEventListener('storage',event=>{
  orderList=loadOrderList();orderNotes=loadOrderNotes();renderOrderList();growthTools?.refresh();
 });
 
-if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261017-quiet-reels').then(module=>module.initializeInstagramGallery()).catch(()=>{});
+if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261022-soap-carousel').then(module=>module.initializeInstagramGallery()).catch(()=>{});

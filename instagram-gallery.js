@@ -43,7 +43,6 @@ export function initializeInstagramGallery(){
    await Promise.race([Promise.all(photos.map(img=>img.decode())),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Photo timeout')),15000))]);
    if(active||mount.contains(document.activeElement))return;
    if(profileDoor&&tiles.length<6)fragment.append(profileDoor.cloneNode(true));visibility?.disconnect();mount.replaceChildren(fragment);mount.dataset.connected='true';signature=nextSignature;reels=nextReels;
-   const note=document.querySelector('.social-source-note');if(note)note.textContent=t('Fresh from @justb.naturals. Reels play quietly as you browse.','Du nouveau chez @justb.naturals. Les reels jouent sans son pendant votre visite.');
    if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state){state.ratio=e.isIntersecting?e.intersectionRatio:0;if(!e.isIntersecting){state.userPaused=false;state.blockedAuto=false;}}if(!e.isIntersecting&&active?.tile===e.target)stop();}updateMobile();},{threshold:[0,0.25,0.55,0.75,1]});tiles.forEach(tile=>visibility.observe(tile));}
   }catch{/* Preserve the original local gallery on feed failures. */}finally{busy=false;}
  }
