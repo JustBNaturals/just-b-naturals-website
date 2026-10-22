@@ -1482,4 +1482,4 @@ window.addEventListener('storage',event=>{
  orderList=loadOrderList();orderNotes=loadOrderNotes();renderOrderList();growthTools?.refresh();
 });
 
-if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261022-nine-reels').then(module=>module.initializeInstagramGallery()).catch(()=>{});
+if(document.querySelector('[data-instagram-gallery]'))import('./instagram-gallery.js?v=20261022-simultaneous-reels').then(module=>module.initializeInstagramGallery()).catch(()=>{});

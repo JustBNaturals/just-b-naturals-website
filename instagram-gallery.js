@@ -10,25 +10,35 @@ export function galleryPosts(connected){
  const seen=new Set();
  return [...connected,...LOCAL_POSTS].filter(post=>{const key=post.permalink?.split('/').filter(Boolean).at(-1);if(!key||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.timestamp)||0)-(Date.parse(a.timestamp)||0)).slice(0,9);
 }
-export function chooseVisibleReel(states,current){
- const visible=states.filter(s=>s.ratio>=0.55&&!s.userPaused&&!s.blockedAuto);
- return visible.find(s=>s.video===current)||visible.sort((a,b)=>b.ratio-a.ratio)[0]||null;
+export function visibleReels(states){
+ return states.filter(s=>s.ratio>=0.25&&!s.userPaused&&!s.blockedAuto);
 }
 export function initializeInstagramGallery(){
  const mount=document.querySelector('[data-instagram-gallery]');if(!mount)return;
  const fr=new URLSearchParams(location.search).get('lang')==='fr',t=(en,french)=>fr?french:en;
  mount.querySelectorAll('[data-social-alt]').forEach(img=>{img.alt=fr?img.dataset.fr:img.dataset.en;});
- let active=null,busy=false,signature='',visibility=null,started=false,reels=[];
+ const playing=new Set();
+ let busy=false,signature='',visibility=null,started=false,reels=[];
  const autoplayAllowed=()=>!matchMedia('(prefers-reduced-motion: reduce)').matches&&!navigator.connection?.saveData;
- function updateAutoplay(){if(document.hidden||!autoplayAllowed()){if(active?.mode==='auto')stop();return;}const next=chooseVisibleReel(reels,active?.video);if(next&&active?.video!==next.video)start(next,'auto');else if(!next&&active?.mode==='auto')stop();}
+ function updateAutoplay(){
+  if(document.hidden){for(const state of playing)stop(state);return;}
+  const eligible=new Set(autoplayAllowed()?visibleReels(reels):[]);
+  for(const state of playing)if(state.mode==='auto'&&!eligible.has(state))stop(state);
+  for(const state of eligible)if(!playing.has(state))start(state,'auto');
+ }
  const profileDoor=mount.querySelector('.social-profile-door')?.cloneNode(true);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(started){load();updateAutoplay();}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)updateAutoplay();else if(started){load();updateAutoplay();}});
  matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',updateAutoplay);
  navigator.connection?.addEventListener?.('change',updateAutoplay);
- function stop(){if(!active)return;active.video.pause();active.tile.classList.remove('is-previewing');active.button.setAttribute('aria-pressed','false');active.button.setAttribute('aria-label',t('Play reel preview','Lire l’aperçu du reel'));active.button.textContent='▶';active=null;}
- async function start(state,mode){stop();active={...state,mode};const {video,tile,button}=state;if(!video.src)video.src=video.dataset.src;try{await video.play();if(active?.video!==video){video.pause();return;}tile.classList.add('is-previewing');button.textContent='Ⅱ';button.setAttribute('aria-pressed','true');button.setAttribute('aria-label',t('Pause reel preview','Mettre l’aperçu en pause'));}catch{if(mode==='auto')state.blockedAuto=true;if(active?.video===video)stop();}}
+ function stop(state){if(!playing.has(state))return;playing.delete(state);state.attempt=(state.attempt||0)+1;state.video.pause();state.tile.classList.remove('is-previewing');state.button.setAttribute('aria-pressed','false');state.button.setAttribute('aria-label',t('Play reel preview','Lire l’aperçu du reel'));state.button.textContent='▶';}
+ async function start(state,mode){
+  if(playing.has(state))return;playing.add(state);state.mode=mode;const attempt=state.attempt=(state.attempt||0)+1;
+  const {video,tile,button}=state;if(!video.src)video.src=video.dataset.src;
+  try{await video.play();if(state.attempt!==attempt||!playing.has(state))return;tile.classList.add('is-previewing');button.textContent='Ⅱ';button.setAttribute('aria-pressed','true');button.setAttribute('aria-label',t('Pause reel preview','Mettre l’aperçu en pause'));}
+  catch{if(state.attempt!==attempt)return;if(mode==='auto')state.blockedAuto=true;stop(state);}
+ }
  async function load(){
-  if(busy||active||mount.contains(document.activeElement))return;busy=true;
+  if(busy||playing.size||mount.contains(document.activeElement))return;busy=true;
   try{
    const response=await fetch('/api/instagram',{cache:'no-cache'});if(!response.ok)return;const feed=await response.json();if(feed.username!=='justb.naturals'||!feed.posts?.length)return;
    const nextSignature=JSON.stringify(feed.posts);if(nextSignature===signature)return;
@@ -46,7 +56,7 @@ export function initializeInstagramGallery(){
      tile.classList.add('is-reel');const video=document.createElement('video');video.className='social-hover-video';video.dataset.src=post.video;video.muted=true;video.loop=true;video.playsInline=true;video.preload='none';video.setAttribute('muted','');video.setAttribute('playsinline','');video.setAttribute('aria-hidden','true');link.insertBefore(video,overlay);
      const button=document.createElement('button');button.type='button';button.className='social-play-toggle';button.textContent='▶';button.setAttribute('aria-label',t('Play reel preview','Lire l’aperçu du reel'));button.setAttribute('aria-pressed','false');tile.append(button);const state={tile,video,button};
      nextReels.push(state);
-     button.addEventListener('click',()=>{if(active?.video===video){state.userPaused=true;stop();}else{state.userPaused=false;state.blockedAuto=false;start(state,'manual');}});
+     button.addEventListener('click',()=>{if(playing.has(state)){state.userPaused=true;stop(state);}else{state.userPaused=false;state.blockedAuto=false;start(state,'manual');}});
     }
     fragment.append(tile);tiles.push(tile);
    }
@@ -54,9 +64,9 @@ export function initializeInstagramGallery(){
    // Verify the replacement photos before removing the working fallback gallery.
    const photos=tiles.map(tile=>tile.querySelector('img'));photos.forEach(img=>{img.loading='eager';});
    await Promise.race([Promise.all(photos.map(img=>img.decode())),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Photo timeout')),15000))]);
-   if(active||mount.contains(document.activeElement))return;
+   if(playing.size||mount.contains(document.activeElement))return;
    if(profileDoor&&tiles.length<9)fragment.append(profileDoor.cloneNode(true));visibility?.disconnect();mount.replaceChildren(fragment);mount.dataset.connected='true';signature=nextSignature;reels=nextReels;
-   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state){state.ratio=e.isIntersecting?e.intersectionRatio:0;if(!e.isIntersecting){state.userPaused=false;state.blockedAuto=false;}}if(!e.isIntersecting&&active?.tile===e.target)stop();}updateAutoplay();},{threshold:[0,0.25,0.55,0.75,1]});tiles.forEach(tile=>visibility.observe(tile));}
+   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state){state.ratio=e.isIntersecting?e.intersectionRatio:0;if(!e.isIntersecting){stop(state);state.userPaused=false;state.blockedAuto=false;}}}updateAutoplay();},{threshold:[0,0.25,0.55,0.75,1]});tiles.forEach(tile=>visibility.observe(tile));}
   }catch{/* Preserve the original local gallery on feed failures. */}finally{busy=false;}
  }
  function begin(){if(started)return;started=true;load();setInterval(()=>{const box=mount.getBoundingClientRect();if(!document.hidden&&box.bottom>0&&box.top<innerHeight+300)load();},300000);}

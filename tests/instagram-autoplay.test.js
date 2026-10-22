@@ -1,17 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {chooseVisibleReel, galleryPosts} from '../instagram-gallery.js';
-test('viewport autoplay selects one mostly visible reel and keeps current playback stable on any device',()=>{
+import {visibleReels, galleryPosts} from '../instagram-gallery.js';
+test('every visible reel qualifies for simultaneous autoplay on any device',()=>{
  const a={video:'a',ratio:0.6},b={video:'b',ratio:0.9};
- assert.equal(chooseVisibleReel([a,b],null),b);
- assert.equal(chooseVisibleReel([a,b],'a'),a);
- assert.equal(chooseVisibleReel([{...a,ratio:0.3},b],'a'),b);
- assert.equal(chooseVisibleReel([{...a,ratio:0.3}],null),null);
+ assert.deepEqual(visibleReels([a,b]),[a,b]);
+ assert.deepEqual(visibleReels([{...a,ratio:0.25},b]),[{...a,ratio:0.25},b]);
+ assert.deepEqual(visibleReels([{...a,ratio:0.2},b]),[b]);
+ assert.deepEqual(visibleReels([{...a,ratio:0}]),[]);
 });
 test('manual pauses and browser-blocked autoplay are respected',()=>{
- assert.equal(chooseVisibleReel([{video:'a',ratio:1,userPaused:true}],null),null);
- assert.equal(chooseVisibleReel([{video:'a',ratio:1,blockedAuto:true}],null),null);
- assert.equal(chooseVisibleReel([],null),null);
+ const a={video:'a',ratio:1},b={video:'b',ratio:1};
+ assert.deepEqual(visibleReels([{...a,userPaused:true},b]),[b]);
+ assert.deepEqual(visibleReels([{...a,blockedAuto:true},b]),[b]);
+ assert.deepEqual(visibleReels([]),[]);
 });
 test('six connected posts and three verified reel covers fill nine distinct chronological tiles',()=>{
  const connected=Array.from({length:6},(_,i)=>({permalink:`https://www.instagram.com/p/real${i}/`,timestamp:`2026-09-${20-i}`}));
