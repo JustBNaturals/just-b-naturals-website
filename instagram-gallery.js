@@ -1,4 +1,7 @@
 // Keep the local gallery as a fallback. Load connected media only near this section.
+// Verified Instagram post omitted by the provider. This is its real cover, not a playable video.
+// Connected copies take precedence, so a newly available video replaces this cover automatically.
+const LOCAL_POSTS=[{id:'local-maple-chai',permalink:'https://www.instagram.com/reel/DekMYRiNu_z/',image:'/images/instagram/maple-chai-cover.webp',type:'IMAGE',video:null,timestamp:'2026-10-16',caption:'Pour and cut of Maple Chai 🍁🫖',alt:'Maple Chai artisan soap from @justb.naturals on Instagram'}];
 export function chooseMobileReel(states,current){
  const visible=states.filter(s=>s.ratio>=0.55&&!s.userPaused&&!s.blockedAuto);
  return visible.find(s=>s.video===current)||visible.sort((a,b)=>b.ratio-a.ratio)[0]||null;
@@ -19,9 +22,12 @@ export function initializeInstagramGallery(){
   try{
    const response=await fetch('/api/instagram',{cache:'no-cache'});if(!response.ok)return;const feed=await response.json();if(feed.username!=='justb.naturals'||!feed.posts?.length)return;
    const nextSignature=JSON.stringify(feed.posts);if(nextSignature===signature)return;
+   const seen=new Set();
+   const posts=[...feed.posts,...LOCAL_POSTS].filter(post=>{const key=post.permalink?.split('/').filter(Boolean).at(-1);if(!key||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.timestamp)||0)-(Date.parse(a.timestamp)||0)).slice(0,6);
    const fragment=document.createDocumentFragment();let tiles=[],nextReels=[];
-   for(const post of feed.posts.slice(0,6)){
-    if(!/^\d+$/.test(post.id)||!post.image?.startsWith('/api/instagram/media?'))continue;
+   for(const post of posts){
+    const local=LOCAL_POSTS.includes(post);
+    if(!local&&(!/^\d+$/.test(post.id)||!post.image?.startsWith('/api/instagram/media?')))continue;
     const href=new URL(post.permalink);if(href.origin!=='https://www.instagram.com')continue;
     const tile=document.createElement('article');tile.className='social-tile social-live-tile';
     const link=document.createElement('a');link.className='social-live-link';link.href=href.href;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',t('Open Instagram post: ','Ouvrir la publication Instagram : ')+(post.caption||'@justb.naturals').slice(0,100));

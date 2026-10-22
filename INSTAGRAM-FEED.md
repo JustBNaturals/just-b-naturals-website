@@ -1,6 +1,6 @@
 # Automatically refreshed Instagram gallery
 
-The homepage shows the six latest posts supplied by the connected @justb.naturals feed, including photos, carousel covers, and real reels. Desktop uses three columns; mobile uses two. No posts are manually omitted.
+The homepage shows six posts, merging the connected @justb.naturals feed with a verified local Maple Chai cover linked to its actual reel (October 16, 2026). Behold currently omits that reel's video. It is an image link, with no simulated playback. Posts are ordered by publication date. If Behold supplies Maple Chai later, its connected video replaces the local cover automatically; newer feed posts can push it out of the latest six. Desktop uses three columns; mobile uses two. The explanatory note beneath the grid has been removed in both languages.
 
 Behold Curate is set to six posts, all post types, off-feed reels enabled, and Publish immediately for new posts. No shopper sign-in is required. The original section headline and description are retained.
 

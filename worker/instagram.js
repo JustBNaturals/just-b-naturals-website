@@ -11,7 +11,7 @@ export function feedPosts(feed){
   let permalink;try{const u=new URL(p.permalink);if(u.protocol!=='https:'||u.hostname!=='www.instagram.com'||!/^\/(?:p|reel)\/[\w-]+\/?$/.test(u.pathname))return [];permalink=u.origin+u.pathname;}catch{return [];}
   const image=trustedMedia(p.sizes?.medium?.mediaUrl||p.sizes?.small?.mediaUrl||p.thumbnailUrl||p.mediaUrl);
   const video=p.mediaType==='VIDEO'?trustedMedia(p.mediaUrl):null;if(!image)return [];
-  return [{id:p.id,permalink,image,video,caption:String(p.prunedCaption||p.caption||'').slice(0,2200),alt:String(p.altText||'').slice(0,500),type:video?'VIDEO':p.mediaType==='CAROUSEL_ALBUM'?'CAROUSEL':'IMAGE'}];
+  return [{id:p.id,permalink,image,video,timestamp:String(p.timestamp||'').slice(0,50),caption:String(p.prunedCaption||p.caption||'').slice(0,2200),alt:String(p.altText||'').slice(0,500),type:video?'VIDEO':p.mediaType==='CAROUSEL_ALBUM'?'CAROUSEL':'IMAGE'}];
  });
 }
 async function mediaFetch(source,options){
@@ -25,7 +25,7 @@ async function mediaFetch(source,options){
  throw new Error('Too many media redirects');
 }
 async function loadFeed(request){
- const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/latest-six-v2',request.url));
+ const cache=typeof caches==='undefined'?null:caches.default,key=new Request(new URL('/_instagram-cache/latest-six-v3-dates',request.url));
  let saved;try{saved=await cache?.match(key);}catch{}if(saved)return saved.json();
  const upstream=await fetch(FEED_URL,{redirect:'follow',signal:AbortSignal.timeout(15000),headers:{Accept:'application/json'}});
  if(!upstream.ok)throw new Error('feed_http_'+upstream.status);
