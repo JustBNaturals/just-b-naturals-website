@@ -2,6 +2,7 @@
   const params = new URLSearchParams(location.search);
   const isFrench = params.get("lang") === "fr";
   const productTranslations = {
+    "chocolate-pumpkin-soap": ["Citrouille et chocolat","Une douceur automnale réconfortante aux notes riches et épicées. Ce savon artisanal associe l’onctuosité de la purée de citrouille à la richesse de la poudre de cacao et de l’argile. Nourrissant et doux pour la peau grâce au beurre de karité et à l’huile d’olive, il exhale un parfum envoûtant d’orange douce, de cèdre chaleureux et d’une touche de clou de girofle avec un soupçon de cannelle. Un véritable délice gourmand pour illuminer vos soins d’automne."],
     "matcha-lavender-soap": ["Matcha et lavande", "Un savon apaisant et riche en minéraux, préparé avec des huiles biologiques, du beurre de karité brut et un mélange délicat de matcha et de lavande."],
     "rosemary-sage-soap": ["Romarin et sauge", "Un savon frais et herbacé aux huiles biologiques, enrichi de romarin et de sauge pour une mousse crémeuse."],
     "lemon-rosemary-soap": ["Citron et romarin", "Un savon lumineux aux notes fraîches de citron et de romarin, fabriqué avec des huiles biologiques et du beurre de karité brut."],
@@ -37,6 +38,8 @@
     "ocean-soap": ["Océan", "Un savon frais aux nuances bleues et grises naturelles, inspiré de l'air marin."],
     "rose-matter-soap": ["Rose Garance", "Un savon floral aux tons de rose naturels, fabriqué en petites quantités avec des huiles nourrissantes."]
   };
+
+  const productIngredientsFr = {"chocolate-pumpkin-soap":"Huile d’olive saponifiée, eau, beurre de karité saponifié, huile de noix de coco saponifiée, huile de jojoba saponifiée, purée de citrouille, huile de ricin saponifiée, huile essentielle d’orange douce, poudre de cacao, huile essentielle de cèdre, huile essentielle de clou de girofle, argile française, cannelle en poudre."};
 
   const ingredientTerms = [
     [/Saponified Oils/gi, "Huiles saponifiées"], [/Organic Olive Oil/gi, "huile d'olive biologique"],
@@ -78,7 +81,7 @@
         product.cardDescription = translated[1];
         product.sections = [{ title: "En détail", paragraphs: [translated[1], categoryDetails[product.category] || "Consultez les détails et les ingrédients pour en savoir plus sur ce produit."] }];
       }
-      product.ingredients = Array.isArray(product.ingredients) ? product.ingredients.map(translateIngredients) : [translateIngredients(product.ingredients)];
+      product.ingredients = productIngredientsFr[product.id] ? [productIngredientsFr[product.id]] : (Array.isArray(product.ingredients) ? product.ingredients.map(translateIngredients) : [translateIngredients(product.ingredients)]);
       product.kicker = "JUST B NATURAL";
       product.note = "";
       if (product.imageNote) product.imageNote = "Photo de la collection. Photo individuelle à venir.";

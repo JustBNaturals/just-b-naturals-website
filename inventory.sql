@@ -51,3 +51,6 @@ INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active
 INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active, availability_status, available_date) VALUES ('lavender-oat-soap', NULL, 800, 1, 'available', NULL);
 INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active, availability_status, available_date) VALUES ('ocean-soap', NULL, 800, 1, 'available', NULL);
 INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active, availability_status, available_date) VALUES ('rose-matter-soap', NULL, 800, 1, 'available', NULL);
+
+-- New ready-to-sell soap; quantity remains unset until entered in inventory.
+INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active) VALUES ('chocolate-pumpkin-soap', NULL, 800, 1);

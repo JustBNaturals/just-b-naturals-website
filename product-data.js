@@ -447,6 +447,40 @@ export const PRODUCTS = [
     "featured": false
   },
   {
+    "id": "chocolate-pumpkin-soap",
+    "category": "artisan-soap",
+    "name": "Chocolate Pumpkin",
+    "kicker": "Just B Clean",
+    "description": "A cozy, comforting autumn treat for your skin. Handcrafted with real pumpkin puree, cacao powder, and French clay, this bar creates a creamy, deeply nourishing lather powered by rich shea butter and olive oil. Scented naturally with a warm fall blend of sweet orange, cedarwood, clove, and a sprinkle of cinnamon. Perfect for bringing a touch of warm seasonal luxury to your daily routine.",
+    "cardDescription": "A creamy autumn soap with real pumpkin puree, cocoa powder, French clay, and warm notes of sweet orange, cedarwood, clove, and cinnamon.",
+    "ingredients": [
+      "Saponified Olive Oil, Water, Saponified Shea Butter, Saponified Coconut Oil, Saponified Jojoba Oil, Pumpkin Puree, Saponified Castor Oil, Sweet Orange Essential Oil, Cocoa Powder, Cedarwood Essential Oil, Clove Essential Oil, French Clay, Ground Cinnamon."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A cozy, comforting autumn treat for your skin. Handcrafted with real pumpkin puree, cacao powder, and French clay, this bar creates a creamy, deeply nourishing lather powered by rich shea butter and olive oil. Scented naturally with a warm fall blend of sweet orange, cedarwood, clove, and a sprinkle of cinnamon. Perfect for bringing a touch of warm seasonal luxury to your daily routine."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": "Available",
+    "availabilityStatus": "available",
+    "availableDate": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-chocolate-pumpkin.jpg",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
     "id": "almond-milk-mocha-soap",
     "category": "artisan-soap",
     "name": "Mocha Latté",

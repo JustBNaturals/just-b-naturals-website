@@ -4,7 +4,7 @@ export const CAMPAIGN_DEFAULTS = Object.freeze({
   pairPriceCents: 1400, donationPerPairCents: 100, timezone: "America/Toronto"
 });
 export const SOAP_IDS = Object.freeze([
-  "matcha-lavender-soap", "rosemary-sage-soap", "lemon-rosemary-soap", "ember-ash-soap",
+  "chocolate-pumpkin-soap", "matcha-lavender-soap", "rosemary-sage-soap", "lemon-rosemary-soap", "ember-ash-soap",
   "sweater-weather-soap", "coconut-lavender-soap", "whisper-citrus-soap", "charcoal-blush-soap",
   "cedar-eucalyptus-loofah-soap", "lemongrass-lavender-soap", "ylang-ylang-soap",
   "honey-oat-comfort-soap", "almond-milk-mocha-soap", "chocolate-pumpkin-pie-soap", "unscented-loofah-soap",
