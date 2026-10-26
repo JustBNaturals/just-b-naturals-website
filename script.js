@@ -552,8 +552,10 @@ function updateAddButton(button) {
   const product = PRODUCTS.find(candidate => candidate.id === button.dataset.addOrder);
   const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
   const item = findOrderLine(button.dataset.addOrder);
-  button.disabled = false;
+  const needsPrice = Boolean(product?.requiresPrice && !Number.isFinite(product.price));
+  button.disabled = needsPrice;
   button.hidden = Boolean(unavailable);
+  if (needsPrice) { button.classList.remove("is-added"); button.textContent = t("Price to be confirmed", "Prix à confirmer"); return; }
   button.classList.toggle("is-added", Boolean(item));
   const base = product?.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart");
   button.innerHTML = `${item ? `${t("Added","Ajouté")} ✓ · ${item.quantity} ${t("in cart","au panier")}` : base} <span>＋</span>`;
@@ -870,6 +872,7 @@ function initializeCatalogueFeatures() {
 }
 
 function productGuidance(product) {
+  if (product.isFood) return { use: product.use, care: product.storage, detail: product.description };
   const guidance = {
     "roller-oils": {
       use: "Roll lightly onto pulse points such as wrists or the back of the neck. Use only as directed and avoid the eye area.",
@@ -908,6 +911,7 @@ function productGuidance(product) {
 }
 
 function conciseProductUse(product) {
+  if (product.isFood) return product.use;
   const french = Boolean(globalThis.JBN_FR?.isFrench);
   const specific = {
     "solid-dish-soap": french ? "Mouiller la brosse, la frotter sur le savon pour créer une mousse, laver, puis bien rincer." : "Wet the brush, swirl it over the soap to create a lather, wash, then rinse thoroughly.",
@@ -957,6 +961,7 @@ const PRODUCT_TAG_RULES = Object.freeze([
 ]);
 
 function productTags(product) {
+  if (product.isFood) return globalThis.JBN_FR?.isFrench ? ["Levain", "255 g", "8–10 crêpes"] : ["Sourdough", "255 g", "8–10 crêpes"];
   const french = Boolean(globalThis.JBN_FR?.isFrench);
   const floralProducts = new Set(["coconut-lavender-soap", "ylang-ylang-soap"]);
   const excludedTags = {
@@ -1039,6 +1044,7 @@ function renderProductPage() {
     }))
     .filter(section => section.paragraphs.length);
   const howTo = conciseProductUse(product);
+  const preparationMarkup = Array.isArray(product.preparationSteps) ? `<ol class="product-preparation-steps">${product.preparationSteps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>` : `<p>${howTo}</p>`;
   const beforeUsing = productSections.find(section => section.title === "Before using")?.paragraphs.join(" ") || product.safety || "Review the complete ingredient list before use. Stop use if irritation occurs. For external use only.";
   const availabilityText = productAvailabilityText(product);
   const stockMarkup = availabilityText ? `<p class="stock-status product-detail-stock${product.availabilityStatus === "preorder" ? " is-preorder" : ""}" data-stock-product="${product.id}">${productAvailabilityMarkup(product)}</p>` : `<p class="stock-status product-detail-stock" data-stock-product="${product.id}" hidden></p>`;
@@ -1084,9 +1090,9 @@ function renderProductPage() {
     </div>
     ${storyMarkup}
     <section class="shell product-use-section">
-      <details class="product-use-item"${useDetailsOpen}><summary><h2>How to use</h2><span aria-hidden="true">＋</span></summary><p>${howTo}</p></details>
-      <details class="product-use-item"${useDetailsOpen}><summary><h2>Care & storage</h2><span aria-hidden="true">＋</span></summary><p>${guide.care}</p></details>
-      <details class="product-use-item"${useDetailsOpen}><summary><h2>Before using</h2><span aria-hidden="true">＋</span></summary><p>${beforeUsing}</p></details>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Preparation", "Préparation") : "How to use"}</h2><span aria-hidden="true">＋</span></summary>${preparationMarkup}</details>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Storage", "Conservation") : "Care & storage"}</h2><span aria-hidden="true">＋</span></summary><p>${guide.care}</p></details>
+      <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Before serving", "Avant de servir") : "Before using"}</h2><span aria-hidden="true">＋</span></summary><p>${beforeUsing}</p></details>
     </section>
     <section class="related-products section shell" ${related.length ? "" : "hidden"}>
       <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="shop.html#${product.category}">View category <span>→</span></a></div>

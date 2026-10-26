@@ -1289,6 +1289,49 @@
     "featured": true
   },
   {
+    "id": "sourdough-crepe-mix",
+    "category": "home-linen",
+    "name": "Sourdough Crêpe Mix",
+    "kicker": "Just B Natural",
+    "description": "A simple sourdough crêpe mix made with organic unbleached flour, organic dehydrated sourdough starter, organic cane sugar and salt. Each 255 g package makes 8–10 crêpes, 10 inches (25 cm) each.",
+    "cardDescription": "255 g of sourdough crêpe mix. Makes 8–10 crêpes, 10 inches (25 cm) each. Just add eggs, vanilla, melted butter and milk.",
+    "ingredients": [
+      "Organic unbleached flour, organic dehydrated sourdough starter, organic cane sugar, salt."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A simple sourdough crêpe mix made with organic unbleached flour, organic dehydrated sourdough starter, organic cane sugar and salt. Each 255 g package makes 8–10 crêpes, 10 inches (25 cm) each."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "Add 4 eggs to the dry mix, then add 1 tsp vanilla, ⅓ cup melted butter and 1½ cups milk. Use a whisk or stick blender to mix until smooth. Pro tip: Let rest for at least 30 min at room temperature, or refrigerate overnight for a stronger sourdough flavour. Pour a small amount of batter into a hot, lightly oiled pan. Cook until golden, then flip.",
+    "preparationSteps": [
+      "Add 4 eggs to the dry mix, then add 1 tsp vanilla, ⅓ cup melted butter and 1½ cups milk.",
+      "Use a whisk or stick blender to mix until smooth.",
+      "Pro tip: Let rest for at least 30 min at room temperature, or refrigerate overnight for a stronger sourdough flavour.",
+      "Pour a small amount of batter into a hot, lightly oiled pan. Cook until golden, then flip."
+    ],
+    "storage": "Keep the dry mix sealed in a cool, dry place. Refrigerate the batter if resting overnight.",
+    "safety": "Cook the crêpes before serving.",
+    "availability": null,
+    "availabilityStatus": "available",
+    "price": null,
+    "stock": null,
+    "image": "images/sourdough-crepe-mix.png",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#e8ddcc",
+    "accent": "#80684a",
+    "featured": false,
+    "isFood": true,
+    "requiresPrice": true,
+    "weightGrams": 255
+  },
+  {
     "id": "blue-cedar-soap",
     "category": "artisan-soap",
     "name": "Blue Cedar",

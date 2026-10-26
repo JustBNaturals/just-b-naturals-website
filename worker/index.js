@@ -355,6 +355,7 @@ async function handleInventoryAdmin(request,env){
       const availableDate=item.availableDate===null||item.availableDate===""?null:clean(item.availableDate,10);
       if(availabilityStatus==="preorder"&&!/^\d{4}-\d{2}-\d{2}$/.test(availableDate||""))return json({error:"Every preorder needs a valid ready date."},400);
       const savedDate=availabilityStatus==="preorder"?availableDate:null;
+      if (id === "sourdough-crepe-mix") updates.push(env.INVENTORY_DB.prepare("INSERT OR IGNORE INTO inventory (product_id,stock_count,price_cents,is_active,availability_status,available_date) VALUES (?,NULL,NULL,1,'available',NULL)").bind(id));
       updates.push(env.INVENTORY_DB.prepare("UPDATE inventory SET stock_count = ?, price_cents = ?, is_active = ?, availability_status = ?, available_date = ?, updated_at = CURRENT_TIMESTAMP WHERE product_id = ?").bind(stock,priceCents,1,availabilityStatus,savedDate,id));
       if(availabilityStatus==="available"&&stock!==0)availableIds.push(id);
     }

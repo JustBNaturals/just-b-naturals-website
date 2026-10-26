@@ -54,3 +54,6 @@ INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active
 
 -- New ready-to-sell soap; quantity remains unset until entered in inventory.
 INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active) VALUES ('chocolate-pumpkin-soap', NULL, 800, 1);
+
+-- Sourdough crêpe mix: price and stock are set in inventory, never guessed.
+INSERT OR IGNORE INTO inventory (product_id, stock_count, price_cents, is_active) VALUES ('sourdough-crepe-mix', NULL, NULL, 1);
