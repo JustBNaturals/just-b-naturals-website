@@ -16,3 +16,7 @@ Visible reel tiles now play muted and inline on both touch and mouse devices at 
 The live provider feed is still returning October 1 and earlier posts. Maple Chai remains a real cover linked to its original working Instagram reel, not an inline video: the source feed omits its video. Restoring that media requires refreshing the Behold source under the owner account, or an original authorized MP4 hosted locally. Instagram’s web player currently exposes a MediaSource blob and its ordinary video download failed. Do not substitute an expiring URL or animate the still cover. Behold sign-in is pending.
 
 The October 25 new-label reel cover was downloaded from the owner’s Instagram profile on October 26 and preserved unchanged at images/instagram/new-labels-20261026.jpg. It links to De7uQEZRIKH. Its native reel is 34 seconds; the local copy is clearly an image link until its actual video is available through the connected feed.
+
+## Single-video playback
+
+Only one reel can play at a time. Viewport selection chooses the most visible eligible reel, retaining the current one during small scroll movements. A manual play choice pauses the other reel first and stays selected while visible. Intersection changes are processed together before choosing a player. Tests cover automatic handoff, manual handoff, and stale asynchronous play requests.

@@ -45,3 +45,21 @@ test('blocked autoplay exposes a real tap control and does not loop play request
 test('leaving viewport before play resolves cannot reveal a stale playing preview',async()=>{
  const f=fixture({deferred:true});f.playback.intersection(f.state,.8);f.playback.intersection(f.state,0);f.finish();await tick();assert.ok(!f.classes.has('is-previewing'));assert.equal(f.state.requested,false);assert.equal(f.state.button['aria-pressed'],'false');
 });
+
+test('multiple visible reels never play concurrently and the most visible takes over after pausing the first',async()=>{
+ const a=fixture(),b=fixture(),states=[a.state,b.state];const events=[];
+ for(const [name,f] of [['a',a],['b',b]]){const play=f.state.video.play,pause=f.state.video.pause;f.state.video.play=()=>{events.push('play '+name);return play();};f.state.video.pause=()=>{events.push('pause '+name);pause();};}
+ const p=reelPlayback(states,{allowed:()=>true,hidden:()=>false,visible:s=>s.ratio>=.35});
+ p.intersection(a.state,.7,true);p.intersection(b.state,.6,true);p.sync();await tick();assert.equal(states.filter(s=>s.requested).length,1);assert.equal(a.plays,1);assert.equal(b.plays,0);
+ p.intersection(b.state,1);await tick();assert.equal(states.filter(s=>s.requested).length,1);assert.equal(a.state.requested,false);assert.equal(b.state.requested,true);assert.ok(events.indexOf('pause a')<events.indexOf('play b'));
+});
+test('a manual reel selection pauses the automatic reel and stays selected while it remains visible',async()=>{
+ const a=fixture(),b=fixture(),states=[a.state,b.state];const p=reelPlayback(states,{allowed:()=>true,hidden:()=>false,visible:s=>s.ratio>=.35});
+ p.intersection(a.state,1,true);p.intersection(b.state,.5,true);p.sync();await tick();p.toggle(b.state);await tick();assert.equal(a.state.requested,false);assert.equal(b.state.requested,true);
+ p.sync();await tick();assert.equal(a.state.requested,false);assert.equal(b.state.requested,true);
+ p.intersection(b.state,0);await tick();assert.equal(a.state.requested,true);assert.equal(b.state.requested,false);
+});
+test('a late play promise from the previous reel cannot reappear after another reel takes over',async()=>{
+ const a=fixture({deferred:true}),b=fixture(),states=[a.state,b.state];const p=reelPlayback(states,{allowed:()=>true,hidden:()=>false,visible:s=>s.ratio>=.35});
+ p.intersection(a.state,.5);p.intersection(b.state,1);await tick();a.finish();await tick();assert.equal(a.state.requested,false);assert.ok(!a.classes.has('is-previewing'));assert.equal(b.state.requested,true);assert.ok(b.classes.has('is-previewing'));
+});

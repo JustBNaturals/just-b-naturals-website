@@ -14,20 +14,33 @@ export function galleryPosts(connected){
 // The same visibility lifecycle is used for mouse, touch and keyboard users.
 // Keep play() in the user-gesture call stack for browsers that block autoplay.
 export function reelPlayback(states,{allowed,hidden,visible,onChange=()=>{}}){
- function stop(state){state.attempt=(state.attempt||0)+1;state.requested=false;state.video.pause();state.tile.classList.remove('is-previewing');state.button.setAttribute('aria-pressed','false');onChange(state,false);}
+ let active=null;
+ function stop(state){if(active===state)active=null;state.attempt=(state.attempt||0)+1;state.requested=false;state.manual=false;state.video.pause();state.tile.classList.remove('is-previewing');state.button.setAttribute('aria-pressed','false');onChange(state,false);}
  function start(state,manual=false){
   if(state.requested||hidden()||!visible(state)||(!manual&&(!allowed()||state.userPaused||state.blockedAuto)))return;
+  // Pause the previous player before issuing the next play request, including taps.
+  for(const other of states)if(other!==state&&other.requested)stop(other);
+  active=state;state.manual=manual;
   state.requested=true;const attempt=state.attempt=(state.attempt||0)+1;
   state.video.muted=true;state.video.defaultMuted=true;
   if(!state.video.src)state.video.src=state.video.dataset.src;
   Promise.resolve(state.video.play()).then(()=>{
    if(state.attempt!==attempt||!state.requested)return;
    state.tile.classList.add('is-previewing');state.button.setAttribute('aria-pressed','true');state.tile.classList.remove('needs-play');onChange(state,true);
-  }).catch(()=>{if(state.attempt!==attempt)return;stop(state);state.blockedAuto=true;state.tile.classList.add('needs-play');});
+  }).catch(()=>{if(state.attempt!==attempt)return;stop(state);state.blockedAuto=true;state.tile.classList.add('needs-play');sync();});
+ }
+ function sync(){
+  if(hidden()||!allowed()){states.forEach(stop);return;}
+  const candidates=states.filter(s=>visible(s)&&!s.userPaused&&!s.blockedAuto).sort((a,b)=>(b.ratio||0)-(a.ratio||0));
+  let winner=candidates[0];
+  // Keep the current reel during small scroll movements; a manual choice wins while visible.
+  if(active&&candidates.includes(active)&&(active.manual||(active.ratio||0)+.15>=(winner?.ratio||0)))winner=active;
+  for(const state of states)if(state!==winner&&state.requested)stop(state);
+  if(winner)start(winner);
  }
  return {
-  sync(){for(const state of states){if(hidden()||!visible(state)||!allowed()){stop(state);}else start(state);}},
-  intersection(state,ratio){state.ratio=ratio;if(ratio>=.35)start(state);else{stop(state);if(!ratio){state.userPaused=false;state.blockedAuto=false;}}},
+  sync,
+  intersection(state,ratio,defer=false){state.ratio=ratio;if(!ratio){state.userPaused=false;state.blockedAuto=false;}if(!defer)sync();},
   toggle(state){if(state.requested){state.userPaused=true;stop(state);}else{state.userPaused=false;state.blockedAuto=false;start(state,true);}},
   stop(){states.forEach(stop);}
  };
@@ -88,7 +101,7 @@ export function initializeInstagramGallery(){
    if(profileDoor&&tiles.length<9)fragment.append(profileDoor.cloneNode(true));visibility?.disconnect();stopPreviews();mount.replaceChildren(fragment);mount.dataset.connected='true';signature=nextSignature;reels=nextReels;
    motionButton.hidden=!reels.length;
    playback=reelPlayback(reels,{allowed:autoAllowed,hidden:()=>document.hidden,visible,onChange(state,isPlaying){state.button.textContent=isPlaying?'Ⅱ':'▶';state.button.setAttribute('aria-label',isPlaying?t('Pause reel preview','Mettre l’aperçu en pause'):t('Play reel preview','Lire l’aperçu du reel'));}});
-   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state)playback.intersection(state,e.isIntersecting?e.intersectionRatio:0);}},{threshold:[0,.1,.35,.6,1]});reels.forEach(state=>visibility.observe(state.tile));}else measure();
+   if(typeof IntersectionObserver!=='undefined'){visibility=new IntersectionObserver(entries=>{for(const e of entries){const state=reels.find(s=>s.tile===e.target);if(state)playback.intersection(state,e.isIntersecting?e.intersectionRatio:0,true);}playback.sync();},{threshold:[0,.1,.35,.6,1]});reels.forEach(state=>visibility.observe(state.tile));}else measure();
   }catch{/* Preserve the original local gallery on feed failures. */}finally{busy=false;}
  }
  function begin(){if(started)return;started=true;load();setInterval(()=>{const box=mount.getBoundingClientRect();if(!document.hidden&&box.bottom>0&&box.top<innerHeight+300)load();},300000);}
