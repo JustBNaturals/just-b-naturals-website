@@ -2,6 +2,7 @@
 // Verified Instagram reels omitted by the provider. These are real covers, not playable videos.
 // Connected copies take precedence, so a newly available video replaces this cover automatically.
 const LOCAL_POSTS=[
+ {id:'local-new-labels',permalink:'https://www.instagram.com/reel/De7uQEZRIKH/',image:'/images/instagram/new-labels-20261026.jpg',type:'IMAGE',video:null,timestamp:'2026-10-25',caption:'Freshly cured soaps and crisp new labels — now available',alt:'Just B Natural artisan soaps with their new bilingual kraft paper labels on a wooden display'},
  {id:'local-maple-chai',permalink:'https://www.instagram.com/reel/DekMYRiNu_z/',image:'/images/instagram/maple-chai-cover.webp',type:'IMAGE',video:null,timestamp:'2026-10-16',caption:'Pour and cut of Maple Chai 🍁🫖',alt:'Maple Chai artisan soap from @justb.naturals on Instagram'},
  {id:'local-cozy',permalink:'https://www.instagram.com/reel/Dd4j-BBtVi9/',image:'/images/instagram/cozy-reel-cover.webp',type:'IMAGE',video:null,timestamp:'2026-09-29T20:11:41Z',caption:'Cozy 🪵☕️',alt:'Cozy artisan soap making reel from @justb.naturals on Instagram'},
  {id:'local-boreal',permalink:'https://www.instagram.com/reel/Dd2TW0fOzcD/',image:'/images/instagram/boreal-reel-cover.webp',type:'IMAGE',video:null,timestamp:'2026-09-28T22:54:31Z',caption:'Winter is coming — Boréal',alt:'Blue and cream Boréal artisan soap making reel from @justb.naturals on Instagram'}
