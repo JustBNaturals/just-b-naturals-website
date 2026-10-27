@@ -20,3 +20,6 @@ The October 25 new-label reel cover was downloaded from the owner’s Instagram 
 ## Single-video playback
 
 Only one reel can play at a time. Viewport selection chooses the most visible eligible reel, retaining the current one during small scroll movements. A manual play choice pauses the other reel first and stays selected while visible. Intersection changes are processed together before choosing a player. Tests cover automatic handoff, manual handoff, and stale asynchronous play requests.
+
+## October 27 layout refinement
+The two real connected videos are placed first and last, separated by photo posts. All nine tiles remain available on mobile; reel tiles occupy their own centered row. The new-label shelf photograph is supplied by the owner and displayed in full. Playback controls were removed at the owner’s request; reels stay muted, inline, exclusive, and pause offscreen or in background tabs. Reduced-motion and data-saver visitors get linked still images. Browsers may still suppress autoplay. Missing provider reels remain honest image links.

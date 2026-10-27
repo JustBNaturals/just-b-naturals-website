@@ -1366,18 +1366,16 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .social-live-link>.social-tile-overlay{position:absolute;inset:0;pointer-events:none}
 .social-live-link>.social-hover-video{opacity:0;transition:opacity .2s}
 .social-live-tile.is-previewing .social-hover-video{opacity:1}
-.social-play-toggle{position:absolute;z-index:3;top:12px;right:12px;width:44px;height:44px;display:grid;place-items:center;border:1px solid #ffffffb3;border-radius:50%;background:#173329d9;color:white;cursor:pointer;font-size:16px;line-height:1}
-.social-play-toggle:focus-visible{outline:3px solid #e7ba74;outline-offset:3px}
-.social-play-toggle:not(:focus-visible){width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.social-live-tile.needs-play .social-play-toggle,.social-live-tile:hover .social-play-toggle,.social-live-tile:focus-within .social-play-toggle{width:44px;height:44px;padding:0;border:1px solid #ffffffb3;overflow:visible;clip-path:none;white-space:normal}
 .social-live-link:focus-visible{outline:3px solid #702b4a;outline-offset:-4px}
-.social-motion-toggle{display:block;margin:18px auto 0;min-height:44px;padding:8px 16px;border:1px solid #17332940;background:transparent;color:#173329;border-radius:24px;font:inherit;font-size:12px;cursor:pointer}
-.social-motion-toggle:focus-visible{outline:3px solid #702b4a;outline-offset:3px}
-.social-motion-toggle[hidden]{display:none}
 .social-live-tile:hover .social-tile-overlay,.social-live-tile:focus-within .social-tile-overlay{opacity:1}
 .social-live-tile.is-previewing .social-tile-overlay{background:linear-gradient(transparent 65%,#17332980)}
 .social-feed .social-tile-overlay{display:none}
 .social-feed{max-width:960px;margin-inline:auto}
-@media(max-width:680px){[data-instagram-gallery]>.social-tile:nth-child(n+7){display:none}}
+
 @media(min-width:681px){.social-live-tile{aspect-ratio:1}}
 @media(prefers-reduced-motion:reduce){.social-live-link>.social-hover-video{transition:none}}
+
+/* Full shelf photograph and separated reel rows on small screens. */
+.social-labels-tile>img,.social-labels-tile .social-live-link>img{object-fit:contain;object-position:center;background:#ede9df}
+.social-labels-tile:hover>img{transform:none}
+@media(max-width:680px){.social-feed{gap:12px}.social-live-tile.is-reel{grid-column:1/-1;justify-self:center;width:min(100%,360px);aspect-ratio:4/5}.social-labels-tile{grid-column:1/-1;aspect-ratio:4/3}.social-live-tile:not(.is-reel):not(.social-labels-tile){aspect-ratio:1}}

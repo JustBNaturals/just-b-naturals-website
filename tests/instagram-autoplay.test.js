@@ -9,7 +9,7 @@ test('connected posts and verified reel covers fill nine distinct chronological 
 });
 test('connected reel replaces a local cover and newer content displaces older content',()=>{
  const live={permalink:'https://www.instagram.com/reel/DekMYRiNu_z/',timestamp:'2026-10-16',type:'VIDEO',video:'/api/instagram/media?id=123&type=video'};
- const posts=galleryPosts([live]);assert.equal(posts.length,4);assert.equal(posts[1],live);
+ const posts=galleryPosts([live]);assert.equal(posts.length,4);assert.equal(posts[0],live);
  const newer=Array.from({length:10},(_,i)=>({permalink:`https://www.instagram.com/p/new${i}/`,timestamp:'2026-10-26'}));
  assert.equal(galleryPosts(newer).length,9);assert.ok(galleryPosts(newer).every(p=>p.timestamp==='2026-10-26'));
 });
@@ -43,7 +43,7 @@ test('blocked autoplay exposes a real tap control and does not loop play request
  f.playback.sync();await tick();assert.equal(f.plays,1);f.playback.toggle(f.state);await tick();assert.equal(f.plays,2);
 });
 test('leaving viewport before play resolves cannot reveal a stale playing preview',async()=>{
- const f=fixture({deferred:true});f.playback.intersection(f.state,.8);f.playback.intersection(f.state,0);f.finish();await tick();assert.ok(!f.classes.has('is-previewing'));assert.equal(f.state.requested,false);assert.equal(f.state.button['aria-pressed'],'false');
+ const f=fixture({deferred:true});f.playback.intersection(f.state,.8);f.playback.intersection(f.state,0);f.finish();await tick();assert.ok(!f.classes.has('is-previewing'));assert.equal(f.state.requested,false);assert.ok(f.pauses>=2);
 });
 
 test('multiple visible reels never play concurrently and the most visible takes over after pausing the first',async()=>{
@@ -62,4 +62,9 @@ test('a manual reel selection pauses the automatic reel and stays selected while
 test('a late play promise from the previous reel cannot reappear after another reel takes over',async()=>{
  const a=fixture({deferred:true}),b=fixture(),states=[a.state,b.state];const p=reelPlayback(states,{allowed:()=>true,hidden:()=>false,visible:s=>s.ratio>=.35});
  p.intersection(a.state,.5);p.intersection(b.state,1);await tick();a.finish();await tick();assert.equal(a.state.requested,false);assert.ok(!a.classes.has('is-previewing'));assert.equal(b.state.requested,true);assert.ok(b.classes.has('is-previewing'));
+});
+
+test('two connected videos are separated by photographs at the beginning and end',()=>{
+ const connected=Array.from({length:6},(_,i)=>({id:String(i),permalink:`https://www.instagram.com/p/order${i}/`,timestamp:`2026-10-0${6-i}`,type:i<2?'VIDEO':'IMAGE',video:i<2?`/api/instagram/media?id=${i}&type=video`:null}));
+ const posts=galleryPosts(connected);assert.equal(posts.length,9);assert.equal(posts[0],connected[0]);assert.equal(posts.at(-1),connected[1]);assert.ok(posts.slice(1,-1).every(p=>p.type!=='VIDEO'));
 });
