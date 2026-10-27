@@ -1378,4 +1378,5 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 /* Full shelf photograph and separated reel rows on small screens. */
 .social-labels-tile>img,.social-labels-tile .social-live-link>img{object-fit:contain;object-position:center;background:#ede9df}
 .social-labels-tile:hover>img{transform:none}
-@media(max-width:680px){.social-feed{gap:12px}.social-live-tile.is-reel{grid-column:1/-1;justify-self:center;width:min(100%,360px);aspect-ratio:4/5}.social-labels-tile{grid-column:1/-1;aspect-ratio:4/3}.social-live-tile:not(.is-reel):not(.social-labels-tile){aspect-ratio:1}}
+@media(min-width:681px){[data-instagram-gallery]>.social-live-tile.is-reel:nth-child(6){order:1}}
+@media(max-width:680px){.social-feed{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}[data-instagram-gallery]>.social-tile{grid-column:auto;justify-self:stretch;width:100%;aspect-ratio:1}[data-instagram-gallery]>.social-tile:nth-child(n+7){display:none}}

@@ -10,10 +10,11 @@ const LOCAL_POSTS=[
 export function galleryPosts(connected){
  const seen=new Set();
  const posts=[...connected,...LOCAL_POSTS].filter(post=>{const key=post.permalink?.split('/').filter(Boolean).at(-1);if(!key||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.timestamp)||0)-(Date.parse(a.timestamp)||0)).slice(0,9);
- // Place the two playable reels at opposite ends, with photos between them.
+ // The first six mobile tiles include two reels separated by four photos.
+ // Desktop places the second reel last through CSS order.
  const videos=posts.filter(p=>p.type==='VIDEO'&&p.video);
  const photos=posts.filter(p=>!videos.includes(p));
- return videos.length>1?[videos[0],...photos,...videos.slice(2),videos[1]]:videos.length?[videos[0],...photos]:photos;
+ return videos.length>1?[videos[0],...photos.slice(0,4),videos[1],...photos.slice(4),...videos.slice(2)]:videos.length?[videos[0],...photos]:photos;
 }
 // The same visibility lifecycle is used for mouse, touch and keyboard users.
 // Keep play() in the user-gesture call stack for browsers that block autoplay.

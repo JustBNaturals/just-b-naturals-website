@@ -23,3 +23,6 @@ Only one reel can play at a time. Viewport selection chooses the most visible el
 
 ## October 27 layout refinement
 The two real connected videos are placed first and last, separated by photo posts. All nine tiles remain available on mobile; reel tiles occupy their own centered row. The new-label shelf photograph is supplied by the owner and displayed in full. Playback controls were removed at the owner’s request; reels stay muted, inline, exclusive, and pause offscreen or in background tabs. Reduced-motion and data-saver visitors get linked still images. Browsers may still suppress autoplay. Missing provider reels remain honest image links.
+
+## October 27 mobile correction
+Mobile is restored to six equal square tiles in two columns. The first and sixth are the two playable feed reels, with four photos between them; desktop retains nine tiles and uses CSS order to place the second video last. No playback buttons are added. The source fallback is also limited to six equal tiles on mobile.

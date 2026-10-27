@@ -64,7 +64,7 @@ test('a late play promise from the previous reel cannot reappear after another r
  p.intersection(a.state,.5);p.intersection(b.state,1);await tick();a.finish();await tick();assert.equal(a.state.requested,false);assert.ok(!a.classes.has('is-previewing'));assert.equal(b.state.requested,true);assert.ok(b.classes.has('is-previewing'));
 });
 
-test('two connected videos are separated by photographs at the beginning and end',()=>{
+test('six mobile tiles include two separated reels and four photos',()=>{
  const connected=Array.from({length:6},(_,i)=>({id:String(i),permalink:`https://www.instagram.com/p/order${i}/`,timestamp:`2026-10-0${6-i}`,type:i<2?'VIDEO':'IMAGE',video:i<2?`/api/instagram/media?id=${i}&type=video`:null}));
- const posts=galleryPosts(connected);assert.equal(posts.length,9);assert.equal(posts[0],connected[0]);assert.equal(posts.at(-1),connected[1]);assert.ok(posts.slice(1,-1).every(p=>p.type!=='VIDEO'));
+ const posts=galleryPosts(connected);assert.equal(posts.length,9);assert.equal(posts[0],connected[0]);assert.equal(posts[5],connected[1]);assert.ok(posts.slice(1,5).every(p=>p.type!=='VIDEO'));assert.ok(posts.slice(6).every(p=>p.type!=='VIDEO'));
 });
