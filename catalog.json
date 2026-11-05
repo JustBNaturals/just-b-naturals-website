@@ -1253,16 +1253,16 @@
     "category": "home-linen",
     "name": "Non-Toxic Solid Dish Soap",
     "kicker": "Just B Clean",
-    "description": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning.",
-    "cardDescription": "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning.",
+    "description": "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean.",
+    "cardDescription": "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean.",
     "ingredients": [
-      "Saponified Organic Coconut Oil, Saponified Organic Castor Oil, All-Natural Citric Acid, Kaolin Clay."
+      "Saponified Oils (Organic Coconut Oil, Olive Oil, Castor Oil), Stearic Acid, Citric Acid, Lemon Essential Oil."
     ],
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A simple, effective solid dish soap made with thoughtfully selected ingredients for everyday kitchen cleaning. Saponified coconut and castor oils create a rich, cleansing lather, while citric acid and kaolin clay complement the formula. A long-lasting, zero-waste alternative to traditional liquid dish soap, paired with a reusable bamboo bristle brush for convenient, plastic-conscious cleaning."
+          "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean."
         ]
       },
       {
@@ -1621,6 +1621,234 @@
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-maple-chai-20261104.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "boreal-soap",
+    "category": "artisan-soap",
+    "name": "Boreal",
+    "kicker": "Just B Clean",
+    "description": "A bold black-and-white artisan soap inspired by the northern wilderness. Boreal creates a rich, creamy lather that leaves skin feeling soft, refreshed, and comforted, while its crisp woodland aroma brings a sense of calm and clarity to your daily routine.",
+    "cardDescription": "A bold black-and-white artisan soap inspired by the northern wilderness. Boreal creates a rich, creamy lather that leaves skin feeling soft, refreshed, and comforted, while its crisp woodland aroma brings a sense of calm and clarity to your daily routine.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oils (Peppermint, Eucalyptus, Tea Tree, Cedarwood), Activated Charcoal, Colloidal Oats."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A bold black-and-white artisan soap inspired by the northern wilderness. Boreal creates a rich, creamy lather that leaves skin feeling soft, refreshed, and comforted, while its crisp woodland aroma brings a sense of calm and clarity to your daily routine."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/boreal-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "evergreen-soap",
+    "category": "artisan-soap",
+    "name": "Evergreen",
+    "kicker": "Just B Clean",
+    "description": "A forest-inspired artisan soap with the fresh scent of fir, pine, cedarwood, and sweet orange. Rich, creamy lather and natural botanicals leave skin feeling clean, refreshed, and beautifully soft while bringing the tranquility of the woods to your everyday routine.",
+    "cardDescription": "A forest-inspired artisan soap with the fresh scent of fir, pine, cedarwood, and sweet orange. Rich, creamy lather and natural botanicals leave skin feeling clean, refreshed, and beautifully soft while bringing the tranquility of the woods to your everyday routine.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Raw Shea Butter, Organic Coconut Oil, Castor Oil), Steam-Distilled Essential Oils (Fir, Pine Needle, Orange, Cedarwood), French Green Clay, Chlorella, Spirulina, Activated Charcoal."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A forest-inspired artisan soap with the fresh scent of fir, pine, cedarwood, and sweet orange. Rich, creamy lather and natural botanicals leave skin feeling clean, refreshed, and beautifully soft while bringing the tranquility of the woods to your everyday routine."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/evergreen-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "gingerbread-soap",
+    "category": "artisan-soap",
+    "name": "Gingerbread",
+    "kicker": "Just B Clean",
+    "description": "A warm, spice-inspired artisan soap with notes of vanilla, orange, cinnamon leaf, and patchouli. Gingerbread creates a rich, creamy lather and fills your daily routine with the comforting scent of freshly baked treats and cozy winter days.",
+    "cardDescription": "A warm, spice-inspired artisan soap with notes of vanilla, orange, cinnamon leaf, and patchouli. Gingerbread creates a rich, creamy lather and fills your daily routine with the comforting scent of freshly baked treats and cozy winter days.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Steam-Distilled Essential Oils (Vanilla Oleoresin, Orange, Cinnamon Leaf, Patchouli), Kaolin Clay, Cocoa Powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A warm, spice-inspired artisan soap with notes of vanilla, orange, cinnamon leaf, and patchouli. Gingerbread creates a rich, creamy lather and fills your daily routine with the comforting scent of freshly baked treats and cozy winter days."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/gingerbread-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "peppermint-twist-soap",
+    "category": "artisan-soap",
+    "name": "Peppermint Twist",
+    "kicker": "Just B Clean",
+    "description": "Bright, playful, and refreshing, Peppermint Twist brings a burst of energy to your daily routine. Swirls of soft pink and natural green create a cheerful, candy-inspired design that's as beautiful as it is inviting.",
+    "cardDescription": "Bright, playful, and refreshing, Peppermint Twist brings a burst of energy to your daily routine. Swirls of soft pink and natural green create a cheerful, candy-inspired design that's as beautiful as it is inviting.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oils (Peppermint, Orange, Litsea), Kaolin Clay, Madder Root Powder, French Green Clay, Pink Clay."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Bright, playful, and refreshing, Peppermint Twist brings a burst of energy to your daily routine. Swirls of soft pink and natural green create a cheerful, candy-inspired design that's as beautiful as it is inviting.",
+          "Organic coconut milk and nourishing oils create a rich, creamy lather that feels silky and luxurious on the skin. Cooling peppermint takes center stage, while sweet orange and vibrant litsea add a lively citrus brightness that keeps the scent fresh, uplifting, and beautifully balanced. Both invigorating and comforting, Peppermint Twist transforms an everyday shower into a refreshing moment of self-care."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/peppermint-twist-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "grinch-soap",
+    "category": "artisan-soap",
+    "name": "Grinch (Mistletoe)",
+    "kicker": "Just B Clean",
+    "description": "A festive artisan soap inspired by evergreen forests and holiday traditions. Rich natural greens and cheerful seasonal colours create a playful appearance, while the fresh blend of fir needle, cedarwood, orange, and rosemary evokes the scent of winter woodlands. Creamy lather and nourishing oils leave skin feeling soft, refreshed, and cared for.",
+    "cardDescription": "A festive artisan soap inspired by evergreen forests and holiday traditions. Rich natural greens and cheerful seasonal colours create a playful appearance, while the fresh blend of fir needle, cedarwood, orange, and rosemary evokes the scent of winter woodlands. Creamy lather and nourishing oils leave skin feeling soft, refreshed, and cared for.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oils (Fir Needle, Cedarwood, Orange, Rosemary), Madder Root Powder, Kaolin Clay, Purple Clay, Chlorella, French Green Clay."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A festive artisan soap inspired by evergreen forests and holiday traditions. Rich natural greens and cheerful seasonal colours create a playful appearance, while the fresh blend of fir needle, cedarwood, orange, and rosemary evokes the scent of winter woodlands. Creamy lather and nourishing oils leave skin feeling soft, refreshed, and cared for."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/grinch-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "brume-soap",
+    "category": "artisan-soap",
+    "name": "Brume",
+    "kicker": "Just B Clean",
+    "description": "Brume is fresh, crisp, and quietly invigorating. Deep natural hues inspired by woodland landscapes give this handcrafted soap a striking appearance, while its clean, forest-fresh aroma creates a sense of calm and clarity.",
+    "cardDescription": "Brume is fresh, crisp, and quietly invigorating. Deep natural hues inspired by woodland landscapes give this handcrafted soap a striking appearance, while its clean, forest-fresh aroma creates a sense of calm and clarity.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oils (Fir Needle, Pine, Peppermint), Chlorella, Indigo Powder, Activated Charcoal."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Brume is fresh, crisp, and quietly invigorating. Deep natural hues inspired by woodland landscapes give this handcrafted soap a striking appearance, while its clean, forest-fresh aroma creates a sense of calm and clarity.",
+          "Organic coconut milk and nourishing oils produce a rich, creamy lather that glides smoothly over the skin, leaving it feeling soft, refreshed, and cared for. Fir needle and pine evoke the scent of dense evergreens after rainfall, while a touch of peppermint adds a cool, airy brightness. Natural botanicals and activated charcoal contribute to a clean, revitalized feel that makes every wash a refreshing escape into nature."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/brume-soap-20261105.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "himalayan-salt-scrub",
+    "category": "artisan-soap",
+    "name": "Himalayan Salt Scrub",
+    "kicker": "Just B Clean",
+    "description": "Awaken your senses with this invigorating salt scrub, crafted to polish, soften, and refresh the skin. Mineral-rich Himalayan salt provides gentle exfoliation, helping to smooth away dullness while revealing skin that feels renewed and silky soft.",
+    "cardDescription": "Awaken your senses with this invigorating salt scrub, crafted to polish, soften, and refresh the skin. Mineral-rich Himalayan salt provides gentle exfoliation, helping to smooth away dullness while revealing skin that feels renewed and silky soft.",
+    "ingredients": [
+      "Saponified Coconut Oil, Himalayan Sea Salt, Aloe Vera Juice, Saponified Castor Oil, Mango Butter, Shea Butter, Colloidal Oats, Indigo Powder, Steam-Distilled Essential Oils (Orange and Eucalyptus)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Awaken your senses with this invigorating salt scrub, crafted to polish, soften, and refresh the skin. Mineral-rich Himalayan salt provides gentle exfoliation, helping to smooth away dullness while revealing skin that feels renewed and silky soft.",
+          "Nourishing butters and conditioning oils create a creamy, cushiony texture that leaves skin feeling moisturized and comfortable, never stripped. Colloidal oats and aloe vera contribute a soothing touch, while the bright, uplifting blend of orange and eucalyptus essential oils delivers a fresh, clean aroma that energizes both body and mind.",
+          "The result is a luxurious exfoliating experience that leaves skin feeling incredibly smooth, refreshed, and glowing."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/himalayan-salt-scrub-20261105.webp",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",

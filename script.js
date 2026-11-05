@@ -1,7 +1,7 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
-import { PRODUCTS } from "./product-data.js?v=20261104-new-soaps";
+import { PRODUCTS } from "./product-data.js?v=20261105-complete-soaps";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261104-new-soaps";
+import "./fr.js?v=20261105-complete-soaps";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -352,6 +352,18 @@ function fallbackArtMarkup(product) {
 }
 
 const PRODUCT_IMAGE_POSITIONS = Object.freeze({
+  "evergreen-soap": "50% 80%",
+  "brume-soap": "50% 68%",
+  "gingerbread-soap": "50% 70%",
+  "boreal-soap": "50% 65%",
+  "grinch-soap": "50% 100%",
+  "peppermint-twist-soap": "50% 100%",
+  "himalayan-salt-scrub": "50% 50%",
+  "serenity-soap": "65% 100%",
+  "cozy-soap": "50% 65%",
+  "sunshine-soap": "50% 70%",
+  "maple-chai-soap": "50% 72%",
+
   "almond-milk-mocha-soap": "50% 69%",
   "blue-cedar-soap": "50% 91%",
   "chamomile-soap": "50% 93%",
@@ -397,7 +409,9 @@ const ARTISAN_DISPLAY_ORDER = Object.freeze([
 ]);
 
 function productImageStyle(product) {
-  return `object-position:${PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%"}`;
+  const position = PRODUCT_IMAGE_POSITIONS[product.id] || "50% 50%";
+  const zoom = { "brume-soap": 1.22, "evergreen-soap": 1.12, "serenity-soap": 1.1, "gingerbread-soap": 1.08 }[product.id] || 1;
+  return `object-position:${position};transform:scale(${zoom});transform-origin:${position}`;
 }
 
 function artMarkup(product) {
@@ -541,7 +555,7 @@ function orderItemMarkup(item) {
   if (!product) return "";
   const key = orderLineKey(item);
   return `<article class="order-list-item" data-order-item="${escapeHtml(key)}">
-    <a href="${productPageUrl(product)}" aria-label="View ${product.name}"><img src="${product.image}" alt="" loading="lazy"></a>
+    <a href="${productPageUrl(product)}" aria-label="View ${product.name}"><img src="${product.image}" alt="" loading="lazy" style="${productImageStyle(product)}"></a>
     <div class="order-item-copy"><h3><a href="${productPageUrl(product)}">${product.name}</a></h3><p>${t(CATEGORY_LABELS[product.category] || "Just B Natural")}${Number.isFinite(product.price) ? ` · ${formatPrice(product.price * item.quantity)}` : ""}</p>
       <div class="order-item-controls"><div class="quantity-control" aria-label="Quantity for ${product.name}"><button type="button" data-order-quantity="-1" data-order-key="${escapeHtml(key)}" aria-label="Remove one ${product.name}">−</button><strong aria-live="polite">${item.quantity}</strong><button type="button" data-order-quantity="1" data-order-key="${escapeHtml(key)}" aria-label="Add one ${product.name}">+</button></div><button class="remove-order-item" type="button" data-order-remove="${escapeHtml(key)}">${t("Remove")}</button></div>
     </div>
@@ -849,6 +863,7 @@ function initializeCatalogueFeatures() {
     if (!product) return;
     const image = dialog.querySelector("img");
     image.src = product.image;
+    image.style.cssText = productImageStyle(product);
     image.alt = product.name;
     dialog.querySelector("h2").textContent = product.name;
     const dialogAdd = dialog.querySelector(".dialog-add-order");
@@ -1069,7 +1084,7 @@ function renderProductPage() {
     <div class="shell product-detail-shell">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html#${product.category}">${categoryLabel}</a><span>/</span><span>${product.name}</span></nav>
       <section class="product-detail-hero" style="--tone:${product.tone};--accent:${product.accent}">
-        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}" style="${productImageStyle(product)}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
+        <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}" ${["boreal-soap","evergreen-soap","gingerbread-soap","peppermint-twist-soap","grinch-soap","brume-soap","himalayan-salt-scrub","serenity-soap","cozy-soap","sunshine-soap","maple-chai-soap"].includes(product.id) ? "data-soap-focused" : ""} style="${productImageStyle(product)}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
         <div class="product-detail-purchase">
           <p class="eyebrow">${product.kicker}</p>
           <h1>${product.name}</h1>

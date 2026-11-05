@@ -1380,3 +1380,6 @@ footer { padding: 62px 0 28px; background: var(--dark); color: rgba(255,255,255,
 .social-labels-tile:hover>img{transform:none}
 @media(min-width:681px){[data-instagram-gallery]>.social-live-tile.is-reel:nth-child(6){order:1}}
 @media(max-width:680px){.social-feed{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}[data-instagram-gallery]>.social-tile{grid-column:auto;justify-self:stretch;width:100%;aspect-ratio:1}[data-instagram-gallery]>.social-tile:nth-child(n+7){display:none}}
+
+/* Keep the November soap gallery square so tall source photos frame the bars. */
+.product-detail-media:has([data-soap-focused]) { min-height: 0; aspect-ratio: 1; align-self: center; }

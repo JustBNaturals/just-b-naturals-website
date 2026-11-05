@@ -7,7 +7,7 @@ import { launchEmailHtml } from "../email-preview.js";
 import { localDeliveryFee } from "../delivery.js";
 import { CAMPAIGN_DEFAULTS, campaignConfig, priceOrder } from "../promotion.js";
 const PRODUCT_CATALOG = PRODUCT_NAMES;
-const NOVEMBER_SOAP_IDS = new Set(["serenity-soap", "cozy-soap", "sunshine-soap", "maple-chai-soap"]);
+const NOVEMBER_SOAP_IDS = new Set(["serenity-soap", "cozy-soap", "sunshine-soap", "maple-chai-soap", "boreal-soap", "evergreen-soap", "gingerbread-soap", "peppermint-twist-soap", "grinch-soap", "brume-soap", "himalayan-salt-scrub"]);
 const BREVO_BASE="https://api.brevo.com/v3";
 const GOOGLE_PLACES_BASE="https://places.googleapis.com/v1";
 const GOOGLE_ROUTES_URL="https://routes.googleapis.com/directions/v2:computeRoutes";
