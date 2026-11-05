@@ -1322,7 +1322,7 @@ export const PRODUCTS = [
     "availabilityStatus": "available",
     "price": null,
     "stock": null,
-    "image": "images/sourdough-crepe-mix.png",
+    "image": "images/catalog/sourdough-crepe-mix-20261104.webp",
     "imageNote": null,
     "art": "jar",
     "tone": "#e8ddcc",
@@ -1491,6 +1491,137 @@ export const PRODUCTS = [
     "price": null,
     "stock": null,
     "image": "images/catalog/soap-rose-matter.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "serenity-soap",
+    "category": "artisan-soap",
+    "name": "Serenity",
+    "kicker": "Just B Clean",
+    "description": "A soothing artisan soap crafted for moments of calm. Soft pastel colours create a delicate, elegant look, while its gentle character makes it perfect for a relaxing daily cleanse. Beautifully simple and effortlessly serene, it's a lovely addition to any bath or skincare routine.",
+    "cardDescription": "A soothing artisan soap crafted for moments of calm. Soft pastel colours create a delicate, elegant look, while its gentle character makes it perfect for a relaxing daily cleanse. Beautifully simple and effortlessly serene, it's a lovely addition to any bath or skincare routine.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oil Blend (Lavender, Frankincense, Orange), Madder Root Powder, Cocoa Powder, Kaolin Clay."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A soothing artisan soap crafted for moments of calm. Soft pastel colours create a delicate, elegant look, while its gentle character makes it perfect for a relaxing daily cleanse. Beautifully simple and effortlessly serene, it's a lovely addition to any bath or skincare routine."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-serenity-20261104.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "cozy-soap",
+    "category": "artisan-soap",
+    "name": "Cozy",
+    "kicker": "Just B Clean",
+    "description": "A warm and comforting artisan soap with rich cocoa hues and gentle blue swirls. Cozy creates a luxurious, creamy lather, while notes of cedarwood, frankincense, and peppermint offer a soothing balance of warmth and freshness. Perfect for slow mornings and peaceful evenings.",
+    "cardDescription": "A warm and comforting artisan soap with rich cocoa hues and gentle blue swirls. Cozy creates a luxurious, creamy lather, while notes of cedarwood, frankincense, and peppermint offer a soothing balance of warmth and freshness. Perfect for slow mornings and peaceful evenings.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Steam-Distilled Essential Oils (Peppermint, Cedarwood, Frankincense), Kaolin Clay, Cocoa Powder, Indigo Powder."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A warm and comforting artisan soap with rich cocoa hues and gentle blue swirls. Cozy creates a luxurious, creamy lather, while notes of cedarwood, frankincense, and peppermint offer a soothing balance of warmth and freshness. Perfect for slow mornings and peaceful evenings."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-cozy-20261104.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "sunshine-soap",
+    "category": "artisan-soap",
+    "name": "Sunshine",
+    "kicker": "Just B Clean",
+    "description": "Bright, cheerful, and full of warmth, Sunshine is a handcrafted soap inspired by golden mornings and clear summer skies. Its sunny hues and delicate botanical accents bring a sense of joy to your daily routine, turning an ordinary wash into a small moment of happiness.",
+    "cardDescription": "Bright, cheerful, and full of warmth, Sunshine is a handcrafted soap inspired by golden mornings and clear summer skies. Its sunny hues and delicate botanical accents bring a sense of joy to your daily routine, turning an ordinary wash into a small moment of happiness.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Organic Coconut Milk, Steam-Distilled Essential Oils (Orange, Litsea), Kaolin Clay, Yellow Clay, Madder Root Powder, Poppy Seeds, Calendula Petals (Garnish Only)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Bright, cheerful, and full of warmth, Sunshine is a handcrafted soap inspired by golden mornings and clear summer skies. Its sunny hues and delicate botanical accents bring a sense of joy to your daily routine, turning an ordinary wash into a small moment of happiness.",
+          "Organic coconut milk and nourishing oils create a rich, creamy lather that feels silky and luxurious on the skin. Sweet orange and vibrant litsea essential oils blend beautifully to create a fresh, citrusy aroma that is uplifting, energetic, and full of life. Gentle exfoliation from poppy seeds adds texture, while touches of yellow clay and natural botanicals enhance its radiant appearance.",
+          "Fresh, optimistic, and beautifully bright, Sunshine brings a little glow to every day."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-sunshine-20261104.webp",
+    "imageNote": null,
+    "art": "bar",
+    "tone": "#ded2bf",
+    "accent": "#745f47",
+    "featured": false
+  },
+  {
+    "id": "maple-chai-soap",
+    "category": "artisan-soap",
+    "name": "Maple Chai",
+    "kicker": "Just B Clean",
+    "description": "Warm, comforting, and richly aromatic, Maple Chai brings to mind cozy kitchens, crisp autumn days, and a steaming cup of spiced tea shared with good company. Inspired by traditional chai blends and sweet maple notes, this handcrafted soap transforms an everyday routine into a moment of comfort and calm.",
+    "cardDescription": "Warm, comforting, and richly aromatic, Maple Chai brings to mind cozy kitchens, crisp autumn days, and a steaming cup of spiced tea shared with good company. Inspired by traditional chai blends and sweet maple notes, this handcrafted soap transforms an everyday routine into a moment of comfort and calm.",
+    "ingredients": [
+      "Saponified Oils (Organic Olive Oil, Shea Butter, Organic Coconut Oil, Castor Oil), Chai Tea, Maple Syrup, Kaolin Clay, Steam-Distilled Essential Oils (Orange, Cedarwood, Cinnamon Leaf, Clove, Ginger, Nutmeg)."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Warm, comforting, and richly aromatic, Maple Chai brings to mind cozy kitchens, crisp autumn days, and a steaming cup of spiced tea shared with good company. Inspired by traditional chai blends and sweet maple notes, this handcrafted soap transforms an everyday routine into a moment of comfort and calm.",
+          "The lather is creamy and luxurious, cleansing gently while leaving skin feeling soft and nourished. The warm spice blend of cinnamon, clove, ginger, and nutmeg is beautifully balanced by bright orange and grounding cedarwood, creating a scent that feels both inviting and sophisticated. Maple syrup and brewed chai tea add a touch of rustic charm, making each bar a celebration of simple pleasures and seasonal warmth."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "use": "",
+    "safety": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/catalog/soap-maple-chai-20261104.webp",
     "imageNote": null,
     "art": "bar",
     "tone": "#ded2bf",

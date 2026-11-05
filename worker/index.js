@@ -7,6 +7,7 @@ import { launchEmailHtml } from "../email-preview.js";
 import { localDeliveryFee } from "../delivery.js";
 import { CAMPAIGN_DEFAULTS, campaignConfig, priceOrder } from "../promotion.js";
 const PRODUCT_CATALOG = PRODUCT_NAMES;
+const NOVEMBER_SOAP_IDS = new Set(["serenity-soap", "cozy-soap", "sunshine-soap", "maple-chai-soap"]);
 const BREVO_BASE="https://api.brevo.com/v3";
 const GOOGLE_PLACES_BASE="https://places.googleapis.com/v1";
 const GOOGLE_ROUTES_URL="https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -128,8 +129,13 @@ function normalizeItems(items){
   }
   return [...grouped.values()];
 }
+async function ensureNovemberSoaps(env){
+  if(!env.INVENTORY_DB)return;
+  await env.INVENTORY_DB.batch([...NOVEMBER_SOAP_IDS].map(id=>env.INVENTORY_DB.prepare("INSERT OR IGNORE INTO inventory (product_id,stock_count,price_cents,is_active,availability_status,available_date) VALUES (?,NULL,800,1,'available',NULL)").bind(id)));
+}
 async function attachInventory(env,items){
   if(!env.INVENTORY_DB||!items.length)return items;
+  if(items.some(item=>NOVEMBER_SOAP_IDS.has(item.id)))await ensureNovemberSoaps(env);
   const marks=items.map(()=>"?").join(",");
   const result=await env.INVENTORY_DB.prepare(`SELECT product_id,stock_count,price_cents,is_active,availability_status,available_date FROM inventory WHERE product_id IN (${marks})`).bind(...items.map(i=>i.id)).all();
   const rows=new Map((result.results||[]).map(row=>[row.product_id,row]));
@@ -299,6 +305,7 @@ async function handleCampaignOrders(request,env){
 }
 async function handleProducts(env){
   if(!env.INVENTORY_DB)return json({products:[]});
+  await ensureNovemberSoaps(env);
   try{const result=await env.INVENTORY_DB.prepare("SELECT product_id,stock_count,price_cents,is_active,availability_status,available_date,updated_at FROM inventory ORDER BY product_id").all();return json({products:(result.results||[]).map(row=>({id:row.product_id,stock:row.stock_count,priceCents:row.price_cents,active:row.is_active!==0,availabilityStatus:row.availability_status||"available",availableDate:row.available_date||null,updatedAt:row.updated_at}))})}catch(_){return json({products:[]})}
 }
 
