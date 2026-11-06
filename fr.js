@@ -44,7 +44,7 @@
     "lavender-bloom-scrub": ["Fleur de lavande", "Un exfoliant au sucre biologique et à la lavande qui polit doucement la peau tout en la laissant souple."],
     "harvest-spa-scrub": ["Récolte", "Un exfoliant au sucre biologique aux notes chaleureuses et réconfortantes, enrichi de beurres et d'huiles nourrissantes."],
     "vanilla-scrub": ["Vanille", "Un exfoliant au sucre biologique à la vanille, crémeux et nourrissant, qui laisse la peau douce et lisse."],
-    "just-b-rested-room-spray": ["Brume d'ambiance et de linge", "Une brume botanique légère pour rafraîchir doucement les pièces et le linge de maison."],
+    "just-b-rested-room-spray": ["Brume aromatique — Lavande", "Une brume aromatique à la lavande pour rafraîchir doucement les pièces et le linge de maison."],
     "blue-cedar-soap": ["Cèdre bleu", "Un savon boisé aux tons bleus naturels et à la mousse riche, inspiré de la fraîcheur du cèdre."],
     "chamomile-soap": ["Camomille", "Un savon doux à la camomille, fabriqué avec des huiles biologiques et du beurre de karité brut."],
     "forest-soap": ["Forêt", "Un savon frais et boisé inspiré de la forêt, coloré avec des ingrédients naturels."],
@@ -101,7 +101,7 @@
         product.sections = [{ title: "En détail", paragraphs: translated[1].split(/\n\n/).concat(categoryDetails[product.category] || "Consultez les détails et les ingrédients pour en savoir plus sur ce produit.") }];
       }
       product.ingredients = productIngredientsFr[product.id] ? [productIngredientsFr[product.id]] : (Array.isArray(product.ingredients) ? product.ingredients.map(translateIngredients) : [translateIngredients(product.ingredients)]);
-      product.kicker = "JUST B NATURAL";
+      product.kicker = product.id === "just-b-rested-room-spray" ? "Brume aromatique" : "JUST B NATURAL";
       product.note = "";
       if (product.imageNote) product.imageNote = "Photo de la collection. Photo individuelle à venir.";
       if (product.category === "artisan-soap") {
