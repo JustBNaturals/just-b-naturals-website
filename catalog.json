@@ -1854,5 +1854,39 @@
     "tone": "#ded2bf",
     "accent": "#745f47",
     "featured": false
+  },
+  {
+    "id": "odds-n-ends",
+    "category": "artisan-soap",
+    "name": "Odds n Ends",
+    "kicker": "Artisan Soap Pieces",
+    "description": "Why throw away perfectly good soap just because it’s not pretty? Zero waste, zero fuss. Odds n Ends is a mix of the little offcuts and irregular pieces left over from making our artisan soaps. Shapes, colours and scents vary with each assortment.",
+    "cardDescription": "Perfectly good artisan soap in little offcuts and irregular pieces. Zero waste, zero fuss.",
+    "ingredients": [
+      "May contain: Saponified fats: olive (also calendula- or chamomile-infused), coconut, castor, sweet almond, jojoba, shea, mango, grass-fed tallow. Mango and shea butters; water; coconut and almond milks; 10% cream; honey; colloidal and decorative oats; sugar; pumpkin purée; banana; espresso and coffee grounds; chai tea; maple syrup; aloe vera juice; Himalayan salt; loofah; activated charcoal; clays: kaolin, French green and pink, Brazilian purple, purple, pink, yellow, French; powders: matcha, cocoa, indigo, turmeric, madder root, chlorella, spirulina; ground cinnamon; poppy seeds; calendula petals; chamomile flowers; vanilla oleoresin; essential oils: lavender, bergamot, patchouli, cedarwood, rosemary, clary sage, frankincense, orange and sweet orange, fir and fir needle, peppermint, grapefruit, eucalyptus, lemongrass, ylang-ylang, clove, litsea, cinnamon leaf, ginger, nutmeg, tea tree, pine and pine needle."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Small pieces, the same everyday purpose. We gather the offcuts and irregular ends from our artisan soap batches so they can be used and enjoyed. Each assortment brings a different mix of shapes, colours and scents.",
+          "Collection photo shown for now. The pieces in each assortment will vary."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "Collection photo shown for now. The pieces in each assortment will vary.",
+    "use": "Lather with water, wash and rinse well. Let the pieces dry between uses.",
+    "safety": "Review the full ingredient list before use. Stop use if irritation occurs. For external use only.",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "image": "images/artisan-soaps-collection.png",
+    "imageNote": "Collection photo — assortment varies.",
+    "art": "bar",
+    "tone": "#e8e1d4",
+    "accent": "#756a56",
+    "featured": false,
+    "requiresPrice": true
   }
 ]
