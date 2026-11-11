@@ -1888,5 +1888,39 @@
     "accent": "#756a56",
     "featured": false,
     "requiresPrice": true
+  },
+  {
+    "id": "menthol-shower-steamer",
+    "category": "home-linen",
+    "name": "Menthol Shower Steamer",
+    "kicker": "Breathe Easy",
+    "description": "A shower steamer with a crisp menthol scent, eucalyptus, peppermint and fir needle essential oils, and lavender buds for decoration. Use it on the included tray to release the aroma as you shower.",
+    "ingredients": [
+      "Baking soda (sodium bicarbonate), citric acid, kaolin clay, menthol crystals, eucalyptus, peppermint and fir needle essential oils, alcohol, lavender buds (decoration)."
+    ],
+    "use": "Place one puck on the included tray away from the direct shower stream. Let a light splash activate it. One puck can last 1–2 showers. Let the puck and tray dry between uses.",
+    "storage": "Keep the bag closed and the pucks dry until use. Store away from humidity.",
+    "safety": "Shower use only. Keep off skin and out of eyes. Do not swallow or use in a bath. Keep away from children and pets. Ventilate the shower and stop use if irritation occurs.",
+    "cardDescription": "A fresh menthol shower steamer with eucalyptus, peppermint and fir needle essential oils. Tray included.",
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "A shower steamer with a crisp menthol scent, eucalyptus, peppermint and fir needle essential oils, and lavender buds for decoration. Use it on the included tray to release the aroma as you shower."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "",
+    "availability": null,
+    "price": null,
+    "stock": null,
+    "requiresPrice": true,
+    "image": "images/just-b-logo-192.webp",
+    "imageNote": "Product photo coming soon.",
+    "art": "bar",
+    "tone": "#e8e1d4",
+    "accent": "#756a56",
+    "featured": false
   }
 ]

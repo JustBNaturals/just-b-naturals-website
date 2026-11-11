@@ -887,7 +887,7 @@ function initializeCatalogueFeatures() {
 }
 
 function productGuidance(product) {
-  if (product.isFood) return { use: product.use, care: product.storage, detail: product.description };
+  if (product.isFood || product.id === "menthol-shower-steamer") return { use: product.use, care: product.storage, detail: product.description };
   const guidance = {
     "roller-oils": {
       use: "Roll lightly onto pulse points such as wrists or the back of the neck. Use only as directed and avoid the eye area.",
@@ -926,7 +926,7 @@ function productGuidance(product) {
 }
 
 function conciseProductUse(product) {
-  if (product.isFood) return product.use;
+  if (product.isFood || product.id === "menthol-shower-steamer") return product.use;
   const french = Boolean(globalThis.JBN_FR?.isFrench);
   const specific = {
     "solid-dish-soap": french ? "Mouiller la brosse, la frotter sur le savon pour créer une mousse, laver, puis bien rincer." : "Wet the brush, swirl it over the soap to create a lather, wash, then rinse thoroughly.",
