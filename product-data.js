@@ -1252,10 +1252,10 @@ export const PRODUCTS = [
   {
     "id": "solid-dish-soap",
     "category": "home-linen",
-    "name": "Non-Toxic Solid Dish Soap",
+    "name": "Solid Dish Soap Set",
     "kicker": "Just B Clean",
-    "description": "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean.",
-    "cardDescription": "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean.",
+    "description": "Lemon-scented solid dish soap and a bamboo dish brush in festive gift packaging. The soap is made with plant-based oils. Let the soap and brush dry between uses.",
+    "cardDescription": "Lemon-scented solid dish soap and a bamboo dish brush in festive gift packaging.",
     "ingredients": [
       "Saponified Oils (Organic Coconut Oil, Olive Oil, Castor Oil), Stearic Acid, Citric Acid, Lemon Essential Oil."
     ],
@@ -1263,7 +1263,7 @@ export const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "A long-lasting solid dish soap crafted to cut through grease while remaining gentle on hands. Made with plant-based oils and naturally scented with fresh lemon essential oil, it creates a rich lather that leaves dishes sparkling clean. An eco-friendly alternative to liquid dish soap, it helps reduce plastic waste while keeping your kitchen fresh and clean."
+          "Lemon-scented solid dish soap and a bamboo dish brush in festive gift packaging. The soap is made with plant-based oils. Let the soap and brush dry between uses."
         ]
       },
       {
@@ -1280,14 +1280,15 @@ export const PRODUCTS = [
     "use": "Wet the bamboo bristle brush and gently swirl it directly over the soap to create a lather. Scrub dishes, cookware, and utensils as needed, then rinse thoroughly with clean water. Allow both the soap and brush to dry between uses to help them last longer.",
     "safety": "",
     "availability": null,
-    "price": null,
+    "price": 20,
     "stock": null,
-    "image": "images/catalog/solid-dish-soap.webp",
+    "image": "images/christmas/solid-dish-soap.webp",
     "imageNote": null,
     "art": "spray",
     "tone": "#d9ded7",
     "accent": "#526b60",
-    "featured": true
+    "featured": true,
+    "holiday": true
   },
   {
     "id": "sourdough-crepe-mix",
@@ -1320,9 +1321,9 @@ export const PRODUCTS = [
     "safety": "Cook the crêpes before serving.",
     "availability": null,
     "availabilityStatus": "available",
-    "price": null,
+    "price": 12,
     "stock": null,
-    "image": "images/catalog/sourdough-crepe-mix-20261104.webp",
+    "image": "images/christmas/sourdough-crepe-mix.webp",
     "imageNote": null,
     "art": "jar",
     "tone": "#e8ddcc",
@@ -1330,7 +1331,8 @@ export const PRODUCTS = [
     "featured": false,
     "isFood": true,
     "requiresPrice": true,
-    "weightGrams": 255
+    "weightGrams": 255,
+    "holiday": true
   },
   {
     "id": "blue-cedar-soap",
@@ -1870,57 +1872,166 @@ export const PRODUCTS = [
       {
         "title": "About this product",
         "paragraphs": [
-          "Small pieces, the same everyday purpose. We gather the offcuts and irregular ends from our artisan soap batches so they can be used and enjoyed. Each assortment brings a different mix of shapes, colours and scents.",
-          "Collection photo shown for now. The pieces in each assortment will vary."
+          "Small pieces, the same everyday purpose. We gather the offcuts and irregular ends from our artisan soap batches so they can be used and enjoyed. Each assortment brings a different mix of shapes, colours and scents."
         ]
       }
     ],
     "details": [],
-    "note": "Collection photo shown for now. The pieces in each assortment will vary.",
+    "note": "Shapes, colours and scents vary by assortment.",
     "use": "Lather with water, wash and rinse well. Let the pieces dry between uses.",
     "safety": "Review the full ingredient list before use. Stop use if irritation occurs. For external use only.",
     "availability": null,
-    "price": null,
+    "price": 8,
     "stock": null,
-    "image": "images/artisan-soaps-collection.png",
-    "imageNote": "Collection photo — assortment varies.",
+    "image": "images/christmas/odds-n-ends.webp",
     "art": "bar",
     "tone": "#e8e1d4",
     "accent": "#756a56",
     "featured": false,
-    "requiresPrice": true
+    "requiresPrice": true,
+    "holiday": true
   },
   {
     "id": "menthol-shower-steamer",
     "category": "home-linen",
-    "name": "Menthol Shower Steamer",
+    "name": "Menthol Shower Steamers",
     "kicker": "Breathe Easy",
-    "description": "A shower steamer with a crisp menthol scent, eucalyptus, peppermint and fir needle essential oils, and lavender buds for decoration. Use it on the included tray to release the aroma as you shower.",
+    "description": "Six menthol shower steamers with eucalyptus, peppermint and fir needle essential oils, and decorative lavender buds. The wooden tray is included.",
     "ingredients": [
       "Baking soda (sodium bicarbonate), citric acid, kaolin clay, menthol crystals, eucalyptus, peppermint and fir needle essential oils, alcohol, lavender buds (decoration)."
     ],
     "use": "Place one puck on the included tray away from the direct shower stream. Let a light splash activate it. One puck can last 1–2 showers. Let the puck and tray dry between uses.",
     "storage": "Keep the bag closed and the pucks dry until use. Store away from humidity.",
     "safety": "Shower use only. Keep off skin and out of eyes. Do not swallow or use in a bath. Keep away from children and pets. Ventilate the shower and stop use if irritation occurs.",
-    "cardDescription": "A fresh menthol shower steamer with eucalyptus, peppermint and fir needle essential oils. Tray included.",
+    "cardDescription": "Six menthol shower steamers with eucalyptus, peppermint and fir needle essential oils. Wooden tray included.",
     "sections": [
       {
         "title": "About this product",
         "paragraphs": [
-          "A shower steamer with a crisp menthol scent, eucalyptus, peppermint and fir needle essential oils, and lavender buds for decoration. Use it on the included tray to release the aroma as you shower."
+          "Six menthol shower steamers with eucalyptus, peppermint and fir needle essential oils, and decorative lavender buds. The wooden tray is included."
         ]
       }
     ],
     "details": [],
     "note": "",
     "availability": null,
-    "price": null,
+    "price": 25,
     "stock": null,
     "requiresPrice": true,
-    "image": "images/menthol-shower-steamers.jpg",
+    "image": "images/christmas/menthol-shower-steamer.webp",
     "art": "bar",
     "tone": "#e8e1d4",
     "accent": "#756a56",
+    "featured": true,
+    "holiday": true
+  },
+  {
+    "id": "gift-soap-duo",
+    "category": "gift-sets",
+    "name": "Two Artisan Soaps",
+    "kicker": "Christmas Gift Set",
+    "description": "Two handmade soaps and a sisal soap bag in a ribbon-tied gift box.",
+    "cardDescription": "Two handmade soaps and a sisal soap bag in a ribbon-tied gift box.",
+    "ingredients": [],
+    "price": 22,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-soap-duo.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false
+  },
+  {
+    "id": "gift-soap-trio",
+    "category": "gift-sets",
+    "name": "Three Artisan Soaps",
+    "kicker": "Christmas Gift Set",
+    "description": "Three handmade soaps and a sisal soap bag in a Christmas gift box.",
+    "cardDescription": "Three handmade soaps and a sisal soap bag in a Christmas gift box.",
+    "ingredients": [],
+    "price": 32,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-soap-trio.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false
+  },
+  {
+    "id": "gift-soap-quartet",
+    "category": "gift-sets",
+    "name": "Four Artisan Soaps",
+    "kicker": "Christmas Gift Set",
+    "description": "Four handmade soaps and a sisal soap bag, packed together for gifting.",
+    "cardDescription": "Four handmade soaps and a sisal soap bag, packed together for gifting.",
+    "ingredients": [],
+    "price": 38,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-soap-quartet.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false
+  },
+  {
+    "id": "gift-soap-and-scrub",
+    "category": "gift-sets",
+    "name": "Artisan Soap & Sugar Scrub",
+    "kicker": "Christmas Gift Set",
+    "description": "One artisan soap and one sugar body scrub, paired in festive gift packaging.",
+    "cardDescription": "One artisan soap and one sugar body scrub, paired in festive gift packaging.",
+    "ingredients": [],
+    "price": 32,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-soap-and-scrub.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false
+  },
+  {
+    "id": "gift-soap-and-roll-on",
+    "category": "gift-sets",
+    "name": "Two Artisan Soaps & a Roll-On",
+    "kicker": "Christmas Gift Set",
+    "description": "Two artisan soaps and one botanical roll-on oil in a ready-to-give set.",
+    "cardDescription": "Two artisan soaps and one botanical roll-on oil in a ready-to-give set.",
+    "ingredients": [],
+    "price": 35,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-soap-duo.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false,
+    "imageNote": "Gift packaging shown. The roll-on is included."
+  },
+  {
+    "id": "gift-complete-care",
+    "category": "gift-sets",
+    "name": "Complete Care Gift Set",
+    "kicker": "Christmas Gift Set",
+    "description": "Two artisan soaps, one whipped tallow, one sugar scrub and two botanical roll-on oils in a ribbon-tied gift bag.",
+    "cardDescription": "Two artisan soaps, one whipped tallow, one sugar scrub and two botanical roll-on oils in a ribbon-tied gift bag.",
+    "ingredients": [],
+    "price": 80,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/gift-complete-care.webp",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
     "featured": false
   }
 ];

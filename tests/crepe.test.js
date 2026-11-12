@@ -36,7 +36,8 @@ test('crêpe page keeps complete bilingual cooking directions and food storage i
     assert.doesNotMatch(ownUse,/external use|mist|linens|irritation|skin|usage externe/i);
     assert.match(ownUse,french?/Réfrigérer/:/Refrigerate/);
     const btn={dataset:{addOrder:product.id},classList:{remove(){},toggle(){}},textContent:''};
-    button(btn);assert.equal(btn.disabled,true);assert.match(btn.textContent,french?/Prix à confirmer/:/Price to be confirmed/);
+    assert.equal(product.price,12);button(btn);assert.equal(btn.disabled,false);
+    product.price=null;button(btn);assert.equal(btn.disabled,true);assert.match(btn.textContent,french?/Prix à confirmer/:/Price to be confirmed/);
     product.price=12;button(btn);assert.equal(btn.disabled,false);assert.match(btn.innerHTML,french?/Add to cart|Ajouter/:/Add to cart/);
     assert.equal(products.some(p=>/magnesium|magnésium/i.test(p.id)),false);
   }

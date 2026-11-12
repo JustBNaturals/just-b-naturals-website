@@ -1,7 +1,7 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
-import { PRODUCTS } from "./product-data.js?v=20261105-complete-soaps";
+import { PRODUCTS } from "./product-data.js?v=20261112-christmas";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261105-complete-soaps";
+import "./fr.js?v=20261112-christmas";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -34,7 +34,7 @@ const DEFAULT_PRICES = Object.freeze({
   "body-care": 25
 });
 PRODUCTS.forEach(product => {
-  product.price = product.id === "just-b-rested-room-spray" ? 15
+  product.price ??= product.id === "just-b-rested-room-spray" ? 15
     : product.id === "solid-dish-soap" ? 20
     : DEFAULT_PRICES[product.category] ?? null;
 });
@@ -42,6 +42,7 @@ PRODUCTS.forEach(product => {
 const NAV_ITEMS = [
   ["index.html", "Home", "home"],
   ["shop.html", "Shop all", "shop"],
+  ["gift-sets.html", "Gift sets", "gift-sets"],
   ["artisan-soap.html", "Artisan soap", "artisan-soap"],
   ["sugar-scrubs.html", "Sugar scrubs", "sugar-scrubs"],
   ["roller-oils.html", "Botanical oils", "roller-oils"],
@@ -62,7 +63,8 @@ const CATEGORY_LABELS = Object.freeze({
   "sugar-scrubs": "Sugar Scrubs",
   "roller-oils": "Botanical Oils",
   "body-care": "Body Care",
-  "home-linen": "Home & Linen"
+  "home-linen": "Home & Linen",
+  "gift-sets": "Gift Sets"
 });
 
 function productPageUrl(productOrId) {
@@ -337,7 +339,7 @@ function renderSiteChrome() {
 
   if (footer) footer.innerHTML = `
     <section class="email-band newsletter-band"><div class="shell email-band-inner"><div><p class="eyebrow">Stay in the loop</p><h2>Small-batch news,<br>sent occasionally.</h2></div><form class="newsletter-form" data-newsletter-form><label for="newsletter-email">Email address</label><div class="newsletter-row"><input id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="160" pattern="[^@ ]+@[^@ ]+[.][A-Za-z]{2,}" title="Enter a complete email address, such as name@example.com." placeholder="you@example.com" required><button class="button button-light" type="submit">Join the list</button></div><label class="consent-check"><input name="consent" type="checkbox" required><span>I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.</span></label><p class="newsletter-status" data-newsletter-status aria-live="polite"></p></form></div></section>
-    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo-192.webp" alt=""><span>JUST B<br>NATURAL</span></a><p>Handcrafted in Gatineau. For everyday rituals across Outaouais and nearby Ottawa.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Botanical oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a><a href="faq.html">Ingredients & FAQ</a><a href="gift-sets.html">Gift combinations</a><a href="local-pickup.html">Pickup & delivery</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
+    <footer><div class="shell footer-grid"><div class="footer-brand"><a class="brand brand-light" href="index.html"><img class="brand-logo footer-logo" src="images/just-b-logo-192.webp" alt=""><span>JUST B<br>NATURAL</span></a><p>Handcrafted in Gatineau. For everyday rituals across Outaouais and nearby Ottawa.</p></div><div><h2>Explore</h2><a href="shop.html">All products</a><a href="artisan-soap.html">Artisan soaps</a><a href="sugar-scrubs.html">Sugar scrubs</a><a href="roller-oils.html">Botanical oils</a><a href="body-care.html">Body care</a><a href="home-linen.html">Home & linen</a><a href="faq.html">Ingredients & FAQ</a><a href="gift-sets.html" data-en="Gift sets" data-fr="Coffrets-cadeaux">Gift sets</a><a href="local-pickup.html">Pickup & delivery</a></div><div><h2>Connect</h2><a href="checkout.html">Request an order</a><a href="${STORE.instagramUrl}" target="_blank" rel="noreferrer">Follow @justb.naturals ↗</a><a href="mailto:${STORE.orderEmail}">${STORE.orderEmail}</a><a href="privacy.html">Privacy</a></div></div><div class="shell footer-bottom"><p>© 2026 ${STORE.name}.</p><p>For external use only unless otherwise stated.</p></div></footer>
     <button class="back-to-top" type="button" aria-label="Back to top">↑</button>`;
 }
 
@@ -476,7 +478,8 @@ function renderCatalogues() {
 function featuredProducts() {
   return PRODUCTS
     .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0)
-    .sort(() => Math.random() - .5);
+    .sort(() => Math.random() - .5)
+    .sort((a, b) => Number(b.id === "menthol-shower-steamer") - Number(a.id === "menthol-shower-steamer"));
 }
 
 function initializeFeaturedCarousel(grid) {
@@ -1037,6 +1040,8 @@ function renderProductPage() {
     return;
   }
 
+  const isGiftSet = product.category === "gift-sets";
+  const categoryUrl = isGiftSet ? "gift-sets.html#gift-collection" : `shop.html#${product.category}`;
   const guide = productGuidance(product);
   const productSections = Array.isArray(product.sections) && product.sections.length
     ? product.sections
@@ -1083,7 +1088,7 @@ function renderProductPage() {
 
   mount.innerHTML = `
     <div class="shell product-detail-shell">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html#${product.category}">${categoryLabel}</a><span>/</span><span>${product.name}</span></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="${categoryUrl}">${categoryLabel}</a><span>/</span><span>${product.name}</span></nav>
       <section class="product-detail-hero" style="--tone:${product.tone};--accent:${product.accent}">
         <div class="product-detail-media"><span class="product-detail-ring" aria-hidden="true"></span><img src="${product.image}" alt="${product.name}" ${["boreal-soap","evergreen-soap","gingerbread-soap","peppermint-twist-soap","grinch-soap","brume-soap","himalayan-salt-scrub","serenity-soap","cozy-soap","sunshine-soap","maple-chai-soap"].includes(product.id) ? "data-soap-focused" : ""} style="${productImageStyle(product)}"><span class="product-image-tagline product-image-tagline--detail" aria-hidden="true">Pure · Natural · Handcrafted</span></div>
         <div class="product-detail-purchase">
@@ -1093,8 +1098,9 @@ function renderProductPage() {
           ${Number.isFinite(product.price) ? `<p class="product-detail-price" data-price-product="${product.id}">${formatPrice(product.price)}</p>` : `<p class="product-detail-price" data-price-product="${product.id}" hidden></p>`}
           <p class="product-detail-description">${heroDescription}</p>
           <div class="product-ingredients-card">
-            <strong>Ingredients</strong>
-            <p>${ingredientsText}</p>
+            <strong>${isGiftSet ? t("What’s included", "Contenu du coffret") : "Ingredients"}</strong>
+            <p>${isGiftSet ? escapeHtml(product.cardDescription) : ingredientsText}</p>
+            ${isGiftSet && product.imageNote ? `<small>${escapeHtml(product.imageNote)}</small>` : ""}
             ${product.note ? `<small>${product.note}</small>` : ""}
           </div>
           ${stockMarkup}
@@ -1105,13 +1111,13 @@ function renderProductPage() {
       </section>
     </div>
     ${storyMarkup}
-    <section class="shell product-use-section">
+    ${isGiftSet ? "" : `<section class="shell product-use-section">
       <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Preparation", "Préparation") : "How to use"}</h2><span aria-hidden="true">＋</span></summary>${preparationMarkup}</details>
       <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Storage", "Conservation") : "Care & storage"}</h2><span aria-hidden="true">＋</span></summary><p>${guide.care}</p></details>
       <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Before serving", "Avant de servir") : "Before using"}</h2><span aria-hidden="true">＋</span></summary><p>${beforeUsing}</p></details>
-    </section>
+    </section>`}
     <section class="related-products section shell" ${related.length ? "" : "hidden"}>
-      <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="shop.html#${product.category}">View category <span>→</span></a></div>
+      <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="${categoryUrl}">View category <span>→</span></a></div>
       <div class="product-grid" ${product.category === "artisan-soap" ? 'data-related-soaps role="region" aria-label="Artisan soaps / Savons artisanaux" tabindex="0"' : ""}>${related.map(productCard).join("")}</div>
     </section>`;
   activateImageFallbacks(mount);

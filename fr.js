@@ -83,6 +83,8 @@
 
   const mentholSteamerFrench = {"name": "Pastille de douche au menthol", "kicker": "Breathe Easy", "description": "Une pastille de douche au parfum frais de menthol, avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin ainsi que des boutons de lavande décoratifs. Le plateau fourni permet de diffuser le parfum pendant la douche.", "ingredients": ["Bicarbonate de soude (bicarbonate de sodium), acide citrique, argile kaolin, cristaux de menthol, huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin, alcool, boutons de lavande (décoration)."], "use": "Déposer une pastille sur le plateau fourni, à l’écart du jet direct. L’humidifier légèrement pour l’activer. Une pastille peut durer 1 à 2 douches. Laisser sécher la pastille et le plateau entre les utilisations.", "storage": "Garder le sachet fermé et les pastilles au sec jusqu’à l’utilisation. Conserver à l’abri de l’humidité.", "safety": "Pour la douche seulement. Éviter le contact avec la peau et les yeux. Ne pas avaler ni utiliser dans le bain. Tenir hors de portée des enfants et des animaux. Aérer la douche et cesser l’utilisation en cas d’irritation.", "cardDescription": "Une pastille de douche au menthol avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin. Plateau inclus.", "sections": [{"title": "En détail", "paragraphs": ["Une pastille de douche au parfum frais de menthol, avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin ainsi que des boutons de lavande décoratifs. Le plateau fourni permet de diffuser le parfum pendant la douche."]}]};
 
+  const holidayTranslations = {"gift-soap-duo": {"name": "Duo de savons artisanaux", "kicker": "Coffret de Noël", "description": "Deux savons faits à la main et un sachet à savon en sisal, dans un coffret noué d’un ruban.", "cardDescription": "Deux savons faits à la main et un sachet à savon en sisal, dans un coffret noué d’un ruban."}, "gift-soap-trio": {"name": "Trio de savons artisanaux", "kicker": "Coffret de Noël", "description": "Trois savons faits à la main et un sachet à savon en sisal, dans un coffret de Noël.", "cardDescription": "Trois savons faits à la main et un sachet à savon en sisal, dans un coffret de Noël."}, "gift-soap-quartet": {"name": "Quatuor de savons artisanaux", "kicker": "Coffret de Noël", "description": "Quatre savons faits à la main et un sachet à savon en sisal, réunis dans un emballage-cadeau.", "cardDescription": "Quatre savons faits à la main et un sachet à savon en sisal, réunis dans un emballage-cadeau."}, "gift-soap-and-scrub": {"name": "Savon artisanal et exfoliant au sucre", "kicker": "Coffret de Noël", "description": "Un savon artisanal et un exfoliant corporel au sucre, réunis dans un emballage des Fêtes.", "cardDescription": "Un savon artisanal et un exfoliant corporel au sucre, réunis dans un emballage des Fêtes."}, "gift-soap-and-roll-on": {"name": "Deux savons artisanaux et une huile à bille", "kicker": "Coffret de Noël", "description": "Deux savons artisanaux et une huile botanique à bille, dans un ensemble prêt à offrir.", "cardDescription": "Deux savons artisanaux et une huile botanique à bille, dans un ensemble prêt à offrir.", "imageNote": "Exemple d’emballage. L’huile à bille est incluse."}, "gift-complete-care": {"name": "Coffret de soins complet", "kicker": "Coffret de Noël", "description": "Deux savons artisanaux, un suif fouetté, un exfoliant au sucre et deux huiles botaniques à bille, dans un sac-cadeau noué d’un ruban.", "cardDescription": "Deux savons artisanaux, un suif fouetté, un exfoliant au sucre et deux huiles botaniques à bille, dans un sac-cadeau noué d’un ruban."}, "solid-dish-soap": {"name": "Ensemble de savon solide pour la vaisselle", "description": "Savon solide pour la vaisselle à l’huile essentielle de citron et brosse en bambou, dans un emballage des Fêtes. Le savon est fabriqué à partir d’huiles végétales. Laisser sécher le savon et la brosse entre les utilisations.", "cardDescription": "Savon solide pour la vaisselle à l’huile essentielle de citron et brosse en bambou, dans un emballage des Fêtes.", "sections": [{"title": "En détail", "paragraphs": ["Savon solide pour la vaisselle à l’huile essentielle de citron et brosse en bambou, dans un emballage des Fêtes. Le savon est fabriqué à partir d’huiles végétales. Laisser sécher le savon et la brosse entre les utilisations."]}]}, "odds-n-ends": {"note": "Les formes, les couleurs et les parfums varient selon l’assortiment.", "imageNote": null}, "menthol-shower-steamer": {"name": "Pastilles de douche au menthol", "kicker": "Respirez à l’aise", "cardDescription": "Six pastilles au menthol avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin. Plateau en bois inclus.", "description": "Six pastilles au menthol avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin. Plateau en bois inclus. Des boutons de lavande décorent les pastilles.", "sections": [{"title": "En détail", "paragraphs": ["Six pastilles au menthol avec des huiles essentielles d’eucalyptus, de menthe poivrée et d’aiguilles de sapin. Plateau en bois inclus. Des boutons de lavande décorent les pastilles."]}]}};
+
   function prepare(products) {
     if (!isFrench || !Array.isArray(products)) return;
     const categoryDetails = {
@@ -94,15 +96,20 @@
     };
     products.forEach(product => {
       if (product.id === "menthol-shower-steamer") {
-        Object.assign(product, mentholSteamerFrench);
+        Object.assign(product, mentholSteamerFrench, holidayTranslations[product.id]);
         return;
       }
       if (product.id === "odds-n-ends") {
-        Object.assign(product, oddsAndEndsFrench);
+        Object.assign(product, oddsAndEndsFrench, holidayTranslations[product.id]);
+        product.sections = product.sections.map(section => ({...section, paragraphs: section.paragraphs.slice(0, 1)}));
         return;
       }
       if (foodTranslations[product.id]) {
         Object.assign(product, foodTranslations[product.id]);
+        return;
+      }
+      if (product.category === "gift-sets") {
+        Object.assign(product, holidayTranslations[product.id]);
         return;
       }
       const translated = productTranslations[product.id];
@@ -112,6 +119,7 @@
         product.cardDescription = translated[1];
         product.sections = [{ title: "En détail", paragraphs: translated[1].split(/\n\n/).concat(categoryDetails[product.category] || "Consultez les détails et les ingrédients pour en savoir plus sur ce produit.") }];
       }
+      if (holidayTranslations[product.id]) Object.assign(product, holidayTranslations[product.id]);
       product.ingredients = productIngredientsFr[product.id] ? [productIngredientsFr[product.id]] : (Array.isArray(product.ingredients) ? product.ingredients.map(translateIngredients) : [translateIngredients(product.ingredients)]);
       product.kicker = product.id === "just-b-rested-room-spray" ? "Brume d’aromathérapie" : "JUST B NATURAL";
       product.note = "";
@@ -140,6 +148,8 @@
 
   const text = new Map(Object.entries({
     "Simple essentials for home and kitchen, from botanical linen spray and solid dish soap to sourdough crêpe mix for your next homemade breakfast.": "Des essentiels simples pour la maison et la cuisine : brume botanique pour le linge, savon solide pour la vaisselle et mélange pour crêpes au levain pour votre prochain déjeuner maison.",
+    "Gift sets": "Coffrets-cadeaux",
+    "Gift Sets": "Coffrets-cadeaux",
     "Gift combinations":"Ensembles cadeaux", "Pickup & delivery":"Ramassage et livraison", "I agree to receive occasional promotions from Just B Natural. I can unsubscribe anytime.":"J’accepte de recevoir occasionnellement les promotions de Just B Natural. Je peux me désabonner en tout temps.", "Voir this page in English":"View this page in English", "Back to top":"Retour en haut",
     "Skip to content":"Aller au contenu", "Home":"Accueil", "Shop":"Boutique", "Shop all":"Tout magasiner", "All products":"Tous les produits",
     "Artisan soap":"Savons artisanaux", "Artisan soaps":"Savons artisanaux", "Artisan Soaps":"Savons artisanaux", "Sugar scrubs":"Exfoliants au sucre", "Sugar Scrubs":"Exfoliants au sucre",

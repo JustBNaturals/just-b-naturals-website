@@ -1,0 +1,52 @@
+.holiday-hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 1fr);
+  min-height: clamp(28rem, 48vw, 39rem);
+  background: #17392e;
+  color: #fff8e9;
+}
+.holiday-hero-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(2rem, 7vw, 8rem); }
+.holiday-hero h1, .holiday-hero h2 { color: inherit; font-family: Newsreader, Georgia, serif; font-size: clamp(3.2rem, 6.4vw, 6.9rem); font-weight: 400; line-height: .93; letter-spacing: -.045em; margin: .3rem 0 1rem; max-width: 10ch; }
+.holiday-hero-copy > p:not(.eyebrow) { color: #f2e8d5; max-width: 35ch; line-height: 1.65; margin: 0 0 1.65rem; }
+.holiday-hero .eyebrow { color: #f2cea1; }
+.holiday-hero .button { color: #17392e; background: #f8ecd6; border-color: #f8ecd6; }
+.holiday-hero .button:hover { background: white; border-color: white; }
+.holiday-hero-photo { position: relative; min-height: 21rem; margin: 0; }
+.holiday-hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 63%; }
+.holiday-collection { padding-block: clamp(3rem, 7vw, 6rem); scroll-margin-top: 6rem; }
+.holiday-collection + .holiday-collection { padding-top: 0; }
+.holiday-collection h2, .holiday-new h2 { color: #17392e; font-family: Newsreader, Georgia, serif; font-weight: 400; letter-spacing: -.025em; font-size: clamp(2.3rem, 5vw, 4.15rem); line-height: 1; margin: 0 0 1.4rem; }
+.holiday-collection h2 { border-bottom: 1px solid #c9aa7f; padding-bottom: 1.2rem; }
+.holiday-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1rem, 2.5vw, 2.5rem); }
+.holiday-card.product-card { border: 1px solid #e2d5bd; background: #fffcf4; box-shadow: none; border-radius: 0; display: flex; flex-direction: column; }
+.holiday-card-photo { display: block; aspect-ratio: 4/4.7; overflow: hidden; background: #e5d5bc; }
+.holiday-card-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 61%; }
+.holiday-card-copy { padding: clamp(.9rem, 2vw, 1.45rem); display: flex; flex-direction: column; flex: 1; }
+.holiday-card .product-title-row { align-items: baseline; }
+.holiday-card h3 { margin: 0; font: 500 clamp(1.22rem, 2.45vw, 1.8rem)/1.09 Newsreader, Georgia, serif; color: #19382e; }
+.holiday-card .product-price { color: #8b2736; white-space: nowrap; }
+.holiday-card-copy > p:not(.stock-status) { font-size: .93rem; line-height: 1.55; margin: .7rem 0 .9rem; }
+.holiday-card .holiday-photo-note { color: #695a49; font-size: .82rem; display: block; margin-bottom: .75rem; }
+.holiday-card .product-order-options { margin-top: auto; padding-top: .6rem; }
+.holiday-card .button { width: 100%; }
+.holiday-new { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1fr); align-items: center; gap: clamp(1.5rem, 6vw, 6rem); padding-block: clamp(3rem, 7vw, 6rem); }
+.holiday-new h2 { margin-bottom: .75rem; }
+.holiday-new .eyebrow { color: #8b2736; }
+.holiday-new-photo { display: block; min-height: 14rem; height: min(31rem, 42vw); overflow: hidden; }
+.holiday-new-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 52%; }
+.holiday-new .product-price { color: #8b2736; font-weight: 700; }
+.holiday-new-copy .hero-actions { margin-top: 1.2rem; }
+@media(max-width: 750px) {
+  .holiday-hero, .holiday-new { grid-template-columns: 1fr; }
+  .holiday-hero-copy { padding: 2.4rem 1.3rem 2rem; }
+  .holiday-hero-photo { min-height: clamp(15rem, 73vw, 25rem); }
+  .holiday-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .holiday-new-photo { height: min(25rem, 74vw); }
+}
+@media(max-width: 420px) {
+  .holiday-grid { gap: .7rem; }
+  .holiday-card-copy { padding: .75rem; }
+  .holiday-card .product-title-row { display: block; }
+  .holiday-card .product-price { display: block; margin-top: .25rem; }
+  .holiday-card .button { padding-inline: .48rem; font-size: .8rem; }
+}
