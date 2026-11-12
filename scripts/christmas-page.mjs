@@ -30,7 +30,13 @@ export function buildChristmasPage(products, french) {
     ['gift-collection','Wrapped gift sets','Coffrets prêts à offrir',['gift-soap-duo','gift-soap-trio','gift-soap-quartet','gift-soap-and-scrub','gift-soap-and-roll-on','gift-complete-care']],
     ['small-gifts','Small gifts & stocking stuffers','Petits cadeaux et surprises pour le bas de Noël',['odds-n-ends','sourdough-crepe-mix','solid-dish-soap','menthol-shower-steamer']]
   ].map(([section,title,fr,ids])=>`<section class="section shell gift-collection" id="${section}" aria-labelledby="${section}-title">
-    <div class="section-heading"><h2 id="${section}-title" ${localized(title,fr)}>${title}</h2></div>
+    <div class="section-heading gift-section-heading">
+      <h2 id="${section}-title" ${localized(title,fr)}>${title}</h2>
+      <div class="gift-section-trim" aria-hidden="true">
+        <div class="gift-snow gift-snow--trim"></div>
+        <span class="gift-trim-ornaments"><i></i><i></i><i></i></span>
+      </div>
+    </div>
     ${renderGrid(ids)}
   </section>`).join('\n');
   for (const [file, markup] of [
