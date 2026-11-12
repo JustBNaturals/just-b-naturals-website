@@ -8,9 +8,10 @@ const announcement = document.querySelector("[data-christmas-announcement]");
 if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31") {
   const french = campaignLanguage === "fr";
   const splashUrl = "christmas.html" + (french ? "?lang=fr" : "");
-  const open = announcement.querySelector("[data-christmas-open]");
-  open.href = splashUrl;
-  open.textContent = t("Christmas at Just B Natural →", "Noël chez Just B Natural →");
+  const giftUrl = "gift-sets.html" + (french ? "?lang=fr" : "");
+  const shopLink = announcement.querySelector("[data-christmas-shop-link]");
+  shopLink.href = giftUrl;
+  shopLink.textContent = t("Shop Christmas gifts →", "Magasiner les cadeaux de Noël →");
   announcement.hidden = false;
 
   const homeCard = document.querySelector("[data-christmas-home-card]");
@@ -19,7 +20,6 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
       {src: "gift-soap-duo.webp", alt: t("A ribbon-tied soap duo beneath the tree", "Un duo de savons noué d’un ruban sous le sapin")},
       {src: "gift-complete-care.webp", alt: t("A kraft gift bag with soaps and body care", "Un sac-cadeau kraft avec des savons et des soins corporels")}
     ];
-    const giftUrl = "gift-sets.html" + (french ? "?lang=fr" : "");
     homeCard.innerHTML = `<section class="shell pink-index-section christmas-home-card" aria-labelledby="christmas-home-title">
       <div class="pink-index-card">
         <div class="pink-index-gallery">
@@ -85,10 +85,5 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
     }
   }
 
-  open.addEventListener("click", event => {
-    if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || typeof HTMLDialogElement === "undefined") return;
-    event.preventDefault();
-    showChristmasPopup();
-  });
   if (!shown && typeof HTMLDialogElement !== "undefined") setTimeout(showChristmasPopup, 700);
 }

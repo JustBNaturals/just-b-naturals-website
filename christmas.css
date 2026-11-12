@@ -2,16 +2,76 @@
 .christmas-announcement a { color: inherit; text-decoration: none; }
 .christmas-announcement a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .christmas-popup .pink-popup-photo { background: #e9e6db; border-radius: 12px; }
-.christmas-popup .eyebrow, .christmas-campaign .pink-eyebrow, .gift-heading .eyebrow { color: #84333b; }
+.christmas-popup .eyebrow, .christmas-campaign .pink-eyebrow { color: #84333b; }
 .christmas-campaign.pink-hero { background: linear-gradient(115deg, #fbf7ec 18%, #e8ede3); }
 .christmas-campaign .pink-hero-copy h1 em { color: #84333b; }
 .christmas-campaign .pink-offer { border-left-color: #a55b58; }
 .christmas-campaign .pink-hero-photo img { max-height: 365px; }
-.gift-heading { padding-bottom: 1rem; }
-.gift-heading h1 { font-size: clamp(2.65rem, 5vw, 4.5rem); margin: .35rem 0 .75rem; }
-.gift-heading > p:not(.eyebrow) { max-width: 42rem; }
-.gift-heading .hero-actions { margin-top: 1rem; }
+/* The seasonal feature is confined to the collection heading. */
+.gift-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+  margin-block: clamp(1.25rem, 3.2vw, 3.2rem) 0;
+  background: #264737;
+  color: #fff8e9;
+  border: 1px solid #345646;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.gift-heading-copy {
+  padding: clamp(1.45rem, 3.8vw, 3.5rem);
+  align-self: center;
+}
+.gift-heading-location {
+  color: #f4d7a9;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+  margin: 0 0 .7rem;
+}
+.gift-heading h1 {
+  color: inherit;
+  font: 500 clamp(2.6rem, 4.6vw, 4.5rem)/.99 Newsreader, Georgia, serif;
+  letter-spacing: -.038em;
+  text-wrap: balance;
+  margin: 0 0 .9rem;
+}
+.gift-heading-copy > p:not(.gift-heading-location) {
+  color: #f5ead8;
+  font-size: .93rem;
+  line-height: 1.65;
+  max-width: 40ch;
+  margin: 0;
+}
+.gift-heading .hero-actions { margin: 1.1rem 0 0; gap: .8rem 1.45rem; flex-wrap: wrap; }
+.gift-heading .gift-heading-button {
+  background: #f7e7cc;
+  border: 1px solid #f7e7cc;
+  color: #254537;
+}
+.gift-heading .gift-heading-button:hover { background: #fff5e4; border-color: #fff5e4; }
+.gift-heading .text-link { color: #fff8e9; }
+.gift-heading-photo {
+  margin: 0;
+  position: relative;
+  min-height: 100%;
+  border-left: 3px solid #b17979;
+}
+.gift-heading-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 64%;
+}
+.gift-heading + .gift-collection { padding-top: clamp(2.1rem, 4vw, 3.5rem); }
 .gift-collection { scroll-margin-top: 6rem; }
+@media (max-width: 680px) {
+  .gift-heading { grid-template-columns: 1fr; }
+  .gift-heading-photo { min-height: 9.5rem; border-left: 0; border-top: 3px solid #b17979; }
+}
 .gift-collection .product-image { object-position: 50% 61%; }
 .gift-collection .gift-photo-note { display: block; font-size: .77rem; color: #695a49; margin-bottom: .6rem; }
 .christmas-preview .section-actions { align-items: center; }
