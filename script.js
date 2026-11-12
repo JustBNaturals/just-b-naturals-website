@@ -352,6 +352,7 @@ function fallbackArtMarkup(product) {
 }
 
 const PRODUCT_IMAGE_POSITIONS = Object.freeze({
+  "menthol-shower-steamer": "50% 66%",
   "evergreen-soap": "50% 80%",
   "brume-soap": "50% 68%",
   "gingerbread-soap": "50% 70%",
