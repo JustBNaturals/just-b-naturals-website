@@ -77,11 +77,12 @@
   }
   .gift-heading-photo {
     grid-row: 1;
-    min-height: clamp(6.25rem, 28vw, 9rem);
+    min-height: 0;
+    height: clamp(14rem, 76vw, 22rem);
     border-left: 0;
     border-bottom: 2px solid #b17979;
   }
-  .gift-heading-photo img { object-position: 50% 63%; }
+  .gift-heading-photo img { object-position: 50% 77%; }
   .gift-heading-copy { padding: 1rem clamp(.9rem, 4.4vw, 1.6rem) 1.05rem; }
   .gift-heading-location { margin-bottom: .4rem; font-size: .63rem; }
   .gift-heading h1 { font-size: clamp(1.95rem, 8.3vw, 3rem); line-height: 1.04; margin-bottom: .42rem; }
@@ -105,8 +106,8 @@
     white-space: normal;
   }
   .gift-heading .hero-actions > .text-link { border: 1px solid #fff8e97a; }
-  .gift-heading + .gift-collection { padding-top: 1.3rem; }
-  .gift-heading + .gift-collection .section-heading { margin-bottom: .85rem; }
+  .gift-heading + .gift-collection { padding-top: clamp(2.5rem, 10vw, 3.5rem); }
+  .gift-heading + .gift-collection .section-heading { margin-bottom: 1.35rem; }
 }
 .gift-collection .product-image { object-position: 50% 61%; }
 .gift-collection .gift-photo-note { display: block; font-size: .77rem; color: #695a49; margin-bottom: .6rem; }
