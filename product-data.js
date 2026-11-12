@@ -1213,7 +1213,7 @@ export const PRODUCTS = [
       {
         "title": "How to use",
         "paragraphs": [
-          "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens."
+          "SHAKE WELL BEFORE USE. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens."
         ]
       },
       {
@@ -1233,11 +1233,11 @@ export const PRODUCTS = [
       "Calming • Woody • Earthy • Botanical • Soft",
       "Lavender provides the gentle floral opening, cedarwood brings a warm woody heart, and frankincense leaves behind a subtle, grounding finish. The result is intentionally soft and natural rather than perfume-heavy.",
       "This spray is particularly suited to bedrooms and nighttime routines, but can be used throughout the home on suitable linens, bedding, curtains, cushions, or simply misted into the air whenever you want to refresh a space.",
-      "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
+      "SHAKE WELL BEFORE USE. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
       "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets."
     ],
     "note": "",
-    "use": "Shake well before each use. Lightly mist into the air or onto suitable fabrics from a short distance. For bedtime, mist lightly over pillows and bedding and allow them to dry before use. Use as desired to refresh bedrooms, living spaces and linens.",
+    "use": "SHAKE WELL BEFORE USE. Mist lightly from a safe distance. Test a hidden area first.",
     "safety": "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets.",
     "availability": null,
     "price": null,
@@ -1248,6 +1248,29 @@ export const PRODUCTS = [
     "tone": "#d9ded7",
     "accent": "#526b60",
     "featured": true
+  },
+  {
+    "id": "fresh-linen-room-spray",
+    "category": "home-linen",
+    "name": "Aromatherapy Mist — Fresh Linen",
+    "kicker": "Aromatherapy Mist",
+    "description": "A room and linen mist with bright lemongrass, soft lavender and herbal notes of tea tree and rosemary.",
+    "cardDescription": "A room and linen mist with bright lemongrass, soft lavender and herbal notes of tea tree and rosemary.",
+    "ingredients": [
+      "Distilled water, witch hazel, lemongrass essential oil, lavender essential oil, tea tree essential oil, rosemary essential oil."
+    ],
+    "use": "SHAKE WELL BEFORE USE. Mist lightly from a safe distance. Test a hidden area first.",
+    "safety": "For external and fabric use only. Do not ingest. Avoid spraying directly onto the face, eyes, skin, pets, food, or polished surfaces. Always spot-test fabrics in an inconspicuous area first, particularly delicate or light-coloured materials. Keep out of reach of children and pets.",
+    "price": null,
+    "requiresPrice": true,
+    "stock": null,
+    "image": "images/just-b-logo-192.webp",
+    "imageNote": "Product photo coming soon.",
+    "art": "spray",
+    "tone": "#d9ded7",
+    "accent": "#526b60",
+    "featured": false,
+    "unlisted": true
   },
   {
     "id": "solid-dish-soap",

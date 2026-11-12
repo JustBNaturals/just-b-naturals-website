@@ -112,6 +112,19 @@
         Object.assign(product, holidayTranslations[product.id]);
         return;
       }
+      if (product.id === "fresh-linen-room-spray") {
+        Object.assign(product, {
+          name: "Brume d’aromathérapie — Linge Frais",
+          kicker: "Brume d’aromathérapie",
+          description: "Une brume pour la maison et les textiles aux notes de citronnelle, de lavande, d’arbre à thé et de romarin.",
+          cardDescription: "Une brume pour la maison et les textiles aux notes de citronnelle, de lavande, d’arbre à thé et de romarin.",
+          ingredients: ["Eau distillée, hamamélis, huile essentielle de citronnelle, huile essentielle de lavande, huile essentielle d’arbre à thé, huile essentielle de romarin."],
+          use: "BIEN AGITER AVANT L’EMPLOI. Vaporiser légèrement à une distance sécuritaire. Tester d’abord sur une zone cachée.",
+          safety: "Pour usage externe et sur les textiles seulement. Ne pas ingérer. Éviter de vaporiser directement sur le visage, les yeux, la peau, les animaux, les aliments ou les surfaces polies. Toujours tester sur une zone peu visible du tissu, surtout les textiles délicats ou de couleur pâle. Tenir hors de portée des enfants et des animaux.",
+          imageNote: "Photo du produit à venir."
+        });
+        return;
+      }
       const translated = productTranslations[product.id];
       if (translated) {
         product.name = translated[0];
@@ -140,7 +153,7 @@
         product.use = "Frotter une brosse humide sur le savon, faire mousser, laver la vaisselle puis rincer.";
         product.safety = "Laisser sécher le savon et la brosse entre les utilisations. Usage ménager seulement.";
       } else if (product.id === "just-b-rested-room-spray") {
-        product.use = "Vaporiser légèrement dans la pièce ou sur le linge à une distance sécuritaire.";
+        product.use = "BIEN AGITER AVANT L’EMPLOI. Vaporiser légèrement à une distance sécuritaire. Tester d’abord sur une zone cachée.";
         product.safety = "Tester d'abord sur une zone peu visible. Éviter les yeux, les flammes et les surfaces délicates.";
       }
     });

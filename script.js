@@ -1,7 +1,7 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
-import { PRODUCTS } from "./product-data.js?v=20261112-gift-names";
+import { PRODUCTS } from "./product-data.js?v=20261112-room-mists";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261112-gift-names";
+import "./fr.js?v=20261112-room-mists";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -38,6 +38,8 @@ PRODUCTS.forEach(product => {
     : product.id === "solid-dish-soap" ? 20
     : DEFAULT_PRICES[product.category] ?? null;
 });
+
+const visibleProducts = PRODUCTS.filter(product => !product.unlisted);
 
 const NAV_ITEMS = [
   ["index.html", "Home", "home"],
@@ -115,7 +117,7 @@ function updateAvailabilitySummaries() {
     const visibleIds = String(node.dataset.visibleProductIds || "").split(",").filter(Boolean);
     const products = visibleIds.length || node.hasAttribute("data-visible-product-ids")
       ? visibleIds.map(id => PRODUCTS.find(product => product.id === id)).filter(Boolean)
-      : category === "all" ? PRODUCTS : PRODUCTS.filter(product => product.category === category);
+      : category === "all" ? visibleProducts : visibleProducts.filter(product => product.category === category);
     node.textContent = availabilitySummary(products);
   });
 }
@@ -467,8 +469,8 @@ function renderCatalogues() {
   document.querySelectorAll("[data-catalog], [data-category]").forEach(grid => {
     const category = grid.dataset.category;
     const catalogue = grid.dataset.catalog;
-    let matches = PRODUCTS;
-    if (category) matches = PRODUCTS.filter(product => product.category === category);
+    let matches = visibleProducts;
+    if (category) matches = visibleProducts.filter(product => product.category === category);
     if (catalogue === "featured") matches = featuredProducts();
     renderProductGrid(grid, matches);
     if (catalogue === "featured") initializeFeaturedCarousel(grid);
@@ -476,7 +478,7 @@ function renderCatalogues() {
 }
 
 function featuredProducts() {
-  return PRODUCTS
+  return visibleProducts
     .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0)
     .sort(() => Math.random() - .5)
     .sort((a, b) => Number(b.id === "menthol-shower-steamer") - Number(a.id === "menthol-shower-steamer"));
@@ -827,7 +829,7 @@ function initializeCatalogueFeatures() {
 
     const updateShopGrid = () => {
       const query = search?.value.trim().toLowerCase() || "";
-      const products = PRODUCTS.filter(product => activeCategory === "all" || product.category === activeCategory);
+      const products = visibleProducts.filter(product => activeCategory === "all" || product.category === activeCategory);
       const visibleMatches = selectAndSortProducts(products, query, activeCategory);
       renderProductGrid(shopGrid, visibleMatches);
       filterButtons.forEach(button => {
@@ -850,7 +852,7 @@ function initializeCatalogueFeatures() {
     const category = categoryGrid.dataset.category;
     const updateCategoryGrid = () => {
       const query = search?.value.trim().toLowerCase() || "";
-      const products = PRODUCTS.filter(product => product.category === category);
+      const products = visibleProducts.filter(product => product.category === category);
       renderProductGrid(categoryGrid, selectAndSortProducts(products, query, category));
     };
     search?.addEventListener("input", updateCategoryGrid);
@@ -930,11 +932,10 @@ function productGuidance(product) {
 }
 
 function conciseProductUse(product) {
-  if (product.isFood || product.id === "menthol-shower-steamer") return product.use;
+  if (product.isFood || product.art === "spray" || product.id === "menthol-shower-steamer") return product.use;
   const french = Boolean(globalThis.JBN_FR?.isFrench);
   const specific = {
-    "solid-dish-soap": french ? "Mouiller la brosse, la frotter sur le savon pour créer une mousse, laver, puis bien rincer." : "Wet the brush, swirl it over the soap to create a lather, wash, then rinse thoroughly.",
-    "just-b-rested-room-spray": french ? "Agiter doucement, puis vaporiser légèrement à une distance sécuritaire. Tester d'abord sur une zone peu visible." : "Shake gently and mist lightly from a safe distance. Test a hidden area first."
+    "solid-dish-soap": french ? "Mouiller la brosse, la frotter sur le savon pour créer une mousse, laver, puis bien rincer." : "Wet the brush, swirl it over the soap to create a lather, wash, then rinse thoroughly."
   };
   if (specific[product.id]) return specific[product.id];
   const byCategory = {
@@ -1015,7 +1016,7 @@ function productTags(product) {
 }
 
 function relatedProducts(product) {
-  const matches = PRODUCTS.filter(item => item.category === product.category && item.id !== product.id);
+  const matches = visibleProducts.filter(item => item.category === product.category && item.id !== product.id);
   return product.category === "artisan-soap"
     ? matches.filter(item => item.active !== false && item.availabilityStatus !== "unavailable" && item.availabilityStatus !== "preorder" && item.stock !== 0)
     : matches.slice(0, 3);
@@ -1502,7 +1503,7 @@ function initializePromotionPopup(){
 }
 document.addEventListener('click',event=>{const opener=event.target.closest('[data-promo-open]');if(!opener||!campaignActive(soapCampaign))return;event.preventDefault();initializePromotionPopup();document.querySelector('[data-promo-popup]').showModal();});
 
-growthTools=initializeGrowth({products:PRODUCTS,t,language:campaignLanguage,add:addToOrderList,cart:()=>orderList,config:()=>soapCampaign});
+growthTools=initializeGrowth({products:visibleProducts,t,language:campaignLanguage,add:addToOrderList,cart:()=>orderList,config:()=>soapCampaign});
 
 // Keep selections consistent when a shopper uses more than one tab.
 window.addEventListener('storage',event=>{

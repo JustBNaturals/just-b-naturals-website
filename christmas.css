@@ -86,3 +86,38 @@
 @media (max-width: 680px) {
   .christmas-home-card .pink-index-gallery > img { height: 175px; }
 }
+
+.gift-heading { position: relative; isolation: isolate; }
+.gift-heading-copy, .gift-heading-photo { position: relative; z-index: 1; }
+.gift-snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.gift-snowflake {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--left);
+  width: var(--size);
+  animation: gift-snowfall var(--duration) linear var(--delay) infinite;
+}
+.gift-snowflake::before {
+  content: "";
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  background: #fff9ef;
+  border-radius: 50%;
+  opacity: var(--opacity);
+}
+.gift-snow[data-paused] .gift-snowflake { animation-play-state: paused; }
+@keyframes gift-snowfall {
+  from { transform: translate3d(0, -5%, 0); }
+  to { transform: translate3d(var(--drift), 105%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gift-snow { display: none; }
+  .gift-snowflake { animation: none; }
+}
