@@ -34,7 +34,6 @@ export function buildChristmasPage(products, french) {
       <h2 id="${section}-title" ${localized(title,fr)}>${title}</h2>
       <div class="gift-section-trim" aria-hidden="true">
         <div class="gift-snow gift-snow--trim"></div>
-        <span class="gift-trim-ornaments"><i></i><i></i><i></i></span>
       </div>
     </div>
     ${renderGrid(ids)}
