@@ -322,6 +322,7 @@
 
   function localizeTitle() {
     if (!isFrench) return;
+    if (document.body.dataset.productId && document.querySelector("[data-product-page] h1")) return;
     const titles = { home:"Soins naturels en petites quantités", shop:"Tous les produits", "artisan-soap":"Savons artisanaux", "sugar-scrubs":"Exfoliants au sucre", "roller-oils":"Huiles à bille", "body-care":"Soins corporels", "home-linen":"Maison et linge", about:"À propos", faq:"Ingrédients et FAQ", checkout:"Demande de commande", privacy:"Confidentialité", "gift-sets":"Ensembles cadeaux", "local-pickup":"Ramassage et livraison à Gatineau", "october-rose":"Octobre rose" };
     const value = titles[document.body.dataset.page];
     document.title = `${value || (document.body.classList.contains("inventory-page") ? "Inventaire" : "Produit")} | Just B Natural`;
