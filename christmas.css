@@ -18,3 +18,11 @@
 @media (max-width: 600px) {
   .christmas-campaign .pink-hero-photo img { max-height: 180px; }
 }
+.christmas-home-card .pink-index-card { background: #f2f1e8; border-color: #dedfd1; }
+.christmas-home-card .pink-index-gallery > img { height: 220px; }
+.christmas-home-card .pink-index-copy .eyebrow { color: #84333b; }
+.christmas-home-card .pink-index-copy h2 { text-wrap: balance; }
+.christmas-home-card .pink-index-controls button { border-color: #cbd2c4; color: #274638; }
+@media (max-width: 680px) {
+  .christmas-home-card .pink-index-gallery > img { height: 175px; }
+}

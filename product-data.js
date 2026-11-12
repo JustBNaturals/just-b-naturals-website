@@ -1928,7 +1928,7 @@ export const PRODUCTS = [
   {
     "id": "gift-soap-duo",
     "category": "gift-sets",
-    "name": "Two Artisan Soaps",
+    "name": "Under the Tree Soap Duo",
     "kicker": "Christmas Gift Set",
     "description": "Two handmade soaps and a sisal soap bag in a ribbon-tied gift box.",
     "cardDescription": "Two handmade soaps and a sisal soap bag in a ribbon-tied gift box.",
@@ -1946,7 +1946,7 @@ export const PRODUCTS = [
   {
     "id": "gift-soap-trio",
     "category": "gift-sets",
-    "name": "Three Artisan Soaps",
+    "name": "Winter Soap Trio",
     "kicker": "Christmas Gift Set",
     "description": "Three handmade soaps and a sisal soap bag in a Christmas gift box.",
     "cardDescription": "Three handmade soaps and a sisal soap bag in a Christmas gift box.",
@@ -1964,7 +1964,7 @@ export const PRODUCTS = [
   {
     "id": "gift-soap-quartet",
     "category": "gift-sets",
-    "name": "Four Artisan Soaps",
+    "name": "Fireside Soap Quartet",
     "kicker": "Christmas Gift Set",
     "description": "Four handmade soaps and a sisal soap bag, packed together for gifting.",
     "cardDescription": "Four handmade soaps and a sisal soap bag, packed together for gifting.",
@@ -1982,7 +1982,7 @@ export const PRODUCTS = [
   {
     "id": "gift-soap-and-scrub",
     "category": "gift-sets",
-    "name": "Artisan Soap & Sugar Scrub",
+    "name": "Winter Glow Soap & Scrub",
     "kicker": "Christmas Gift Set",
     "description": "One artisan soap and one sugar body scrub, paired in festive gift packaging.",
     "cardDescription": "One artisan soap and one sugar body scrub, paired in festive gift packaging.",
@@ -2000,7 +2000,7 @@ export const PRODUCTS = [
   {
     "id": "gift-soap-and-roll-on",
     "category": "gift-sets",
-    "name": "Two Artisan Soaps & a Roll-On",
+    "name": "The Pocket Ritual Gift Set",
     "kicker": "Christmas Gift Set",
     "description": "Two artisan soaps and one botanical roll-on oil in a ready-to-give set.",
     "cardDescription": "Two artisan soaps and one botanical roll-on oil in a ready-to-give set.",
@@ -2019,7 +2019,7 @@ export const PRODUCTS = [
   {
     "id": "gift-complete-care",
     "category": "gift-sets",
-    "name": "Complete Care Gift Set",
+    "name": "The Winter Ritual Gift Set",
     "kicker": "Christmas Gift Set",
     "description": "Two artisan soaps, one whipped tallow, one sugar scrub and two botanical roll-on oils in a ribbon-tied gift bag.",
     "cardDescription": "Two artisan soaps, one whipped tallow, one sugar scrub and two botanical roll-on oils in a ribbon-tied gift bag.",
