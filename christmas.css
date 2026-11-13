@@ -120,6 +120,8 @@
   border-color: #38594b;
   color: #fff6e6;
   padding-top: 3.1rem;
+  isolation: isolate;
+  overflow: hidden;
 }
 .christmas-home-card .pink-index-gallery > img {
   display: block;
@@ -138,11 +140,70 @@
 .christmas-home-card .button-dark:hover { background: #fff5e4; border-color: #fff5e4; }
 .christmas-home-card .pink-index-card > .christmas-lights {
   position: absolute;
-  top: .3rem;
-  left: 50%;
-  width: min(94%, 610px);
-  height: 2.55rem;
-  transform: translateX(-50%);
+  inset: .25rem 0 auto;
+  height: 2.65rem;
+}
+.christmas-home-card :is(.pink-index-gallery, .pink-index-copy) { position: relative; z-index: 1; }
+.christmas-home-card .pink-index-copy > p:not(.eyebrow) { color: #f6ecd7; }
+.christmas-snowman { display: none; }
+@media (min-width: 681px) {
+  .christmas-home-card .pink-index-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4.5rem);
+    padding-inline: clamp(1.25rem, 3vw, 3rem);
+  }
+  .christmas-home-card .pink-index-gallery > img { aspect-ratio: 6 / 5; }
+  .christmas-home-card .pink-index-copy h2 {
+    font-size: clamp(2.5rem, 4.15vw, 4.6rem);
+    max-width: 13ch;
+  }
+  .christmas-home-card .pink-index-copy > p:not(.eyebrow) {
+    font-size: clamp(.94rem, 1.25vw, 1.13rem);
+    max-width: 36ch;
+  }
+}
+@media (min-width: 1000px) {
+  .christmas-snowman {
+    display: block;
+    position: absolute;
+    right: .8rem;
+    bottom: -2.6rem;
+    width: 2.65rem;
+    height: 2.45rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 43%, #456357 0 2px, transparent 2.5px),
+                radial-gradient(circle at 50% 68%, #456357 0 2px, transparent 2.5px), #e9f1e8;
+    box-shadow: 0 .2rem 0 #162f2760;
+  }
+  .christmas-snowman span {
+    position: absolute;
+    width: 1.85rem;
+    height: 1.8rem;
+    left: .4rem;
+    bottom: 1.95rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 42%, #345649 0 1.5px, transparent 2px),
+                radial-gradient(circle at 64% 42%, #345649 0 1.5px, transparent 2px), #f7f7ec;
+    border-bottom: .25rem solid #ad4c53;
+  }
+  .christmas-snowman span::before {
+    content: "";
+    position: absolute;
+    top: -.27rem;
+    left: -.1rem;
+    width: 2rem;
+    height: .52rem;
+    border-radius: 50% 50% 18% 18%;
+    background: #ad4c53;
+  }
+  .christmas-snowman span::after {
+    content: "";
+    position: absolute;
+    top: .92rem;
+    left: .87rem;
+    border-block: 2px solid transparent;
+    border-left: 7px solid #d88946;
+  }
 }
 @media (max-width: 680px) {
   .christmas-home-card .pink-index-card { padding-inline: clamp(.8rem, 4vw, 1.25rem); }
@@ -185,28 +246,48 @@
 }
 
 .gift-section-heading { display: block; }
+.gift-section-heading > h2 { width: fit-content; }
 .gift-section-trim {
   position: relative;
   isolation: isolate;
-  height: 2rem;
+  height: 2.35rem;
   margin-top: .55rem;
+  width: var(--gift-title-width, 100%);
 }
-.gift-section-trim > .christmas-lights { position: relative; width: min(100%, 550px); height: 100%; }
 .gift-snow--trim { --gift-flake-color: #6a8475; }
-.christmas-lights { display: block; pointer-events: none; }
-.christmas-light-wire { fill: none; stroke: #748676; stroke-width: 2; stroke-linecap: round; }
-.christmas-light-socket { fill: #526858; }
-.christmas-light-bulb { fill: var(--bulb-color); }
-.christmas-light-highlight { fill: none; stroke: #fff8dd; stroke-width: 1.5; stroke-linecap: round; opacity: .75; }
-@media (prefers-reduced-motion: no-preference) {
-  .christmas-light-bulb {
-    animation: christmas-light-flicker var(--bulb-duration) ease-in-out var(--bulb-delay) infinite;
-  }
+.christmas-lights { pointer-events: none; }
+.gift-section-trim > .christmas-lights { position: absolute; inset: 0; }
+.christmas-lights svg { display: block; width: 100%; height: 100%; }
+.christmas-light-wire {
+  fill: none;
+  stroke: #789286;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
 }
-@keyframes christmas-light-flicker {
-  0%, 39%, 100% { opacity: .88; }
-  49% { opacity: .55; }
-  61%, 78% { opacity: 1; }
+.christmas-light-socket {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: .36rem;
+  height: .39rem;
+  border-radius: 2px;
+  background: #60786b;
+  transform: translate(-50%, -1px) rotate(var(--angle));
+  transform-origin: top center;
+}
+.christmas-light-bulb {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  width: .64rem;
+  height: .93rem;
+  border-radius: 45% 45% 52% 52% / 36% 36% 65% 65%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 31% 27%, #fff9dcad, transparent 45%), var(--bulb-color);
+  box-shadow: 0 0 .38rem color-mix(in srgb, var(--bulb-color) 65%, transparent);
+}
+@media (max-width: 680px) {
+  .gift-section-trim { width: auto; margin-inline: calc((100% - 100vw) / 2); }
 }
 @media (min-width: 621px) {
   #small-gifts .featured-carousel > .product-card { flex-basis: calc((100% - 48px) / 3.25); }

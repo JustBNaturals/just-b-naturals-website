@@ -1,6 +1,6 @@
-const snowLayers = document.querySelectorAll(".gift-snow");
-
-if (snowLayers.length) {
+export function startSnow(root) {
+  const snowLayers = root.querySelectorAll(".gift-snow");
+  if (!snowLayers.length) return;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const between = (min, max) => min + Math.random() * (max - min);
 
@@ -38,3 +38,5 @@ if (snowLayers.length) {
     snowLayers.forEach(layer => observer.observe(layer));
   }
 }
+
+startSnow(document);
