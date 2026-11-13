@@ -175,6 +175,9 @@
   width: clamp(4.85rem, 8vw, 7.4rem);
   aspect-ratio: 1 / 1.18;
 }
+@media (min-width: 1024px) {
+  .christmas-snowman { width: clamp(8.25rem, 12vw, 10rem); }
+}
 .christmas-snowman span { position: absolute; display: block; }
 .christmas-snowman-shadow {
   left: 12%; right: 11%; bottom: 1%; height: 12%;
@@ -182,8 +185,8 @@
   background: #132d2499;
 }
 .christmas-snowman-body {
-  inset: auto 18% 4% 13%;
-  height: 49%;
+  inset: auto 18% 4% 18%;
+  height: 54%;
   border-radius: 50%;
   background: radial-gradient(circle at 53% 40%, #345649 0 4%, transparent 5%),
               radial-gradient(circle at 53% 65%, #345649 0 4%, transparent 5%),
@@ -207,22 +210,22 @@
 .christmas-snowman-arm::before { transform: rotate(-48deg); }
 .christmas-snowman-arm::after { transform: rotate(46deg); }
 .christmas-snowman-head {
-  top: 23%; left: 25%; width: 45%; height: 40%;
-  border-radius: 48%;
+  top: 23%; left: 28%; width: 44%; height: 37.3%;
+  border-radius: 50%;
   background: radial-gradient(circle at 35% 26%, #fffaf0, #d4e6de 90%);
 }
 .christmas-snowman-hat {
-  width: 74%; height: 57%; left: 8%; top: -32%;
-  border-radius: 32% 32% 13% 12%;
-  transform: rotate(-12deg);
-  background: #29312e;
-  border-bottom: .24rem solid #bb525a;
+  width: 70%; height: 52%; left: 15%; top: -32%;
+  border-radius: 23% 23% 10% 10%;
+  transform: rotate(-7deg);
+  transform-origin: 50% 95%;
+  background: linear-gradient(to bottom, #29312e 0 73%, #a83643 73% 93%, #29312e 93%);
 }
 .christmas-snowman-hat::after {
   content: "";
   position: absolute;
-  inset: auto -21% -23%;
-  height: 27%;
+  inset: auto -27% -11%;
+  height: 23%;
   border-radius: 40%;
   background: #29312e;
 }
@@ -237,18 +240,19 @@
   clip-path: polygon(0 0, 100% 55%, 0 100%);
 }
 .christmas-snowman-scarf {
-  top: 56%; left: 24%; width: 48%; height: 8%;
-  border-radius: 40%;
-  transform: rotate(-5deg);
-  background: #bb525a;
+  top: 54%; left: 27%; width: 46%; height: 8%;
+  border-radius: 22% 22% 43% 43%;
+  transform: rotate(4deg);
+  background: linear-gradient(#c6555f, #a83643);
 }
 .christmas-snowman-scarf::after {
   content: "";
   position: absolute;
-  width: 23%; height: 250%; left: 9%; top: 50%;
-  border-radius: 0 0 23% 23%;
-  transform: rotate(14deg);
-  background: #bb525a;
+  width: 23%; height: 235%; right: 10%; top: 58%;
+  border-radius: 12% 12% 25% 25%;
+  transform: rotate(-18deg);
+  transform-origin: 50% 0;
+  background: #b84754;
 }
 @media (prefers-reduced-motion: no-preference) {
   .christmas-snowman { animation: snowman-bob 4.8s ease-in-out infinite; }
