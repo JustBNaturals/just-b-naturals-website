@@ -17,9 +17,20 @@ export function twinkleLights(root) {
 
 twinkleLights(document);
 
-const titleWidths = new ResizeObserver(entries => {
-  for (const {target, contentRect} of entries) {
-    target.parentElement.style.setProperty("--gift-title-width", `${contentRect.width}px`);
+const headings = document.querySelectorAll(".gift-section-heading > h2");
+function sizeStrands() {
+  const width = document.documentElement.clientWidth;
+  for (const heading of headings) {
+    const bounds = heading.getBoundingClientRect();
+    const section = heading.parentElement;
+    section.style.setProperty("--gift-title-width", `${bounds.width}px`);
+    section.style.setProperty("--gift-viewport-width", `${width}px`);
+    section.style.setProperty("--gift-viewport-offset", `-${bounds.left}px`);
   }
-});
-document.querySelectorAll(".gift-section-heading > h2").forEach(title => titleWidths.observe(title));
+}
+if (headings.length) {
+  sizeStrands();
+  addEventListener("resize", sizeStrands);
+  const titleWidths = new ResizeObserver(sizeStrands);
+  headings.forEach(heading => titleWidths.observe(heading));
+}

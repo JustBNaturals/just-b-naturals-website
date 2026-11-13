@@ -287,7 +287,10 @@
   box-shadow: 0 0 .38rem color-mix(in srgb, var(--bulb-color) 65%, transparent);
 }
 @media (max-width: 680px) {
-  .gift-section-trim { width: auto; margin-inline: calc((100% - 100vw) / 2); }
+  .gift-section-trim {
+    width: var(--gift-viewport-width, 100%);
+    margin-left: var(--gift-viewport-offset, 0px);
+  }
 }
 @media (min-width: 621px) {
   #small-gifts .featured-carousel > .product-card { flex-basis: calc((100% - 48px) / 3.25); }
