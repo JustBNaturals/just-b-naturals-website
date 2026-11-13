@@ -1,4 +1,4 @@
-import { twinkleLights } from "./christmas-twinkle.js?v=20261112-wide";
+import { twinkleLights } from "./christmas-twinkle.js?v=20261113-snowman";
 import { startSnow } from "./gift-snow.js?v=20261112-wide";
 import { christmasLights } from "./christmas-lights.js?v=20261112-wide";
 import { t, campaignLanguage } from "./campaign-ui.js?v=20261016-natural-fade";
@@ -39,8 +39,20 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
           <p class="eyebrow">${t("Christmas at Just B Natural", "Noël chez Just B Natural")}</p>
           <h2 id="christmas-home-title">${t("Handmade gifts, ready to give.", "Des cadeaux faits à la main, prêts à offrir.")}</h2>
           <p>${t("Ribbon-tied soap sets, care bundles and stocking stuffers, wrapped in Aylmer.", "Des coffrets de savons, des ensembles de soins et de petits cadeaux, emballés à Aylmer.")}</p>
-          <div class="christmas-snowman" aria-hidden="true"><span></span></div>
-          <div class="hero-actions"><a class="button button-dark" href="${giftUrl}">${t("Shop Christmas gift sets", "Magasiner les coffrets de Noël")} <span aria-hidden="true">→</span></a></div>
+          <div class="christmas-home-actions">
+            <div class="hero-actions"><a class="button button-dark" href="${giftUrl}">${t("Shop Christmas gift sets", "Magasiner les coffrets de Noël")} <span aria-hidden="true">→</span></a></div>
+            <div class="christmas-snowman" aria-hidden="true">
+              <span class="christmas-snowman-shadow"></span>
+              <span class="christmas-snowman-arm"></span>
+              <span class="christmas-snowman-body"></span>
+              <span class="christmas-snowman-head">
+                <span class="christmas-snowman-hat"></span>
+                <span class="christmas-snowman-eyes"></span>
+                <span class="christmas-snowman-nose"></span>
+              </span>
+              <span class="christmas-snowman-scarf"></span>
+            </div>
+          </div>
         </div>
       </div>
     </section>`;

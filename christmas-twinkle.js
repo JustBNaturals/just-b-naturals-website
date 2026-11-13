@@ -9,9 +9,9 @@ export function twinkleLights(root) {
           {opacity: 1}, {opacity: .45, offset: .33}, {opacity: 1}
         ], {duration: 360 + Math.random() * 420, easing: "ease-in-out"});
       }
-      setTimeout(flicker, 900 + Math.random() * 5100);
+      setTimeout(flicker, 9000 + Math.random() * 13000);
     }
-    setTimeout(flicker, Math.random() * 3800);
+    setTimeout(flicker, 2000 + Math.random() * 12000);
   }
 }
 

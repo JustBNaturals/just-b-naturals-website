@@ -125,7 +125,8 @@
 }
 .christmas-home-card .pink-index-gallery > img {
   display: block;
-  width: 100%;
+  width: 92%;
+  margin-inline: auto;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -145,7 +146,6 @@
 }
 .christmas-home-card :is(.pink-index-gallery, .pink-index-copy) { position: relative; z-index: 1; }
 .christmas-home-card .pink-index-copy > p:not(.eyebrow) { color: #f6ecd7; }
-.christmas-snowman { display: none; }
 @media (min-width: 681px) {
   .christmas-home-card .pink-index-card {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -162,48 +162,111 @@
     max-width: 36ch;
   }
 }
-@media (min-width: 1000px) {
-  .christmas-snowman {
-    display: block;
-    position: absolute;
-    right: .8rem;
-    bottom: -2.6rem;
-    width: 2.65rem;
-    height: 2.45rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 43%, #456357 0 2px, transparent 2.5px),
-                radial-gradient(circle at 50% 68%, #456357 0 2px, transparent 2.5px), #e9f1e8;
-    box-shadow: 0 .2rem 0 #162f2760;
-  }
-  .christmas-snowman span {
-    position: absolute;
-    width: 1.85rem;
-    height: 1.8rem;
-    left: .4rem;
-    bottom: 1.95rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 42%, #345649 0 1.5px, transparent 2px),
-                radial-gradient(circle at 64% 42%, #345649 0 1.5px, transparent 2px), #f7f7ec;
-    border-bottom: .25rem solid #ad4c53;
-  }
-  .christmas-snowman span::before {
-    content: "";
-    position: absolute;
-    top: -.27rem;
-    left: -.1rem;
-    width: 2rem;
-    height: .52rem;
-    border-radius: 50% 50% 18% 18%;
-    background: #ad4c53;
-  }
-  .christmas-snowman span::after {
-    content: "";
-    position: absolute;
-    top: .92rem;
-    left: .87rem;
-    border-block: 2px solid transparent;
-    border-left: 7px solid #d88946;
-  }
+.christmas-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .85rem 1.3rem;
+}
+.christmas-snowman {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(4.85rem, 8vw, 7.4rem);
+  aspect-ratio: 1 / 1.18;
+}
+.christmas-snowman span { position: absolute; display: block; }
+.christmas-snowman-shadow {
+  left: 12%; right: 11%; bottom: 1%; height: 12%;
+  border-radius: 50%;
+  background: #132d2499;
+}
+.christmas-snowman-body {
+  inset: auto 18% 4% 13%;
+  height: 49%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 53% 40%, #345649 0 4%, transparent 5%),
+              radial-gradient(circle at 53% 65%, #345649 0 4%, transparent 5%),
+              radial-gradient(circle at 37% 20%, #fffaf0, #d4e6de 85%);
+}
+.christmas-snowman-arm {
+  width: 32%; height: 4%; top: 58%; left: 65%;
+  border-radius: 1rem;
+  background: #ad805d;
+  transform: rotate(-35deg);
+  transform-origin: 8% 50%;
+}
+.christmas-snowman-arm::before, .christmas-snowman-arm::after {
+  content: "";
+  position: absolute;
+  right: 5%; width: 38%; height: 82%;
+  border-radius: inherit;
+  background: inherit;
+  transform-origin: right center;
+}
+.christmas-snowman-arm::before { transform: rotate(-48deg); }
+.christmas-snowman-arm::after { transform: rotate(46deg); }
+.christmas-snowman-head {
+  top: 23%; left: 25%; width: 45%; height: 40%;
+  border-radius: 48%;
+  background: radial-gradient(circle at 35% 26%, #fffaf0, #d4e6de 90%);
+}
+.christmas-snowman-hat {
+  width: 74%; height: 57%; left: 8%; top: -32%;
+  border-radius: 32% 32% 13% 12%;
+  transform: rotate(-12deg);
+  background: #29312e;
+  border-bottom: .24rem solid #bb525a;
+}
+.christmas-snowman-hat::after {
+  content: "";
+  position: absolute;
+  inset: auto -21% -23%;
+  height: 27%;
+  border-radius: 40%;
+  background: #29312e;
+}
+.christmas-snowman-eyes {
+  top: 38%; left: 23%; width: 57%; height: 12%;
+  background: radial-gradient(circle at 19% 50%, #29312e 0 11%, transparent 13%),
+              radial-gradient(circle at 80% 50%, #29312e 0 11%, transparent 13%);
+}
+.christmas-snowman-nose {
+  top: 49%; left: 51%; width: 35%; height: 17%;
+  background: #d98038;
+  clip-path: polygon(0 0, 100% 55%, 0 100%);
+}
+.christmas-snowman-scarf {
+  top: 56%; left: 24%; width: 48%; height: 8%;
+  border-radius: 40%;
+  transform: rotate(-5deg);
+  background: #bb525a;
+}
+.christmas-snowman-scarf::after {
+  content: "";
+  position: absolute;
+  width: 23%; height: 250%; left: 9%; top: 50%;
+  border-radius: 0 0 23% 23%;
+  transform: rotate(14deg);
+  background: #bb525a;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .christmas-snowman { animation: snowman-bob 4.8s ease-in-out infinite; }
+  .christmas-snowman-arm { animation: snowman-wave 8s ease-in-out infinite; }
+  .christmas-snowman-eyes { animation: snowman-blink 6.6s ease-in-out infinite; }
+}
+@keyframes snowman-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-4%) rotate(2deg); }
+}
+@keyframes snowman-wave {
+  0%, 50%, 100% { transform: rotate(-35deg); }
+  9%, 25% { transform: rotate(-75deg); }
+  17%, 33% { transform: rotate(-45deg); }
+}
+@keyframes snowman-blink {
+  0%, 25%, 32%, 100% { transform: scaleY(1); }
+  28%, 30% { transform: scaleY(.15); }
 }
 @media (max-width: 680px) {
   .christmas-home-card .pink-index-card { padding-inline: clamp(.8rem, 4vw, 1.25rem); }
