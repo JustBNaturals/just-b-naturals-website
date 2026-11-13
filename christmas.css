@@ -114,13 +114,39 @@
 @media (max-width: 600px) {
   .christmas-campaign .pink-hero-photo img { max-height: 180px; }
 }
-.christmas-home-card .pink-index-card { background: #f2f1e8; border-color: #dedfd1; }
-.christmas-home-card .pink-index-gallery > img { height: 220px; }
-.christmas-home-card .pink-index-copy .eyebrow { color: #84333b; }
-.christmas-home-card .pink-index-copy h2 { text-wrap: balance; }
-.christmas-home-card .pink-index-controls button { border-color: #cbd2c4; color: #274638; }
+.christmas-home-card .pink-index-card {
+  position: relative;
+  background: #244438;
+  border-color: #38594b;
+  color: #fff6e6;
+  padding-top: 3.1rem;
+}
+.christmas-home-card .pink-index-gallery > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 68%;
+  border-radius: 8px;
+}
+.christmas-home-card .pink-index-copy .eyebrow { color: #f6d499; }
+.christmas-home-card .pink-index-copy h2 { color: #fff6e6; text-wrap: balance; }
+.christmas-home-card .pink-index-controls { color: #f6d499; }
+.christmas-home-card .pink-index-controls button { border-color: #e4dbc2; color: #274638; }
+.christmas-home-card .button-dark { background: #f7e7cc; border-color: #f7e7cc; color: #254537; }
+.christmas-home-card .button-dark:hover { background: #fff5e4; border-color: #fff5e4; }
+.christmas-home-card .pink-index-card > .christmas-lights {
+  position: absolute;
+  top: .3rem;
+  left: 50%;
+  width: min(94%, 610px);
+  height: 2.55rem;
+  transform: translateX(-50%);
+}
 @media (max-width: 680px) {
-  .christmas-home-card .pink-index-gallery > img { height: 175px; }
+  .christmas-home-card .pink-index-card { padding-inline: clamp(.8rem, 4vw, 1.25rem); }
+  .christmas-home-card .pink-index-gallery > img { aspect-ratio: 1 / 1.08; }
 }
 
 .gift-heading { position: relative; isolation: isolate; }
@@ -162,15 +188,26 @@
 .gift-section-trim {
   position: relative;
   isolation: isolate;
-  height: 1.4rem;
+  height: 2rem;
   margin-top: .55rem;
 }
-.gift-section-trim::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  inset-inline: 0;
-  height: 1px;
-  background: linear-gradient(90deg, #5b765e80, transparent);
-}
+.gift-section-trim > .christmas-lights { position: relative; width: min(100%, 550px); height: 100%; }
 .gift-snow--trim { --gift-flake-color: #6a8475; }
+.christmas-lights { display: block; pointer-events: none; }
+.christmas-light-wire { fill: none; stroke: #748676; stroke-width: 2; stroke-linecap: round; }
+.christmas-light-socket { fill: #526858; }
+.christmas-light-bulb { fill: var(--bulb-color); }
+.christmas-light-highlight { fill: none; stroke: #fff8dd; stroke-width: 1.5; stroke-linecap: round; opacity: .75; }
+@media (prefers-reduced-motion: no-preference) {
+  .christmas-light-bulb {
+    animation: christmas-light-flicker var(--bulb-duration) ease-in-out var(--bulb-delay) infinite;
+  }
+}
+@keyframes christmas-light-flicker {
+  0%, 39%, 100% { opacity: .88; }
+  49% { opacity: .55; }
+  61%, 78% { opacity: 1; }
+}
+@media (min-width: 621px) {
+  #small-gifts .featured-carousel > .product-card { flex-basis: calc((100% - 48px) / 3.25); }
+}

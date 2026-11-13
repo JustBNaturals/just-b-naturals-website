@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs';
+import { christmasLights } from '../christmas-lights.js';
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[char]);
 const localized = (en, fr) => `data-en="${escape(en)}" data-fr="${escape(fr)}"`;
@@ -25,7 +26,7 @@ export function buildChristmasPage(products, french) {
       </div>
     </article>`;
   };
-  const renderGrid = ids => `<div class="product-grid">${ids.map(renderCard).join('\n').replace(/^[ \t]+$/gm, '')}</div>`;
+  const renderGrid = (ids, attributes = "") => `<div class="product-grid"${attributes}>${ids.map(renderCard).join('\n').replace(/^[ \t]+$/gm, '')}</div>`;
   const collection = [
     ['gift-collection','Wrapped gift sets','Coffrets prêts à offrir',['gift-soap-duo','gift-soap-trio','gift-soap-quartet','gift-soap-and-scrub','gift-soap-and-roll-on','gift-complete-care']],
     ['small-gifts','Small gifts & stocking stuffers','Petits cadeaux et surprises pour le bas de Noël',['odds-n-ends','sourdough-crepe-mix','solid-dish-soap','menthol-shower-steamer']]
@@ -34,9 +35,10 @@ export function buildChristmasPage(products, french) {
       <h2 id="${section}-title" ${localized(title,fr)}>${title}</h2>
       <div class="gift-section-trim" aria-hidden="true">
         <div class="gift-snow gift-snow--trim"></div>
+        ${christmasLights}
       </div>
     </div>
-    ${renderGrid(ids)}
+    ${renderGrid(ids, section === "small-gifts" ? ' data-stocking-carousel role="region" aria-labelledby="small-gifts-title" tabindex="0"' : "")}
   </section>`).join('\n');
   for (const [file, markup] of [
     ['gift-sets.html',collection],

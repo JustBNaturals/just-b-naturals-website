@@ -1,3 +1,4 @@
+import { christmasLights } from "./christmas-lights.js";
 import { t, campaignLanguage } from "./campaign-ui.js?v=20261016-natural-fade";
 
 const torontoToday = new Intl.DateTimeFormat("en-CA", {
@@ -22,6 +23,7 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
     ];
     homeCard.innerHTML = `<section class="shell pink-index-section christmas-home-card" aria-labelledby="christmas-home-title">
       <div class="pink-index-card">
+        ${christmasLights}
         <div class="pink-index-gallery">
           <img data-christmas-photo src="images/christmas/${photos[0].src}" width="820" height="1093" alt="${photos[0].alt}">
           <div class="pink-index-controls">

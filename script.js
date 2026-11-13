@@ -1436,6 +1436,8 @@ renderSiteChrome();
 initializeCampaignLanguage();
 renderCampaign();
 renderCatalogues();
+const stockingCarousel = document.querySelector("[data-stocking-carousel]");
+if (stockingCarousel) initializeFeaturedCarousel(stockingCarousel);
 renderProductPage();
 initializeMenu();
 initializeOrderList();
