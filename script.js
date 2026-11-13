@@ -1,7 +1,7 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
-import { PRODUCTS } from "./product-data.js?v=20261112-room-mists";
+import { PRODUCTS } from "./product-data.js?v=20261113-new-photos";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261112-room-mists-title";
+import "./fr.js?v=20261113-new-photos";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -103,7 +103,7 @@ function productAvailabilityMarkup(product) {
 }
 
 function availabilitySummary(products) {
-  const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0).length;
+  const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0 && (!product.requiresPrice || Number.isFinite(product.price))).length;
   const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
   const parts = [];
   if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
@@ -479,7 +479,7 @@ function renderCatalogues() {
 
 function featuredProducts() {
   return visibleProducts
-    .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0)
+    .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0 && (!product.requiresPrice || Number.isFinite(product.price)))
     .sort(() => Math.random() - .5)
     .sort((a, b) => Number(b.id === "menthol-shower-steamer") - Number(a.id === "menthol-shower-steamer"));
 }

@@ -20,7 +20,7 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
   const homeCard = document.querySelector("[data-christmas-home-card]");
   if (homeCard) {
     const photos = [
-      {src: "gift-soap-duo.webp", alt: t("A ribbon-tied soap duo beneath the tree", "Un duo de savons noué d’un ruban sous le sapin")},
+      {src: "holiday-promo-20261113.webp", wide: true, alt: t("Handmade Christmas gift sets arranged around a tree", "Coffrets de Noël faits à la main disposés autour d’un sapin")},
       {src: "gift-complete-care.webp", alt: t("A kraft gift bag with soaps and body care", "Un sac-cadeau kraft avec des savons et des soins corporels")}
     ];
     homeCard.innerHTML = `<section class="shell pink-index-section christmas-home-card" aria-labelledby="christmas-home-title">
@@ -28,7 +28,7 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
         <div class="gift-snow" aria-hidden="true"></div>
         ${christmasLights}
         <div class="pink-index-gallery">
-          <img data-christmas-photo src="images/christmas/${photos[0].src}" width="820" height="1093" alt="${photos[0].alt}">
+          <img data-christmas-photo data-wide-photo src="images/christmas/${photos[0].src}" width="820" height="1093" alt="${photos[0].alt}">
           <div class="pink-index-controls">
             <button type="button" data-christmas-step="-1" aria-label="${t("Previous photo", "Photo précédente")}">←</button>
             <span data-christmas-position aria-live="polite">1 / ${photos.length}</span>
@@ -65,6 +65,7 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
       slide = (slide + Number(control.dataset.christmasStep) + photos.length) % photos.length;
       image.src = "images/christmas/" + photos[slide].src;
       image.alt = photos[slide].alt;
+      image.toggleAttribute("data-wide-photo", Boolean(photos[slide].wide));
       position.textContent = `${slide + 1} / ${photos.length}`;
     });
     homeCard.hidden = false;
@@ -83,7 +84,7 @@ if (announcement && torontoToday >= "2026-11-12" && torontoToday <= "2026-12-31"
       document.body.insertAdjacentHTML("beforeend", `<dialog class="pink-promo-popup christmas-popup" data-christmas-popup aria-labelledby="christmas-popup-title">
         <button type="button" class="pink-popup-close" data-christmas-close aria-label="${t("Close Christmas popup", "Fermer la fenêtre de Noël")}">×</button>
         <div class="pink-popup-grid">
-          <img class="pink-popup-photo" src="images/christmas/gift-soap-duo.webp" width="820" height="1093" alt="${t("A soap gift box under the Christmas tree", "Un coffret de savons sous le sapin de Noël")}">
+          <img class="pink-popup-photo" src="images/christmas/gift-soap-duo-20261113.webp" width="820" height="1093" alt="${t("A soap gift box under the Christmas tree", "Un coffret de savons sous le sapin de Noël")}">
           <div class="pink-popup-copy">
             <p class="eyebrow">${t("Christmas at Just B Natural", "Noël chez Just B Natural")}</p>
             <h2 id="christmas-popup-title">${t("Handmade Christmas gifts", "Des cadeaux de Noël faits à la main")}</h2>
