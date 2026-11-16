@@ -1148,6 +1148,39 @@ export const PRODUCTS = [
     "featured": false
   },
   {
+    "id": "maple-chai-scrub",
+    "category": "sugar-scrubs",
+    "name": "Maple Chai",
+    "kicker": "Just B Scrubbed",
+    "description": "Organic cane and maple sugars gently polish the skin, while shea butter and vanilla-infused jojoba leave it feeling soft. Cinnamon, cardamom, ginger, nutmeg and clove give this body scrub the warm scent of a maple chai, with a touch of Bourbon vanilla.",
+    "cardDescription": "A 130 g body scrub with organic maple sugar, shea butter, warm chai spices and Bourbon vanilla.",
+    "ingredients": [
+      "Organic cane sugar, organic maple sugar, arrowroot, organic rosehip, organic shea butter, vanilla-infused jojoba, organic castor oil, vitamin E, cardamom, cinnamon, ginger, nutmeg, cloves, Bourbon vanilla."
+    ],
+    "sections": [
+      {
+        "title": "About this product",
+        "paragraphs": [
+          "Organic cane and maple sugars gently polish the skin, while shea butter and vanilla-infused jojoba leave it feeling soft. Cinnamon, cardamom, ginger, nutmeg and clove give this body scrub the warm scent of a maple chai, with a touch of Bourbon vanilla."
+        ]
+      }
+    ],
+    "details": [],
+    "note": "130 g",
+    "use": "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week.",
+    "safety": "For external use only. Avoid the face, broken or irritated skin, and freshly shaved areas. Keep water out of the jar and take care on slippery surfaces.",
+    "availability": null,
+    "price": 20,
+    "seedInventory": true,
+    "stock": null,
+    "image": "images/catalog/maple-chai-scrub.jpg",
+    "imageNote": null,
+    "art": "jar",
+    "tone": "#ead8c8",
+    "accent": "#9a684f",
+    "featured": false
+  },
+  {
     "id": "vanilla-scrub",
     "category": "sugar-scrubs",
     "name": "Vanilla",

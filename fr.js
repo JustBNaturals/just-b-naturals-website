@@ -125,6 +125,19 @@
         });
         return;
       }
+      if (product.id === "maple-chai-scrub") {
+        Object.assign(product, {
+          name: "Chai à l’érable",
+          kicker: "Just B Natural",
+          description: "Les sucres de canne et d’érable biologiques exfolient la peau en douceur, tandis que le beurre de karité et le jojoba infusé à la vanille la laissent douce. La cannelle, la cardamome, le gingembre, la muscade et le clou de girofle rappellent un chai à l’érable, avec une touche de vanille Bourbon.",
+          cardDescription: "Un exfoliant corporel de 130 g au sucre d’érable biologique, au beurre de karité, aux épices chai et à la vanille Bourbon.",
+          ingredients: ["Sucre de canne biologique, sucre d’érable biologique, arrow-root, cynorrhodon biologique, beurre de karité biologique, jojoba infusé à la vanille, huile de ricin biologique, vitamine E, cardamome, cannelle, gingembre, muscade, clous de girofle, vanille Bourbon."],
+          sections: [{ title: "En détail", paragraphs: ["Les sucres de canne et d’érable biologiques exfolient la peau en douceur, tandis que le beurre de karité et le jojoba infusé à la vanille la laissent douce. La cannelle, la cardamome, le gingembre, la muscade et le clou de girofle rappellent un chai à l’érable, avec une touche de vanille Bourbon."] }],
+          use: "Masser une petite quantité sur la peau humide en mouvements circulaires, puis bien rincer à l’eau tiède. Utiliser jusqu’à deux fois par semaine.",
+          safety: "Pour usage externe seulement. Éviter le visage, la peau lésée, irritée ou fraîchement rasée. Garder l’eau hors du pot et faire attention aux surfaces glissantes."
+        });
+        return;
+      }
       const translated = productTranslations[product.id];
       if (translated) {
         product.name = translated[0];

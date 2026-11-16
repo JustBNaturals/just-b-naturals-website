@@ -1,7 +1,7 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261116-next-batch";
-import { PRODUCTS } from "./product-data.js?v=20261116-next-batch";
+import { PRODUCTS } from "./product-data.js?v=20261116-maple-chai";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261116-next-batch";
+import "./fr.js?v=20261116-maple-chai";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
