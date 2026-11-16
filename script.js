@@ -1,7 +1,7 @@
-import { initializeGrowth, scentFamilies } from "./growth.js?v=20261017-dashboard";
-import { PRODUCTS } from "./product-data.js?v=20261113-new-photos";
+import { initializeGrowth, scentFamilies } from "./growth.js?v=20261116-next-batch";
+import { PRODUCTS } from "./product-data.js?v=20261116-next-batch";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261113-new-photos";
+import "./fr.js?v=20261116-next-batch";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -88,7 +88,7 @@ function formatReadyDate(value) {
 }
 
 function productAvailabilityText(product) {
-  if (product.availabilityStatus === "preorder") return product.availableDate ? `Preorder • Available ${formatReadyDate(product.availableDate)}` : "Preorder";
+  if (product.availabilityStatus === "preorder") return product.availableDate ? `${t("Next batch available","Prochain lot disponible")} · ${formatReadyDate(product.availableDate)}` : t("Next batch available","Prochain lot disponible");
   if (product.stock === 0) return "Out of stock";
   if (product.availabilityStatus === "unavailable" || product.active === false) return "Currently unavailable";
   if (Number.isInteger(product.stock)) return `${product.stock} in stock`;
@@ -97,7 +97,7 @@ function productAvailabilityText(product) {
 
 function productAvailabilityMarkup(product) {
   if (product.availabilityStatus === "preorder" && product.availableDate) {
-    return `<span class="stock-status-kind">Preorder</span><span class="stock-status-date">Available ${escapeHtml(formatReadyDate(product.availableDate))}</span>`;
+    return `<span class="stock-status-kind">${t("Next batch available","Prochain lot disponible")}</span><span class="stock-status-date">${escapeHtml(formatReadyDate(product.availableDate))}</span>`;
   }
   return escapeHtml(productAvailabilityText(product));
 }
@@ -107,7 +107,7 @@ function availabilitySummary(products) {
   const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
   const parts = [];
   if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
-  if (preorder) parts.push(`${preorder} available for preorder`);
+  if (preorder) parts.push(t(`${preorder} with a next batch`, `${preorder} ${preorder===1?"produit":"produits"} dans un prochain lot`));
   return parts.length ? parts.join(" • ") : "No products currently available";
 }
 
@@ -433,7 +433,7 @@ function productCard(product) {
       <div class="product-title-row"><h2><a href="${productPageUrl(product)}">${product.name}</a></h2>${Number.isFinite(product.price) ? `<span class="product-price">${formatPrice(product.price)}</span>` : ""}</div>
       <p class="product-description">${product.cardDescription || product.description}</p>
       ${availability}
-      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart")} <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">${t("View full details")}</a></div>
+      <div class="product-order-options"><button class="button button-dark add-order-button" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Order from next batch","Commander du prochain lot") : t("Add to cart")} <span>＋</span></button><button class="notify-product-button" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button><a class="product-detail-link" href="${productPageUrl(product)}">${t("View full details")}</a></div>
     </div>
   </article>`;
 }
@@ -577,7 +577,7 @@ function updateAddButton(button) {
   button.hidden = Boolean(unavailable);
   if (needsPrice) { button.classList.remove("is-added"); button.textContent = t("Price to be confirmed", "Prix à confirmer"); return; }
   button.classList.toggle("is-added", Boolean(item));
-  const base = product?.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart");
+  const base = product?.availabilityStatus === "preorder" ? t("Order from next batch","Commander du prochain lot") : t("Add to cart");
   button.innerHTML = `${item ? `${t("Added","Ajouté")} ✓ · ${item.quantity} ${t("in cart","au panier")}` : base} <span>＋</span>`;
 }
 
@@ -1105,7 +1105,7 @@ function renderProductPage() {
             ${product.note ? `<small>${product.note}</small>` : ""}
           </div>
           ${stockMarkup}
-          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Preorder") : t("Add to cart")} <span>＋</span></button>
+          <button class="button button-dark product-detail-add" type="button" data-add-order="${product.id}">${product.availabilityStatus === "preorder" ? t("Order from next batch","Commander du prochain lot") : t("Add to cart")} <span>＋</span></button>
           <button class="notify-product-button notify-product-button--detail" type="button" data-notify-product="${product.id}" hidden>Notify me when available</button>
           <div class="product-detail-tags" aria-label="Product tags">${tags.map(tag => `<a href="shop.html?search=${encodeURIComponent(tag)}">${tag}</a>`).join("")}</div>
         </div>

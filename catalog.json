@@ -433,7 +433,7 @@
     "note": "",
     "use": "",
     "safety": "",
-    "availability": "Preorder • Available September 24, 2026",
+    "availability": "Next batch available · September 24, 2026",
     "availabilityStatus": "preorder",
     "availableDate": "2026-09-24",
     "price": null,
@@ -1104,46 +1104,6 @@
     "tone": "#ead8c8",
     "accent": "#9a684f",
     "featured": true
-  },
-  {
-    "id": "harvest-spa-scrub",
-    "category": "sugar-scrubs",
-    "name": "Harvest",
-    "kicker": "Just B Scrubbed",
-    "description": "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed.",
-    "cardDescription": "A refreshing sugar scrub with organic cane sugar, unrefined shea butter, and organic jojoba, rosehip, and castor oils.",
-    "ingredients": [
-      "Organic Cane Sugar, Unrefined Shea Butter, Organic Jojoba Oil, Organic Rosehip Oil, Organic Castor Oil, Arrowroot Powder, All-Natural Vitamin E, Organic Essential Oils (Sweet Orange, Lavender, Peppermint, Frankincense)."
-    ],
-    "sections": [
-      {
-        "title": "About this product",
-        "paragraphs": [
-          "A rich, refreshing sugar scrub that gently exfoliates dry, rough skin while nourishing it with unrefined shea butter, jojoba, rosehip, and castor oils, plus vitamin E. Sweet orange adds a bright citrus note, lavender brings a soft calming aroma, peppermint provides a fresh, cooling touch, and frankincense rounds out the blend with a warm, earthy finish. Skin is left feeling smooth, soft, moisturized, and refreshed."
-        ]
-      },
-      {
-        "title": "How to use",
-        "paragraphs": [
-          "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas."
-        ]
-      }
-    ],
-    "details": [
-      "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas."
-    ],
-    "note": "",
-    "use": "Massage a small amount onto damp skin using gentle circular motions, then rinse well with warm water. Use up to twice a week. Avoid the face, broken or irritated skin, and freshly shaved areas.",
-    "safety": "",
-    "availability": null,
-    "price": null,
-    "stock": null,
-    "image": "images/catalog/harvest-spa-scrub.jpg",
-    "imageNote": null,
-    "art": "jar",
-    "tone": "#ead8c8",
-    "accent": "#9a684f",
-    "featured": false
   },
   {
     "id": "vanilla-scrub",

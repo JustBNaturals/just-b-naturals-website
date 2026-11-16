@@ -80,7 +80,7 @@ export function initializeGrowth(api){
   sticky.hidden=!inventoryReady||!record||(!Number.isInteger(record.priceCents)&&!soldOut)||sticky.dataset.past!=='true';
   sticky.querySelector('[data-sticky-price]').textContent=Number.isInteger(record?.priceCents)?format(record.priceCents):'';
   const add=sticky.querySelector('[data-add-order]'),notify=sticky.querySelector('[data-notify-product]');add.hidden=!!soldOut;notify.hidden=!soldOut;
-  const item=api.cart().find(item=>item.id===p?.id);add.classList.toggle('is-added',!!item);add.textContent=item?t(`Added ✓ · ${item.quantity}`,`Ajouté ✓ · ${item.quantity}`):p?.availabilityStatus==='preorder'?t('Preorder +','Précommander +'):t('Add to cart +','Ajouter au panier +');
+  const item=api.cart().find(item=>item.id===p?.id);add.classList.toggle('is-added',!!item);add.textContent=item?t(`Added ✓ · ${item.quantity}`,`Ajouté ✓ · ${item.quantity}`):p?.availabilityStatus==='preorder'?t('Order from next batch +','Commander du prochain lot +'):t('Add to cart +','Ajouter au panier +');
  }
  function showReviews(){
   const mount=document.querySelector('[data-customer-reviews]');if(!mount||!storefront?.reviews?.length)return;

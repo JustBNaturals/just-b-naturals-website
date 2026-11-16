@@ -434,7 +434,7 @@ export const PRODUCTS = [
     "note": "",
     "use": "",
     "safety": "",
-    "availability": "Preorder • Available September 24, 2026",
+    "availability": "Next batch available · September 24, 2026",
     "availabilityStatus": "preorder",
     "availableDate": "2026-09-24",
     "price": null,
@@ -1107,6 +1107,7 @@ export const PRODUCTS = [
     "featured": true
   },
   {
+    "unlisted": true,
     "id": "harvest-spa-scrub",
     "category": "sugar-scrubs",
     "name": "Harvest",

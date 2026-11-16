@@ -31,7 +31,7 @@ function filterInventory(){
 
 function setStatus(cell, status, date, stock) {
   if (status === "preorder") {
-    cell.textContent = date ? `Preorder until ${new Date(`${date}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}` : "Choose a ready date";
+    cell.textContent = date ? `Next batch available ${new Date(`${date}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}` : "Choose a ready date";
     cell.dataset.state = "preorder";
   } else if (stock !== "" && Number(stock) === 0) {
     cell.textContent = "Out of stock automatically";
@@ -78,7 +78,7 @@ async function openInventory(key) {
     const statusSelect = document.createElement("select");
     statusSelect.className = "inventory-status-select";
     statusSelect.setAttribute("aria-label", `Website status for ${product.name}`);
-    statusSelect.innerHTML = '<option value="available">Available now</option><option value="preorder">Preorder</option>';
+    statusSelect.innerHTML = '<option value="available">Available now</option><option value="preorder">Next batch available</option>';
     statusSelect.value = record.availabilityStatus === "preorder" ? "preorder" : "available";
     statusCell.append(statusSelect);
     const dateCell = document.createElement("td");
@@ -177,7 +177,7 @@ async function saveInventory() {
   if (invalidDate) {
     invalidDate.reportValidity();
     invalidDate.focus();
-    saveStatus.textContent = "Choose a ready date for every product marked Preorder.";
+    saveStatus.textContent = "Choose a ready date for every product marked Next batch available.";
     return;
   }
   const changed=[...rows.querySelectorAll('tr.is-dirty')];

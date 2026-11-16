@@ -215,16 +215,16 @@
   background: radial-gradient(circle at 35% 26%, #fffaf0, #d4e6de 90%);
 }
 .christmas-snowman-hat {
-  width: 70%; height: 52%; left: 15%; top: -32%;
+  width: 70%; height: 48%; left: 15%; top: -29%;
   border-radius: 23% 23% 10% 10%;
-  transform: rotate(-7deg);
+  transform: rotate(0deg);
   transform-origin: 50% 95%;
   background: linear-gradient(to bottom, #29312e 0 73%, #a83643 73% 93%, #29312e 93%);
 }
 .christmas-snowman-hat::after {
   content: "";
   position: absolute;
-  inset: auto -27% -11%;
+  inset: auto -25% -5%;
   height: 23%;
   border-radius: 40%;
   background: #29312e;
@@ -240,9 +240,9 @@
   clip-path: polygon(0 0, 100% 55%, 0 100%);
 }
 .christmas-snowman-scarf {
-  top: 54%; left: 27%; width: 46%; height: 8%;
+  top: 53.5%; left: 28%; width: 44%; height: 7%;
   border-radius: 22% 22% 43% 43%;
-  transform: rotate(4deg);
+  transform: rotate(0deg);
   background: linear-gradient(#c6555f, #a83643);
 }
 .christmas-snowman-scarf::after {
