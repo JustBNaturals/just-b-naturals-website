@@ -40,6 +40,7 @@ PRODUCTS.forEach(product => {
 });
 
 const visibleProducts = PRODUCTS.filter(product => !product.unlisted);
+let inventoryPending = true;
 
 const NAV_ITEMS = [
   ["index.html", "Home", "home"],
@@ -87,6 +88,11 @@ function formatReadyDate(value) {
   return new Date(`${value}T12:00:00`).toLocaleDateString(globalThis.JBN_FR?.isFrench ? "fr-CA" : "en-CA", { month: "long", day: "numeric", year: "numeric" });
 }
 
+function isProductUnavailable(product) {
+  return product.active === false || product.availabilityStatus === "unavailable" ||
+    (product.stock === 0 && product.availabilityStatus !== "preorder");
+}
+
 function productAvailabilityText(product) {
   if (product.availabilityStatus === "preorder") return product.availableDate ? `${t("Next batch available","Prochain lot disponible")} · ${formatReadyDate(product.availableDate)}` : t("Next batch available","Prochain lot disponible");
   if (product.stock === 0) return "Out of stock";
@@ -103,7 +109,7 @@ function productAvailabilityMarkup(product) {
 }
 
 function availabilitySummary(products) {
-  const available = products.filter(product => product.active !== false && product.availabilityStatus !== "unavailable" && product.availabilityStatus !== "preorder" && product.stock !== 0 && (!product.requiresPrice || Number.isFinite(product.price))).length;
+  const available = products.filter(product => !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price))).length;
   const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
   const parts = [];
   if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
@@ -445,7 +451,9 @@ function activateImageFallbacks(scope = document) {
   });
 }
 
-function renderProductGrid(grid, matches) {
+function renderProductGrid(grid, products) {
+  if (inventoryPending) return;
+  const matches = products.filter(product => !product.unlisted && !isProductUnavailable(product));
   grid.innerHTML = matches.map(productCard).join("");
   grid.dataset.productIds = matches.map(product => product.id).join(",");
   const count = grid.closest("section")?.querySelector("[data-product-count]");
@@ -462,21 +470,9 @@ function renderProductGrid(grid, matches) {
   if (STORE.orderListEnabled) renderOrderList();
 }
 
-function renderCatalogues() {
-  document.querySelectorAll("[data-catalog], [data-category]").forEach(grid => {
-    const category = grid.dataset.category;
-    const catalogue = grid.dataset.catalog;
-    let matches = visibleProducts;
-    if (category) matches = visibleProducts.filter(product => product.category === category);
-    if (catalogue === "featured") matches = featuredProducts();
-    renderProductGrid(grid, matches);
-    if (catalogue === "featured") initializeFeaturedCarousel(grid);
-  });
-}
-
 function featuredProducts() {
   return visibleProducts
-    .filter(product => product.active !== false && product.availabilityStatus !== "preorder" && product.availabilityStatus !== "unavailable" && product.stock !== 0 && (!product.requiresPrice || Number.isFinite(product.price)))
+    .filter(product => !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price)))
     .sort(() => Math.random() - .5)
     .sort((a, b) => Number(b.id === "menthol-shower-steamer") - Number(a.id === "menthol-shower-steamer"));
 }
@@ -485,7 +481,7 @@ function initializeFeaturedCarousel(grid) {
   if (typeof grid._featuredCarouselCleanup === "function") grid._featuredCarouselCleanup();
   grid.classList.add("featured-carousel");
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const originals = [...grid.querySelectorAll(":scope > .product-card")];
+  const originals = [...grid.querySelectorAll(":scope > .product-card:not([hidden])")];
   if (originals.length < 2 || grid.scrollWidth <= grid.clientWidth) return;
   const clones = originals.map(card => {
     const clone = card.cloneNode(true);
@@ -567,7 +563,7 @@ function orderItemMarkup(item) {
 
 function updateAddButton(button) {
   const product = PRODUCTS.find(candidate => candidate.id === button.dataset.addOrder);
-  const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
+  const unavailable = product && isProductUnavailable(product);
   const item = findOrderLine(button.dataset.addOrder);
   const needsPrice = Boolean(product?.requiresPrice && !Number.isFinite(product.price));
   button.disabled = needsPrice;
@@ -613,7 +609,7 @@ function showOrderToast(message, checkout = false) {
 
 function addToOrderList(productId) {
   const product = PRODUCTS.find(candidate => candidate.id === productId);
-  if (!product || product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder")) return null;
+  if (!product || isProductUnavailable(product)) return null;
   const existing = findOrderLine(productId);
   if(product.availabilityStatus!=="preorder"&&Number.isInteger(product.stock)&&(existing?.quantity||0)>=product.stock){showOrderToast(t("That is all the stock available right now.","C’est tout le stock disponible pour le moment."));return null;}
   if (existing) existing.quantity = Math.min(99, existing.quantity + 1);
@@ -1013,20 +1009,21 @@ function productTags(product) {
 }
 
 function relatedProducts(product) {
-  const matches = visibleProducts.filter(item => item.category === product.category && item.id !== product.id);
+  const matches = visibleProducts.filter(item => item.category === product.category &&
+    item.id !== product.id && !isProductUnavailable(item));
   return product.category === "artisan-soap"
-    ? matches.filter(item => item.active !== false && item.availabilityStatus !== "unavailable" && item.availabilityStatus !== "preorder" && item.stock !== 0)
+    ? matches.filter(item => item.availabilityStatus !== "preorder")
     : matches.slice(0, 3);
 }
 
-function refreshRelatedSoapCarousel() {
-  const grid = document.querySelector("[data-related-soaps]");
+function refreshRelatedProducts() {
+  const grid = document.querySelector("[data-related-products]");
   const product = PRODUCTS.find(item => item.id === document.body.dataset.productId);
   if (!grid || !product) return;
   const matches = relatedProducts(product);
   grid.closest("section").hidden = !matches.length;
   renderProductGrid(grid, matches);
-  initializeFeaturedCarousel(grid);
+  if (grid.hasAttribute("data-related-soaps")) initializeFeaturedCarousel(grid);
 }
 
 function renderProductPage() {
@@ -1068,7 +1065,6 @@ function renderProductPage() {
   const availabilityText = productAvailabilityText(product);
   const stockMarkup = availabilityText ? `<p class="stock-status product-detail-stock${product.availabilityStatus === "preorder" ? " is-preorder" : ""}" data-stock-product="${product.id}">${productAvailabilityMarkup(product)}</p>` : `<p class="stock-status product-detail-stock" data-stock-product="${product.id}" hidden></p>`;
   const categoryLabel = CATEGORY_LABELS[product.category] || "Just B Natural";
-  const related = relatedProducts(product);
   const ingredientsText = product.ingredients.join(" ");
   const tags = productTags(product);
   const useDetailsOpen = window.matchMedia("(max-width: 620px)").matches ? "" : " open";
@@ -1114,13 +1110,11 @@ function renderProductPage() {
       <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Storage", "Conservation") : "Care & storage"}</h2><span aria-hidden="true">＋</span></summary><p>${guide.care}</p></details>
       <details class="product-use-item"${useDetailsOpen}><summary><h2>${product.isFood ? t("Before serving", "Avant de servir") : "Before using"}</h2><span aria-hidden="true">＋</span></summary><p>${beforeUsing}</p></details>
     </section>`}
-    <section class="related-products section shell" ${related.length ? "" : "hidden"}>
+    <section class="related-products section shell" hidden>
       <div class="section-heading"><div><p class="eyebrow">You may also like</p><h2>More from ${categoryLabel}</h2></div><a class="text-link" href="${categoryUrl}">View category <span>→</span></a></div>
-      <div class="product-grid" ${product.category === "artisan-soap" ? 'data-related-soaps role="region" aria-label="Artisan soaps / Savons artisanaux" tabindex="0"' : ""}>${related.map(productCard).join("")}</div>
+      <div class="product-grid" data-related-products ${product.category === "artisan-soap" ? 'data-related-soaps role="region" aria-label="Artisan soaps / Savons artisanaux" tabindex="0"' : ""}></div>
     </section>`;
   activateImageFallbacks(mount);
-  const relatedCarousel = mount.querySelector("[data-related-soaps]");
-  if (relatedCarousel) initializeFeaturedCarousel(relatedCarousel);
 }
 
 function initializeInlineValidation(form) {
@@ -1327,67 +1321,84 @@ function initializeScrollLife() {
   }
 }
 
+function refreshGiftCards() {
+  document.querySelectorAll("[data-inventory-gift-grid]").forEach(grid => {
+    grid._featuredCarouselCleanup?.();
+    let available = 0;
+    grid.querySelectorAll(":scope > .product-card").forEach(card => {
+      const product = PRODUCTS.find(item => item.id === card.dataset.productId);
+      card.hidden = !product || product.unlisted || isProductUnavailable(product);
+      if (!card.hidden) available++;
+    });
+    grid.hidden = available === 0;
+    grid.nextElementSibling.hidden = available > 0;
+    if (grid.hasAttribute("data-stocking-carousel")) initializeFeaturedCarousel(grid);
+  });
+}
+
 async function loadInventory() {
+  let records = [];
   try {
     const response = await fetch("/api/products", { cache: "no-store", headers: { Accept: "application/json" } });
-    if (!response.ok) return;
-    const payload = await response.json();
-    const inventory = new Map((payload.products || []).map(item => [item.id, item]));
-    PRODUCTS.forEach(product => {
-      const record = inventory.get(product.id);
-      if (!record) return;
-      product.stock = Number.isInteger(record.stock) ? record.stock : null;
-      product.price = Number.isInteger(record.priceCents) ? record.priceCents / 100 : product.price;
-      product.active = record.active !== false;
-      product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
-      product.availableDate = record.availableDate || null;
-      product.availability = productAvailabilityText(product);
-    });
-    const catalogueSort = document.querySelector("[data-product-sort]");
-    if (catalogueSort) catalogueSort.dispatchEvent(new Event("change"));
-    document.querySelectorAll('[data-catalog="featured"]').forEach(grid => {
-      renderProductGrid(grid, featuredProducts());
-      initializeFeaturedCarousel(grid);
-    });
-    refreshRelatedSoapCarousel();
-    document.querySelectorAll(".product-card").forEach(card => {
-      const product = PRODUCTS.find(item => item.id === card.dataset.productId);
-      if (!product) return;
-      const titleRow = card.querySelector(".product-title-row");
-      let price = titleRow?.querySelector(".product-price");
-      if (!Number.isFinite(product.price)) { if (price) price.remove(); return; }
-      if (!price) { price = document.createElement("span"); price.className = "product-price"; titleRow?.append(price); }
-      price.textContent = formatPrice(product.price);
-    });
-    document.querySelectorAll("[data-price-product]").forEach(node => {
-      const product = PRODUCTS.find(item => item.id === node.dataset.priceProduct);
-      node.textContent = product && Number.isFinite(product.price) ? formatPrice(product.price) : "";
-      node.hidden = !node.textContent;
-    });
-    document.querySelectorAll("[data-stock-product]").forEach(node => {
-      const product = PRODUCTS.find(item => item.id === node.dataset.stockProduct);
-      if (!product) return;
-      const text = productAvailabilityText(product);
-      node.innerHTML = productAvailabilityMarkup(product);
-      node.classList.toggle("is-preorder", product.availabilityStatus === "preorder" && Boolean(product.availableDate));
-      node.hidden = !text;
-    });
-    document.querySelectorAll("[data-notify-product]").forEach(button => {
-      const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
-      const unavailable = product && (product.availabilityStatus === "unavailable" || product.active === false || (product.stock === 0 && product.availabilityStatus !== "preorder"));
-      const show = product && unavailable;
-      button.hidden = !show;
-      button.textContent = "Notify me when available";
-      button.classList.toggle("notify-product-button--primary", Boolean(unavailable));
-    });
-    document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
-    growthTools?.setInventory(payload.products||[]);
-    updateAvailabilitySummaries();
-    renderCampaignProducts();
-    renderOrderList();
+    if (response.ok) records = (await response.json()).products || [];
   } catch (_) {
-    // The catalog remains usable if inventory status is temporarily unavailable.
+    // Fall back to catalogue data if live inventory is temporarily unavailable.
   }
+  const inventory = new Map(records.map(item => [item.id, item]));
+  PRODUCTS.forEach(product => {
+    const record = inventory.get(product.id);
+    if (!record) return;
+    product.stock = Number.isInteger(record.stock) ? record.stock : null;
+    product.price = Number.isInteger(record.priceCents) ? record.priceCents / 100 : product.price;
+    product.active = record.active !== false;
+    product.availabilityStatus = record.availabilityStatus || (record.active === false ? "unavailable" : "available");
+    product.availableDate = record.availableDate || null;
+    product.availability = productAvailabilityText(product);
+  });
+  inventoryPending = false;
+  const catalogueSort = document.querySelector("[data-product-sort]");
+  if (catalogueSort) catalogueSort.dispatchEvent(new Event("change"));
+  document.querySelectorAll('[data-catalog="featured"]').forEach(grid => {
+    renderProductGrid(grid, featuredProducts());
+    initializeFeaturedCarousel(grid);
+  });
+  refreshRelatedProducts();
+  refreshGiftCards();
+  document.querySelectorAll(".product-card").forEach(card => {
+    const product = PRODUCTS.find(item => item.id === card.dataset.productId);
+    if (!product) return;
+    const titleRow = card.querySelector(".product-title-row");
+    let price = titleRow?.querySelector(".product-price");
+    if (!Number.isFinite(product.price)) { if (price) price.remove(); return; }
+    if (!price) { price = document.createElement("span"); price.className = "product-price"; titleRow?.append(price); }
+    price.textContent = formatPrice(product.price);
+  });
+  document.querySelectorAll("[data-price-product]").forEach(node => {
+    const product = PRODUCTS.find(item => item.id === node.dataset.priceProduct);
+    node.textContent = product && Number.isFinite(product.price) ? formatPrice(product.price) : "";
+    node.hidden = !node.textContent;
+  });
+  document.querySelectorAll("[data-stock-product]").forEach(node => {
+    const product = PRODUCTS.find(item => item.id === node.dataset.stockProduct);
+    if (!product) return;
+    const text = productAvailabilityText(product);
+    node.innerHTML = productAvailabilityMarkup(product);
+    node.classList.toggle("is-preorder", product.availabilityStatus === "preorder" && Boolean(product.availableDate));
+    node.hidden = !text;
+  });
+  document.querySelectorAll("[data-notify-product]").forEach(button => {
+    const product = PRODUCTS.find(item => item.id === button.dataset.notifyProduct);
+    const unavailable = product && isProductUnavailable(product);
+    const show = product && unavailable;
+    button.hidden = !show;
+    button.textContent = "Notify me when available";
+    button.classList.toggle("notify-product-button--primary", Boolean(unavailable));
+  });
+  document.querySelectorAll("[data-add-order]").forEach(updateAddButton);
+  if (inventory.size) growthTools?.setInventory(records);
+  updateAvailabilitySummaries();
+  renderCampaignProducts();
+  renderOrderList();
 }
 
 function initializeAvailabilityNotifications() {
@@ -1432,9 +1443,7 @@ globalThis.JBN_FR?.prepare(PRODUCTS);
 renderSiteChrome();
 initializeCampaignLanguage();
 renderCampaign();
-renderCatalogues();
-const stockingCarousel = document.querySelector("[data-stocking-carousel]");
-if (stockingCarousel) initializeFeaturedCarousel(stockingCarousel);
+document.querySelectorAll("[data-inventory-gift-grid]").forEach(grid => { grid.hidden = true; });
 renderProductPage();
 initializeMenu();
 initializeOrderList();
@@ -1456,7 +1465,7 @@ loadInventory();
 function renderCampaignProducts(){
   const grid=document.querySelector('[data-campaign-products]');
   if(!grid)return;
-  const products=PRODUCTS.filter(p=>p.category==='artisan-soap'&&p.active!==false&&p.availabilityStatus!=='unavailable'&&p.availabilityStatus!=='preorder'&&p.stock!==0);
+  const products=visibleProducts.filter(p=>p.category==='artisan-soap'&&!isProductUnavailable(p)&&p.availabilityStatus!=='preorder');
   renderProductGrid(grid,products);
   const stock=document.querySelector('[data-campaign-stock-note]');
   if(stock){stock.hidden=products.length>0;stock.textContent=products.length?'':t('No soaps are available right now. Please check back soon.','Aucun savon disponible en ce moment. Revenez bientôt.');}

@@ -13,8 +13,8 @@ function storefront(french=false){
   vm.createContext(context);if(french)vm.runInContext(readFileSync(new URL('../fr.js',import.meta.url),'utf8'),context);
   let source=readFileSync(new URL('../script.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
   source=source.slice(0,source.indexOf('renderSiteChrome();\ninitializeCampaignLanguage();'));
-  source+='\nglobalThis.harness={price:cartPricing,summary:buildOrderSummary,set(items,config){orderList=items;soapCampaign=config;},products:PRODUCTS,load:loadOrderList,save:saveOrderList};';
-  vm.runInContext(source,context);return {h:context.harness,storage};
+  source+='\nglobalThis.harness={price:cartPricing,summary:buildOrderSummary,set(items,config){orderList=items;soapCampaign=config;},products:PRODUCTS,load:loadOrderList,save:saveOrderList,loadInventory,renderProductGrid,relatedProducts};';
+  vm.runInContext(source,context);return {h:context.harness,storage,context};
 }
 test('cart quantity changes, removal, refresh persistence and fallback summary use shared offer',()=>{
   const {h,storage}=storefront();const config={...promotion.CAMPAIGN_DEFAULTS,startDate:'2020-01-01',endDate:'2030-01-01'};
@@ -30,4 +30,49 @@ test('existing French system translates soaps and includes the current Mocha bar
   assert.equal(h.products.find(p=>p.id==='matcha-lavender-soap').name,'Matcha et lavande');
   assert.equal(h.products.find(p=>p.id==='almond-milk-mocha-soap').name,'Mocha Latté');
   h.set([{id:'almond-milk-mocha-soap',quantity:2}],config);assert.equal(h.price().itemSubtotalCents,1400);
+});
+
+test('inventory hides sold-out cards, preserves preorders, and restores cards after restock', async () => {
+  const {h, context} = storefront();
+  const sold = h.products.find(product => product.id === 'vanilla-scrub');
+  const nextBatch = h.products.find(product => product.id === 'lavender-bloom-scrub');
+  const maple = h.products.find(product => product.id === 'maple-chai-scrub');
+  const gift = h.products.find(product => product.id === 'gift-soap-duo');
+  const records = [
+    {id:sold.id, stock:0},
+    {id:nextBatch.id, stock:0, availabilityStatus:'preorder'},
+    {id:gift.id, stock:5, availabilityStatus:'unavailable'},
+  ];
+  const giftCard = {dataset:{productId:gift.id}};
+  const giftGrid = {
+    querySelectorAll: () => [giftCard],
+    nextElementSibling: {},
+    hasAttribute: () => false,
+  };
+  const shopGrid = {
+    dataset: {},
+    innerHTML: '',
+    closest: () => null,
+    querySelectorAll: () => [],
+  };
+  context.document.querySelectorAll = selector => selector === '[data-inventory-gift-grid]' ? [giftGrid] : [];
+  context.fetch = async () => ({ok:true, json:async () => ({products:records})});
+  context.renderCampaignProducts = () => {};
+  h.renderProductGrid(shopGrid, [sold, nextBatch, maple]);
+  assert.equal(shopGrid.innerHTML, '');
+
+  await h.loadInventory();
+  h.renderProductGrid(shopGrid, [sold, nextBatch, maple]);
+  assert.equal(shopGrid.dataset.productIds, 'lavender-bloom-scrub,maple-chai-scrub');
+  assert.equal(h.relatedProducts(maple).map(product => product.id).join(','), nextBatch.id);
+  assert.equal(giftCard.hidden, true);
+  assert.equal(giftGrid.nextElementSibling.hidden, false);
+
+  records[0].stock = 2;
+  records[2].availabilityStatus = 'available';
+  await h.loadInventory();
+  h.renderProductGrid(shopGrid, [sold, nextBatch, maple]);
+  assert.equal(shopGrid.dataset.productIds, 'vanilla-scrub,lavender-bloom-scrub,maple-chai-scrub');
+  assert.equal(giftCard.hidden, false);
+  assert.equal(giftGrid.nextElementSibling.hidden, true);
 });

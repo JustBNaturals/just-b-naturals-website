@@ -26,7 +26,8 @@ export function buildChristmasPage(products, french) {
       </div>
     </article>`;
   };
-  const renderGrid = (ids, attributes = "") => `<div class="product-grid"${attributes}>${ids.map(renderCard).join('\n').replace(/^[ \t]+$/gm, '')}</div>`;
+  const renderGrid = (ids, attributes = "") => `<div class="product-grid" data-inventory-gift-grid${attributes}>${ids.map(renderCard).join('\n').replace(/^[ \t]+$/gm, '')}</div>
+    <p class="catalog-empty" ${localized('No products currently available', 'Aucun produit disponible pour le moment')} hidden>No products currently available</p>`;
   const collection = [
     ['gift-collection','Wrapped gift sets','Coffrets prêts à offrir',['gift-soap-duo','gift-soap-trio','gift-soap-quartet','gift-soap-and-scrub','gift-soap-and-roll-on','gift-complete-care']],
     ['small-gifts','Small gifts & stocking stuffers','Petits cadeaux et surprises pour le bas de Noël',['odds-n-ends','sourdough-crepe-mix','solid-dish-soap','menthol-shower-steamer']]
