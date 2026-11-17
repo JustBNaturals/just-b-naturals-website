@@ -1,5 +1,5 @@
 import { initializeGrowth, scentFamilies } from "./growth.js?v=20261116-next-batch";
-import { PRODUCTS } from "./product-data.js?v=20261116-maple-chai";
+import { PRODUCTS } from "./product-data.js?v=20261117-product-photos";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
 import "./fr.js?v=20261116-maple-chai";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
@@ -381,10 +381,7 @@ const PRODUCT_IMAGE_POSITIONS = Object.freeze({
   "ocean-soap": "50% 92%",
   "rose-matter-soap": "50% 92%",
   "spiced-banana-soap": "50% 93%",
-  "sweater-weather-soap": "50% 76%",
-  "just-b-calm": "50% 50%",
-  "just-b-relieved": "50% 54%",
-  "cycle-harmony": "50% 50%"
+  "sweater-weather-soap": "50% 76%"
 });
 
 const ARTISAN_DISPLAY_ORDER = Object.freeze([
