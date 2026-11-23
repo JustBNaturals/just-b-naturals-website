@@ -33,7 +33,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": true
+    "featured": false
   },
   {
     "id": "rosemary-sage-soap",
@@ -140,7 +140,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": true
+    "featured": false
   },
   {
     "id": "sweater-weather-soap",
@@ -769,7 +769,7 @@ export const PRODUCTS = [
     "art": "jar",
     "tone": "#eadfc8",
     "accent": "#8b6b48",
-    "featured": false
+    "featured": true
   },
   {
     "id": "unscented-tallow",
@@ -833,7 +833,7 @@ export const PRODUCTS = [
     "art": "jar",
     "tone": "#eadfc8",
     "accent": "#8b6b48",
-    "featured": false
+    "featured": true
   },
   {
     "id": "just-b-calm",
@@ -963,7 +963,7 @@ export const PRODUCTS = [
     "art": "roller",
     "tone": "#d5dfd6",
     "accent": "#456b59",
-    "featured": false
+    "featured": true
   },
   {
     "id": "cycle-harmony",
@@ -1024,7 +1024,7 @@ export const PRODUCTS = [
     "art": "roller",
     "tone": "#d5dfd6",
     "accent": "#456b59",
-    "featured": false
+    "featured": true
   },
   {
     "id": "lavender-bloom-scrub",
@@ -1178,7 +1178,7 @@ export const PRODUCTS = [
     "art": "jar",
     "tone": "#ead8c8",
     "accent": "#9a684f",
-    "featured": false
+    "featured": true
   },
   {
     "id": "vanilla-scrub",
@@ -1211,7 +1211,7 @@ export const PRODUCTS = [
     "art": "jar",
     "tone": "#ead8c8",
     "accent": "#9a684f",
-    "featured": false
+    "featured": true
   },
   {
     "id": "just-b-rested-room-spray",
@@ -1303,7 +1303,7 @@ export const PRODUCTS = [
     "tone": "#d9ded7",
     "accent": "#526b60",
     "availability": "Coming soon",
-    "featured": false
+    "featured": true
   },
   {
     "id": "solid-dish-soap",
@@ -1343,7 +1343,7 @@ export const PRODUCTS = [
     "art": "spray",
     "tone": "#d9ded7",
     "accent": "#526b60",
-    "featured": true,
+    "featured": false,
     "holiday": true
   },
   {
@@ -1384,7 +1384,7 @@ export const PRODUCTS = [
     "art": "jar",
     "tone": "#e8ddcc",
     "accent": "#80684a",
-    "featured": false,
+    "featured": true,
     "isFood": true,
     "requiresPrice": true,
     "weightGrams": 255,
@@ -1585,7 +1585,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "cozy-soap",
@@ -1617,7 +1617,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "sunshine-soap",
@@ -1651,7 +1651,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "maple-chai-soap",
@@ -1684,7 +1684,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "boreal-soap",
@@ -1716,7 +1716,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "evergreen-soap",
@@ -1748,7 +1748,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gingerbread-soap",
@@ -1780,7 +1780,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "peppermint-twist-soap",
@@ -1813,7 +1813,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "grinch-soap",
@@ -1845,7 +1845,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "brume-soap",
@@ -1878,7 +1878,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "himalayan-salt-scrub",
@@ -1912,7 +1912,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "odds-n-ends",
@@ -1997,7 +1997,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-trio",
@@ -2015,7 +2015,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-quartet",
@@ -2033,7 +2033,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-and-scrub",
@@ -2051,7 +2051,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-and-roll-on",
@@ -2069,7 +2069,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-complete-care",
@@ -2087,7 +2087,7 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-little-thank-you",
@@ -2106,6 +2106,6 @@ export const PRODUCTS = [
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   }
 ];

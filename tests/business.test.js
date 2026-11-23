@@ -15,3 +15,21 @@ test('live product structured data reads trusted stock and localizes French meta
 test('dashboard uses all period orders without shipping/contact data or a 250-order cap',async()=>{const {db,env}=setup();try{await worker.fetch(request('/api/storefront'),env);const payload=JSON.stringify({estimatedTotalCents:1400,items:[],qualifyingPairs:1});const insert=db.prepare("INSERT INTO campaign_orders(order_id,created_at,order_json,status,retained_pairs,email_status) VALUES(?,datetime('now'),?,?,1,'sent')");for(let i=0;i<300;i++)insert.run('summary-'+i,payload,i<260?'paid':'pending');await worker.fetch(request('/api/metrics',{event:'page_view',source:'email'}),env);const response=await worker.fetch(request('/api/business/summary',undefined,true),env);const data=await response.json();assert.equal(data.orderStats.request_count,300);assert.equal(data.orderStats.paid_count,260);assert.equal(data.orderStats.paid_value_cents,364000);assert.equal(data.daily[0].views,1);assert.equal(data.stockOverview.available,2);assert.equal(data.orders,undefined);assert.equal(response.headers.get('Cache-Control'),'no-store');}finally{db.close()}});
 test('availability requests require explicit one-time consent before storing or emailing',()=>withMail(async sent=>{const {db,env}=setup();try{for(const consent of [undefined,false,'true']){const response=await worker.fetch(request('/api/notify',{productId:'matcha-lavender-soap',email:'customer@example.com',consent}),env);assert.equal(response.status,400);}assert.equal(sent.length,0);}finally{db.close()}}));
 test('review visibility can be changed only by the inventory administrator',async()=>{const {db,env}=setup();try{await worker.fetch(request('/api/business/reviews',{author:'Customer',quoteEn:'Lovely handmade soap.',permission:true,published:false},true),env);const id=db.prepare('SELECT id FROM business_reviews').get().id;assert.equal((await worker.fetch(request('/api/business/reviews',{action:'publish',id}),env)).status,401);assert.equal((await(await worker.fetch(request('/api/storefront'),env)).json()).reviews.length,0);await worker.fetch(request('/api/business/reviews',{action:'publish',id},true),env);assert.equal((await(await worker.fetch(request('/api/storefront'),env)).json()).reviews.length,1);await worker.fetch(request('/api/business/reviews',{action:'unpublish',id},true),env);assert.equal((await(await worker.fetch(request('/api/storefront'),env)).json()).reviews.length,0);}finally{db.close()}});
+
+test('arranged delivery or pickup saves a request without an address or a fabricated fee',()=>withMail(async sent=>{
+  const {db,env}=setup();
+  try {
+    for (const language of ['en','fr']) {
+      const data={...order(),fulfillment:'arrange',language,deliveryFeeCents:999999};
+      const response=await worker.fetch(request('/api/order',data),env);
+      assert.equal(response.status,200);
+      const result=await response.json();
+      const saved=JSON.parse(db.prepare('SELECT order_json FROM order_delivery WHERE order_id=?').get(result.orderId).order_json);
+      assert.equal(saved.fulfillment,'arrange');
+      assert.equal(saved.deliveryFeeCents,null);
+      assert.equal(saved.estimatedTotalCents,saved.itemSubtotalCents);
+    }
+    assert(sent.some(message=>message.htmlContent.includes('Local delivery or pickup')));
+    assert(sent.some(message=>message.htmlContent.includes('À confirmer avant le paiement')));
+  }finally{db.close()}
+}));

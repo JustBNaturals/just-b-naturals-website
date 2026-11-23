@@ -32,7 +32,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": true
+    "featured": false
   },
   {
     "id": "rosemary-sage-soap",
@@ -139,7 +139,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": true
+    "featured": false
   },
   {
     "id": "sweater-weather-soap",
@@ -768,7 +768,7 @@
     "art": "jar",
     "tone": "#eadfc8",
     "accent": "#8b6b48",
-    "featured": false
+    "featured": true
   },
   {
     "id": "unscented-tallow",
@@ -832,7 +832,7 @@
     "art": "jar",
     "tone": "#eadfc8",
     "accent": "#8b6b48",
-    "featured": false
+    "featured": true
   },
   {
     "id": "just-b-calm",
@@ -962,7 +962,7 @@
     "art": "roller",
     "tone": "#d5dfd6",
     "accent": "#456b59",
-    "featured": false
+    "featured": true
   },
   {
     "id": "cycle-harmony",
@@ -1023,7 +1023,7 @@
     "art": "roller",
     "tone": "#d5dfd6",
     "accent": "#456b59",
-    "featured": false
+    "featured": true
   },
   {
     "id": "lavender-bloom-scrub",
@@ -1136,7 +1136,7 @@
     "art": "jar",
     "tone": "#ead8c8",
     "accent": "#9a684f",
-    "featured": false
+    "featured": true
   },
   {
     "id": "vanilla-scrub",
@@ -1169,7 +1169,7 @@
     "art": "jar",
     "tone": "#ead8c8",
     "accent": "#9a684f",
-    "featured": false
+    "featured": true
   },
   {
     "id": "just-b-rested-room-spray",
@@ -1261,7 +1261,7 @@
     "tone": "#d9ded7",
     "accent": "#526b60",
     "availability": "Coming soon",
-    "featured": false
+    "featured": true
   },
   {
     "id": "solid-dish-soap",
@@ -1301,7 +1301,7 @@
     "art": "spray",
     "tone": "#d9ded7",
     "accent": "#526b60",
-    "featured": true,
+    "featured": false,
     "holiday": true
   },
   {
@@ -1342,7 +1342,7 @@
     "art": "jar",
     "tone": "#e8ddcc",
     "accent": "#80684a",
-    "featured": false,
+    "featured": true,
     "isFood": true,
     "requiresPrice": true,
     "weightGrams": 255,
@@ -1543,7 +1543,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "cozy-soap",
@@ -1575,7 +1575,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "sunshine-soap",
@@ -1609,7 +1609,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "maple-chai-soap",
@@ -1642,7 +1642,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "boreal-soap",
@@ -1674,7 +1674,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "evergreen-soap",
@@ -1706,7 +1706,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gingerbread-soap",
@@ -1738,7 +1738,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "peppermint-twist-soap",
@@ -1771,7 +1771,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "grinch-soap",
@@ -1803,7 +1803,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "brume-soap",
@@ -1836,7 +1836,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "himalayan-salt-scrub",
@@ -1870,7 +1870,7 @@
     "art": "bar",
     "tone": "#ded2bf",
     "accent": "#745f47",
-    "featured": false
+    "featured": true
   },
   {
     "id": "odds-n-ends",
@@ -1955,7 +1955,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-trio",
@@ -1973,7 +1973,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-quartet",
@@ -1991,7 +1991,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-and-scrub",
@@ -2009,7 +2009,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-soap-and-roll-on",
@@ -2027,7 +2027,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-complete-care",
@@ -2045,7 +2045,7 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   },
   {
     "id": "gift-little-thank-you",
@@ -2064,6 +2064,6 @@
     "art": "bar",
     "tone": "#efe5d6",
     "accent": "#365448",
-    "featured": false
+    "featured": true
   }
 ]

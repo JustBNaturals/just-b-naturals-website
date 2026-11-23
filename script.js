@@ -1,7 +1,7 @@
-import { initializeGrowth, scentFamilies } from "./growth.js?v=20261116-next-batch";
-import { PRODUCTS } from "./product-data.js?v=20261123-thank-you";
+import { initializeGrowth, scentFamilies } from "./growth.js?v=20261123-local-arrangements";
+import { PRODUCTS } from "./product-data.js?v=20261123-local-arrangements";
 import { LOCAL_DELIVERY_MAX_KM, LOCAL_DELIVERY_FEE_CENTS, FREE_DELIVERY_THRESHOLD_CENTS } from "./delivery.js";
-import "./fr.js?v=20261123-thank-you";
+import "./fr.js?v=20261123-local-arrangements";
 import { CAMPAIGN_DEFAULTS, campaignActive, priceOrder } from "./promotion.js";
 import { campaignLanguage, t, initializeCampaignLanguage, campaignHero, campaignPopup, octoberHomeCard, awarenessContent } from "./campaign-ui.js?v=20261016-natural-fade";
 let growthTools = null;
@@ -109,7 +109,7 @@ function productAvailabilityMarkup(product) {
 }
 
 function availabilitySummary(products) {
-  const available = products.filter(product => !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price))).length;
+  const available = products.filter(product => product.featured && !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price))).length;
   const preorder = products.filter(product => product.active !== false && product.availabilityStatus === "preorder").length;
   const parts = [];
   if (available) parts.push(`${available} product${available === 1 ? "" : "s"} available`);
@@ -261,7 +261,7 @@ function buildOrderSummary(details = {}) {
     details.deliveryAddress ? `Delivery address: ${details.deliveryAddress}` : "",
     Number.isFinite(details.deliveryDistanceKm) ? `Estimated driving distance: ${details.deliveryDistanceKm.toFixed(1)} km` : "",
     Number.isInteger(details.deliveryFeeCents) ? `Local delivery: ${details.deliveryFeeCents === 0 ? "Free" : `${formatPrice(details.deliveryFeeCents / 100)} CAD`}` : "",
-    `Fulfillment: ${details.fulfillment === "delivery" ? "Local delivery" : "Local pickup"}`,
+    `Fulfillment: ${details.fulfillment === "arrange" ? "Local delivery or pickup to be arranged by DM" : details.fulfillment === "delivery" ? "Local delivery" : "Local pickup"}`,
     `Payment: ${details.payment === "cash" ? "Cash" : "Interac e-Transfer"}`,
     details.marketingConsent ? "Promotional emails: Yes, consent given" : "Promotional emails: No"
   ].filter(Boolean) : [];
@@ -279,6 +279,7 @@ function buildOrderSummary(details = {}) {
     `Subtotal after promotion: ${formatPrice(subtotalCents/100)}`,
     ...(details.fulfillment === "delivery" ? [Number.isInteger(details.deliveryFeeCents) ? `Estimated delivery: ${formatPrice(deliveryFeeCents / 100)}` : "Estimated delivery: pending address", `Estimated order total: ${formatPrice((subtotalCents + deliveryFeeCents) / 100)}`] : [`Estimated order total: ${formatPrice(subtotalCents / 100)}`]),
     "",
+    ...(details.fulfillment === "arrange" ? ["Delivery or pickup and any delivery fee will be confirmed before payment."] : []),
     details.notes?.trim() ? `Notes:\n${details.notes.trim()}\n` : (orderNotes.trim() ? `Notes:\n${orderNotes.trim()}\n` : "Notes:\n"),
     "",
     "I understand this is a request only and I will wait for confirmation before paying.",
@@ -472,7 +473,7 @@ function renderProductGrid(grid, products) {
 
 function featuredProducts() {
   return visibleProducts
-    .filter(product => !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price)))
+    .filter(product => product.featured && !isProductUnavailable(product) && product.availabilityStatus !== "preorder" && (!product.requiresPrice || Number.isFinite(product.price)))
     .sort(() => Math.random() - .5)
     .sort((a, b) => Number(b.id === "menthol-shower-steamer") - Number(a.id === "menthol-shower-steamer"));
 }
@@ -1449,7 +1450,7 @@ initializeMenu();
 initializeOrderList();
 if(document.querySelector('[data-checkout]')){
  const submit=document.querySelector('.checkout-submit');if(submit)submit.disabled=true;
- import('./checkout-ui.js?v=20261017-shopping').then(({initializeCheckoutPage})=>{
+ import('./checkout-ui.js?v=20261123-local-arrangements').then(({initializeCheckoutPage})=>{
   initializeCheckoutPage({STORE,campaignLanguage,t,cartSubtotalCents,updateCheckoutTotals,escapeHtml,buildOrderSummary,initializeInlineValidation,renderOrderList,syncCheckoutState,cart:()=>orderList,clearCart(){orderList=[];orderNotes="";saveOrderList();}});
   if(submit)submit.disabled=false;
  }).catch(()=>{const status=document.querySelector('[data-checkout-status]');if(status)status.textContent=t('Please refresh to load the order form.','Actualisez la page pour charger le formulaire.');});

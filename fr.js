@@ -181,6 +181,14 @@
   }
 
   const text = new Map(Object.entries({
+    "Aromatherapy mists and solid dish soap.":"Brumes d’aromathérapie et savon à vaisselle solide.",
+    "Lavender Bloom, Maple Chai and Vanilla sugar scrubs.":"Exfoliants au sucre Fleur de lavande, Chai à l’érable et Vanille.",
+    "We’ll confirm your order by email. Local delivery or pickup is arranged with us.":"Nous confirmerons votre commande par courriel. La livraison ou le ramassage se convient avec nous.",
+    "We confirm your order and arrange delivery or pickup with you.":"Nous confirmons votre commande et convenons avec vous de la livraison ou du ramassage.",
+    "Delivery or pickup details and any delivery fee are confirmed before payment.":"Les modalités de livraison ou de ramassage et les frais éventuels sont confirmés avant le paiement.",
+    "Products total":"Total des produits",
+    "Products total before delivery":"Total des produits avant livraison",
+
     "Simple essentials for home and kitchen, from botanical linen spray and solid dish soap to sourdough crêpe mix for your next homemade breakfast.": "Des essentiels simples pour la maison et la cuisine : brume botanique pour le linge, savon solide pour la vaisselle et mélange pour crêpes au levain pour votre prochain déjeuner maison.",
     "Gift sets": "Coffrets-cadeaux",
     "Gift Sets": "Coffrets-cadeaux",

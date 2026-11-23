@@ -4,7 +4,7 @@ export function initializeCheckoutPage(api) {
  let pendingCheckout={signature:"",key:""};
 function checkoutPayload(form) {
   const data = new FormData(form);
-  const fulfillment = String(data.get("fulfillment") || "pickup");
+  const fulfillment = String(data.get("fulfillment") || "arrange");
   const deliveryAddress = String(data.get("deliveryAddress") || "").trim();
   const deliveryDistanceKm = Number(data.get("deliveryDistanceKm"));
   const deliveryFeeCents = Number(data.get("deliveryFeeCents"));
@@ -19,7 +19,7 @@ function checkoutPayload(form) {
     deliveryAddress,
     deliveryPlaceId: String(data.get("deliveryPlaceId") || "").trim(),
     deliveryDistanceKm: Number.isFinite(deliveryDistanceKm) && deliveryDistanceKm > 0 ? deliveryDistanceKm : null,
-    deliveryFeeCents: Number.isInteger(deliveryFeeCents) && deliveryFeeCents >= 0 ? deliveryFeeCents : null,
+    deliveryFeeCents: fulfillment === "delivery" && data.get("deliveryFeeCents") !== null && Number.isInteger(deliveryFeeCents) && deliveryFeeCents >= 0 ? deliveryFeeCents : null,
     payment: String(data.get("payment") || "etransfer"),
     notes: String(data.get("notes") || "").trim(),
     marketingConsent: data.get("marketingConsent") === "on",

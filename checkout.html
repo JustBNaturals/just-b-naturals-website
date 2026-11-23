@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.min.css?v=20261105-soap-focus">
-  <script type="module" src="script.js?v=20261117-product-photos" defer></script>
+  <script type="module" src="script.js?v=20261123-local-arrangements" defer></script>
 
 
 
@@ -36,7 +36,7 @@
     <section class="checkout-process shell" aria-label="How ordering works">
       <div><p><strong>Send your request</strong>Your cart and contact details go to Just B Natural.</p></div>
       <div><p><strong>We review your request</strong>You receive the final details and payment instructions by email.</p></div>
-      <div><p><strong>Pay after confirmation</strong>You receive payment and pickup or delivery details by email.</p></div>
+      <div><p><strong>Pay after confirmation</strong>We confirm your order and arrange delivery or pickup with you.</p></div>
     </section>
 
     <section class="checkout-section shell" data-checkout>
@@ -60,23 +60,12 @@
           </section>
 
           <section class="checkout-card">
-            <div class="checkout-card-heading"><div><p class="eyebrow">Fulfillment</p><h2>How will you receive it?</h2></div></div>
-            <div class="choice-grid">
-              <label class="choice-card"><input type="radio" name="fulfillment" value="pickup" checked><span><strong>Local pickup</strong><small>Pickup details will be confirmed by email.</small></span></label>
-              <label class="choice-card"><input type="radio" name="fulfillment" value="delivery"><span><strong>Local delivery</strong><small>$10 within 20 km of Aylmer. Free on product orders of $50 or more.</small></span></label>
-            </div>
-            <div class="pickup-area" data-pickup-area><label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" minlength="2" maxlength="120" placeholder="For example: Aylmer or Hull"></label></div>
-            <div class="delivery-estimator" data-delivery-estimator hidden>
-              <p class="delivery-extra-note"><strong>Simple local delivery.</strong> Delivery is $10 within 20 km of Aylmer, or free when your product subtotal is $50 or more.</p>
-              <div class="delivery-address-wrap">
-                <label class="field-block"><span>Exact delivery address</span><input name="deliveryAddress" data-delivery-address autocomplete="street-address" minlength="8" maxlength="220" placeholder="Start typing your street address" aria-autocomplete="list" aria-expanded="false" aria-controls="delivery-address-suggestions" aria-describedby="delivery-address-instruction delivery-estimate-status"></label>
-                <div class="delivery-suggestions" id="delivery-address-suggestions" data-delivery-suggestions role="listbox" hidden></div>
-              </div>
-              <input type="hidden" name="deliveryPlaceId"><input type="hidden" name="deliveryDistanceKm"><input type="hidden" name="deliveryFeeCents">
-              <p class="field-instruction" id="delivery-address-instruction">Type your address, then choose the matching suggestion to confirm that it is inside our local delivery zone.</p>
-              <p class="delivery-estimate-status" id="delivery-estimate-status" data-delivery-estimate-status aria-live="polite">Select an address suggestion to confirm local delivery.</p>
-              <p class="delivery-estimate-help">The calculator only confirms the delivery zone and applies the flat fee. Your total appears here and in your order email.</p>
-            </div>
+            <div class="checkout-card-heading"><div><p class="eyebrow" data-en="Getting your order" data-fr="Recevoir votre commande">Getting your order</p><h2 data-en="Local delivery or pickup by arrangement" data-fr="Livraison locale ou ramassage à convenir">Local delivery or pickup by arrangement</h2></div></div>
+            <input type="hidden" name="fulfillment" value="arrange">
+            <p data-en="Local delivery in Outaouais & nearby Ottawa. DM us to arrange a pickup location." data-fr="Livraison locale en Outaouais et dans les environs d’Ottawa. Écrivez-nous en message privé pour convenir d’un lieu de ramassage.">Local delivery in Outaouais & nearby Ottawa. DM us to arrange a pickup location.</p>
+            <p><a href="https://ig.me/m/justb.naturals" target="_blank" rel="noreferrer" data-en="DM us to arrange pickup" data-fr="Écrivez-nous pour organiser le ramassage">DM us to arrange pickup</a></p>
+            <label class="field-block"><span>Your neighbourhood or general area <small>optional</small></span><input name="area" minlength="2" maxlength="120" placeholder="For example: Aylmer or Hull"></label>
+            <p data-en="Free local delivery on orders of $50 or more." data-fr="Livraison locale gratuite dès 50 $ d’achats.">Free local delivery on orders of $50 or more.</p>
           </section>
 
           <section class="checkout-card">
@@ -108,10 +97,10 @@
           <p class="pink-cart-message" data-promotion-message aria-live="polite" hidden></p><dl class="checkout-totals">
             <div><dt>Products subtotal</dt><dd data-checkout-subtotal>$0.00</dd></div>
             <div data-promotion-row hidden><dt data-en="October soap offer applied" data-fr="Promotion de savons d’octobre">October soap offer applied</dt><dd data-promotion-discount></dd></div>
-            <div data-checkout-delivery-row hidden><dt>Local delivery</dt><dd data-checkout-delivery>Select an address</dd></div>
-            <div class="checkout-grand-total"><dt>Estimated order total</dt><dd data-checkout-total>$0.00</dd></div>
+            <div data-checkout-delivery-row hidden><dt>Local delivery</dt><dd data-checkout-delivery>To be arranged</dd></div>
+            <div class="checkout-grand-total"><dt data-en="Products total" data-fr="Total des produits">Products total</dt><dd data-checkout-total>$0.00</dd></div>
           </dl>
-          <p>Local delivery is available within 20 km of Aylmer for a flat $10, or free on product orders of $50 or more.</p>
+          <p>Delivery or pickup details and any delivery fee are confirmed before payment.</p>
         </aside>
       </div>
 
