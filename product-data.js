@@ -2088,5 +2088,24 @@ export const PRODUCTS = [
     "tone": "#efe5d6",
     "accent": "#365448",
     "featured": false
+  },
+  {
+    "id": "gift-little-thank-you",
+    "category": "gift-sets",
+    "name": "A Little Thank You",
+    "kicker": "Christmas Gift Set",
+    "description": "A thoughtful little thank-you, ready for the stocking or a favourite teacher. Each $12 set includes one artisan soap, an all-natural sisal soap bag and a bamboo soap dish, finished with festive wrapping.",
+    "cardDescription": "One artisan soap, an all-natural sisal bag and a bamboo soap dish. A ready-to-give thank-you for teachers, hosts and stockings.",
+    "ingredients": [],
+    "price": 12,
+    "stock": null,
+    "holiday": true,
+    "requiresPrice": true,
+    "image": "images/christmas/little-thank-you-20261123.webp",
+    "imageNote": "One set per purchase. Photo shows three separately wrapped sets; soap scent and wrapping may vary.",
+    "art": "bar",
+    "tone": "#efe5d6",
+    "accent": "#365448",
+    "featured": false
   }
 ];

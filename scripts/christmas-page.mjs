@@ -30,7 +30,7 @@ export function buildChristmasPage(products, french) {
     <p class="catalog-empty" ${localized('No products currently available', 'Aucun produit disponible pour le moment')} hidden>No products currently available</p>`;
   const collection = [
     ['gift-collection','Wrapped gift sets','Coffrets prêts à offrir',['gift-soap-duo','gift-soap-trio','gift-soap-quartet','gift-soap-and-scrub','gift-soap-and-roll-on','gift-complete-care']],
-    ['small-gifts','Small gifts & stocking stuffers','Petits cadeaux et surprises pour le bas de Noël',['odds-n-ends','sourdough-crepe-mix','solid-dish-soap','menthol-shower-steamer']]
+    ['small-gifts','Small gifts & stocking stuffers','Petits cadeaux et surprises pour le bas de Noël',['gift-little-thank-you','odds-n-ends','sourdough-crepe-mix','solid-dish-soap','menthol-shower-steamer']]
   ].map(([section,title,fr,ids])=>`<section class="section shell gift-collection" id="${section}" aria-labelledby="${section}-title">
     <div class="section-heading gift-section-heading">
       <h2 id="${section}-title" ${localized(title,fr)}>${title}</h2>
